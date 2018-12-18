@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: crane_plus_description
+    relative_path: urdf/crane_plus.urdf
+  SRDF:
+    relative_path: config/crane_plus.srdf
+  CONFIG:
+    author_name: Charlene Leong
+    author_email: charleneleong84@gmail.com
+    generated_timestamp: 1492669186
