@@ -1,0 +1,60 @@
+shoulder_revolute_servo_controller:
+  controller:
+    package: dynamixel_controllers
+    module: joint_position_controller
+    type: JointPositionController
+  joint_name: crane_plus_shoulder_revolute_joint
+  joint_speed: 1.17
+  motor:
+    id: 1
+    init: 512
+    min: 0
+    max: 1023
+shoulder_flex_servo_controller:
+  controller:
+    package: dynamixel_controllers
+    module: joint_position_controller
+    type: JointPositionController
+  joint_name: crane_plus_shoulder_flex_joint
+  joint_speed: 1.17
+  motor:
+    id: 2
+    init: 512
+    min: 178
+    max: 844
+elbow_servo_controller:
+  controller:
+    package: dynamixel_controllers
+    module: joint_position_controller
+    type: JointPositionController
+  joint_name: crane_plus_elbow_joint
+  joint_speed: 1.17
+  motor:
+    id: 3
+    init: 512
+    min: 58
+    max: 962
+wrist_servo_controller:
+  controller:
+    package: dynamixel_controllers
+    module: joint_position_controller
+    type: JointPositionController
+  joint_name: crane_plus_wrist_joint
+  joint_speed: 1.17
+  motor:
+    id: 4
+    init: 512
+    min: 178
+    max: 844
+finger_servo_controller:
+  controller:
+    package: dynamixel_controllers
+    module: joint_position_controller
+    type: JointPositionController
+  joint_name: crane_plus_moving_finger_joint
+  joint_speed: 1.17
+  motor:
+    id: 5
+    init: 512
+    min: 394
+    max: 639
