@@ -27,7 +27,7 @@ Based on the [TurtleBot Arm code](https://github.com/turtlebot/turtlebot_arm)
 - [Ubuntu 16.04 Xenial](http://releases.ubuntu.com/16.04/)
 - [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
 - [Moveit! Motion Planning Framework](http://moveit.ros.org/install/)
-- [Dynamixel Motor](http://wiki.ros.org/dynamixel_motor)
+- [Dynamixel Motor](http://wiki.ros.org/dynamixel_motor) ROS package
 
 This package has only been tested on Ubuntu 16.04 with ROS Kinetic. 
 
@@ -35,7 +35,7 @@ This package has only been tested on Ubuntu 16.04 with ROS Kinetic.
 
 **camera_plus_description**
 
-​	CAD files and [URDF](http://wiki.ros.org/urdf) (Unified Description Format) model of CRANE+V2
+​	CAD files and [URDF](http://wiki.ros.org/urdf) (Unified Robot Description Format) model of CRANE+V2
 
 **camera_plus_gripper**
 

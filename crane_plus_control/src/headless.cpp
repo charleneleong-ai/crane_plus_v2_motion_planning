@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
   
   
   // Plan a move to the "vertical" pose
-  arm.setNamedTarget("vertical");
+  arm.setNamedTarget("resting");
   // Execute the move
   arm.move();
 
