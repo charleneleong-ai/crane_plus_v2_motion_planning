@@ -2,9 +2,9 @@
 
 ## Crane+V2 Robot Arm
 
-Code and models for the [Crane+V2 4DOF Arm](https://www.rt-net.jp/products/cranep2?lang=en) with the [MoveIt! Framework](http://moveit.ros.org/) in ROS 
+Code and models for the [Crane+V2 5DOF Arm](https://www.rt-net.jp/products/cranep2?lang=en) with the [MoveIt! Framework](http://moveit.ros.org/) in ROS.
 
-Based on the [TurtleBot Arm code](https://github.com/turtlebot/turtlebot_arm) 
+Based on the [TurtleBot Arm code](https://github.com/turtlebot/turtlebot_arm).
 
 
 
@@ -87,6 +87,14 @@ Launch the hardware node to set up interface between ROS and hardware
 
 ```bash
 $ roslaunch crane_plus_hardware start_arm_standalone.launch
+$ roslaunch crane_plus_moveit_config move_group.launch
+$ roslaunch crane_plus_moveit_config moveit_rviz.launch config:=true
+```
+
+Launch with simulation
+
+```bash
+$ roslaunch crane_plus_simulation simulation.launch
 $ roslaunch crane_plus_moveit_config move_group.launch
 $ roslaunch crane_plus_moveit_config moveit_rviz.launch config:=true
 ```
