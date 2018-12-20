@@ -2,7 +2,7 @@
 
 ## Crane+V2 Robot Arm
 
-Code and models for the [Crane+V2 5DOF Arm](https://www.rt-net.jp/products/cranep2?lang=en) with the [MoveIt! Framework](http://moveit.ros.org/) in ROS.
+Code and models for the [Crane+V2 5DOF](https://www.rt-net.jp/products/cranep2?lang=en) (4DOF arm + gripper) with the [MoveIt! Framework](http://moveit.ros.org/) in ROS.
 
 Based on the [TurtleBot Arm code](https://github.com/turtlebot/turtlebot_arm).
 
@@ -67,39 +67,37 @@ This package has only been tested on Ubuntu 16.04 with ROS Kinetic.
 
 Please see [instructions below](#ros-installation-and-configuration) for first time ROS installation and configuration.
 
-Install the required packages
+1. Install the required packages
 
-```bash
-$ sudo apt-get install ros-kinetic-moveit-*
-$ sudo apt-get install ros-kinetic-dynamixel-motor
-```
+    ```bash
+    $ sudo apt-get install ros-kinetic-moveit-*
+    $ sudo apt-get install ros-kinetic-dynamixel-motor
+    ```
 
-Download the project files and compile the project
+2. Download the project files and compile the project
 
-```bash
-$ cd ~/catkin_ws/src/
-$ git clone git@gojou:charyeezy/Crane_V2_ROS.git
-$ cd ~/catkin_ws && catkin_make
-$ source ~/catkin_ws/devel/setup.bash
-```
+    ```bash
+    $ cd ~/catkin_ws/src/
+    $ git clone git@gojou:charyeezy/Crane_V2_ROS.git
+    $ cd ~/catkin_ws && catkin_make
+    $ source ~/catkin_ws/devel/setup.bash
+    ```
 
-Launch the hardware node to set up interface between ROS and hardware
+3. Launch the hardware node to set up interface between ROS and hardware
 
-```bash
-$ roslaunch crane_plus_hardware start_arm_standalone.launch
-$ roslaunch crane_plus_moveit_config move_group.launch
-$ roslaunch crane_plus_moveit_config moveit_rviz.launch config:=true
-```
+    ```bash
+    $ roslaunch crane_plus_hardware start_arm_standalone.launch
+    $ roslaunch crane_plus_moveit_config move_group.launch
+    $ roslaunch crane_plus_moveit_config moveit_rviz.launch config:=true
+    ```
 
-Launch with simulation
+4. Launch with simulation
 
-```bash
-$ roslaunch crane_plus_simulation simulation.launch
-$ roslaunch crane_plus_moveit_config move_group.launch
-$ roslaunch crane_plus_moveit_config moveit_rviz.launch config:=true
-```
-
-
+    ```bash
+    $ roslaunch crane_plus_simulation simulation.launch
+    $ roslaunch crane_plus_moveit_config move_group.launch
+    $ roslaunch crane_plus_moveit_config moveit_rviz.launch config:=true
+    ```
 
 ## ROS Installation and Configuration
 

@@ -41,77 +41,6 @@ find_package(Boost REQUIRED
 )
 
 
-################################################
-## Declare ROS messages, services and actions ##
-################################################
-
-## To declare and build messages, services or actions from within this
-## package, follow these steps:
-## * Let MSG_DEP_SET be the set of packages whose message types you use in
-##   your messages/services/actions (e.g. std_msgs, actionlib_msgs, ...).
-## * In the file package.xml:
-##   * add a build_depend tag for "message_generation"
-##   * add a build_depend and a exec_depend tag for each package in MSG_DEP_SET
-##   * If MSG_DEP_SET isn't empty the following dependency has been pulled in
-##     but can be declared for certainty nonetheless:
-##     * add a exec_depend tag for "message_runtime"
-## * In this file (CMakeLists.txt):
-##   * add "message_generation" and every package in MSG_DEP_SET to
-##     find_package(catkin REQUIRED COMPONENTS ...)
-##   * add "message_runtime" and every package in MSG_DEP_SET to
-##     catkin_package(CATKIN_DEPENDS ...)
-##   * uncomment the add_*_files sections below as needed
-##     and list every .msg/.srv/.action file to be processed
-##   * uncomment the generate_messages entry below
-##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
-
-## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
-
-## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
-
-## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
-#   Action1.action
-#   Action2.action
-# )
-
-## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   control_msgs#   geometry_msgs#   moveit_msgs#   shape_msgs#   trajectory_msgs
-# )
-
-################################################
-## Declare ROS dynamic reconfigure parameters ##
-################################################
-
-## To declare and build dynamic reconfigure parameters within this
-## package, follow these steps:
-## * In the file package.xml:
-##   * add a build_depend and a exec_depend tag for "dynamic_reconfigure"
-## * In this file (CMakeLists.txt):
-##   * add "dynamic_reconfigure" to
-##     find_package(catkin REQUIRED COMPONENTS ...)
-##   * uncomment the "generate_dynamic_reconfigure_options" section below
-##     and list every .cfg file to be processed
-
-## Generate dynamic reconfigure parameters in the 'cfg' folder
-# generate_dynamic_reconfigure_options(
-#   cfg/DynReconf1.cfg
-#   cfg/DynReconf2.cfg
-# )
-
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -165,7 +94,10 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/crane_plus_control_node.cpp)
-add_executable(${PROJECT_NAME}_headless src/headless.cpp)
+add_executable(${PROJECT_NAME}_headless nodes/headless.cpp)
+add_executable(${PROJECT_NAME}_resting nodes/resting.cpp)
+add_executable(${PROJECT_NAME}_vertical nodes/vertical.cpp)
+add_executable(${PROJECT_NAME}_backbend nodes/backbend.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -173,14 +105,35 @@ add_executable(${PROJECT_NAME}_headless src/headless.cpp)
 ## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
 # set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
 set_target_properties(${PROJECT_NAME}_headless PROPERTIES OUTPUT_NAME headless PREFIX "")
+set_target_properties(${PROJECT_NAME}_resting PROPERTIES OUTPUT_NAME resting PREFIX "")
+set_target_properties(${PROJECT_NAME}_vertical PROPERTIES OUTPUT_NAME vertical PREFIX "")
+set_target_properties(${PROJECT_NAME}_backbend PROPERTIES OUTPUT_NAME backbend PREFIX "")
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(${PROJECT_NAME}_headless ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(${PROJECT_NAME}_resting ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(${PROJECT_NAME}_vertical ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(${PROJECT_NAME}_backbend ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}_headless
+  ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
+
+target_link_libraries(${PROJECT_NAME}_resting
+  ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
+
+target_link_libraries(${PROJECT_NAME}_vertical
+  ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
+
+target_link_libraries(${PROJECT_NAME}_backbend
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
 )
