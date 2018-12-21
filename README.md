@@ -11,14 +11,16 @@ Based on the [TurtleBot Arm code](https://github.com/turtlebot/turtlebot_arm).
 #### Robot Arm Description
 
 <div style="width:image width px; font-size:80%; text-align:center;">
-<img src="imgs/cranev2_tf.png" width="600"/></div>
+<img src="imgs/cranev2_tf.png" width="600" align="middle"/></div>
+
 
 [Source](https://www.rt-shop.jp/blog/archives/6711)
 
 #### Motion Planning with MoveIt! Framework in RViz 
 
 <div style="width:image width px; font-size:80%; text-align:center;">
-<img src="imgs/cranev2_rviz.png" width="600"/></div>
+<img src="imgs/cranev2_rviz.png" width="600" align="middle"/></div>
+
 
 
 
