@@ -18,7 +18,8 @@ int main(int argc, char **argv) {
   arm.setPoseReferenceFrame("base_link");
   //arm.setPlannerId("BiTRRTkConfigDefault"); 
   //arm.setPlannerId("BKPIECEkConfigDefault");  
-  arm.setPlannerId("KPIECEkConfigDefault");  
+  //arm.setPlannerId("KPIECEkConfigDefault");  
+  arm.setPlannerId("RRTstarkConfigDefault"); 
 
   // Plan a move to the "resting" pose
   arm.setNamedTarget("resting");

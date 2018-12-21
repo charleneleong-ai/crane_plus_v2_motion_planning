@@ -23,7 +23,6 @@ planner_configs:
 
   KPIECEkConfigDefault:
     type: geometric::KPIECE
-    optimization_objective: MaximizeMinClearanceObjective
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
     goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05 
     border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9 (0.0,1.]
@@ -32,9 +31,7 @@ planner_configs:
 
     projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
     longest_valid_segment_fraction: 0.005
-
-    
-    
+   
   RRTkConfigDefault:
     type: geometric::RRT
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
@@ -42,8 +39,11 @@ planner_configs:
   RRTConnectkConfigDefault:
     type: geometric::RRTConnect
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    
   RRTstarkConfigDefault:
     type: geometric::RRTstar
+    optimization_objective: PathLengthOptimizationObjective
+
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
     goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
     delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1

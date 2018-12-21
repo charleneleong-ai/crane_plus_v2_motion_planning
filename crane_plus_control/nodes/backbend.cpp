@@ -17,7 +17,8 @@ int main(int argc, char **argv) {
   // Specify end-effector positions in the "base_link" task frame
   //arm.setPlannerId("BiTRRTkConfigDefault"); 
   //arm.setPlannerId("BKPIECEkConfigDefault");  
-  arm.setPlannerId("KPIECEkConfigDefault");  
+  //arm.setPlannerId("KPIECEkConfigDefault");  
+  arm.setPlannerId("RRTstarkConfigDefault"); 
 
 
   arm.setPoseReferenceFrame("base_link");
