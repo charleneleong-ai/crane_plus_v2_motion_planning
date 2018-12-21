@@ -14,6 +14,10 @@ int main(int argc, char **argv) {
 
   // Set up the arm planning interface
   moveit::planning_interface::MoveGroupInterface arm("arm");
+  //arm.setPlannerId("BiTRRTkConfigDefault"); 
+  //arm.setPlannerId("BKPIECEkConfigDefault");  
+  arm.setPlannerId("KPIECEkConfigDefault");  
+
   // Specify end-effector positions in the "base_link" task frame
   arm.setPoseReferenceFrame("base_link");
 

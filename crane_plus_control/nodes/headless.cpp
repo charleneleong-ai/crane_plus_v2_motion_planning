@@ -71,7 +71,6 @@ int main(int argc, char **argv) {
   pose.pose.orientation.z = 0.0;
   pose.pose.orientation.w = 0.707106;
 
-
   arm.setPoseTarget(pose);
   moveit::planning_interface::MoveGroupInterface::Plan planned_path;
   
