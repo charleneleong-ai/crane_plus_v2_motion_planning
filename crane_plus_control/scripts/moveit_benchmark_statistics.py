@@ -528,7 +528,7 @@ def computeViews(dbname):
     c.close()
 
 if __name__ == "__main__":
-    usage = """%prog [options] [<benchmark.log> ...]"""
+    usage = """%prog [<benchmark.log> ...] [options] """
     parser = OptionParser("A script to parse benchmarking results.\n" + usage)
     parser.add_option("-d", "--database", dest="dbname", default="benchmark.db",
         help="Filename of benchmark database [default: %default]")
