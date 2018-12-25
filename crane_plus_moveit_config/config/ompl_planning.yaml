@@ -1,16 +1,26 @@
 planner_configs:
-  SBLkConfigDefault:
-    type: geometric::SBL
+
+  RRTstarkConfigDefault:
+    type: geometric::RRTstar
+    optimization_objective: PathLengthOptimizationObjective
+
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-  ESTkConfigDefault:
-    type: geometric::EST
-    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0 setup()
-    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05
-  LBKPIECEkConfigDefault:
-    type: geometric::LBKPIECE
+    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
+    delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1
+
+  RRTConnectkConfigDefault:
+    type: geometric::RRTConnect
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-    border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9
-    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5
+
+  BiTRRTkConfigDefault:
+    type: geometric::BiTRRT
+    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    temp_change_factor: 0.1  # how much to increase or decrease temp. default: 0.1
+    init_temperature: 100  # initial temperature. default: 100
+    frountier_threshold: 0.0  # dist new state to nearest neighbor to disqualify as frontier. default: 0.0 set in setup() 
+    frountier_node_ratio: 0.1  # 1/10, or 1 nonfrontier for every 10 frontier. default: 0.1
+    cost_threshold: 1e300  # the cost threshold. Any motion cost that is not better will not be expanded. default: inf
+
   BKPIECEkConfigDefault:
     type: geometric::BKPIECE
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
@@ -31,22 +41,28 @@ planner_configs:
 
     projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
     longest_valid_segment_fraction: 0.005
+
+
+  SBLkConfigDefault:
+    type: geometric::SBL
+    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+  ESTkConfigDefault:
+    type: geometric::EST
+    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0 setup()
+    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05
+  LBKPIECEkConfigDefault:
+    type: geometric::LBKPIECE
+    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9
+    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5
+
    
   RRTkConfigDefault:
     type: geometric::RRT
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
     goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
-  RRTConnectkConfigDefault:
-    type: geometric::RRTConnect
-    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-    
-  RRTstarkConfigDefault:
-    type: geometric::RRTstar
-    optimization_objective: PathLengthOptimizationObjective
 
-    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
-    delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1
+    
   TRRTkConfigDefault:
     type: geometric::TRRT
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
@@ -94,14 +110,8 @@ planner_configs:
     max_pts_per_leaf: 6  # max points per leaf in the GNAT. default: 6
     estimated_dimension: 0.0  # estimated dimension of the free space. default: 0.0
     min_valid_path_fraction: 0.2  # Accept partially valid moves above fraction. default: 0.2
-  BiTRRTkConfigDefault:
-    type: geometric::BiTRRT
-    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-    temp_change_factor: 0.1  # how much to increase or decrease temp. default: 0.1
-    init_temperature: 100  # initial temperature. default: 100
-    frountier_threshold: 0.0  # dist new state to nearest neighbor to disqualify as frontier. default: 0.0 set in setup() 
-    frountier_node_ratio: 0.1  # 1/10, or 1 nonfrontier for every 10 frontier. default: 0.1
-    cost_threshold: 1e300  # the cost threshold. Any motion cost that is not better will not be expanded. default: inf
+
+
   LBTRRTkConfigDefault:
     type: geometric::LBTRRT
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
