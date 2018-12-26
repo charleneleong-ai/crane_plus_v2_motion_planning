@@ -29,6 +29,7 @@
   <!-- Use doc_depend for packages you need only for building documentation: -->
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>common_rosdeps</build_depend>
   <build_depend>actionlib</build_depend>
   <build_depend>control_msgs</build_depend>
   <build_depend>geometry_msgs</build_depend>
@@ -65,7 +66,7 @@
   <exec_depend>shape_msgs</exec_depend>
   <exec_depend>tf</exec_depend>
   <exec_depend>trajectory_msgs</exec_depend>
-
+  <exec_depend>common_rosdeps</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

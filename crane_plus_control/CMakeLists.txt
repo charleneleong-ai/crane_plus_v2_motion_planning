@@ -121,6 +121,7 @@ target_link_libraries(${PROJECT_NAME}_named_pose
 target_link_libraries(${PROJECT_NAME}_parameter_tuning
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
+  yaml-cpp
 )
 
 

@@ -17,6 +17,9 @@ int main(int argc, char **argv)
 {
   std::string named_pose;
 
+  //getNamedTargets
+  //https://docs.ros.org/api/moveit_ros_planning_interface/html/classmoveit_1_1planning__interface_1_1MoveGroupInterface.html#a8fdc429c39a619d9935d9d15efbed87d
+
   if (argc == 1 || argc > 2)
   {
     printf("rosrun crane_plus_control named_pose [pose] \n");
