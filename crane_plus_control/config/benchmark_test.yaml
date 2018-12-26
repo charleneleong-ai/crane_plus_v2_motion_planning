@@ -9,15 +9,15 @@ benchmark_config:
     warehouse:
         host: 127.0.0.1
         port: 33829
-        scene_name: Kitchen1     # Required
+        scene_name: Test     # Required
     parameters:
-        name: KitchenPick1
+        name: Test1
         runs: 50
         group: arm       # Required
         timeout: 10.0
         output_directory: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/moveit_benchmarks
-        queries: Pick1
-        start_states: Start1
+        queries: resting_backbend
+        start_states: resting
     planners:
         - plugin: ompl_interface/OMPLPlanner
           planners:
