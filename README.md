@@ -91,6 +91,7 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
 
     ```bash
     $ roslaunch crane_plus_hardware start_arm_standalone.launch
+    $ roslaunch crane_plus_moveit_config demo.launch robot_execution:=true
     ```
 
     ***Launch robot model through simulation [DRAFT]***.
@@ -100,19 +101,8 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     $ roslaunch crane_plus_moveit_config demo.launch
     ```
 
-4. Launch the MoveIt! motion planning interface.
+4. Control headlessly.
 
-    ```bash
-    $ roslaunch crane_plus_moveit_config move_group.launch
-    ```
-
-5. Launch control nodes.
-
-    Control through RViz.
-    ```bash
-    $ roslaunch crane_plus_moveit_config moveit_rviz.launch config:=true
-    ```
-    Control headlessly.
     ```bash
     $ roslaunch crane_plus_moveit_config 
     ```
