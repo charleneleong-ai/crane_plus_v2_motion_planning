@@ -1,8 +1,11 @@
+
 <launch>
-  <!-- benchmark options file -->
+
+  <!-- parameter tuning file -->
   <arg name="params" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>
 
-  <node name="parameter_tuning" pkg="crane_plus_control" type="parameter_tuning" output="screen" required="true">
+  <node pkg="crane_plus_control" name="parameter_tuning" type="parameter_tuning.py" output="screen" required="true">
     <rosparam command="load" file="$(arg params)"/>
+    <param name="target" type="str" value="$(arg target)" />
   </node>
 </launch>

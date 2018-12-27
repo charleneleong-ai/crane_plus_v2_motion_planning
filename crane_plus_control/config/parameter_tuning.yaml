@@ -1,12 +1,6 @@
+named_states: [vertical, backbend, resting, pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, pose9, pose10, pose11, pose12, pose13, pose14]
+
 planner_configs:
-
-  RRTstarkConfigDefault:
-    type: geometric::RRTstar
-    optimization_objective: PathLengthOptimizationObjective
-
-    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
-    delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1
 
   RRTConnectkConfigDefault:
     type: geometric::RRTConnect
