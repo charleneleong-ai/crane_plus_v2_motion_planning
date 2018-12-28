@@ -91,7 +91,7 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     $ source ~/catkin_ws/devel/setup.bash
     ```
 
-3. Launch the CRANE+V2 robot model.
+3. Launch the CRANE+V2 robot model either through hardware interface or through simulation.
 
     Launch robot model through hardware interface.
 
@@ -117,8 +117,10 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
 
     Control headlessly.
 
+    Select from list of named states: [vertical, backbend, resting, pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, pose9, pose10, pose11, pose12, pose13, pose14]
+
     ```bash
-    $ roslaunch crane_plus_control 
+    $ roslaunch crane_plus_control parameter_tuning.launch target:=vertical
     ```
 
 
