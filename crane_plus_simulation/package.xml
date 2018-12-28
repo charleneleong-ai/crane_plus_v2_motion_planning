@@ -17,4 +17,5 @@
   <run_depend>urdf</run_depend>
   <run_depend>xacro</run_depend>
   <run_depend>crane_plus_description</run_depend>
+  <run_depend>gazebo_ros_control</run_depend>
 </package>
