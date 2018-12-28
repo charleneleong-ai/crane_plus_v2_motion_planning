@@ -5,29 +5,28 @@ import time
 import argparse
 import copy
 import rospy
+from math import pi
+
 import moveit_commander
+from moveit_commander.conversions import pose_to_list
 import moveit_msgs.msg
 from moveit_msgs.srv import GetPlannerParams, SetPlannerParams
 import geometry_msgs.msg
-from math import pi
 from std_msgs.msg import String
-from moveit_commander.conversions import pose_to_list
+
 
 planners = ['RRTConnectkConfigDefault', 'BiTRRTkConfigDefault',
             'BKPIECEkConfigDefault', 'KPIECEkConfigDefault']
 
 #temp
 planner = planners[1]
-
-
-class Param_Tuning_Session():
+class ParamTuningSession():
     def __init__(self, robot, move_group, planner_id):
         self.robot = robot
         self.move_group = move_group
         self.planner_id = planner_id
-        self.params = None
-        
-    
+        self.params = self.get_planner_params()
+
     def get_planner_params(self):
         #rospy.loginfo('Waiting for get_planner_params')
         rospy.wait_for_service('get_planner_params')
@@ -41,7 +40,6 @@ class Param_Tuning_Session():
 
         return req.params
 
-    
     def update_planner_params(self):
         #rospy.loginfo('Waiting for set_planner_params')
         rospy.wait_for_service('set_planner_params')
@@ -53,7 +51,7 @@ class Param_Tuning_Session():
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
 
-        return get_planner_params(self.planner_id)   
+        return self.get_planner_params()
 
     def move_arm(self, target):
         ##Setting goal
@@ -62,8 +60,8 @@ class Param_Tuning_Session():
 
         ##Visualising trajectory
         display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
-                                                    moveit_msgs.msg.DisplayTrajectory,
-                                                    queue_size=20)
+                                                       moveit_msgs.msg.DisplayTrajectory,
+                                                       queue_size=20)
 
         display_trajectory = moveit_msgs.msg.DisplayTrajectory()
         display_trajectory.trajectory_start = self.robot.get_current_state()
@@ -76,9 +74,9 @@ class Param_Tuning_Session():
         # Calling `stop()` ensures that there is no residual movement
         self.move_group.stop()
 
-        def reset_state:
-            pass
-            
+    def reset_state(self):
+        pass
+
 
 def init_arm():
     moveit_commander.roscpp_initialize(sys.argv)
@@ -88,7 +86,7 @@ def init_arm():
     #scene = moveit_commander.PlanningSceneInterface()
     arm = moveit_commander.MoveGroupCommander("arm")
     return robot, arm
- 
+
 
 def check_target():
     target = rospy.get_param("/parameter_tuning/target")
@@ -101,11 +99,12 @@ def check_target():
 
     return target
 
+
 def main():
     robot, arm = init_arm()
     target = check_target()
 
-    session = Param_Tuning_Session(robot, arm, planner)
+    session = ParamTuningSession(robot, arm, planner)
     #session.
 
     session.move_arm(target)

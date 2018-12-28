@@ -91,29 +91,45 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     $ source ~/catkin_ws/devel/setup.bash
     ```
 
-3. Launch the CRANE+V2 robot model either from the hardware interface or Gazebo simulation.
+3. Launch the CRANE+V2 robot model either through hardware interface or through simulation.
 
     Launch robot model through hardware interface.
 
     ```bash
     $ roslaunch crane_plus_hardware start_arm_standalone.launch
-    $ roslaunch crane_plus_moveit_config demo.launch robot_execution:=true
     ```
 
-    ***Launch robot model through simulation [DRAFT]***.
+    Launch robot model through simulation.
 
     ```bash
+    $ sudo apt-get install ros-kinetic-joint-trajectory-controller
+    $ sudo apt-get install ros-kinetic-effort-controllers
     $ roslaunch crane_plus_simulation simulation.launch
-    $ roslaunch crane_plus_moveit_config demo.launch
     ```
 
-4. Control headlessly.
+4. Control either through MoveIt RViz or headlessly.
+
+    Control through MoveIt RViz.  To launch on real robot or Gazebo simulation, set `robot_execution:=true`.
 
     ```bash
-    $ roslaunch crane_plus_moveit_config 
+    $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true
+    ```
+
+    Control headlessly.
+
+    Select from list of named states: [vertical, backbend, resting, pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, pose9, pose10, pose11, pose12, pose13, pose14]
+
+    ```bash
+    $ roslaunch crane_plus_control parameter_tuning.launch target:=vertical
     ```
 
 
+NOTE: If you find errors due to missing dependencies - 
+
+```bash
+$ cd ~/catkin_ws
+$ rosdep install -y --from-paths src --ignore-src --rosdistro kinetic
+```
 
 
 

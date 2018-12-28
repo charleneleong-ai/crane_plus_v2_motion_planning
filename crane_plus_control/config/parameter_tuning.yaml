@@ -9,7 +9,7 @@ planner_configs:
   BiTRRTkConfigDefault:
     type: geometric::BiTRRT
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-    temp_change_factor: 0.1  # how much to increase or decrease temp. default: 0.1
+    temp_change_factor: [0.1, 0.05, 0.02]  # how much to increase or decrease temp. default: 0.1
     init_temperature: 100  # initial temperature. default: 100
     frountier_threshold: 0.0  # dist new state to nearest neighbor to disqualify as frontier. default: 0.0 set in setup() 
     frountier_node_ratio: 0.1  # 1/10, or 1 nonfrontier for every 10 frontier. default: 0.1
