@@ -102,6 +102,8 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     Launch robot model through simulation.
 
     ```bash
+    $ sudo apt-get install ros-kinetic-joint-trajectory-controller
+    $ sudo apt-get install ros-kinetic-effort-controllers
     $ roslaunch crane_plus_simulation simulation.launch
     ```
 
@@ -123,7 +125,7 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
 NOTE: If you find errors due to missing dependencies - 
 
 ```bash
-$ cd ~/catkin_Ws
+$ cd ~/catkin_ws
 $ rosdep install -y --from-paths src --ignore-src --rosdistro kinetic
 ```
 
