@@ -20,7 +20,7 @@ planners = ['RRTConnectkConfigDefault', 'BiTRRTkConfigDefault',
 
 #temp
 planner = planners[1]
-class ParamTuningSession():
+class ParamTuningSession(object):
     def __init__(self, robot, move_group, planner_id):
         self.robot = robot
         self.move_group = move_group
@@ -79,6 +79,11 @@ class ParamTuningSession():
 
 
 def init_arm():
+    """
+    Intialises the rospy and RobotCommander and Movegroup Commander
+    :return robot: instance of RobotCommander
+    :return arm: instance of MoveGroupCommander
+    """
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('parameter_tuning',
                     anonymous=True)
@@ -89,6 +94,10 @@ def init_arm():
 
 
 def check_target():
+    """
+    Validates if selected parameter is in list of named states from rosparam server, else exits program
+    :return target: target pose of robot
+    """
     target = rospy.get_param("/parameter_tuning/target")
     named_states = rospy.get_param("/parameter_tuning/named_states")
 
