@@ -1,6 +1,21 @@
+import csv
+from hyperopt import STATUS_OK
+from timeit import default_timer as timer
 
-while runtime < runtime_limit:
+planners = ['RRTConnectkConfigDefault', 'BiTRRTkConfigDefault',
+            'BKPIECEkConfigDefault', 'KPIECEkConfigDefault']
 
-    new_params = update_param_set(planner_id, params)
+#temp
+planner = planners[1]
 
-    if(do n)
+robot, arm = init_arm()
+target = check_target()
+
+def objective(params):
+
+    global ITERATION
+    ITERATION += 1
+
+    session = ParamTuningSession(robot, arm, planner, start, target)
+
+    return {'loss': loss, 'params': params, 'iteration': ITERATION, 'train_time': run_time, 'status': STATUS_OK}
