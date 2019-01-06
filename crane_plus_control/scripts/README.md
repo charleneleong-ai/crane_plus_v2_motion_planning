@@ -20,7 +20,6 @@ Launch CRANE+V2 simulation
     ```bash
     $ roslaunch crane_plus_control benchmark.launch 
     ```
-    
     Log files will be saved to `crane_plus_control/moveit_benchmarks/`. Config file is in `crane_plus_control/config/`.
 
 3. Run `moveit_benchmark_statistics.py` in `crane_plus_control/scripts/` to view results.
@@ -30,14 +29,14 @@ Launch CRANE+V2 simulation
     $ rosrun crane_plus_control moveit_benchmark_statistics.py <path_of_logfile>
     ```
     
-    To generate a PDF of plots:
-    
+To generate a PDF of plots:
+
     ```bash
     $ python moveit_benchmark_statistics.py <path_to_logfile> -p <plots_filename>
     ```
-    
-    To change database name:
-    
+
+   To change database name:
+
     ```bash
     $ python moveit_benchmark_statistics.py <path_to_logfile> -d <dbname>
     ```
