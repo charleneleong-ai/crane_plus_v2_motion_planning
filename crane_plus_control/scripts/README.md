@@ -10,17 +10,16 @@ Launch CRANE+V2 simulation
 
 1. Adjust and save the desired scenes, queries and states to be benchmarked in the MongoDB Warehouse.
 
-   ```bash 
-   $ sudo apt-get install mongodb
-   $ roslaunch crane_plus_moveit_config demo.launch db:=true
-   ```
+    ```bash 
+    $ sudo apt-get install mongodb
+    $ roslaunch crane_plus_moveit_config demo.launch db:=true
+    ```
 
 2. Run the benchmarks. 
 
     ```bash
     $ roslaunch crane_plus_control benchmark.launch 
     ```
-
     Log files will be saved to `crane_plus_control/moveit_benchmarks/`. Config file is in `crane_plus_control/config/`.
 
 3. Run `moveit_benchmark_statistics.py` in `crane_plus_control/scripts/` to view results.
@@ -29,8 +28,8 @@ Launch CRANE+V2 simulation
     $ cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/
     $ rosrun crane_plus_control moveit_benchmark_statistics.py <path_of_logfile>
     ```
-
-   To generate a PDF of plots:
+    
+To generate a PDF of plots:
 
     ```bash
     $ python moveit_benchmark_statistics.py <path_to_logfile> -p <plots_filename>
