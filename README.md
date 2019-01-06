@@ -80,6 +80,8 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     ```bash
     $ sudo apt-get install ros-kinetic-moveit-*
     $ sudo apt-get install ros-kinetic-dynamixel-motor
+    $ sudo apt-get install ros-kinetic-joint-trajectory-controller
+    $ sudo apt-get install ros-kinetic-effort-controllers
     ```
 
 2. Download the project files and compile the project.
@@ -102,8 +104,6 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     Launch robot model through simulation.
 
     ```bash
-    $ sudo apt-get install ros-kinetic-joint-trajectory-controller
-    $ sudo apt-get install ros-kinetic-effort-controllers
     $ roslaunch crane_plus_simulation simulation.launch
     ```
 
