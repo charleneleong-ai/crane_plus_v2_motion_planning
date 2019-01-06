@@ -78,15 +78,13 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
 1. Install all dependent packages.
 
     ```bash
-    $ cd ~/catkin_ws
-    $ rosdep install -y --from-paths src --ignore-src --rosdistro kinetic
+    $ cd ~/catkin_ws && rosdep install -y --from-paths src --ignore-src --rosdistro kinetic
     ```
 
 2. Download the project files and compile the project.
 
     ```bash
-    $ cd ~/catkin_ws/src/
-    $ git clone git@gojou:charyeezy/Crane_V2_ROS.git
+    $ cd ~/catkin_ws/src/ && git clone git@gojou:charyeezy/crane_plus_v2_planning.git
     $ cd ~/catkin_ws && catkin_make
     $ source ~/catkin_ws/devel/setup.bash
     ```
