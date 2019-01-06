@@ -15,7 +15,7 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>rospy</run_depend>
-  <run_depend>dynamixel_msgs</run_depend>
-  <run_depend>sensor_msgs</run_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>dynamixel_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
 </package>

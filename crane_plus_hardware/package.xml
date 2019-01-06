@@ -15,6 +15,6 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>crane_plus_description</run_depend>
-  <run_depend>dynamixel_controllers</run_depend>
+  <exec_depend>crane_plus_description</exec_depend>
+  <exec_depend>dynamixel_controllers</exec_depend>
 </package>
