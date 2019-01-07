@@ -540,7 +540,7 @@ if __name__ == "__main__":
         help="Filename of benchmark database [default: %default]")
     parser.add_option("-v", "--view", action="store_true", dest="view", default=False,
         help="Compute the views for best planner configurations")
-    parser.add_option("-p", "--plot", dest="plot", default=None,
+    parser.add_option("-p", "--plot", dest="plot", default=pkg_path+"/benchmarks/benchmark_plots",
         help="Create a PDF of plots with the filename provided")
     parser.add_option("-m", "--mysql", dest="mysqldb", default=None,
         help="Save SQLite3 database as a MySQL dump file")
