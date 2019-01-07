@@ -1,4 +1,4 @@
-<package>
+<package format="2">
   <name>crane_plus_description</name>
   <version>0.1.0</version>
   <description>
@@ -15,6 +15,6 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>urdf</run_depend>
-  <run_depend>xacro</run_depend>
+  <exec_depend>urdf</exec_depend>
+  <exec_depend>xacro</exec_depend>
 </package>

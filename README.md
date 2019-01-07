@@ -75,18 +75,16 @@ This package has only been tested on Ubuntu 16.04 with ROS Kinetic.
 
 Please see [instructions below](#ros-installation-and-configuration) for first time ROS installation and configuration.
 
-1. Install the required packages.
+1. Install all dependent packages.
 
     ```bash
-    $ sudo apt-get install ros-kinetic-moveit-*
-    $ sudo apt-get install ros-kinetic-dynamixel-motor
+    $ cd ~/catkin_ws && rosdep install -y --from-paths src --ignore-src --rosdistro kinetic
     ```
 
 2. Download the project files and compile the project.
 
     ```bash
-    $ cd ~/catkin_ws/src/
-    $ git clone git@gojou:charyeezy/Crane_V2_ROS.git
+    $ cd ~/catkin_ws/src/ && git clone http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git
     $ cd ~/catkin_ws && catkin_make
     $ source ~/catkin_ws/devel/setup.bash
     ```
@@ -102,8 +100,6 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     Launch robot model through simulation.
 
     ```bash
-    $ sudo apt-get install ros-kinetic-joint-trajectory-controller
-    $ sudo apt-get install ros-kinetic-effort-controllers
     $ roslaunch crane_plus_simulation simulation.launch
     ```
 
@@ -124,28 +120,17 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     ```
 
 
-NOTE: If you find errors due to missing dependencies - 
-
-```bash
-$ cd ~/catkin_ws
-$ rosdep install -y --from-paths src --ignore-src --rosdistro kinetic
-```
-
-
 
 ## ROS Installation and Configuration
 
 [Install](http://wiki.ros.org/kinetic/Installation/Ubuntu) ROS Kinetic 
 
 ```bash
-$ sudo apt-get update
-$ sudo apt-get upgrade
+$ sudo apt-get update && sudo apt-get upgrade
 $ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 $ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
-$ sudo apt-get update
-$ sudo apt-get install ros-kinetic-desktop-full
-$ sudo rosdep init
-$ rosdep update
+$ sudo apt-get update && sudo apt-get install ros-kinetic-desktop-full
+$ sudo rosdep init && rosdep update
 $ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 $ source ~/.bashrc
 $ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential

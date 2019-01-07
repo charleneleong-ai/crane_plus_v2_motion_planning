@@ -1,4 +1,4 @@
-<package>
+<package format="2">
   <name>crane_plus_joint_state_publisher</name>
   <version>0.1.0</version>
   <description>
@@ -15,7 +15,7 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>rospy</run_depend>
-  <run_depend>dynamixel_msgs</run_depend>
-  <run_depend>sensor_msgs</run_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>dynamixel_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
 </package>

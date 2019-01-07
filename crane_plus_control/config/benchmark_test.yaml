@@ -15,7 +15,7 @@ benchmark_config:
         runs: 50
         group: arm       # Required
         timeout: 10.0
-        output_directory: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/moveit_benchmarks
+        output_directory: /home/$USERNAME/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/moveit_benchmarks
         queries: resting_backbend
         start_states: resting
     planners:
