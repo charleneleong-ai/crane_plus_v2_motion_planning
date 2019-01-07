@@ -21,7 +21,10 @@ planners = ['RRTConnectkConfigDefault', 'BiTRRTkConfigDefault',
 #temp
 planner = planners[1]
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 68ac6fae78630f78b664d38cf8bee0bd20fd2065
 class ParamTuningSession(object):
 
     def __init__(self, robot, move_group, planner_id):
