@@ -35,9 +35,11 @@
 ######################################################################
 
 # Author: Mark Moll, Ioan Sucan, Luis G. Torres
+# Adapted: Charlene Leong
 
 from sys import argv, exit
-from os.path import basename, splitext
+from os.path import basename, splitext, join
+import os
 import sqlite3
 import datetime
 import matplotlib
@@ -48,6 +50,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from math import floor
 from optparse import OptionParser, OptionGroup
+import rospkg
 
 # Given a text line, split it into tokens (by space) and return the token
 # at the desired index. Additionally, test that some expected tokens exist.
@@ -528,9 +531,12 @@ def computeViews(dbname):
     c.close()
 
 if __name__ == "__main__":
+    rospack = rospkg.RosPack()
+    pkg_path = rospack.get_path('crane_plus_control')
+
     usage = """%prog [<benchmark.log> ...] [options] """
     parser = OptionParser("A script to parse benchmarking results.\n" + usage)
-    parser.add_option("-d", "--database", dest="dbname", default="benchmark.db",
+    parser.add_option("-d", "--database", dest="dbname", default=pkg_path+"/benchmarks/benchmark.db",
         help="Filename of benchmark database [default: %default]")
     parser.add_option("-v", "--view", action="store_true", dest="view", default=False,
         help="Compute the views for best planner configurations")
@@ -541,7 +547,18 @@ if __name__ == "__main__":
     (options, args) = parser.parse_args()
 
     if len(args) == 0:
-	parser.error("No arguments were provided. Please provide full path of log file")
+        log_path = pkg_path+'/benchmarks/logs'
+
+        try:
+            latest_log = os.listdir(log_path)[0]
+        except IndexError:
+            parser.error("No logs in crane_plus_control/benchmarks/logs/ directory.\nPlease 'roslaunch crane_plus_control benchmark.launch' or provide path to log file.")
+    	
+        latest_log_path = [join(log_path, latest_log)]
+    	print('Loading benchmarks from latest log: %s' % latest_log)
+    	readBenchmarkLog(options.dbname, latest_log_path)
+    	options.view = True
+	
 
     if len(args) == 1:
         readBenchmarkLog(options.dbname, args)

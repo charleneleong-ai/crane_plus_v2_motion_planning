@@ -1,6 +1,7 @@
 <launch>
+
   <!-- benchmark options file -->
-  <arg name="bench_opts" default="$(find crane_plus_control)/config/benchmark_test.yaml"/>
+  <arg name="bench_opts" default="$(find crane_plus_control)/config/benchmark_config.yaml"/>
 
   <!-- Load robot settings -->
   <include file="$(find crane_plus_moveit_config)/launch/planning_context.launch">
@@ -18,5 +19,6 @@
   <!-- Launch benchmark node -->
   <node name="moveit_run_benchmark" pkg="moveit_ros_benchmarks" type="moveit_run_benchmark" output="screen" required="true">
     <rosparam command="load" file="$(arg bench_opts)"/>
+    
   </node>
 </launch>
