@@ -558,7 +558,6 @@ if __name__ == "__main__":
     	print('Loading benchmarks from latest log: %s' % latest_log)
     	readBenchmarkLog(options.dbname, latest_log_path)
     	options.view = True
-	
 
     if len(args) == 1:
         readBenchmarkLog(options.dbname, args)
