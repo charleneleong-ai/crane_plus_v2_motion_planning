@@ -60,6 +60,8 @@ CATKIN_IGNORE
 [Ll]ogs/
 *.log
 
+crane_plus_moveit_config/default_warehouse_mongo_db/
+
 #======================
 #    IPython
 #======================
