@@ -69,7 +69,7 @@ This package has only been tested on Ubuntu 16.04 with ROS Kinetic.
 
 1. [Quick Launch](#quick-launch)
 2. [ROS Installation and Configuration](#ros-installation-and-configuration)
-3. [Benchmarking](/crane_plus_control/scripts/README.md)
+3. [Benchmarking](/crane_plus_control/README.md)
 
 ## Quick Launch
 

@@ -1,11 +1,14 @@
 
 <launch>
 
+
   <!-- parameter tuning file -->
-  <arg name="params" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>
+  <arg name="param_tune" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>
+  <!-- option to choose target -->
+  <arg name="target" default="None"/>
 
   <node pkg="crane_plus_control" name="parameter_tuning" type="parameter_tuning.py" output="screen" required="true">
-    <rosparam command="load" file="$(arg params)"/>
+    <rosparam command="load" file="$(arg param_tune)"/>
     <param name="target" type="str" value="$(arg target)" />
   </node>
 </launch>

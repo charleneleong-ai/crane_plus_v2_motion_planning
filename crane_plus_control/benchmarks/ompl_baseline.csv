@@ -1,0 +1,33 @@
+		0
+RRTConnectkConfigDefault	run_time (s)	3.648643970489502
+RRTConnectkConfigDefault	range	0.0
+RRTConnectkConfigDefault	target	resting
+RRTConnectkConfigDefault	start	vertical
+BKPIECEkConfigDefault	target	resting
+BKPIECEkConfigDefault	longest_valid_segment_fraction	0.005
+BKPIECEkConfigDefault	start	vertical
+BKPIECEkConfigDefault	border_fraction	0.9
+BKPIECEkConfigDefault	projection_evaluator	joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
+BKPIECEkConfigDefault	range	0.0
+BKPIECEkConfigDefault	failed_expansion_score_factor	0.5
+BKPIECEkConfigDefault	run_time (s)	3.5123181343078613
+BKPIECEkConfigDefault	min_valid_path_fraction	0.5
+BiTRRTkConfigDefault	init_temperature	100
+BiTRRTkConfigDefault	temp_change_factor	0.1
+BiTRRTkConfigDefault	target	resting
+BiTRRTkConfigDefault	frountier_threshold	0.0
+BiTRRTkConfigDefault	start	vertical
+BiTRRTkConfigDefault	range	0.0
+BiTRRTkConfigDefault	frountier_node_ratio	0.1
+BiTRRTkConfigDefault	run_time (s)	3.650272846221924
+BiTRRTkConfigDefault	cost_threshold	1e300
+KPIECEkConfigDefault	target	resting
+KPIECEkConfigDefault	longest_valid_segment_fraction	0.005
+KPIECEkConfigDefault	start	vertical
+KPIECEkConfigDefault	border_fraction	0.9
+KPIECEkConfigDefault	projection_evaluator	joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
+KPIECEkConfigDefault	range	0.0
+KPIECEkConfigDefault	failed_expansion_score_factor	0.5
+KPIECEkConfigDefault	run_time (s)	3.4149229526519775
+KPIECEkConfigDefault	goal_bias	0.05
+KPIECEkConfigDefault	min_valid_path_fraction	0.5

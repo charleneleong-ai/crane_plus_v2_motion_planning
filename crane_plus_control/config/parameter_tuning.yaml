@@ -1,15 +1,18 @@
-named_states: [vertical, backbend, resting, pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, pose9, pose10, pose11, pose12, pose13, pose14]
+named_states: [None, vertical, backbend, resting, pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, pose9, pose10, pose11, pose12, pose13, pose14]
 poses: [pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, pose9, pose10, pose11, pose12, pose13, pose14]
 
-planner_configs:
+# poses: 
+#   vertical:
+#     joint_state_name: ['crane_plus_elbow_joint,'crane_plus_gripper_joint','crane_plus_shoulder_flex_joint','crane_plus_shoulder_revolute_joint']
 
+planner_configs_param_tune:
   RRTConnectkConfigDefault:
     type: geometric::RRTConnect
-    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    default: [0.1, 2.0, 0.1] # Max steering distance
 
   BiTRRTkConfigDefault:
     type: geometric::BiTRRT
-    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    range: 0.0  # Max steering distance
     temp_change_factor: [0.1, 0.05, 0.02]  # how much to increase or decrease temp. default: 0.1
     init_temperature: 100  # initial temperature. default: 100
     frountier_threshold: 0.0  # dist new state to nearest neighbor to disqualify as frontier. default: 0.0 set in setup() 
@@ -18,10 +21,10 @@ planner_configs:
 
   BKPIECEkConfigDefault:
     type: geometric::BKPIECE
-    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-    border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9
-    failed_expansion_score_factor: 0.5  # When extending motion fails, scale score by factor. default: 0.5
-    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5
+    range: [0.1, 2.0, 0.1]  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    border_fraction: [0.05, 1.0, 0.05]  # Fraction of time focused on boarder default: 0.9
+    failed_expansion_score_factor: [0.05, 1.0, 0.05]  # When extending motion fails, scale score by factor. default: 0.5
+    min_valid_path_fraction: [0.05, 1.0, 0.05]  # Accept partially valid moves above fraction. default: 0.5
 
     projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
     longest_valid_segment_fraction: 0.005
@@ -36,3 +39,21 @@ planner_configs:
 
     projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
     longest_valid_segment_fraction: 0.005
+
+
+planner_configs_Cano_etal_default:
+
+  RRTConnectkConfigDefault:
+    type: geometric::RRTConnect
+    default: 1.0  # Max steering distance default: 0.0
+
+  BKPIECEkConfigDefault:
+    type: geometric::BKPIECE
+    range:  1.0 # Max steering distance default: 0.0
+    border_fraction: 0.5  # Fraction of time focused on boarder default: 0.9
+    failed_expansion_score_factor: 0.5  # When extending motion fails, scale score by factor. default: 0.5
+    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5
+
+    projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
+    longest_valid_segment_fraction: 0.005
+

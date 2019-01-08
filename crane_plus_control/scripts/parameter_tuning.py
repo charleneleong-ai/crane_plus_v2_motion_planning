@@ -1,22 +1,29 @@
 #!/usr/bin/env python
 
 import sys
+import os
 import time
 import argparse
 import copy
 import rospy
+import rospkg
 from math import pi
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
+import pprint
 
 import moveit_commander
 from moveit_commander.conversions import pose_to_list
 import moveit_msgs.msg
+from moveit_msgs.msg import RobotState
+from sensor_msgs.msg import JointState
 from moveit_msgs.srv import GetPlannerParams, SetPlannerParams
 import geometry_msgs.msg
-from std_msgs.msg import String
+from std_msgs.msg import String, Header
 
 import csv
+import itertools
 from hyperopt import hp, rand, tpe, Trials, fmin
 from timeit import default_timer as timer
 from hyperopt.pyll.stochastic import sample
@@ -28,43 +35,45 @@ planners = ['RRTConnectkConfigDefault', 'BiTRRTkConfigDefault',
 #temp
 planner = planners[1]
 
+
 class ParamTuningSession(object):
 
-    def __init__(self, robot, move_group, planner_id):
+    def __init__(self, robot, move_group, planners):
         self.robot = robot
         self.move_group = move_group
-        self.planner_id = planner_id
-        self.params = self.get_planner_params()
+        self.planners = planners
+        
 
-    def get_planner_params(self):
+    def get_planner_params(self, planner_id):
         #rospy.loginfo('Waiting for get_planner_params')
         rospy.wait_for_service('get_planner_params')
         get_planner_params = rospy.ServiceProxy(
             'get_planner_params', GetPlannerParams)
         try:
-            req = get_planner_params(self.planner_id, "arm")
+            req = get_planner_params(planner_id, "arm")
             print(req)
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
 
         return req.params
 
-    def set_planner_params(self):
+    def set_planner_params(self, planner_id, params):
         #rospy.loginfo('Waiting for set_planner_params')
         rospy.wait_for_service('set_planner_params')
         set_planner_params = rospy.ServiceProxy(
             'set_planner_params', SetPlannerParams)
         try:
-            set_planner_params(self.planner_id, "arm", self.params, True)
+            set_planner_params(planner_id, "arm", params, True)
             rospy.loginfo('Parameters updated')
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
+        print(params)
 
-        return self.get_planner_params()
-
-    def move_arm(self, target):
+    def move_arm(self, pose):
         ##Setting goal
-        self.move_group.set_named_target(target)
+        # self.set_state()
+        
+        self.move_group.set_named_target(pose)
         plan = self.move_group.plan()
 
         ##Visualising trajectory
@@ -78,14 +87,56 @@ class ParamTuningSession(object):
         # Publish
         display_trajectory_publisher.publish(display_trajectory)
 
-        rospy.loginfo("Moving to %s pose", target)
+        rospy.loginfo("Moving to %s pose", pose)
         plan = self.move_group.go(wait=True)
         # Calling `stop()` ensures that there is no residual movement
         self.move_group.stop()
 
-    def reset_state(self):
-        pass
 
+    def obtain_baseline(self, start, target):
+        planner_configs_default = {}
+        run_times = []
+
+        for p in self.planners:
+
+            planner_configs_default[p] = rospy.get_param(
+                "/move_group/planner_configs/"+p)
+            planner_configs_default[p].pop('type', None)
+            
+            self.move_arm(start)
+            start_time = timer()
+            self.move_arm(target)
+            run_time = timer() - start_time
+            run_times.append(run_time)
+
+            planner_configs_default[p]['run_time (s)'] = run_time
+            planner_configs_default[p]['start'] = start
+            planner_configs_default[p]['target'] = target
+
+        #pprint.pprint(planner_configs_default)
+
+        #converting nested dict to pd DataFrame
+        ids = []
+        frames = []
+        for id, d in sorted(planner_configs_default.iteritems(), key=lambda (k,v): (v,k)):
+            ids.append(id)
+            frames.append(pd.DataFrame.from_dict(d, orient='index'))
+
+        df = pd.concat(frames, keys=ids)
+        run_times = pd.DataFrame({'planners' : planners, 'run_times (s)' : run_times})
+        print(run_times)
+
+        #saving to csv in benchmarks folder
+        pkg_path = rospkg.RosPack().get_path('crane_plus_control')
+        df.to_csv(pkg_path+"/benchmarks/ompl_baseline.csv", sep='\t')
+        
+        return df, run_times 
+
+
+# class PlannerConfigs(Object):
+#     def __init__(self, name, planners):
+#         self.name = name
+#         self.planners = planners
 
 def init_arm():
     """
@@ -117,6 +168,7 @@ def check_target():
 
     return target
 
+
 def objective(params, poses):
 
     global ITERATION
@@ -138,84 +190,35 @@ def objective(params, poses):
 
     return {'loss': loss, 'params': params, 'iteration': ITERATION, 'run_time': run_time, 'status': STATUS_OK}
 
-def obj(x):
-    """Objective function to minimize"""
-    
-    # Create the polynomial object
-    f = np.poly1d([1, -2, -28, 28, 12, -26, 100])
-
-    # Return the value of the polynomial
-    return f(x) * 0.05
-
-def optimise_obj_simple():
-    # Space over which to evluate the function is -5 to 6
-    x = np.linspace(-5, 6, 10000)
-    y = obj(x)
-
-    miny = min(y)
-    minx = x[np.argmin(y)]
-
-    # Print out the minimum of the function and value
-    print('Minimum of %0.4f occurs at %0.4f' % (miny, minx))
-
-    # Create the domain space
-    space = hp.uniform('x', -5, 6)
-
-    samples = []
-
-    # Sample 10000 values from the range
-    for _ in range(10000):
-        samples.append(sample(space))
-
-    # Histogram of the values
-    plt.hist(samples, bins = 20, edgecolor = 'black'); 
-    plt.xlabel('x'); plt.ylabel('Frequency'); plt.title('Domain Space');
-
-    tpe_trials = Trials()
-    rand_trials = Trials()
-
-    start_time = timer()
-        # Run 2000 evals with the tpe algorithm
-    tpe_best = fmin(fn=obj, space=space, algo=tpe.suggest, trials=tpe_trials, 
-                    max_evals=2000, rstate= np.random.RandomState(50))
-
-    tpe_run_time = timer() - start_time
-    start_time = timer()
-                    # Run 2000 evals with the random algorithm
-    rand_best = fmin(fn=obj, space=space, algo=rand.suggest, trials=rand_trials, 
-                 max_evals=2000, rstate= np.random.RandomState(50))
-
-    rand_run_time = timer() - start_time
-
-    print(tpe_run_time)
-    print(rand_run_time)
-
-    # Print out information about losses
-    print('Minimum loss attained with TPE:    {:.4f}'.format(tpe_trials.best_trial['result']['loss']))
-    print('Minimum loss attained with random: {:.4f}'.format(rand_trials.best_trial['result']['loss']))
-    print('Actual minimum of f(x):            {:.4f}'.format(miny))
-
-    # Print out information about number of trials
-    print('\nNumber of trials needed to attain minimum with TPE:    {}'.format(tpe_trials.best_trial['misc']['idxs']['x'][0]))
-    print('Number of trials needed to attain minimum with random: {}'.format(rand_trials.best_trial['misc']['idxs']['x'][0]))
-
-    # Print out information about value of x
-    print('\nBest value of x from TPE:    {:.4f}'.format(tpe_best['x']))
-    print('Best value of x from random: {:.4f}'.format(rand_best['x']))
-    print('Actual best value of x:      {:.4f}'.format(minx))
-
 
 
 def main():
-    # robot, arm = init_arm()
-    # #target = check_target()
-    # poses = rospy.get_param("/parameter_tuning/poses")
-    
-    # optimise_obj()
-    #session = ParamTuningSession(robot, arm, planner)
-    #session.
+    robot, arm = init_arm()
+    target = check_target()
 
-    #session.move_arm(target)
+    #check if move to defined target or load all params
+    if target is "None":
+        pass
+
+    # poses = rospy.get_param("/parameter_tuning/poses")
+
+    #planners, params = load_params()
+    planner_configs_param_tune = rospy.get_param(
+        "/parameter_tuning/planner_configs_param_tune")
+    planners = planner_configs_param_tune.keys()
+    session = ParamTuningSession(robot, arm, planners)
+    baseline = session.obtain_baseline('vertical', target)
+    
+    # for p in planners:
+    #     print(p)
+    #     planner_configs[p].pop('type', None)
+    #     params = dict(planner_configs[p].items())
+    #print(params, type(params))
+    # for key, val in params:
+    #     # if not isinstance(val, (str)):
+    #     print(key, val, type(val))
+
+    # optimise_obj()
 
 
 if __name__ == "__main__":
