@@ -19,8 +19,8 @@ from hyperopt import hp, rand, tpe, Trials, fmin, STATUS_OK
 from hyperopt.pyll.stochastic import sample
 
 PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
-MAX_EVALS = 50
-ITERATION = 0
+MAX_EVALS = 5
+EVAL = 0
 
 
 class ParamTuningSession(object):
@@ -103,7 +103,6 @@ class ParamTuningSession(object):
         return sum(run_times)/float(len(run_times))
 
     def _obtain_baseline(self, start_pose, target_pose, iter):
-
         avg_run_times = []
         for p in self.planners:
             #rospy.loginfo("Executing %s: Averaging over %d runs", p, iter)
@@ -137,28 +136,40 @@ class ParamTuningSession(object):
 
     def _objective(self, params):
         # Keep track of evals
-        global ITERATION
-        ITERATION += 1
+        global EVAL
+        EVAL += 1
 
         avg_run_time = self._get_avg_run_time(
             params['start_pose'], params['target_pose'], params['avg_runs'])
 
-        # Min run_time
-        loss = avg_run_time
-        rospy.loginfo("Loss: %f Iteration: %d Avg Runtime: %f",
-                      loss, ITERATION, avg_run_time)
+        rospy.loginfo("EVAL: %d Avg Runtime: %f",
+                      EVAL, avg_run_time)
+
+        result = {'EVAL': EVAL, 'loss': avg_run_time, 'planner': params['planner'], 'start_pose': params['start_pose'],
+                  'target_pose': params['target_pose'], 'avg_runs': params['avg_runs']}
+
+        params_set = params.copy()
+        params_set.pop('planner', None)
+        params_set.pop('start_pose', None)
+        params_set.pop('target_pose', None)
+        params_set.pop('avg_run_time', None)
+        params_set.pop('avg_runs', None)
+        result['params'] = params_set
+        result['status'] = STATUS_OK
 
         of_connection = open(self.results_path, 'a')
         writer = csv.writer(of_connection)
-        writer.writerow([loss, params, ITERATION, avg_run_time])
+        writer.writerow([EVAL, avg_run_time, params['planner'], params['start_pose'],
+                         params['target_pose'], params['avg_runs'], params_set])
 
-        return {'loss': loss, 'params': params, 'iteration': ITERATION, 'run_time': avg_run_time, 'status': STATUS_OK}
+        return result
 
     def _optimise_obj(self, start_pose, target_pose, iter):
         # File to save first results
         of_connection = open(self.results_path, 'w')
         writer = csv.writer(of_connection)
-        writer.writerow(['loss', 'params', 'iteration', 'avg_run_time'])
+        writer.writerow(['EVAL', 'avg_run_time', 'planner',
+                         'start_pose', 'target_pose', 'avg_runs', 'params'])
         of_connection.close()
 
         # Setting up the parameter search space and parameters
@@ -184,21 +195,27 @@ class ParamTuningSession(object):
             print("\n")
             rospy.loginfo("Executing %s:  Max Eval: %d Averaging over %d runs",
                           params['planner'], MAX_EVALS, params['avg_runs'])
-            #reset to num_evals to zero for each planner
-            global ITERATION
-            ITERATION = 0
+            # Reset to num_evals to zero for each planner
+            global EVAL
+            EVAL = 0
             #Run optimisation
             tpe_trials = Trials()
             best = fmin(fn=self._objective, space=params, algo=tpe.suggest,
                         max_evals=MAX_EVALS, trials=tpe_trials)
-
-            pprint.pprint(best)
+            # pprint.pprint(best)
 
     def run(self, start_pose, target_pose, iter=3):
         if self.tune == True:
             self._optimise_obj(start_pose, target_pose, iter)
         else:
             self._obtain_baseline(start_pose, target_pose, iter)
+
+    def get_results(self):
+        results = pd.read_csv(self.results_path)
+        # Sort with best scores on top and reset index for slicing
+        results.sort_values('loss', ascending=True, inplace=True)
+        results.reset_index(inplace=True, drop=True)
+        print(results.head())
 
 
 def init_arm():
@@ -254,10 +271,11 @@ def main():
         pass
 
     # poses = rospy.get_param("/parameter_tuning/poses")
-    #planner_config = 'planner_configs_Cano_etal_default'
 
     session = ParamTuningSession(robot, arm, planner_config, tune=tune)
     session.run(start_pose, target_pose, iter=1)
+    # session.get_results()
+
 
 if __name__ == "__main__":
     main()
