@@ -29,20 +29,18 @@ from timeit import default_timer as timer
 from hyperopt.pyll.stochastic import sample
 
 
-planners = ['RRTConnectkConfigDefault', 'BiTRRTkConfigDefault',
-            'BKPIECEkConfigDefault', 'KPIECEkConfigDefault']
-
-#temp
-planner = planners[1]
-
-
 class ParamTuningSession(object):
 
-    def __init__(self, robot, move_group, planners):
+    def __init__(self, robot, move_group, planner_config):
         self.robot = robot
         self.move_group = move_group
-        self.planners = planners
+        self.name = planner_config
+        self.planner_config = rospy.get_param("/parameter_tuning/"+planner_config)
+        self.planners = self.planner_config.keys()
         
+        for p in self.planners:
+            self.planner_config[p].pop('type', None)
+            #pprint.pprint(self.planner_config[p])
 
     def get_planner_params(self, planner_id):
         #rospy.loginfo('Waiting for get_planner_params')
@@ -93,44 +91,45 @@ class ParamTuningSession(object):
         self.move_group.stop()
 
 
-    def obtain_baseline(self, start, target):
-        planner_configs_default = {}
-        run_times = []
+    def obtain_baseline(self, start, target, i):
 
+        avg_run_times = []
         for p in self.planners:
+            rospy.loginfo("Executing %s: Averaging over %d runs", p, i)
 
-            planner_configs_default[p] = rospy.get_param(
-                "/move_group/planner_configs/"+p)
-            planner_configs_default[p].pop('type', None)
-            
-            self.move_arm(start)
-            start_time = timer()
-            self.move_arm(target)
-            run_time = timer() - start_time
-            run_times.append(run_time)
+            run_times = []
+            for _ in range(i):
+                self.move_arm(start)
+                start_time = timer()
+                self.move_arm(target)
+                run_time = timer() - start_time
+                run_times.append(run_time)
 
-            planner_configs_default[p]['run_time (s)'] = run_time
-            planner_configs_default[p]['start'] = start
-            planner_configs_default[p]['target'] = target
+            avg_run_time = sum(run_times)/float(len(run_times))
+            avg_run_times.append(avg_run_time) 
 
-        #pprint.pprint(planner_configs_default)
+            self.planner_config[p]['baseline_runtime (s) avg_'+str(i)] = avg_run_time
+            self.planner_config[p]['start'] = start
+            self.planner_config[p]['target'] = target
 
         #converting nested dict to pd DataFrame
         ids = []
         frames = []
-        for id, d in sorted(planner_configs_default.iteritems(), key=lambda (k,v): (v,k)):
+        for id, d in sorted(self.planner_config.iteritems(), key=lambda (k,v): (v,k)):
             ids.append(id)
             frames.append(pd.DataFrame.from_dict(d, orient='index'))
 
         df = pd.concat(frames, keys=ids)
-        run_times = pd.DataFrame({'planners' : planners, 'run_times (s)' : run_times})
-        print(run_times)
+        
+        avg_run_times = pd.DataFrame({'planners' : self.planners, 'run_times (s)' : avg_run_times})
+        print("\n")
+        print(avg_run_times)
 
         #saving to csv in benchmarks folder
         pkg_path = rospkg.RosPack().get_path('crane_plus_control')
-        df.to_csv(pkg_path+"/benchmarks/ompl_baseline.csv", sep='\t')
+        df.to_csv(pkg_path+"/benchmarks/"+self.name+"_baseline.csv", sep='\t')
         
-        return df, run_times 
+        return df, avg_run_times 
 
 
 # class PlannerConfigs(Object):
@@ -153,20 +152,24 @@ def init_arm():
     return robot, arm
 
 
-def check_target():
+def check_valid_pose():
     """
     Validates if selected parameter is in list of named states from rosparam server, else exits program
     :return target: target pose of robot
     """
+    start = rospy.get_param("/parameter_tuning/start")
     target = rospy.get_param("/parameter_tuning/target")
     named_states = rospy.get_param("/parameter_tuning/named_states")
 
     if target not in named_states:
         rospy.logerr('Target not in list of named_states')
         rospy.logerr(named_states)
-        sys.exit(1)
-
-    return target
+        
+    elif start not in named_states:
+        rospy.logerr('Start not in list of named_states')
+        rospy.logerr(named_states)
+        
+    return start, target
 
 
 def objective(params, poses):
@@ -191,10 +194,9 @@ def objective(params, poses):
     return {'loss': loss, 'params': params, 'iteration': ITERATION, 'run_time': run_time, 'status': STATUS_OK}
 
 
-
 def main():
     robot, arm = init_arm()
-    target = check_target()
+    start, target = check_valid_pose()
 
     #check if move to defined target or load all params
     if target is "None":
@@ -203,17 +205,20 @@ def main():
     # poses = rospy.get_param("/parameter_tuning/poses")
 
     #planners, params = load_params()
-    planner_configs_param_tune = rospy.get_param(
-        "/parameter_tuning/planner_configs_param_tune")
-    planners = planner_configs_param_tune.keys()
-    session = ParamTuningSession(robot, arm, planners)
-    baseline = session.obtain_baseline('vertical', target)
-    
+    # planner_configs_param_tune = rospy.get_param(
+    #     "/parameter_tuning/planner_configs_param_tune")
+    # planners = planner_configs_param_tune.keys()
+
+    planner_config = 'planner_configs_Cano_etal_default'
+
+    session = ParamTuningSession(robot, arm, planner_config)
+    session.obtain_baseline(start, target, 5)
+
     # for p in planners:
     #     print(p)
     #     planner_configs[p].pop('type', None)
     #     params = dict(planner_configs[p].items())
-    #print(params, type(params))
+    # print(params, type(params))
     # for key, val in params:
     #     # if not isinstance(val, (str)):
     #     print(key, val, type(val))
