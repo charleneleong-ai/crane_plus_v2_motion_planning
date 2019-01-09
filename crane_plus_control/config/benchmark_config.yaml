@@ -15,7 +15,7 @@ benchmark_config:
         runs: 150
         group: arm       # Required
         timeout: 10.0
-        output_directory:  /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/benchmarks/logs/
+        output_directory:  /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/results/benchmarks/logs/
         queries: Move1
         start_states: Start1
     planners:

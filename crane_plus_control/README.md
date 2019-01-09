@@ -20,7 +20,7 @@ Adapted from [moveit_benchmark_statistics.py](https://github.com/ros-planning/mo
 
 6. The config file `/scripts/benchmark_config.yaml` refers to the scenes, queries and start states used for benchmarking. Modify them appropriately.
 
-7. Set the username for the `output_directory` to export the benchmarked files. Log files will be saved to `/home/${USER}/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/benchmarks/` by default. 
+7. Set the username for the `output_directory` to export the benchmarked files. Log files will be saved to `/home/${USER}/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/results/benchmarks/` by default. 
 
     ```bash
     $ rosed crane_plus_control benchmark_config.yaml
