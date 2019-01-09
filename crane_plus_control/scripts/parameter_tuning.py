@@ -19,7 +19,7 @@ from hyperopt import hp, rand, tpe, Trials, fmin, STATUS_OK
 from hyperopt.pyll.stochastic import sample
 
 PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
-MAX_EVALS = 5
+MAX_EVALS = 50
 EVAL = 0
 
 
@@ -47,7 +47,7 @@ class ParamTuningSession(object):
             self.planner_config[p].pop('type', None)
             #pprint.pprint(self.planner_config[p])
 
-    def get_planner_params(self, planner_id):
+    def _get_planner_params(self, planner_id):
         # rospy.loginfo('Waiting for get_planner_params')
         rospy.wait_for_service('get_planner_params')
         get_planner_params = rospy.ServiceProxy(
@@ -57,10 +57,9 @@ class ParamTuningSession(object):
             print(req)
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
-
         return req.params
 
-    def set_planner_params(self, planner_id, params):
+    def _set_planner_params(self, planner_id, params):
         # rospy.loginfo('Waiting for set_planner_params')
         rospy.wait_for_service('set_planner_params')
         set_planner_params = rospy.ServiceProxy(
@@ -70,7 +69,6 @@ class ParamTuningSession(object):
             rospy.loginfo('Parameters updated')
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
-        print(params)
 
     def _move_arm(self, pose):
         # Setting goal
@@ -139,6 +137,19 @@ class ParamTuningSession(object):
         global EVAL
         EVAL += 1
 
+        params_set = params.copy()
+        params_set.pop('planner', None)
+        params_set.pop('start_pose', None)
+        params_set.pop('target_pose', None)
+        params_set.pop('avg_run_time', None)
+        params_set.pop('avg_runs', None)
+
+        #Set new params
+        planner_params = moveit_msgs.msg.PlannerParams()
+        planner_params.keys =  params_set.keys()
+        planner_params.values  = [str(i) for i in params_set.values()]
+        self._set_planner_params(params['planner'], planner_params)
+
         avg_run_time = self._get_avg_run_time(
             params['start_pose'], params['target_pose'], params['avg_runs'])
 
@@ -147,13 +158,6 @@ class ParamTuningSession(object):
 
         result = {'EVAL': EVAL, 'loss': avg_run_time, 'planner': params['planner'], 'start_pose': params['start_pose'],
                   'target_pose': params['target_pose'], 'avg_runs': params['avg_runs']}
-
-        params_set = params.copy()
-        params_set.pop('planner', None)
-        params_set.pop('start_pose', None)
-        params_set.pop('target_pose', None)
-        params_set.pop('avg_run_time', None)
-        params_set.pop('avg_runs', None)
         result['params'] = params_set
         result['status'] = STATUS_OK
 
@@ -177,7 +181,7 @@ class ParamTuningSession(object):
             params = dict(self.planner_config[planner].items())
             # pprint.pprint(param_grid)
             #print(planner)
-
+            
             for k, v in params.iteritems():
                 if isinstance(v, list):
                     begin_range = v[0]
@@ -198,11 +202,15 @@ class ParamTuningSession(object):
             # Reset to num_evals to zero for each planner
             global EVAL
             EVAL = 0
+
+            
+
             #Run optimisation
             tpe_trials = Trials()
             best = fmin(fn=self._objective, space=params, algo=tpe.suggest,
                         max_evals=MAX_EVALS, trials=tpe_trials)
             # pprint.pprint(best)
+            
 
     def run(self, start_pose, target_pose, iter=3):
         if self.tune == True:
