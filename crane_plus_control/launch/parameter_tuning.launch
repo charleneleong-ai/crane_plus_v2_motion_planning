@@ -5,12 +5,16 @@
   <!-- parameter tuning file -->
   <arg name="param_tune" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>
   <!-- option to choose target -->
-  <arg name="start" default="None"/>
-  <arg name="target" default="None"/>
+  <arg name="start_pose" default="None"/>
+  <arg name="target_pose" default="None"/>
+  <arg name="planner_config" default="Cano_etal"/>
+  <arg name="tune" default="true"/>
 
   <node pkg="crane_plus_control" name="parameter_tuning" type="parameter_tuning.py" output="screen" required="true">
     <rosparam command="load" file="$(arg param_tune)"/>
-    <param name="start" type="str" value="$(arg start)" />
-    <param name="target" type="str" value="$(arg target)" />
+    <param name="start_pose" type="str" value="$(arg start_pose)" />
+    <param name="target_pose" type="str" value="$(arg target_pose)" />
+    <param name="planner_config" type="str" value="$(arg planner_config)" />
+    <param name="tune" type="bool" value="$(arg tune)" />
   </node>
 </launch>

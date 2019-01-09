@@ -1,0 +1,14 @@
+		0
+RRTConnectkConfigDefault	default	1.0
+RRTConnectkConfigDefault	start	resting
+RRTConnectkConfigDefault	runtime (s) avg_5	0.5037088394165039
+RRTConnectkConfigDefault	target	backbend
+BKPIECEkConfigDefault	target	backbend
+BKPIECEkConfigDefault	longest_valid_segment_fraction	0.005
+BKPIECEkConfigDefault	start	resting
+BKPIECEkConfigDefault	border_fraction	0.5
+BKPIECEkConfigDefault	projection_evaluator	joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
+BKPIECEkConfigDefault	range	1.0
+BKPIECEkConfigDefault	failed_expansion_score_factor	0.5
+BKPIECEkConfigDefault	min_valid_path_fraction	0.5
+BKPIECEkConfigDefault	runtime (s) avg_5	0.4667167663574219

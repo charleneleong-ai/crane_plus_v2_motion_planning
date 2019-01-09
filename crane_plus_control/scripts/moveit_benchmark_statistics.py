@@ -536,23 +536,23 @@ if __name__ == "__main__":
 
     usage = """%prog [<benchmark.log> ...] [options] """
     parser = OptionParser("A script to parse benchmarking results.\n" + usage)
-    parser.add_option("-d", "--database", dest="dbname", default=pkg_path+"/benchmarks/benchmark.db",
+    parser.add_option("-d", "--database", dest="dbname", default=pkg_path+"/results/benchmarks/benchmark.db",
         help="Filename of benchmark database [default: %default]")
     parser.add_option("-v", "--view", action="store_true", dest="view", default=False,
         help="Compute the views for best planner configurations")
-    parser.add_option("-p", "--plot", dest="plot", default=pkg_path+"/benchmarks/benchmark_plots",
+    parser.add_option("-p", "--plot", dest="plot", default=pkg_path+"/results/benchmarks/benchmark_plots",
         help="Create a PDF of plots with the filename provided")
     parser.add_option("-m", "--mysql", dest="mysqldb", default=None,
         help="Save SQLite3 database as a MySQL dump file")
     (options, args) = parser.parse_args()
 
     if len(args) == 0:
-        log_path = pkg_path+'/benchmarks/logs'
+        log_path = pkg_path+'/results/benchmarks/logs'
 
         try:
             latest_log = os.listdir(log_path)[0]
         except IndexError:
-            parser.error("No logs in crane_plus_control/benchmarks/logs/ directory.\nPlease 'roslaunch crane_plus_control benchmark.launch' or provide path to log file.")
+            parser.error("No logs in crane_plus_control/results/benchmarks/logs/ directory.\nPlease 'roslaunch crane_plus_control benchmark.launch' or provide path to log file.")
     	
         latest_log_path = [join(log_path, latest_log)]
     	print('Loading benchmarks from latest log: %s' % latest_log)

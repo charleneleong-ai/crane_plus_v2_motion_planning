@@ -9,7 +9,7 @@
     />
 
   <!-- Start the manipulator's world -->
-  <param name="/use_sim_time" value="true" />
+  <!-- <param name="/use_sim_time" value="true" />-->
   <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
 
   <!-- Spawn the manipulator model -->
