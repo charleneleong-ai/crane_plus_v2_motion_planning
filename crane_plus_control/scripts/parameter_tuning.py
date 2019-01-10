@@ -7,6 +7,7 @@ import pprint
 import random
 import pandas as pd
 import numpy as np
+from collections import OrderedDict
 
 import rospkg
 import rospy
@@ -19,12 +20,13 @@ from hyperopt import hp, rand, tpe, Trials, fmin, STATUS_OK
 from hyperopt.pyll.stochastic import sample
 
 PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
-MAX_EVALS = 50
+MAX_EVALS = 30
 EVAL = 0
 
-
 class ParamTuningSession(object):
-
+    """
+    Class for a Parameter Tuning Session
+    """
     def __init__(self, robot, move_group, planner_config, tune):
         self.robot = robot
         self.move_group = move_group
@@ -41,11 +43,7 @@ class ParamTuningSession(object):
                 "/parameter_tuning/planner_configs_"+planner_config+"_default")
             assert isinstance(self.planner_config, dict)
         self.planners = self.planner_config.keys()
-        self.results_path = PKG_PATH+'/results/'+self.name+'_tpe.csv'
-
-        for p in self.planners:
-            self.planner_config[p].pop('type', None)
-            #pprint.pprint(self.planner_config[p])
+        self.results_path = PKG_PATH+'/results/'+self.name
 
     def _get_planner_params(self, planner_id):
         # rospy.loginfo('Waiting for get_planner_params')
@@ -54,7 +52,6 @@ class ParamTuningSession(object):
             'get_planner_params', GetPlannerParams)
         try:
             req = get_planner_params(planner_id, "arm")
-            print(req)
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
         return req.params
@@ -101,54 +98,60 @@ class ParamTuningSession(object):
         return sum(run_times)/float(len(run_times))
 
     def _obtain_baseline(self, start_pose, target_pose, iter):
+        # for OMPL defaults
+        # self.planner_config = rospy.get_param('/move_group/planner_configs/')
+        # self.planner_config = dict((k, self.planner_config[k]) for k in self.planners if k in self.planner_config)
+        
         avg_run_times = []
         for p in self.planners:
-            #rospy.loginfo("Executing %s: Averaging over %d runs", p, iter)
+            rospy.loginfo("Executing %s: Averaging over %d runs", p, iter)
+            self.move_group.set_planner_id(p)
 
             avg_run_time = self._get_avg_run_time(
                 start_pose, target_pose, iter)
             avg_run_times.append(avg_run_time)
-            # Add info to dict
-            self.planner_config[p]['runtime (s) avg_' +
-                                   str(iter)] = avg_run_time
-            self.planner_config[p]['start_pose'] = start_pose
-            self.planner_config[p]['target_pose'] = target_pose
+
+            self.planner_config[p].pop('type', None)
+                
+        result = OrderedDict([('avg_run_time', avg_run_time) , ('planner', p) , ('start_pose', start_pose),
+                  ('target_pose', target_pose), ('avg_runs', iter), ('params', self.planner_config.values())])
+
+        df = pd.DataFrame(result)
+        df.to_csv(self.results_path+"_baseline.csv", index=False)
 
         # Converting nested dict to pd DataFrame
-        ids = []
-        frames = []
-        for id, d in sorted(self.planner_config.iteritems(), key=lambda (k, v): (v, k)):
-            ids.append(id)
-            frames.append(pd.DataFrame.from_dict(d, orient='index'))
-
-        df = pd.concat(frames, keys=ids)
+        # ids = []
+        # frames = []
+        # for id, d in sorted(self.planner_config.iteritems(), key=lambda (k, v): (v, k)):
+        #     ids.append(id)
+        #     frames.append(pd.DataFrame.from_dict(d, orient='index'))
+        # df = pd.concat(frames, keys=ids)
 
         avg_run_times = pd.DataFrame(
             {'planners': self.planners, 'run_times (s)': avg_run_times})
         print("\n")
         print(avg_run_times)
-
-        df.to_csv(PKG_PATH+"/results/"+self.name+"_baseline.csv", sep='\t')
-
+     
         return df, avg_run_times
 
     def _objective(self, params):
         # Keep track of evals
         global EVAL
         EVAL += 1
-
+        # Extract param set
         params_set = params.copy()
         params_set.pop('planner', None)
         params_set.pop('start_pose', None)
         params_set.pop('target_pose', None)
         params_set.pop('avg_run_time', None)
         params_set.pop('avg_runs', None)
-
-        #Set new params
+        # Set new params
         planner_params = moveit_msgs.msg.PlannerParams()
         planner_params.keys =  params_set.keys()
         planner_params.values  = [str(i) for i in params_set.values()]
+        self.move_group.set_planner_id(params['planner'])
         self._set_planner_params(params['planner'], planner_params)
+        # print(self._get_planner_params(params['planner']))
 
         avg_run_time = self._get_avg_run_time(
             params['start_pose'], params['target_pose'], params['avg_runs'])
@@ -160,8 +163,9 @@ class ParamTuningSession(object):
                   'target_pose': params['target_pose'], 'avg_runs': params['avg_runs']}
         result['params'] = params_set
         result['status'] = STATUS_OK
-
-        of_connection = open(self.results_path, 'a')
+        
+        params_set.pop('type', None)
+        of_connection = open(self.results_path+'_tpe.csv', 'a')
         writer = csv.writer(of_connection)
         writer.writerow([EVAL, avg_run_time, params['planner'], params['start_pose'],
                          params['target_pose'], params['avg_runs'], params_set])
@@ -170,7 +174,7 @@ class ParamTuningSession(object):
 
     def _optimise_obj(self, start_pose, target_pose, iter):
         # File to save first results
-        of_connection = open(self.results_path, 'w')
+        of_connection = open(self.results_path+'_tpe.csv', 'w')
         writer = csv.writer(of_connection)
         writer.writerow(['EVAL', 'avg_run_time', 'planner',
                          'start_pose', 'target_pose', 'avg_runs', 'params'])
@@ -201,9 +205,7 @@ class ParamTuningSession(object):
                           params['planner'], MAX_EVALS, params['avg_runs'])
             # Reset to num_evals to zero for each planner
             global EVAL
-            EVAL = 0
-
-            
+            EVAL = 0   
 
             #Run optimisation
             tpe_trials = Trials()
@@ -229,8 +231,8 @@ class ParamTuningSession(object):
 def init_arm():
     """
     Intialises the rospy and RobotCommander and Movegroup Commander
-    :return robot: instance of RobotCommander
-    :return arm: instance of MoveGroupCommander
+    :return robot: RobotCommander instance
+    :return arm: MoveGroupCommander instance
     """
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('parameter_tuning',
@@ -243,7 +245,8 @@ def init_arm():
 
 def check_valid_pose():
     """
-    Validates if selected parameter is in list of named states from rosparam server, else exits program
+    Validates if selected parameter is in list of named states from rosparam server
+    :return target_pose: start_pose of robot
     :return target_pose: target_pose of robot
     """
     start_pose = rospy.get_param("/parameter_tuning/start_pose")
@@ -270,8 +273,8 @@ def init_planner():
 
 
 def main():
-    robot, arm = init_arm()
     start_pose, target_pose = check_valid_pose()
+    robot, arm = init_arm()
     planner_config, tune = init_planner()
 
     #check if move to defined target_pose or load all params

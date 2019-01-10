@@ -1,33 +1,37 @@
 		0
-RRTConnectkConfigDefault	start	backbend
 RRTConnectkConfigDefault	range	0.0
-RRTConnectkConfigDefault	target	resting
-RRTConnectkConfigDefault	avg_run_time (s)	0.4095765590667725
-BKPIECEkConfigDefault	target	resting
+RRTConnectkConfigDefault	runtime (s) avg_3	0.3562896251678467
+RRTConnectkConfigDefault	type	geometric::RRTConnect
+RRTConnectkConfigDefault	start_pose	resting
+RRTConnectkConfigDefault	target_pose	backbend
+BKPIECEkConfigDefault	target_pose	backbend
 BKPIECEkConfigDefault	longest_valid_segment_fraction	0.005
-BKPIECEkConfigDefault	start	backbend
+BKPIECEkConfigDefault	start_pose	resting
 BKPIECEkConfigDefault	border_fraction	0.9
 BKPIECEkConfigDefault	projection_evaluator	joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
 BKPIECEkConfigDefault	range	0.0
+BKPIECEkConfigDefault	runtime (s) avg_3	0.918593962987264
 BKPIECEkConfigDefault	failed_expansion_score_factor	0.5
-BKPIECEkConfigDefault	avg_run_time (s)	0.39875407218933107
 BKPIECEkConfigDefault	min_valid_path_fraction	0.5
+BKPIECEkConfigDefault	type	geometric::BKPIECE
 BiTRRTkConfigDefault	init_temperature	100
 BiTRRTkConfigDefault	temp_change_factor	0.1
-BiTRRTkConfigDefault	target	resting
+BiTRRTkConfigDefault	target_pose	backbend
+BiTRRTkConfigDefault	start_pose	resting
 BiTRRTkConfigDefault	frountier_threshold	0.0
-BiTRRTkConfigDefault	start	backbend
 BiTRRTkConfigDefault	range	0.0
+BiTRRTkConfigDefault	runtime (s) avg_3	0.3700157006581624
 BiTRRTkConfigDefault	frountier_node_ratio	0.1
-BiTRRTkConfigDefault	avg_run_time (s)	0.41165642738342284
+BiTRRTkConfigDefault	type	geometric::BiTRRT
 BiTRRTkConfigDefault	cost_threshold	1e300
-KPIECEkConfigDefault	target	resting
+KPIECEkConfigDefault	target_pose	backbend
 KPIECEkConfigDefault	longest_valid_segment_fraction	0.005
-KPIECEkConfigDefault	start	backbend
+KPIECEkConfigDefault	start_pose	resting
 KPIECEkConfigDefault	border_fraction	0.9
 KPIECEkConfigDefault	projection_evaluator	joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
 KPIECEkConfigDefault	range	0.0
+KPIECEkConfigDefault	runtime (s) avg_3	0.6020785967508951
 KPIECEkConfigDefault	failed_expansion_score_factor	0.5
-KPIECEkConfigDefault	avg_run_time (s)	0.4838440418243408
 KPIECEkConfigDefault	goal_bias	0.05
 KPIECEkConfigDefault	min_valid_path_fraction	0.5
+KPIECEkConfigDefault	type	geometric::KPIECE
