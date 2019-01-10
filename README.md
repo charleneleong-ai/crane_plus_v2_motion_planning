@@ -111,11 +111,12 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true
     ```
 
-    Control headlessly.
+    Control headlessly. Set `rviz:=false` if for faster execution in Gazebo simulation.
 
     Select from list of named states: [vertical, backbend, resting, pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, pose9, pose10, pose11, pose12, pose13, pose14]
 
     ```bash
+    $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true rviz:=false
     $ roslaunch crane_plus_control parameter_tuning.launch target:=vertical
     ```
 

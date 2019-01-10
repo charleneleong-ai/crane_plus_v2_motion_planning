@@ -1,7 +1,8 @@
 <launch>
   <!-- By default, will execute for simulation -->
   <arg name="robot_execution" default="false" />
- 
+  <arg name="rviz" default="true" /> 
+
   <!-- By default, we do not start a database (it can be large) -->
   <arg name="db" default="false" />
   <!-- Allow user to specify database location -->
@@ -15,11 +16,7 @@
     <arg name="load_robot_description" value="true"/>
   </include>
 
-  <!-- If needed, broadcast static tf for robot root -->
-  
-
   <!-- We do not have a robot connected, so publish fake joint states -->
-  
   <node unless="$(arg robot_execution)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="/use_gui" value="false"/>
     <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
@@ -44,7 +41,7 @@
   </include>
 
   <!-- Run Rviz and load the default config to see the state of the move_group node -->
-  <include file="$(find crane_plus_moveit_config)/launch/moveit_rviz.launch">
+  <include if="$(arg rviz)" file="$(find crane_plus_moveit_config)/launch/moveit_rviz.launch">
     <arg name="config" value="true"/>
     <arg name="debug" value="$(arg debug)"/>
   </include>
