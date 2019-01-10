@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 from timeit import default_timer as timer
 from collections import OrderedDict
