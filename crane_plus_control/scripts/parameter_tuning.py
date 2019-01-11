@@ -24,17 +24,24 @@ import moveit_msgs.msg
 from hyperopt import hp, rand, tpe, Trials, fmin, STATUS_OK
 from hyperopt.pyll.stochastic import sample
 
+<<<<<<< HEAD
+>>>>>>> dev
+=======
 >>>>>>> dev
 from parameter_tuning_session import ParamTuningSession
 
 
 def main():
 <<<<<<< HEAD
+<<<<<<< HEAD
     # parser = argparse.ArgumentParser()
     # parser.add_argument('--max_trials', type=int, default=30,
     #                     help='Max num of trials for hyperopt')
     # args = parser.parse_args()
     moveit_commander.roscpp_initialize(sys.argv)
+=======
+
+>>>>>>> dev
 =======
 
 >>>>>>> dev

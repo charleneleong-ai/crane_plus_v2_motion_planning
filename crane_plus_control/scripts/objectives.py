@@ -1,6 +1,7 @@
 from parameter_tuning import ParamTuningSession
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # class Objective(object):
 #     def __init__:
         
@@ -62,6 +63,8 @@ from parameter_tuning import ParamTuningSession
 
 #         return result
 =======
+=======
+>>>>>>> dev
 class Objective(object):
     def _objective(self, *args, **kwargs):
         return weight * _compute_acceleration()
@@ -117,4 +120,7 @@ class MyClass(AccelerationClass, ElapsedTimeClass):
                          params['target_pose'], params['avg_runs'], params_set])
 
         return result
+<<<<<<< HEAD
+>>>>>>> dev
+=======
 >>>>>>> dev
