@@ -1,4 +1,5 @@
 n_trial,avg_run_time,planner,start_pose,target_pose,avg_runs,params
+<<<<<<< HEAD
 1,0.983640193939209,0.983640193939209,BKPIECEkConfigDefault,backbend,resting,1
 2,0.8872551918029785,0.8872551918029785,BKPIECEkConfigDefault,backbend,resting,1
 3,0.6849169731140137,0.6849169731140137,BKPIECEkConfigDefault,backbend,resting,1
@@ -19,3 +20,5 @@ n_trial,avg_run_time,planner,start_pose,target_pose,avg_runs,params
 8,0.36029601097106934,0.36029601097106934,RRTConnectkConfigDefault,backbend,resting,1
 9,0.3769690990447998,0.3769690990447998,RRTConnectkConfigDefault,backbend,resting,1
 10,0.33246707916259766,0.33246707916259766,RRTConnectkConfigDefault,backbend,resting,1
+=======
+>>>>>>> dev

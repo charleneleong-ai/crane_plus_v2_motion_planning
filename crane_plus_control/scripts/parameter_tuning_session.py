@@ -143,6 +143,7 @@ class ParamTuningSession(object):
     #         fwd_kin_coordinates = [0, 0, 0]
 
     #     return fwd_kin_coordinates
+    
     def _merge_dicts(self, d1, d2):
         d3 = d1.copy()   # start with d1's keys and values
         d3.update(d2)    # modifies d3 with d2's keys and values & returns None
