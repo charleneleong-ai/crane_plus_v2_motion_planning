@@ -19,36 +19,26 @@ import moveit_msgs.msg
 from hyperopt import hp, rand, tpe, Trials, fmin, STATUS_OK
 from hyperopt.pyll.stochastic import sample
 
-from objectives import objectives
-
-
+# from objectives import objectives
 class ParamTuningSession(object):
     """
     Class for a Parameter Tuning Session
     """
-    PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
-    PLANNING_TIME = 2  # seconds
-
+    
     def __init__(self):
+        self.planner_config_obj = PlannerConfig()
+        self.mode = self.planner_config_obj.mode
+        self.name = self.planner_config_obj.name
+        self.planner_config = self.planner_config_obj.planner_config
+        self.planners = self.planner_config_obj.planners
 
-        planner_select, start_pose, target_pose, mode = self._load_params()
-        self.mode = mode
-        self.name = planner_select+"_"+mode
         self.n_trial = 0
         self.max_trials = rospy.get_param("/parameter_tuning/max_trials")
-        self.start_pose = start_pose
-        self.target_pose = target_pose
+        self.start_pose = self.planner_config_obj.start_pose
+        self.target_pose = self.planner_config_obj.target_pose
 
-        if self.mode is "baseline":
-            self.planner_config = rospy.get_param(
-                "/parameter_tuning/planner_configs_"+planner_select+"_default")
-        else:
-            self.planner_config = rospy.get_param(
-                "/parameter_tuning/planner_configs_"+planner_select+"_tune")
-        assert isinstance(self.planner_config, dict)
-
-        self.planners = self.planner_config.keys()
-        self.results_path = self.PKG_PATH+'/results/'+self.name+".csv"
+        self.results_path = rospkg.RosPack().get_path(
+            'crane_plus_control')+'/results/'+self.name+".csv"
 
         moveit_commander.roscpp_initialize(sys.argv)
         self.robot = moveit_commander.RobotCommander()
@@ -56,53 +46,6 @@ class ParamTuningSession(object):
         # self.planning_frame = self.group.get_planning_frame()  # "/world"
         # self.scene = moveit_commander.PlanningSceneInterface()
 
-    def _load_params(self):
-        planner_select = rospy.get_param(
-            "/parameter_tuning/planner_config")
-        if planner_select not in ['Cano_etal']:
-                rospy.logerr("Invalid planner config select")
-                sys.exit(1)
-
-        start_pose = rospy.get_param("/parameter_tuning/start_pose")
-        target_pose = rospy.get_param("/parameter_tuning/target_pose")
-        named_states = rospy.get_param("/parameter_tuning/named_states")
-        if target_pose not in named_states:
-            rospy.logerr('target_pose not in list of named_states')
-            rospy.logerr(named_states)
-            sys.exit(1)
-        elif start_pose not in named_states:
-            rospy.logerr('start_pose not in list of named_states')
-            rospy.logerr(named_states)
-            sys.exit(1)
-
-        mode = rospy.get_param("/parameter_tuning/mode")
-        if mode not in ['baseline', 'tpe', 'rand']:
-            rospy.logerr("Invalid mode.")
-            sys.exit(1)
-
-        return planner_select, start_pose, target_pose, mode
-
-    def _get_planner_params(self, planner_id):
-        # rospy.loginfo('Waiting for get_planner_params')
-        rospy.wait_for_service('get_planner_params')
-        get_planner_params = rospy.ServiceProxy(
-            'get_planner_params', GetPlannerParams)
-        try:
-            req = get_planner_params(planner_id, "arm")
-        except rospy.ServiceException as e:
-            rospy.logerr('Failed to get params: %s', e)
-        return req.params
-
-    def _set_planner_params(self, planner_id, params):
-        # rospy.loginfo('Waiting for set_planner_params')
-        rospy.wait_for_service('set_planner_params')
-        set_planner_params = rospy.ServiceProxy(
-            'set_planner_params', SetPlannerParams)
-        try:
-            set_planner_params(planner_id, "arm", params, True)
-            rospy.loginfo('Parameters updated')
-        except rospy.ServiceException as e:
-            rospy.logerr('Failed to get params: %s', e)
 
     def _move_arm(self, pose):
         # Setting goal
@@ -189,13 +132,12 @@ class ParamTuningSession(object):
         planner_params.keys = params_set.keys()
         planner_params.values = [str(i) for i in params_set.values()]
         self.group.set_planner_id(params['planner'])
-        self._set_planner_params(params['planner'], planner_params)
+        self.planner_config_obj.set_planner_params(params['planner'], planner_params)
         # print(self._get_planner_params(params['planner']))
 
         avg_run_time = self._get_avg_run_time(
             params['start_pose'], params['target_pose'], params['avg_runs'])
 
-        accel = self.get_accel()
 
         rospy.loginfo("n_trial: %d Avg Runtime: %f",
                       self.n_trial, avg_run_time)
@@ -276,3 +218,65 @@ class ParamTuningSession(object):
                 'avg_run_time', ascending=True, inplace=True)
             planner_df.reset_index(inplace=True, drop=True)
             print(planner_df.head())
+
+class PlannerConfig(object):
+    def __init__(self):
+        self.planning_time = 2  # seconds
+
+        self.planner_select = rospy.get_param(
+            "/parameter_tuning/planner_config")
+        if self.planner_select not in ['Cano_etal']:
+                rospy.logerr("Invalid planner config select")
+                sys.exit(1)
+
+        self.start_pose = rospy.get_param("/parameter_tuning/start_pose")
+        self.target_pose = rospy.get_param("/parameter_tuning/target_pose")
+        self.named_states = rospy.get_param("/parameter_tuning/named_states")
+        if self.target_pose not in self.named_states:
+            rospy.logerr('target_pose not in list of named_states')
+            rospy.logerr(self.named_states)
+            sys.exit(1)
+        elif self.start_pose not in self.named_states:
+            rospy.logerr('start_pose not in list of named_states')
+            rospy.logerr(self.named_states)
+            sys.exit(1)
+
+        self.mode = rospy.get_param("/parameter_tuning/mode")
+        if self.mode not in ['baseline', 'tpe', 'rand']:
+            rospy.logerr("Invalid mode.")
+            sys.exit(1)
+
+        if self.mode is "baseline":
+            self.planner_config = rospy.get_param(
+                "/parameter_tuning/planner_configs_"+self.planner_select+"_default")
+        else:
+            self.planner_config = rospy.get_param(
+                "/parameter_tuning/planner_configs_"+self.planner_select+"_tune")
+        assert isinstance(self.planner_config, dict)
+
+        self.planners = self.planner_config.keys()
+        self.name = self.planner_select+"_"+self.mode
+
+    def get_planner_params(self, planner_id):
+        # rospy.loginfo('Waiting for get_planner_params')
+        rospy.wait_for_service('get_planner_params')
+        get_planner_params = rospy.ServiceProxy(
+            'get_planner_params', GetPlannerParams)
+        try:
+            req = get_planner_params(planner_id, "arm")
+        except rospy.ServiceException as e:
+            rospy.logerr('Failed to get params: %s', e)
+        return req.params
+
+    def set_planner_params(self, planner_id, params):
+        # rospy.loginfo('Waiting for set_planner_params')
+        rospy.wait_for_service('set_planner_params')
+        set_planner_params = rospy.ServiceProxy(
+            'set_planner_params', SetPlannerParams)
+        try:
+            set_planner_params(planner_id, "arm", params, True)
+            rospy.loginfo('Parameters updated')
+        except rospy.ServiceException as e:
+            rospy.logerr('Failed to get params: %s', e)
+
+        
