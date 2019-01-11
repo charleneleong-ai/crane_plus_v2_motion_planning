@@ -1,0 +1,66 @@
+planner_configs_Cano_etal_tune:
+  RRTConnectkConfigDefault:
+    type: geometric::RRTConnect
+    #[begin_range, end_range, step]
+    default: [0.1, 2.0, 0.1] # Max steering distance 
+  BKPIECEkConfigDefault:
+    type: geometric::BKPIECE
+    #[begin_range, end_range, step]
+    range: [0.1, 2.0, 0.1]  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    border_fraction: [0.05, 1.0, 0.05]  # Fraction of time focused on boarder default: 0.9
+    failed_expansion_score_factor: [0.05, 1.0, 0.05]  # When extending motion fails, scale score by factor. default: 0.5
+    min_valid_path_fraction: [0.05, 1.0, 0.05]  # Accept partially valid moves above fraction. default: 0.5
+    projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
+    longest_valid_segment_fraction: 0.005
+
+planner_configs_Cano_etal_default:
+  RRTConnectkConfigDefault:
+    type: geometric::RRTConnect
+    default: 1.0  # Max steering distance default: 0.0
+  BKPIECEkConfigDefault:
+    type: geometric::BKPIECE
+    range:  1.0 # Max steering distance default: 0.0
+    border_fraction: 0.5  # Fraction of time focused on boarder default: 0.9
+    failed_expansion_score_factor: 0.5  # When extending motion fails, scale score by factor. default: 0.5
+    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5
+    projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
+    longest_valid_segment_fraction: 0.005
+
+# planner_configs_other_default:
+#   RRTConnectkConfigDefault:
+#     type: geometric::RRTConnect
+#     #[start, end, step]
+#     default: [0.1, 2.0, 0.1] # Max steering distance 
+
+#   BiTRRTkConfigDefault:
+#     type: geometric::BiTRRT
+#     range: 0.0  # Max steering distance
+#     temp_change_factor: [0.05, 1.0, 0.05]   # how much to increase or decrease temp. default: 0.1
+#     init_temperature: 100  # initial temperature. default: 100
+#     frountier_threshold: 0.0  # dist new state to nearest neighbor to disqualify as frontier. default: 0.0 set in setup() 
+#     frountier_node_ratio: 0.1  # 1/10, or 1 nonfrontier for every 10 frontier. default: 0.1
+#     cost_threshold: 1e300  # the cost threshold. Any motion cost that is not better will not be expanded. default: inf
+
+#   BKPIECEkConfigDefault:
+#     type: geometric::BKPIECE
+#     #[start, end, step]
+#     range: [0.1, 2.0, 0.1]  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+#     border_fraction: [0.05, 1.0, 0.05]  # Fraction of time focused on boarder default: 0.9
+#     failed_expansion_score_factor: [0.05, 1.0, 0.05]  # When extending motion fails, scale score by factor. default: 0.5
+#     min_valid_path_fraction: [0.05, 1.0, 0.05]  # Accept partially valid moves above fraction. default: 0.5
+
+#     projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
+#     longest_valid_segment_fraction: 0.005
+
+#   KPIECEkConfigDefault:
+#     type: geometric::KPIECE
+#     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+#     goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05 
+#     border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9 (0.0,1.]
+#     failed_expansion_score_factor: 0.5  # When extending motion fails, scale score by factor. default: 0.5
+#     min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5
+
+#     projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
+#     longest_valid_segment_fraction: 0.005
+
+

@@ -3,14 +3,17 @@
 import sys
 from timeit import default_timer as timer
 from collections import OrderedDict
+import itertools
 
 import csv
 import pprint
 import pandas as pd
 import numpy as np
+from functools import partial
 
 import rospkg
 import rospy
+import std_msgs.msg
 
 import moveit_commander
 from moveit_msgs.srv import GetPlannerParams, SetPlannerParams
@@ -20,11 +23,13 @@ from hyperopt import hp, rand, tpe, Trials, fmin, STATUS_OK
 from hyperopt.pyll.stochastic import sample
 
 # from objectives import objectives
+
+
 class ParamTuningSession(object):
     """
     Class for a Parameter Tuning Session
     """
-    
+
     def __init__(self):
         self.planner_config_obj = PlannerConfig()
         self.mode = self.planner_config_obj.mode
@@ -33,26 +38,23 @@ class ParamTuningSession(object):
         self.planners = self.planner_config_obj.planners
 
         self.n_trial = 0
-        self.max_trials = rospy.get_param("/parameter_tuning/max_trials")
+        if self.mode != "baseline":
+            self.max_trials = rospy.get_param("~max_trials")
+        self.iter = rospy.get_param("~iter")
         self.start_pose = self.planner_config_obj.start_pose
         self.target_pose = self.planner_config_obj.target_pose
 
         self.results_path = rospkg.RosPack().get_path(
             'crane_plus_control')+'/results/'+self.name+".csv"
 
-        moveit_commander.roscpp_initialize(sys.argv)
         self.robot = moveit_commander.RobotCommander()
         self.group = moveit_commander.MoveGroupCommander("arm")
         # self.planning_frame = self.group.get_planning_frame()  # "/world"
         # self.scene = moveit_commander.PlanningSceneInterface()
 
-
     def _move_arm(self, pose):
-        # Setting goal
         self.group.set_named_target(pose)
         plan = self.group.plan()
-
-        # Visualising trajectory
         display_trajectory_publisher = rospy.Publisher('/group/display_planned_path',
                                                        moveit_msgs.msg.DisplayTrajectory,
                                                        queue_size=20)
@@ -62,40 +64,214 @@ class ParamTuningSession(object):
         display_trajectory_publisher.publish(display_trajectory)
 
         #rospy.loginfo("Moving to %s pose", pose)
-        plan = self.group.go(wait=True)
-        # Calling `stop()` ensures that there is no residual movement
+        self.group.go(wait=True)
         self.group.stop()
 
-    def _get_avg_run_time(self, start_pose, target_pose, iter):
+    def _plan_path(self, start_pose, target_pose):
+        # start_state = self.robot.get_current_state()
+        # start_state.joint_state.position = start_pose
+        # self.group.set_start_state(start_state)
+        self.group.set_named_target(target_pose)
+        start_time = timer()
+        planned_path = self.group.plan()
+        plan_time = timer() - start_time
+
+        # not sure how to figure out a failure otherwise
+        if len(planned_path.joint_trajectory.points) != 0:
+            length = self._get_path_length(planned_path)
+            # success = 1
+
+        return {"path": planned_path, "plan_time": plan_time, "length": length}
+
+    def _get_path_length(self, path):
+        """ 
+        Function to calculate both dist path lengths and actual path both in jointspace and workspace
+        :param path: plan from move_group
+        :return: dict of lengths in jointspace and workspace
+        """
+        pts = path.joint_trajectory.points  # shorthand
+
+        j_length = 0    # j = jointspace
+        w_length = 0    # w = workspace
+        n_pts = len(pts)
+        #Straight path
+        # Get dist path coordinates
+        a = np.array(pts[0].positions)
+        b = np.array(pts[n_pts-1].positions)
+        j_dist = np.linalg.norm((a - b), ord=2)         # Get 2-norm (Euc dist)
+        # a1 = np.array(self._get_forward_kinematics(a))    # Get 3D fwd kinematics coordinates
+        # b1 = np.array(self._get_forward_kinematics(b))
+        # w_dist = np.linalg.norm((a1 - b1), ord=2)
+        # Actual path
+        for x in xrange(n_pts-1):
+            a = np.array(pts[x].positions)
+            b = np.array(pts[x+1].positions)
+            j_length += np.linalg.norm((a - b), ord=2)
+            # a1 = np.array(self._get_forward_kinematics(a))
+            # b1 = np.array(self._get_forward_kinematics(b))
+            # w_length += np.linalg.norm((a1 - b1), ord=2)
+
+        # return {'joint_dist': j_dist, 'joint_path': j_length,
+        #         'work_dist': w_dist, 'work_path': w_length}
+
+        return {'joint_dist': j_dist, 'joint_length': j_length}
+
+    # def _get_forward_kinematics(self, joint_pos):
+    #     """
+    #     Function that gets the forward kinematics using the move_group service
+    #     """
+    #     rospy.wait_for_service('compute_fk')
+    #     try:
+    #         moveit_fk = rospy.ServiceProxy('compute_fk', moveit_msgs.srv._GetPositionFK.GetPositionFK)
+    #     except rospy.ServiceException, e:
+    #         rospy.logerror("Service call failed: %s"%e)
+
+    #     fkln = ['ee_link']   #forward kinematic link to be calculated
+
+    #     header = std_msgs.msg.Header(0,rospy.Time.now(),"/world")   #make header for the argument to moveit_fk
+
+    #     rs = self.robot.get_current_state()
+    #     rs.joint_state.position = joint_pos   #robot state for argument to moveit_fk
+
+    #     fwd_kin = moveit_fk(header, fkln,rs)
+
+    #     print(fwd_kin)
+    #     try:
+    #         pos = fwd_kin.pose_stamped[0].pose.position   #extract position
+    #         fwd_kin_coordinates = [pos.x, pos.y, pos.z]
+    #     except IndexError:
+    #         fwd_kin_coordinates = [0, 0, 0]
+
+    #     return fwd_kin_coordinates
+    def _merge_dicts(self, d1, d2):
+        d3 = d1.copy()   # start with d1's keys and values
+        d3.update(d2)    # modifies d3 with d2's keys and values & returns None
+        return d3
+
+    def _get_stats(self, start_pose, target_pose):
+
         run_times = []
-        for _ in range(iter):
-            self._move_arm(start_pose)
+        path_stats = []
+        for _ in xrange(self.iter):
+            self._move_arm(start_pose)  # reset to start pose
             start_time = timer()
+            path = self._plan_path(start_pose, target_pose)
             self._move_arm(target_pose)
             run_time = timer() - start_time
+
             run_times.append(run_time)
+            path_stats.append(path)
 
-        return sum(run_times)/float(len(run_times))
+        #pprint.pprint(path_stats)
+        avg_run_time = sum(run_times)/float(len(run_times))
+        avg_plan_time = float(sum(d['plan_time']
+                                  for d in path_stats)) / len(path_stats)
+        avg_dist = float(
+            sum(d['length']['joint_dist'] for d in path_stats)) / len(path_stats)
+        avg_path_length = float(
+            sum(d['length']['joint_length'] for d in path_stats)) / len(path_stats)
+        result = {'avg_run_time': avg_run_time, 'avg_plan_time': avg_plan_time,
+                  'avg_dist': avg_dist, 'avg_path_length': avg_path_length}
 
-    def _obtain_baseline(self, start_pose, target_pose, iter):
+        return result
+
+    def _objective(self, params):
+        # raise NotImplementedError, "Should be implemented in child class"
+        self.n_trial += 1
+
+        # Extract param set
+        params_config = params['params_config']
+        params_set = params['params_set']
+
+        # Set new params
+        planner_params = moveit_msgs.msg.PlannerParams()
+        planner_params.keys = params_set.keys()
+        planner_params.values = [str(i) for i in params_set.values()]
+        self.group.set_planner_id(params_config['planner'])
+        self.planner_config_obj.set_planner_params(
+            params_config['planner'], planner_params)
+        # print(self._get_planner_params(params['planner']))
+
+        # Execute experiment for iter times and get planning and run_time stats
+        stats = self._get_stats(params_config['start_pose'], params_config['target_pose'])
+        
+        rospy.loginfo("n_trial: %d Avg Runtime: %.4f Avg Plantime: %.4f Avg StraightPath: %.4f Avg PathLength: %.4f",
+                      self.n_trial, stats['avg_run_time'], stats['avg_plan_time'], stats['avg_dist'], stats['avg_path_length'])
+
+        loss = stats['avg_path_length']
+
+        result = {'n_trial': self.n_trial, 'loss': loss, 'params': params_set, 'status': STATUS_OK}
+        result = self._merge_dicts(result, params_config)
+        result = self._merge_dicts(result, stats)
+
+        of_connection = open(self.results_path, 'a')
+        writer = csv.writer(of_connection)
+        writer.writerow([self.n_trial, result['avg_run_time'], result['avg_run_time'], result['planner'], result['start_pose'],
+                         result['target_pose'], result['avg_runs']])
+        return result
+
+    def _optimise_obj(self, start_pose, target_pose):
+        # File to save first results
+        of_connection = open(self.results_path, 'w')
+        writer = csv.writer(of_connection)
+        writer.writerow(['n_trial', 'avg_run_time', 'planner',
+                         'start_pose', 'target_pose', 'avg_runs', 'params'])
+        of_connection.close()
+
+        
+        # Setting up the parameter search space and parameters
+        for planner, params_set in self.planner_config.iteritems():
+            params_set = dict(self.planner_config[planner].items())
+            for k, v in params_set.iteritems():
+                if isinstance(v, list):
+                    begin_range = v[0]
+                    end_range = v[1]
+                    step = v[2]
+                    # Discrete uniform dist
+                    params_set[k] = hp.quniform(
+                        k, begin_range, end_range, step)
+            params = {}
+            params['params_set'] = params_set
+            params['params_config'] = {'planner': planner, 'start_pose': start_pose, 'target_pose': target_pose, 'avg_runs': self.iter}
+            
+            print("\n")
+            rospy.loginfo("Executing %s on %s:  Max trials: %d Averaging over %d runs", self.mode,
+                          params['params_config']['planner'], self.max_trials, params['params_config']['avg_runs'])           
+            self.n_trial = 0        # Reset to n_trials to zero for each planner
+            if self.mode == "tpe":
+                algo = partial(tpe.suggest,
+                               # Sample 1000 candidate and select candidate that has highest Expected Improvement (EI)
+                               n_EI_candidates=100,
+                               # Use 20% of best observations to estimate next set of parameters
+                               gamma=0.2,
+                               # First 20 trials are going to be random
+                               n_startup_jobs=20)
+            elif self.mode == "rand":
+                algo = rand.suggest
+
+            best = fmin(fn=self._objective, space=params, algo=algo,
+                        max_evals=self.max_trials, trials=Trials())
+            pprint.pprint(best)
+
+    def _obtain_baseline(self, start_pose, target_pose):
         # for OMPL defaults
         # self.planner_config = rospy.get_param('/group/planner_configs/')
         # self.planner_config = dict((k, self.planner_config[k]) for k in self.planners if k in self.planner_config)
 
-        avg_run_times = []
+        #avg_run_times = []
         for p in self.planners:
             rospy.loginfo(
-                "Executing %s baseline: Averaging over %d runs", p, iter)
+                "Executing %s baseline: Averaging over %d runs", p, self.iter)
             self.group.set_planner_id(p)
 
-            avg_run_time = self._get_avg_run_time(
-                start_pose, target_pose, iter)
-            avg_run_times.append(avg_run_time)
+            # avg_run_time = self._get_avg_run_time(
+            #     start_pose, target_pose, iter)
+            # avg_run_times.append(avg_run_time)
 
             self.planner_config[p].pop('type', None)
 
         result = OrderedDict([('avg_run_time', avg_run_time), ('planner', p), ('start_pose', start_pose),
-                              ('target_pose', target_pose), ('avg_runs', iter), ('params', self.planner_config.values())])
+                              ('target_pose', target_pose), ('avg_runs', self.iter), ('params', self.planner_config.values())])
 
         df = pd.DataFrame(result)
         df.to_csv(self.results_path, index=False)
@@ -115,94 +291,11 @@ class ParamTuningSession(object):
 
         return df, avg_run_times
 
-    def _objective(self, params):
-        # raise NotImplementedError, "Should be implemented in child class"
-        # Keep track of trials
-        self.n_trial += 1
-
-        # Extract param set
-        params_set = params.copy()
-        params_set.pop('planner', None)
-        params_set.pop('start_pose', None)
-        params_set.pop('target_pose', None)
-        params_set.pop('avg_run_time', None)
-        params_set.pop('avg_runs', None)
-        # Set new params
-        planner_params = moveit_msgs.msg.PlannerParams()
-        planner_params.keys = params_set.keys()
-        planner_params.values = [str(i) for i in params_set.values()]
-        self.group.set_planner_id(params['planner'])
-        self.planner_config_obj.set_planner_params(params['planner'], planner_params)
-        # print(self._get_planner_params(params['planner']))
-
-        avg_run_time = self._get_avg_run_time(
-            params['start_pose'], params['target_pose'], params['avg_runs'])
-
-
-        rospy.loginfo("n_trial: %d Avg Runtime: %f",
-                      self.n_trial, avg_run_time)
-
-        result = {'n_trial': self.n_trial, 'loss': avg_run_time, 'planner': params['planner'], 'start_pose': params['start_pose'],
-                  'target_pose': params['target_pose'], 'avg_runs': params['avg_runs']}
-        result['params'] = params_set
-        result['status'] = STATUS_OK
-
-        params_set.pop('type', None)
-        of_connection = open(self.results_path, 'a')
-        writer = csv.writer(of_connection)
-        writer.writerow([self.n_trial, avg_run_time, params['planner'], params['start_pose'],
-                         params['target_pose'], params['avg_runs'], params_set])
-
-        return result
-
-    def _optimise_obj(self, start_pose, target_pose, iter):
-        # File to save first results
-        of_connection = open(self.results_path, 'w')
-        writer = csv.writer(of_connection)
-        writer.writerow(['n_trial', 'avg_run_time', 'planner',
-                         'start_pose', 'target_pose', 'avg_runs', 'params'])
-        of_connection.close()
-
-        # Setting up the parameter search space and parameters
-        for planner, params in self.planner_config.iteritems():
-            params = dict(self.planner_config[planner].items())
-            # pprint.pprint(param_grid)
-
-            for k, v in params.iteritems():
-                if isinstance(v, list):
-                    begin_range = v[0]
-                    end_range = v[1]
-                    step = v[2]
-                    # Discrete uniform dist
-                    params[k] = hp.quniform(k, begin_range, end_range, step)
-
-            params['planner'] = planner
-            params['start_pose'] = start_pose
-            params['target_pose'] = target_pose
-            params['avg_runs'] = iter
-            # pprint.pprint(params)
-
-            print("\n")
-            rospy.loginfo("Executing %s on %s:  Max trials: %d Averaging over %d runs", self.mode,
-                          params['planner'], self.max_trials, params['avg_runs'])
-            # Reset to num_trials to zero for each planner
-            self.n_trial = 0
-            #Run optimisation
-
-            if self.mode == "tpe":
-                algo = tpe.suggest
-            elif self.mode == "rand":
-                algo = rand.suggest
-            best = fmin(fn=self._objective, space=params, algo=algo,
-                        max_evals=self.max_trials, trials=Trials())
-            # pprint.pprint(best)
-
     def run(self):
-        iter = 1
-        if self.mode is "baseline":
-            self._obtain_baseline(self.start_pose, self.target_pose, iter)
+        if self.mode == "baseline":
+            self._obtain_baseline(self.start_pose, self.target_pose)
         else:
-            self._optimise_obj(self.start_pose, self.target_pose, iter)
+            self._optimise_obj(self.start_pose, self.target_pose)
 
     def get_results(self):
         # try:
@@ -219,19 +312,20 @@ class ParamTuningSession(object):
             planner_df.reset_index(inplace=True, drop=True)
             print(planner_df.head())
 
+
 class PlannerConfig(object):
     def __init__(self):
         self.planning_time = 2  # seconds
 
         self.planner_select = rospy.get_param(
-            "/parameter_tuning/planner_config")
+            "~planner_config")
         if self.planner_select not in ['Cano_etal']:
                 rospy.logerr("Invalid planner config select")
                 sys.exit(1)
 
-        self.start_pose = rospy.get_param("/parameter_tuning/start_pose")
-        self.target_pose = rospy.get_param("/parameter_tuning/target_pose")
-        self.named_states = rospy.get_param("/parameter_tuning/named_states")
+        self.start_pose = rospy.get_param("~start_pose")
+        self.target_pose = rospy.get_param("~target_pose")
+        self.named_states = rospy.get_param("~named_states")
         if self.target_pose not in self.named_states:
             rospy.logerr('target_pose not in list of named_states')
             rospy.logerr(self.named_states)
@@ -241,17 +335,17 @@ class PlannerConfig(object):
             rospy.logerr(self.named_states)
             sys.exit(1)
 
-        self.mode = rospy.get_param("/parameter_tuning/mode")
+        self.mode = rospy.get_param("~mode")
         if self.mode not in ['baseline', 'tpe', 'rand']:
             rospy.logerr("Invalid mode.")
             sys.exit(1)
 
         if self.mode is "baseline":
             self.planner_config = rospy.get_param(
-                "/parameter_tuning/planner_configs_"+self.planner_select+"_default")
+                "~planner_configs_"+self.planner_select+"_default")
         else:
             self.planner_config = rospy.get_param(
-                "/parameter_tuning/planner_configs_"+self.planner_select+"_tune")
+                "~planner_configs_"+self.planner_select+"_tune")
         assert isinstance(self.planner_config, dict)
 
         self.planners = self.planner_config.keys()
@@ -278,5 +372,3 @@ class PlannerConfig(object):
             rospy.loginfo('Parameters updated')
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
-
-        

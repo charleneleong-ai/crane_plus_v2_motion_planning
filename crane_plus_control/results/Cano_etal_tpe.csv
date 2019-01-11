@@ -1,61 +1,21 @@
 n_trial,avg_run_time,planner,start_pose,target_pose,avg_runs,params
-1,4.584753036499023,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.1, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.7000000000000001, 'failed_expansion_score_factor': 0.2, 'min_valid_path_fraction': 0.45}"
-2,2.6105189323425293,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.6000000000000001, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.7000000000000002, 'failed_expansion_score_factor': 0.8500000000000001, 'min_valid_path_fraction': 0.1}"
-3,1.0257740020751953,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 1.0, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.5, 'failed_expansion_score_factor': 0.75, 'min_valid_path_fraction': 0.30000000000000004}"
-4,0.5447239875793457,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.25, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.6, 'failed_expansion_score_factor': 0.7000000000000001, 'min_valid_path_fraction': 0.9500000000000001}"
-5,0.386059045791626,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.35000000000000003, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.6000000000000001, 'failed_expansion_score_factor': 0.4, 'min_valid_path_fraction': 0.05}"
-6,0.5355877876281738,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.05, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.7000000000000001, 'failed_expansion_score_factor': 0.25, 'min_valid_path_fraction': 0.45}"
-7,0.543381929397583,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.8, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.9000000000000001, 'failed_expansion_score_factor': 0.7000000000000001, 'min_valid_path_fraction': 0.45}"
-8,0.5083580017089844,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.8500000000000001, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.9, 'failed_expansion_score_factor': 0.05, 'min_valid_path_fraction': 0.45}"
-9,0.640596866607666,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.75, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.9, 'failed_expansion_score_factor': 0.7000000000000001, 'min_valid_path_fraction': 0.9}"
-10,0.537775993347168,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.8500000000000001, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.9000000000000001, 'failed_expansion_score_factor': 0.45, 'min_valid_path_fraction': 0.6000000000000001}"
-11,0.5324461460113525,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.6000000000000001, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.3, 'failed_expansion_score_factor': 0.5, 'min_valid_path_fraction': 0.5}"
-12,0.5199160575866699,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.75, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.0, 'failed_expansion_score_factor': 0.4, 'min_valid_path_fraction': 0.55}"
-13,0.6067090034484863,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.7000000000000001, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.6, 'failed_expansion_score_factor': 0.75, 'min_valid_path_fraction': 0.5}"
-14,0.4541459083557129,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.2, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.5, 'failed_expansion_score_factor': 0.45, 'min_valid_path_fraction': 0.4}"
-15,0.6671919822692871,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.55, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.9000000000000001, 'failed_expansion_score_factor': 0.9500000000000001, 'min_valid_path_fraction': 0.05}"
-16,0.48004817962646484,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.35000000000000003, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.3, 'failed_expansion_score_factor': 0.8500000000000001, 'min_valid_path_fraction': 0.55}"
-17,0.5441751480102539,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.65, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.4, 'failed_expansion_score_factor': 0.55, 'min_valid_path_fraction': 1.0}"
-18,0.4602060317993164,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.30000000000000004, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.7000000000000001, 'failed_expansion_score_factor': 0.35000000000000003, 'min_valid_path_fraction': 0.9}"
-19,0.603773832321167,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.15000000000000002, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.7000000000000002, 'failed_expansion_score_factor': 0.8500000000000001, 'min_valid_path_fraction': 0.2}"
-20,0.440169095993042,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.65, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.9, 'failed_expansion_score_factor': 0.6000000000000001, 'min_valid_path_fraction': 0.5}"
-21,0.7722690105438232,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.45, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.1, 'failed_expansion_score_factor': 0.6000000000000001, 'min_valid_path_fraction': 0.8}"
-22,0.49835801124572754,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.45, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.30000000000000004, 'failed_expansion_score_factor': 0.30000000000000004, 'min_valid_path_fraction': 0.75}"
-23,0.4398078918457031,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.4, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.5, 'failed_expansion_score_factor': 0.1, 'min_valid_path_fraction': 0.2}"
-24,0.47934579849243164,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.4, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.4, 'failed_expansion_score_factor': 0.05, 'min_valid_path_fraction': 0.15000000000000002}"
-25,0.5890309810638428,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.5, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.1, 'failed_expansion_score_factor': 0.15000000000000002, 'min_valid_path_fraction': 0.25}"
-26,0.5219907760620117,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.30000000000000004, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.5, 'failed_expansion_score_factor': 0.15000000000000002, 'min_valid_path_fraction': 0.05}"
-27,0.47025489807128906,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.35000000000000003, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.2, 'failed_expansion_score_factor': 0.05, 'min_valid_path_fraction': 0.30000000000000004}"
-28,0.46761608123779297,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.2, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.6000000000000001, 'failed_expansion_score_factor': 0.15000000000000002, 'min_valid_path_fraction': 0.1}"
-29,0.45762109756469727,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.5, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.7000000000000001, 'failed_expansion_score_factor': 0.25, 'min_valid_path_fraction': 0.35000000000000003}"
-30,0.505713939666748,BKPIECEkConfigDefault,backbend,resting,1,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.1, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.2000000000000002, 'failed_expansion_score_factor': 0.35000000000000003, 'min_valid_path_fraction': 0.2}"
-1,0.2661559581756592,RRTConnectkConfigDefault,backbend,resting,1,{'default': 1.4000000000000001}
-2,0.2906649112701416,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.5}
-3,0.3036940097808838,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.2}
-4,0.27411913871765137,RRTConnectkConfigDefault,backbend,resting,1,{'default': 1.1}
-5,0.30956411361694336,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.5}
-6,0.2939610481262207,RRTConnectkConfigDefault,backbend,resting,1,{'default': 1.3}
-7,0.26392197608947754,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.8}
-8,0.2519540786743164,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.4}
-9,0.31521105766296387,RRTConnectkConfigDefault,backbend,resting,1,{'default': 1.7000000000000002}
-10,0.2899768352508545,RRTConnectkConfigDefault,backbend,resting,1,{'default': 1.1}
-11,0.28925013542175293,RRTConnectkConfigDefault,backbend,resting,1,{'default': 1.9000000000000001}
-12,0.45103001594543457,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.8}
-13,0.38773107528686523,RRTConnectkConfigDefault,backbend,resting,1,{'default': 1.0}
-14,0.35039591789245605,RRTConnectkConfigDefault,backbend,resting,1,{'default': 1.7000000000000002}
-15,0.30190086364746094,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.8}
-16,0.31255483627319336,RRTConnectkConfigDefault,backbend,resting,1,{'default': 1.8}
-17,0.3048410415649414,RRTConnectkConfigDefault,backbend,resting,1,{'default': 1.8}
-18,0.28238391876220703,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.1}
-19,0.281419038772583,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.4}
-20,0.3429410457611084,RRTConnectkConfigDefault,backbend,resting,1,{'default': 1.5}
-21,0.3603651523590088,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.7000000000000001}
-22,0.33445191383361816,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.4}
-23,0.311629056930542,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.2}
-24,0.30657505989074707,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.7000000000000001}
-25,0.2874481678009033,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.9}
-26,0.3319079875946045,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.6000000000000001}
-27,0.30403614044189453,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.2}
-28,0.2828078269958496,RRTConnectkConfigDefault,backbend,resting,1,{'default': 0.4}
-29,0.370682954788208,RRTConnectkConfigDefault,backbend,resting,1,{'default': 1.4000000000000001}
-30,0.3141169548034668,RRTConnectkConfigDefault,backbend,resting,1,{'default': 1.2000000000000002}
+1,0.983640193939209,0.983640193939209,BKPIECEkConfigDefault,backbend,resting,1
+2,0.8872551918029785,0.8872551918029785,BKPIECEkConfigDefault,backbend,resting,1
+3,0.6849169731140137,0.6849169731140137,BKPIECEkConfigDefault,backbend,resting,1
+4,0.823383092880249,0.823383092880249,BKPIECEkConfigDefault,backbend,resting,1
+5,0.6919169425964355,0.6919169425964355,BKPIECEkConfigDefault,backbend,resting,1
+6,0.6339211463928223,0.6339211463928223,BKPIECEkConfigDefault,backbend,resting,1
+7,0.5279858112335205,0.5279858112335205,BKPIECEkConfigDefault,backbend,resting,1
+8,0.6327309608459473,0.6327309608459473,BKPIECEkConfigDefault,backbend,resting,1
+9,0.5870060920715332,0.5870060920715332,BKPIECEkConfigDefault,backbend,resting,1
+10,0.5797228813171387,0.5797228813171387,BKPIECEkConfigDefault,backbend,resting,1
+1,0.3446848392486572,0.3446848392486572,RRTConnectkConfigDefault,backbend,resting,1
+2,0.37442994117736816,0.37442994117736816,RRTConnectkConfigDefault,backbend,resting,1
+3,0.3267061710357666,0.3267061710357666,RRTConnectkConfigDefault,backbend,resting,1
+4,0.3497769832611084,0.3497769832611084,RRTConnectkConfigDefault,backbend,resting,1
+5,0.35410404205322266,0.35410404205322266,RRTConnectkConfigDefault,backbend,resting,1
+6,0.32224202156066895,0.32224202156066895,RRTConnectkConfigDefault,backbend,resting,1
+7,0.4790968894958496,0.4790968894958496,RRTConnectkConfigDefault,backbend,resting,1
+8,0.36029601097106934,0.36029601097106934,RRTConnectkConfigDefault,backbend,resting,1
+9,0.3769690990447998,0.3769690990447998,RRTConnectkConfigDefault,backbend,resting,1
+10,0.33246707916259766,0.33246707916259766,RRTConnectkConfigDefault,backbend,resting,1
