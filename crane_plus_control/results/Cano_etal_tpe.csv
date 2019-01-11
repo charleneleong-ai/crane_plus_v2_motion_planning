@@ -1,21 +1,3 @@
-n_trial,avg_run_time,planner,start_pose,target_pose,avg_runs,params
-1,0.983640193939209,0.983640193939209,BKPIECEkConfigDefault,backbend,resting,1
-2,0.8872551918029785,0.8872551918029785,BKPIECEkConfigDefault,backbend,resting,1
-3,0.6849169731140137,0.6849169731140137,BKPIECEkConfigDefault,backbend,resting,1
-4,0.823383092880249,0.823383092880249,BKPIECEkConfigDefault,backbend,resting,1
-5,0.6919169425964355,0.6919169425964355,BKPIECEkConfigDefault,backbend,resting,1
-6,0.6339211463928223,0.6339211463928223,BKPIECEkConfigDefault,backbend,resting,1
-7,0.5279858112335205,0.5279858112335205,BKPIECEkConfigDefault,backbend,resting,1
-8,0.6327309608459473,0.6327309608459473,BKPIECEkConfigDefault,backbend,resting,1
-9,0.5870060920715332,0.5870060920715332,BKPIECEkConfigDefault,backbend,resting,1
-10,0.5797228813171387,0.5797228813171387,BKPIECEkConfigDefault,backbend,resting,1
-1,0.3446848392486572,0.3446848392486572,RRTConnectkConfigDefault,backbend,resting,1
-2,0.37442994117736816,0.37442994117736816,RRTConnectkConfigDefault,backbend,resting,1
-3,0.3267061710357666,0.3267061710357666,RRTConnectkConfigDefault,backbend,resting,1
-4,0.3497769832611084,0.3497769832611084,RRTConnectkConfigDefault,backbend,resting,1
-5,0.35410404205322266,0.35410404205322266,RRTConnectkConfigDefault,backbend,resting,1
-6,0.32224202156066895,0.32224202156066895,RRTConnectkConfigDefault,backbend,resting,1
-7,0.4790968894958496,0.4790968894958496,RRTConnectkConfigDefault,backbend,resting,1
-8,0.36029601097106934,0.36029601097106934,RRTConnectkConfigDefault,backbend,resting,1
-9,0.3769690990447998,0.3769690990447998,RRTConnectkConfigDefault,backbend,resting,1
-10,0.33246707916259766,0.33246707916259766,RRTConnectkConfigDefault,backbend,resting,1
+n_trial,loss,planner,start_pose,target_pose,avg_runs,avg_runtime,avg_plan_time,avg_dist,avg_path_length,params
+1,10.0346975219,BKPIECEkConfigDefault,backbend,resting,1,0.831152915955,0.187623023987,4.50796079099,4.50796079099,"{'border_fraction': 0.4, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 2.0, 'failed_expansion_score_factor': 0.9500000000000001, 'longest_valid_segment_fraction': 0.005, 'min_valid_path_fraction': 0.9, 'type': 'geometric::BKPIECE'}",
+1,9.3619606348,RRTConnectkConfigDefault,backbend,resting,1,0.315452098846,0.0305509567261,4.50797878962,4.50797878962,"{'default': 1.5, 'type': 'geometric::RRTConnect'}",

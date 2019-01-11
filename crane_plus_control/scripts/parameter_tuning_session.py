@@ -6,6 +6,7 @@ from collections import OrderedDict
 import itertools
 
 import csv
+import json
 import pprint
 import pandas as pd
 import numpy as np
@@ -46,6 +47,7 @@ class ParamTuningSession(object):
 
         self.results_path = rospkg.RosPack().get_path(
             'crane_plus_control')+'/results/'+self.name+".csv"
+        self.results_df = {}
 
         self.robot = moveit_commander.RobotCommander()
         self.group = moveit_commander.MoveGroupCommander("arm")
@@ -84,36 +86,31 @@ class ParamTuningSession(object):
         return {"path": planned_path, "plan_time": plan_time, "length": length}
 
     def _get_path_length(self, path):
-        """ 
+        """
         Function to calculate both dist path lengths and actual path both in jointspace and workspace
         :param path: plan from move_group
         :return: dict of lengths in jointspace and workspace
         """
-        pts = path.joint_trajectory.points  # shorthand
-
+        pts = path.joint_trajectory.points
         j_length = 0    # j = jointspace
         w_length = 0    # w = workspace
         n_pts = len(pts)
-        #Straight path
-        # Get dist path coordinates
-        a = np.array(pts[0].positions)
+        a = np.array(pts[0].positions)      # Straight path
         b = np.array(pts[n_pts-1].positions)
         j_dist = np.linalg.norm((a - b), ord=2)         # Get 2-norm (Euc dist)
         # a1 = np.array(self._get_forward_kinematics(a))    # Get 3D fwd kinematics coordinates
         # b1 = np.array(self._get_forward_kinematics(b))
         # w_dist = np.linalg.norm((a1 - b1), ord=2)
-        # Actual path
-        for x in xrange(n_pts-1):
+
+        for x in xrange(n_pts-1):       # Actual path
             a = np.array(pts[x].positions)
             b = np.array(pts[x+1].positions)
             j_length += np.linalg.norm((a - b), ord=2)
             # a1 = np.array(self._get_forward_kinematics(a))
             # b1 = np.array(self._get_forward_kinematics(b))
             # w_length += np.linalg.norm((a1 - b1), ord=2)
-
         # return {'joint_dist': j_dist, 'joint_path': j_length,
         #         'work_dist': w_dist, 'work_path': w_length}
-
         return {'joint_dist': j_dist, 'joint_length': j_length}
 
     # def _get_forward_kinematics(self, joint_pos):
@@ -143,11 +140,6 @@ class ParamTuningSession(object):
     #         fwd_kin_coordinates = [0, 0, 0]
 
     #     return fwd_kin_coordinates
-    
-    def _merge_dicts(self, d1, d2):
-        d3 = d1.copy()   # start with d1's keys and values
-        d3.update(d2)    # modifies d3 with d2's keys and values & returns None
-        return d3
 
     def _get_stats(self, start_pose, target_pose):
 
@@ -179,7 +171,6 @@ class ParamTuningSession(object):
     def _objective(self, params):
         # raise NotImplementedError, "Should be implemented in child class"
         self.n_trial += 1
-
         # Extract param set
         params_config = params['params_config']
         params_set = params['params_set']
@@ -194,32 +185,42 @@ class ParamTuningSession(object):
         # print(self._get_planner_params(params['planner']))
 
         # Execute experiment for iter times and get planning and run_time stats
-        stats = self._get_stats(params_config['start_pose'], params_config['target_pose'])
-        
-        rospy.loginfo("n_trial: %d Avg Runtime: %.4f Avg Plantime: %.4f Avg StraightPath: %.4f Avg PathLength: %.4f",
-                      self.n_trial, stats['avg_run_time'], stats['avg_plan_time'], stats['avg_dist'], stats['avg_path_length'])
+        stats = self._get_stats(
+            params_config['start_pose'], params_config['target_pose'])
 
-        loss = stats['avg_path_length']
+        loss = sum(stats.values())
 
-        result = {'n_trial': self.n_trial, 'loss': loss, 'params': params_set, 'status': STATUS_OK}
-        result = self._merge_dicts(result, params_config)
-        result = self._merge_dicts(result, stats)
+        rospy.loginfo("n_trial: %d loss: %.4f avg_run_time: %.4f avg_plan_time: %.4f avg_dist: %.4f avg_path_length: %.4f",
+                      self.n_trial, loss, stats['avg_run_time'], stats['avg_plan_time'], stats['avg_dist'], stats['avg_path_length'])
 
-        of_connection = open(self.results_path, 'a')
-        writer = csv.writer(of_connection)
-        writer.writerow([self.n_trial, result['avg_run_time'], result['avg_run_time'], result['planner'], result['start_pose'],
-                         result['target_pose'], result['avg_runs']])
-        return result
+        # Create OrderedDict to write to CSV
+        result = OrderedDict([('n_trial', self.n_trial), ('loss', loss)])
+        planner_params = OrderedDict([('planner', params_config['planner']), ('start_pose', params_config['start_pose']), (
+            'target_pose', params_config['target_pose']), ('avg_runs', self.iter)])
+        stats = OrderedDict([('avg_runtime', stats['avg_run_time']), ('avg_plan_time', stats['avg_plan_time']),
+                             ('avg_dist', stats['avg_dist']), ('avg_path_length', stats['avg_path_length'])])
+        result = OrderedDict(list(result.items()) +
+                             list(planner_params.items() + list(stats.items())))
+        params_set_str = str(params_set)
+
+        result_csv = OrderedDict(list(result.items()) + [('params', params_set_str)])
+        result = OrderedDict(list(result.items()) + [('params', params_set), ('status', STATUS_OK)])
+
+        print(json.dumps(result_csv, indent=4))
+        result_df = pd.DataFrame(dict(result_csv), columns=result.keys(), index=[0])
+
+        with open(self.results_path, 'a') as f:
+            result_df.to_csv(f, header=False, index=False)
+
+        return dict(result)
 
     def _optimise_obj(self, start_pose, target_pose):
-        # File to save first results
-        of_connection = open(self.results_path, 'w')
-        writer = csv.writer(of_connection)
-        writer.writerow(['n_trial', 'avg_run_time', 'planner',
-                         'start_pose', 'target_pose', 'avg_runs', 'params'])
-        of_connection.close()
+        # Write headers
+        with open(self.results_path, 'w') as f:
+            writer = csv.writer(f)
+            writer.writerow(['n_trial', 'loss', 'planner', 'start_pose', 'target_pose', 'avg_runs', 'avg_runtime',
+            'avg_plan_time', 'avg_dist', 'avg_path_length', 'params'])
 
-        
         # Setting up the parameter search space and parameters
         for planner, params_set in self.planner_config.iteritems():
             params_set = dict(self.planner_config[planner].items())
@@ -233,11 +234,12 @@ class ParamTuningSession(object):
                         k, begin_range, end_range, step)
             params = {}
             params['params_set'] = params_set
-            params['params_config'] = {'planner': planner, 'start_pose': start_pose, 'target_pose': target_pose, 'avg_runs': self.iter}
-            
+            params['params_config'] = {
+                'planner': planner, 'start_pose': start_pose, 'target_pose': target_pose, 'avg_runs': self.iter}
+
             print("\n")
             rospy.loginfo("Executing %s on %s:  Max trials: %d Averaging over %d runs", self.mode,
-                          params['params_config']['planner'], self.max_trials, params['params_config']['avg_runs'])           
+                          params['params_config']['planner'], self.max_trials, params['params_config']['avg_runs'])
             self.n_trial = 0        # Reset to n_trials to zero for each planner
             if self.mode == "tpe":
                 algo = partial(tpe.suggest,
@@ -250,9 +252,15 @@ class ParamTuningSession(object):
             elif self.mode == "rand":
                 algo = rand.suggest
 
+            trials = Trials()
             best = fmin(fn=self._objective, space=params, algo=algo,
-                        max_evals=self.max_trials, trials=Trials())
-            pprint.pprint(best)
+                        max_evals=self.max_trials, trials=trials)
+
+        #     self.results_df[planner] = trials.results
+        #     # pprint.pprint(trials.results)
+
+        # pprint.pprint(self.results_df)
+        # #self.results_df.to_csv(self.results_path, index=False)
 
     def _obtain_baseline(self, start_pose, target_pose):
         # for OMPL defaults
@@ -274,16 +282,8 @@ class ParamTuningSession(object):
         result = OrderedDict([('avg_run_time', avg_run_time), ('planner', p), ('start_pose', start_pose),
                               ('target_pose', target_pose), ('avg_runs', self.iter), ('params', self.planner_config.values())])
 
-        df = pd.DataFrame(result)
-        df.to_csv(self.results_path, index=False)
-
-        # Converting nested dict to pd DataFrame
-        # ids = []
-        # frames = []
-        # for id, d in sorted(self.planner_config.iteritems(), key=lambda (k, v): (v, k)):
-        #     ids.append(id)
-        #     frames.append(pd.DataFrame.from_dict(d, orient='index'))
-        # df = pd.concat(frames, keys=ids)
+        self.results_df = pd.DataFrame(result)
+        self.results_df.to_csv(self.results_path, index=False)
 
         avg_run_times = pd.DataFrame(
             {'planners': self.planners, 'run_times (s)': avg_run_times})
