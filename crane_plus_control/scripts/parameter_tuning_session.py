@@ -24,8 +24,6 @@ from hyperopt import hp, rand, tpe, Trials, fmin, STATUS_OK
 from hyperopt.pyll.stochastic import sample
 
 # from objectives import objectives
-
-
 class ParamTuningSession(object):
     """
     Class for a Parameter Tuning Session
@@ -142,7 +140,6 @@ class ParamTuningSession(object):
     #     return fwd_kin_coordinates
 
     def _get_stats(self, start_pose, target_pose):
-
         run_times = []
         path_stats = []
         for _ in xrange(self.iter):
@@ -201,14 +198,11 @@ class ParamTuningSession(object):
                              ('avg_dist', stats['avg_dist']), ('avg_path_length', stats['avg_path_length'])])
         result = OrderedDict(list(result.items()) +
                              list(planner_params.items() + list(stats.items())))
-        params_set_str = str(params_set)
-
-        result_csv = OrderedDict(list(result.items()) + [('params', params_set_str)])
+        result_csv = OrderedDict(list(result.items()) + [('params', str(params_set))])  # Need to save params as str for csv
         result = OrderedDict(list(result.items()) + [('params', params_set), ('status', STATUS_OK)])
+        print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
 
-        print(json.dumps(result_csv, indent=4))
         result_df = pd.DataFrame(dict(result_csv), columns=result.keys(), index=[0])
-
         with open(self.results_path, 'a') as f:
             result_df.to_csv(f, header=False, index=False)
 
