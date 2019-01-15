@@ -4,7 +4,6 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /MotionPlanning1
         - /MotionPlanning1/Planning Request1
       Splitter Ratio: 0.742560029
     Tree Height: 344
@@ -341,6 +340,15 @@ Visualization Manager:
         Show Robot Visual: true
       Value: true
       Velocity_Scaling_Factor: 1
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: visualization_marker
+      Name: Marker
+      Namespaces:
+        cafe_table__link__visual: true
+        first_2015_trash_can__link__visual: true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -357,7 +365,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 2.12707996
+      Distance: 1.81830978
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -372,10 +380,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.00479621533
+      Pitch: 0.239796177
       Target Frame: base_link
       Value: XYOrbit (rviz)
-      Yaw: 3.36995673
+      Yaw: 6.04994965
     Saved: ~
 Window Geometry:
   Displays:

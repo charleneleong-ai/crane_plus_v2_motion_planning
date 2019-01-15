@@ -98,7 +98,7 @@ class Base(object):
         p.pose.position.x = self.pos[0]
         p.pose.position.y = self.pos[1]
         p.pose.position.z = self.pos[2]
-        self.scene.add_box("box", p, (self.dim[0], self.dim[1], self.dim[2]))
+        self.scene.add_box("base", p, (self.dim[0], self.dim[1], self.dim[2]))
 
         return self.wait_for_state_update(box_is_known=True, timeout=timeout)
 
