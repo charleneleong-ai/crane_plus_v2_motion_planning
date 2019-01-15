@@ -16,6 +16,7 @@ class PlannerConfig(object):
         self.start_pose = rospy.get_param("~start_pose")
         self.target_pose = rospy.get_param("~target_pose")
         self.named_states = rospy.get_param("~named_states")
+
         if self.target_pose not in self.named_states:
             rospy.logerr('target_pose not in list of named_states')
             rospy.logerr(self.named_states)
@@ -38,14 +39,17 @@ class PlannerConfig(object):
                 "~planner_configs_"+self.planner_select+"_tune")
         assert isinstance(self.planner_config, dict)
 
-        self.planners = self.planner_config.keys()
+        self.planners = list(self.planner_config.keys())
         self.name = self.planner_select+"_"+self.mode
 
     def get_planner_config(self):
         return self.planner_config
         
-    def get_planner_config(self):
+    def get_planner_mode(self):
         return self.mode
+
+    def get_planners(self):
+        return self.planners
 
     def get_planner_params(self, planner_id):
         # rospy.loginfo('Waiting for get_planner_params')
@@ -56,6 +60,10 @@ class PlannerConfig(object):
             req = get_planner_params(planner_id, "arm")
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
+
+        # params = {}
+        # for k in len(req.params.keys):
+        #     params[req.params.keys]
         return req.params
 
     def set_planner_params(self, planner_id, params):
