@@ -25,4 +25,15 @@
     <param unless="$(eval arg('mode') == 'baseline')" name="max_trials" type="int" value="$(arg max_trials)" />
     <param name="iter" type="int" value="$(arg iter)" />
   </node>
+  <!-- <node pkg="crane_plus_control" name="benchmark" type="benchmark_session.py" output="screen" required="true">
+    <rosparam command="load" file="$(arg param_mode)"/>
+    <rosparam command="load" file="$(arg planner_configs)"/>
+    <param name="start_pose" type="str" value="$(arg start_pose)" />
+    <param name="target_pose" type="str" value="$(arg target_pose)" />
+    <param name="planner_config" type="str" value="$(arg planner_config)" />
+    
+    <param name="mode" type="str" value="$(arg mode)" />
+    <param unless="$(eval arg('mode') == 'baseline')" name="max_trials" type="int" value="$(arg max_trials)" />
+    <param name="iter" type="int" value="$(arg iter)" />
+  </node> -->
 </launch>

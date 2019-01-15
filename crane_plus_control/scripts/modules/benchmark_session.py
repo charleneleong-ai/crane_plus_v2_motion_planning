@@ -55,7 +55,7 @@ class BenchmarkSession(Session):
         # # self.scene = moveit_commander.PlanningSceneInterface()
 
         #Configuration settings
-        self.scenes = ["scene_7"]
+        self.scenes = ["scene_7", "scene_6"]
 
         #Object Publishers, can alsu use PlanningSceneInterface, but this doesn throw any warnings
         self.object_publisher = rospy.Publisher('/collision_object',
@@ -64,17 +64,14 @@ class BenchmarkSession(Session):
 
         self.attached_object_publisher = rospy.Publisher('/attached_collision_object',
                 moveit_msgs.msg._AttachedCollisionObject.AttachedCollisionObject,
-                queue_size=30)
+            reboot    queue_size=30)
 
-        self.planning_frame = self.group.get_planning_frame() # "/world"
-        self.env_names = []
-                        
-        self.scene = moveit_commander.PlanningSceneInterface()
+        self.env_names = []                   
 
         self.states = rospy.get_param('~named_states')
-        # print(self.states)
+        #print(self.planners)
 
-    def load_env(self, scene):
+    def _load_env(self, scene):
         """ 
         Function that parses a .scene file and loads the environment. Currently
         Only supports the BOX type, but can be easily extended if needed
@@ -161,8 +158,10 @@ class BenchmarkSession(Session):
                 self.object_publisher.publish(object)
                 time.sleep(self.PUBLISHER_DELAY)
 
+            scene.
+
     
-    def clear_env(self):        
+    def _clear_env(self):        
         """  
         Clears the collision model for a new scene to be loaded 
         """    
@@ -185,27 +184,26 @@ class BenchmarkSession(Session):
                
             scene_name = self.scenes[x1]
 
-            self.load_env(scene_name)           #load environment into collision model
+            self._load_env(scene_name)           #load environment into collision model
        
             scene = {"name":scene_name}         #create scene dict
             query_count = 0             
             for x2 in xrange(len(self.states)):
-            # for x2 in range(0,5):
+
                 start = self.states[x2]
                 for x3 in range (x2+1, len(self.states)):         #loops to decide start and goal states
-                # for x3 in range(5,10):         #loops to decide start and goal states
-                    # goal = self.states[x3]                          
+                        
                     goal = self.states[x3]
                                         
                     query = {"start":start, "goal":goal}        #create query dict
                     
                     for x4 in xrange(len(self.planners)):                        
-                        planner_name = self.planners[x4]                
+                        planner_name = self.planners[x4]         
                         self.group.set_planner_id(planner_name)     #set new planner ID
                                       
-                        planner_results = {"name":planner_name}     #create new planner dict                   
+                        #planner_results = {"name":planner_name}     #create new planner dict                   
                         planner_results = super(BenchmarkSession, self)._get_stats(start,goal)    #plan path and add results to planner dict    
-                        query[x4] = planner_results                         #add planner dict to query dict
+                        query[planner_name] = planner_results                         #add planner dict to query dict
                     scene[query_count] = query                  #add query dict to scene dict
                     query_count += 1
 		    prog_counter += 1
@@ -216,7 +214,7 @@ class BenchmarkSession(Session):
     	    
             with open(ROS_PKG_PATH+'/scripts/benchmark_data.p', 'wb') as fp:    #store this scene's data
                 	pickle.dump(self.results, fp)                
-            self.clear_env()
+            self._clear_env()
 
         data_string = ROS_PKG_PATH+'/scripts/bm_' + str(dt.now().month) + '.' + str(dt.now().day) + '_' + str(dt.now().hour) + '.' + str(dt.now().minute) + '_' + str(self.iter) + '.p'
     
@@ -227,4 +225,4 @@ class BenchmarkSession(Session):
         #     pickle.dump(self.results, fp)
 
         pprint.pprint(self.results)
-        print(json.dump(self.results))
+        #print(json.dumps(self.results))

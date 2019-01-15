@@ -61,8 +61,8 @@ class ParamTuningSession(Session):
         # Create OrderedDict to write to CSV
         result = OrderedDict([('n_trial', self.n_trial), ('loss', loss)])
         planner_params = OrderedDict([('planner', params_config['planner']), ('start_pose', params_config['start_pose']), (
-            'target_pose', params_config['target_pose']), ('avg_runs', self.iter)])
-        stats = OrderedDict([('avg_runtime', stats['avg_run_time']), ('avg_plan_time', stats['avg_plan_time']),
+            'target_pose', params_config['target_pose'])])
+        stats = OrderedDict([('avg_runs', stats['avg_runs']), ('avg_runtime', stats['avg_run_time']), ('avg_plan_time', stats['avg_plan_time']),
                              ('avg_dist', stats['avg_dist']), ('avg_path_length', stats['avg_path_length'])])
         result = OrderedDict(list(result.items()) +
                              list(planner_params.items() + list(stats.items())))
@@ -101,11 +101,11 @@ class ParamTuningSession(Session):
             params = {}
             params['params_set'] = params_set
             params['params_config'] = {
-                'planner': planner, 'start_pose': start_pose, 'target_pose': target_pose, 'avg_runs': self.iter}
+                'planner': planner, 'start_pose': start_pose, 'target_pose': target_pose}
 
             print("\n")
             rospy.loginfo("Executing %s on %s:  Max trials: %d Averaging over %d runs", self.mode,
-                          params['params_config']['planner'], self.max_trials, params['params_config']['avg_runs'])
+                          params['params_config']['planner'], self.max_trials, self.iter)
             self.n_trial = 0        # Reset to n_trials to zero for each planner
             if self.mode == "tpe":
                 algo = partial(tpe.suggest,

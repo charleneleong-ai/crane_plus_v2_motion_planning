@@ -4,7 +4,7 @@
   <arg name="rviz" default="true" /> 
 
   <!-- By default, we do not start a database (it can be large) -->
-  <arg name="db" default="false" />
+  <arg name="db" default="true" />
   <!-- Allow user to specify database location -->
   <arg name="db_path" default="$(find crane_plus_moveit_config)/default_warehouse_mongo_db" />
 
@@ -45,6 +45,9 @@
     <arg name="config" value="true"/>
     <arg name="debug" value="$(arg debug)"/>
   </include>
+
+  <node if="$(arg rviz)" name="launch_base" pkg="crane_plus_moveit_config" type="launch_base.py">
+  </node>
 
   <!-- If database loading was enabled, start mongodb as well -->
   <include file="$(find crane_plus_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)">

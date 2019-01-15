@@ -37,15 +37,15 @@ class Session(object):
         if self.mode != "baseline":
             self.max_trials = rospy.get_param("~max_trials")
         self.iter = rospy.get_param("~iter")
-        self.start_pose = self.planner_config_obj.start_pose
-        self.target_pose = self.planner_config_obj.target_pose
+        # self.start_pose = self.planner_config_obj.start_pose
+        # self.target_pose = self.planner_config_obj.target_pose
 
         self.results_path = ROS_PKG_PATH+'/results/'+self.name+".csv"
 
         self.robot = moveit_commander.RobotCommander()
         self.group = moveit_commander.MoveGroupCommander("arm")
-        # self.planning_frame = self.group.get_planning_frame()  # "/world"
-        # self.scene = moveit_commander.PlanningSceneInterface()
+        self.planning_frame = self.group.get_planning_frame()  # "/world"
+        self.scene = moveit_commander.PlanningSceneInterface()
 
     def _move_arm(self, pose):
         self.group.set_named_target(pose)
@@ -157,7 +157,7 @@ class Session(object):
             sum(d['length']['joint_dist'] for d in path_stats)) / len(path_stats)
         avg_path_length = float(
             sum(d['length']['joint_length'] for d in path_stats)) / len(path_stats)
-        result = {'avg_run_time': avg_run_time, 'avg_plan_time': avg_plan_time,
+        result = { 'avg_runs': self.iter, 'avg_run_time': avg_run_time, 'avg_plan_time': avg_plan_time,
                   'avg_dist': avg_dist, 'avg_path_length': avg_path_length}
 
         return result
