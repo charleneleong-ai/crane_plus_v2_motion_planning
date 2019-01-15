@@ -1,3 +1,9 @@
-avg_run_time,planner,start_pose,target_pose,avg_runs,params
-0.0942879517873,RRTConnectkConfigDefault,backbend,resting,3,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': [0.05, 1.0, 0.05], 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': [0.1, 2.0, 0.1], 'failed_expansion_score_factor': [0.05, 1.0, 0.05], 'min_valid_path_fraction': [0.05, 1.0, 0.05]}"
-0.0942879517873,RRTConnectkConfigDefault,backbend,resting,3,"{'default': [0.1, 2.0, 0.1]}"
+planner,start_pose,target_pose,avg_runs,avg_runtime,avg_plan_time,avg_dist,avg_path_length,params
+BKPIECEkConfigDefault,backbend,resting,10,,0.309419393539,4.50795673446,4.50795673446,"keys: [border_fraction, failed_expansion_score_factor, longest_valid_segment_fraction, min_valid_path_fraction,
+  projection_evaluator, range, type]
+values: ['0.9', '0.5', '0.005', '0.5', 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)',
+  '0', 'geometric::BKPIECE']
+descriptions: []"
+RRTConnectkConfigDefault,backbend,resting,10,,0.0481371641159,4.50797183404,4.50797183404,"keys: [range, type]
+values: ['0', 'geometric::RRTConnect']
+descriptions: []"

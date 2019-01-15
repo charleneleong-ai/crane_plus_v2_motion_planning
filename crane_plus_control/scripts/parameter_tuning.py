@@ -3,7 +3,7 @@
 import sys
 import rospy
 import moveit_commander
-from parameter_tuning_session import ParamTuningSession
+from modules.parameter_tuning_session import ParamTuningSession
 
 def main():
     moveit_commander.roscpp_initialize(sys.argv)
