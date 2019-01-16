@@ -6,17 +6,17 @@ benchmark_config:
     warehouse:
         host: 127.0.0.1
         port: 33829
-        scene_name: scene_1     # Required
+        scene_name: Scene1     # Required
     parameters:
-        name: scene_1_query_1
+        name: Scene1Move1
         runs: 150
         group: arm       # Required
         timeout: 10.0
 
         # Please edit the /home/<user> dir to your orn $USER 
         output_directory:  /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/results/benchmarks/logs/
-        queries: [query_1, query_2, query_3]
-        start_states: vertical
+        queries: Move1
+        start_states: Start1
     planners:
         - plugin: ompl_interface/OMPLPlanner
           planners:

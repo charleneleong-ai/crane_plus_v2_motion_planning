@@ -7,7 +7,6 @@
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
-
 from sys import argv, exit
 from os.path import basename, splitext, join
 import os
