@@ -23,18 +23,18 @@ class PlannerConfig(object):
                 rospy.logerr("Invalid planner config select")
                 sys.exit(1)
 
-        # self.start_pose = rospy.get_param("~start_pose")
-        # self.target_pose = rospy.get_param("~target_pose")
+        self.start_pose = rospy.get_param("~start_pose")
+        self.target_pose = rospy.get_param("~target_pose")
         self.named_states = rospy.get_param("~named_states")
 
-        # if self.target_pose not in self.named_states:
-        #     rospy.logerr('target_pose not in list of named_states')
-        #     rospy.logerr(self.named_states)
-        #     sys.exit(1)
-        # elif self.start_pose not in self.named_states:
-        #     rospy.logerr('start_pose not in list of named_states')
-        #     rospy.logerr(self.named_states)
-        #     sys.exit(1)
+        if self.target_pose not in self.named_states:
+            rospy.logerr('target_pose not in list of named_states')
+            rospy.logerr(self.named_states)
+            sys.exit(1)
+        elif self.start_pose not in self.named_states:
+            rospy.logerr('start_pose not in list of named_states')
+            rospy.logerr(self.named_states)
+            sys.exit(1)
 
         self.mode = rospy.get_param("~mode")
         if self.mode not in ['baseline', 'tpe', 'rand']:

@@ -17,9 +17,10 @@ from modules.benchmark_session import BenchmarkSession
 def main():
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('parameter_tuning', anonymous=True)
-    # session = ParamTuningSession()
+    session = ParamTuningSession()
     session = BenchmarkSession()
-    # session.run()
+    session.run()
+    # session.get_results()
     moveit_commander.roscpp_shutdown()
 
 if __name__ == "__main__":

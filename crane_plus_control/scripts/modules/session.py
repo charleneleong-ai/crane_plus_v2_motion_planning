@@ -44,8 +44,8 @@ class Session(object):
         if self.mode != "baseline":
             self.max_trials = rospy.get_param("~max_trials")
         self.iter = rospy.get_param("~iter")
-        # self.start_pose = self.planner_config_obj.start_pose
-        # self.target_pose = self.planner_config_obj.target_pose
+        self.start_pose = self.planner_config_obj.start_pose
+        self.target_pose = self.planner_config_obj.target_pose
 
         self.results_path = ROS_PKG_PATH+'/results/'+self.name+".csv"
 
@@ -183,6 +183,6 @@ class Session(object):
             planner_df = results[results['planner'] == p]
             #print(planner_df)
             planner_df.sort_values(
-                'avg_run_time', ascending=True, inplace=True)
+                'loss', ascending=True, inplace=True)
             planner_df.reset_index(inplace=True, drop=True)
             print(planner_df.head())
