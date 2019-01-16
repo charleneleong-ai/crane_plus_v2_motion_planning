@@ -19,7 +19,7 @@ def main():
     rospy.init_node('parameter_tuning', anonymous=True)
     # session = ParamTuningSession()
     session = BenchmarkSession()
-    session.run()
+    # session.run()
     moveit_commander.roscpp_shutdown()
 
 if __name__ == "__main__":

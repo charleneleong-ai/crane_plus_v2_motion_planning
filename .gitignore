@@ -65,7 +65,7 @@ CATKIN_IGNORE
 
 # Database files
 crane_plus_moveit_config/default_warehouse_mongo_db/
-*.db
+
 
 #======================
 #    IPython

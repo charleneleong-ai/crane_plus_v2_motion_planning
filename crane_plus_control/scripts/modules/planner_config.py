@@ -62,6 +62,14 @@ class PlannerConfig(object):
         return self.planners
 
     def get_planner_params(self, planner_id):
+        """Calls GetPlannerParams moveit ROS service and returns params for select planenr
+        
+        Arguments:
+            planner_id {str} -- planner_name
+        
+        Returns:
+            dict -- planner_params
+        """
         # rospy.loginfo('Waiting for get_planner_params')
         rospy.wait_for_service('get_planner_params')
         get_planner_params = rospy.ServiceProxy(
@@ -71,10 +79,10 @@ class PlannerConfig(object):
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
 
-        # params = {}
-        # for k in len(req.params.keys):
-        #     params[req.params.keys]
-        return req.params
+        params = {}
+        for idx, k in enumerate(req.params.keys):         
+            params[k] = req.params.values[idx]
+        return params
 
     def set_planner_params(self, planner_id, params):
         # rospy.loginfo('Waiting for set_planner_params')

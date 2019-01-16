@@ -4,6 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /MotionPlanning1
         - /MotionPlanning1/Planning Request1
       Splitter Ratio: 0.742560029
     Tree Height: 344
@@ -42,7 +43,7 @@ Visualization Manager:
       Enabled: true
       Move Group Namespace: ""
       MoveIt_Allow_Approximate_IK: false
-      MoveIt_Allow_External_Program: false
+      MoveIt_Allow_External_Program: true
       MoveIt_Allow_Replanning: false
       MoveIt_Allow_Sensor_Positioning: false
       MoveIt_Goal_Tolerance: 0
@@ -203,7 +204,7 @@ Visualization Manager:
         Interactive Marker Size: 0
         Joint Violation Color: 255; 0; 255
         Planning Group: arm
-        Query Goal State: true
+        Query Goal State: false
         Query Start State: false
         Show Workspace: false
         Start State Alpha: 1
@@ -345,8 +346,7 @@ Visualization Manager:
       Marker Topic: visualization_marker
       Name: Marker
       Namespaces:
-        cafe_table__link__visual: true
-        first_2015_trash_can__link__visual: true
+        {}
       Queue Size: 100
       Value: true
   Enabled: true
@@ -365,25 +365,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 1.81830978
+      Distance: 0.905490637
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.113567002
-        Y: 0.105920002
-        Z: 2.23518001e-07
+        X: 0.0316504315
+        Y: 0.0612652749
+        Z: 2.23517986e-07
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.239796177
+      Pitch: 0.309796333
       Target Frame: base_link
       Value: XYOrbit (rviz)
-      Yaw: 6.04994965
+      Yaw: 6.17994738
     Saved: ~
 Window Geometry:
   Displays:
@@ -397,11 +397,11 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002ad000003cafc0200000008fb000000100044006900730070006c0061007900730100000028000001ed000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a0056006900650077007300000003b0000000b0000000ad00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e0067010000021b0000018e0000018300fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c007300470075006901000003af000000430000004300ffffff000004ad000003ca00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002ad000003cafc0200000008fb000000100044006900730070006c0061007900730100000028000001ed000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a0056006900650077007300000003b0000000b0000000ad00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e0067010000021b0000018e0000018300fffffffb00000024005200760069007a00560069007300750061006c0054006f006f006c007300470075006901000003af000000430000004300ffffff000002a1000003ca00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   RvizVisualToolsGui:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1888
-  X: 1510
-  Y: 177
+  Width: 1364
+  X: 65
+  Y: 24

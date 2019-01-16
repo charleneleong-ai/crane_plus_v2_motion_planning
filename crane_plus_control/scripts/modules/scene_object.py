@@ -24,6 +24,11 @@ class Scene(object):
     PUBLISHER_DELAY = 0.3
 
     def __init__(self, scene_file):
+        """Class constructor for Scene object
+        
+        Arguments:
+            scene {str} -- scene name
+        """
         self.robot = moveit_commander.RobotCommander()
         self.planning_frame = self.robot.get_planning_frame()
         self.scene = moveit_commander.PlanningSceneInterface()
@@ -39,12 +44,16 @@ class Scene(object):
         self.rviz = rospy.get_param('/launch_base/rviz')
         self.name = "box"
         self._load_scene(scene_file)
+        self._load_states(scene_file)
 
     def _load_scene(self, scene):
-        """ 
-        Function that parses a .scene file and loads the environment. 
-        Currently only supports the BOX type, but can be easily extended if needed
+        """Loads scene file. Currently only supports BOX type. 
+        
+        Arguments:
+            scene {str} -- scene name
         """
+
+
         rospy.loginfo("Loading %s scene", scene)
         self._clear_env()
         with open(ROS_PKG_PATH+scene+".scene") as f:
@@ -176,3 +185,13 @@ class Scene(object):
                 rospy.sleep(self.PUBLISHER_DELAY)
     
         return self._wait_for_state_update(box_is_known=False)
+
+    def _load_states(self, scene):
+        """Loads states from corresponding scene into self.states.
+        
+        Arguments:
+            scene {str} -- scene name
+        """
+        with open(ROS_PKG_PATH+scene+".states") as f:
+            content = f.readlines()
+        self.states = [x.strip() for x in content] 

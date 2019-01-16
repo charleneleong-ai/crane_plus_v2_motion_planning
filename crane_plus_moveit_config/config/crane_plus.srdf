@@ -142,6 +142,13 @@
         <joint name="crane_plus_shoulder_revolute_joint" value="-0.5464" />
         <joint name="crane_plus_wrist_joint" value="1.6066" />
     </group_state>
+    <group_state name="low_fwd_reach" group="arm">
+        <joint name="crane_plus_elbow_joint" value="0" />
+        <joint name="crane_plus_gripper_joint" value="0" />
+        <joint name="crane_plus_shoulder_flex_joint" value="-1.7" />
+        <joint name="crane_plus_shoulder_revolute_joint" value="0" />
+        <joint name="crane_plus_wrist_joint" value="-0.1" />
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="gripper" parent_link="crane_plus_gripper_link" group="gripper" parent_group="arm" />
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
