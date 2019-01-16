@@ -1,5 +1,9 @@
-
-// Copyright 2018 Charlene Leong (charleneleong84@gmail.com)
+/*
+ * File Created: Thursday, 27th December 2018 4:13:36 pm
+ * Modified By: charlene
+ * Last Modified: Wed Jan 16 2019
+ * Author: Charlene Leong (charleneleong84@gmail.com)
+ */
 
 #include <iostream>
 #include <unordered_map>

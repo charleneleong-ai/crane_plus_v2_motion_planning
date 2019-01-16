@@ -1,8 +1,3 @@
-/*
- * File Created: Friday, 11th January 2019 7:54:57 pm
- * Last Modified: Wednesday, 16th January 2019 10:05:45 am
- * Author: Charlene Leong (charleneleong84@gmail.com)
- */
 
 planner_configs_Cano_etal_tune:
   RRTConnectkConfigDefault:

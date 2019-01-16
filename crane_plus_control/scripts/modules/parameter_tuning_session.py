@@ -1,9 +1,12 @@
 #!/usr/bin/env python
-'''
-File Created: Wednesday, 16th January 2019 8:36:58 am
-Last Modified: Wednesday, 16th January 2019 10:02:13 am
-Author: Charlene Leong (charleneleong84@gmail.com)
-'''
+# -*- coding:utf-8 -*-
+###
+# File Created: Wednesday, 16th January 2019 10:02:24 am
+# Modified By: charlene
+# Last Modified: Wed Jan 16 2019
+# Author: Charlene Leong (charleneleong84@gmail.com)
+###
+
 
 import sys
 from timeit import default_timer as timer

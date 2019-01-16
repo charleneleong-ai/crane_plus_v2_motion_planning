@@ -1,5 +1,10 @@
 
-// Copyright 2018 Charlene Leong (charleneleong84@gmail.com)
+/*
+ * File Created: Thursday, 27th December 2018 10:55:52 am
+ * Modified By: charlene
+ * Last Modified: Wed Jan 16 2019
+ * Author: Charlene Leong (charleneleong84@gmail.com)
+ */
 
 #include <ros/ros.h>
 #include <moveit/move_group_interface/move_group_interface.h>

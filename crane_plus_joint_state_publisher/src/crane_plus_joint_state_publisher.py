@@ -1,6 +1,11 @@
 #!/usr/bin/env python
-
-"""Joint state publishing node for the CRANE+ manipulator."""
+# -*- coding:utf-8 -*-
+###
+# File Created: Wednesday, 26th December 2018 7:14:52 pm
+# Modified By: charlene
+# Last Modified: Wed Jan 16 2019
+# Author: Charlene Leong (charleneleong84@gmail.com)
+###
 
 import sys
 
@@ -11,7 +16,9 @@ from dynamixel_msgs.msg import JointState as DynamixelJointState
 
 
 def joint_state_cb(msg, js_publisher):
-    """Callback that converts a Dynamixel JointState to a standard JointState."""
+    """
+    Callback that converts a Dynamixel JointState to a standard JointState.
+    """
     js = JointState()
     js.header.stamp = msg.header.stamp
     js.name = [msg.name]
@@ -22,7 +29,9 @@ def joint_state_cb(msg, js_publisher):
 
 
 def subscribe_to_servo_controller(joint, namespace, js_publisher):
-    """Subscribe to the state topic for the specified servo controller."""
+    """
+    Subscribe to the state topic for the specified servo controller.
+    """
     topic_name = '/'.join([namespace, joint, 'state'])
     return rospy.Subscriber(topic_name,
                             DynamixelJointState,
@@ -31,7 +40,9 @@ def subscribe_to_servo_controller(joint, namespace, js_publisher):
 
 
 def publish_virtual_joint_cb_maker(joint_name, pub):
-    """Make a callback for publishing a zero'd JointState for a given joint."""
+    """
+    Make a callback for publishing a zero'd JointState for a given joint.
+    """
     def publisher(event):
         js = JointState()
         js.header.stamp = rospy.Time.now()
@@ -44,7 +55,6 @@ def publish_virtual_joint_cb_maker(joint_name, pub):
 
 
 def main():
-    """Main function."""
     rospy.init_node('crane_plus_joint_state_publisher')
 
     try:

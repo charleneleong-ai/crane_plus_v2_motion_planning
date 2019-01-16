@@ -1,9 +1,12 @@
 #!/usr/bin/env python
-'''
-File Created: Wednesday, 16th January 2019 8:43:13 am
-Last Modified: Wednesday, 16th January 2019 10:07:18 am
-Author: Charlene Leong (charleneleong84@gmail.com)
-'''
+# -*- coding:utf-8 -*-
+###
+# File Created: Wednesday, 16th January 2019 10:07:21 am
+# Modified By: charlene
+# Last Modified: Wed Jan 16 2019
+# Author: Charlene Leong (charleneleong84@gmail.com)
+###
+
 
 from sys import argv, exit
 from os.path import basename, splitext, join

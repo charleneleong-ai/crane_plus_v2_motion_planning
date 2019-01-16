@@ -20,12 +20,12 @@ Author: Charlene Leong (charleneleong84@gmail.com)
   <node pkg="tf" type="static_transform_publisher" name="world_to_base_link" args="0 0 0 0 0 0 /world /base_link 100"/>
 
   <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
-  <include unless="$(arg robot_execution)" file="$(find crane_plus_moveit_config)/launch/planning_context.launch">
+  <include unless="$(arg robot_execution)" file="$(find crane_plus_moveit_config)/launch/planning_context.launch" required="true">
     <arg name="load_robot_description" value="true"/>
   </include>
 
   <!-- We do not have a robot connected, so publish fake joint states -->
-  <node unless="$(arg robot_execution)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+  <node unless="$(arg robot_execution)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" required="true">
     <param name="/use_gui" value="false"/>
     <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
   </node>
@@ -34,7 +34,7 @@ Author: Charlene Leong (charleneleong84@gmail.com)
   <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" /> -->
 
   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
-  <include if="$(arg robot_execution)"  file="$(find crane_plus_moveit_config)/launch/move_group.launch">
+  <include if="$(arg robot_execution)"  file="$(find crane_plus_moveit_config)/launch/move_group.launch"> 
     <arg name="allow_trajectory_execution" value="true"/>
     <arg name="fake_execution" value="false"/>
     <arg name="info" value="true"/>
@@ -49,10 +49,12 @@ Author: Charlene Leong (charleneleong84@gmail.com)
   </include>
 
   <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  
   <include if="$(arg rviz)" file="$(find crane_plus_moveit_config)/launch/moveit_rviz.launch">
     <arg name="config" value="true"/>
     <arg name="debug" value="$(arg debug)"/>
   </include>
+  
 
 
   <!-- If database loading was enabled, start mongodb as well -->
@@ -60,8 +62,9 @@ Author: Charlene Leong (charleneleong84@gmail.com)
     <arg name="moveit_warehouse_database_path" value="$(arg db_path)"/>
   </include>
 
-
-  <node name="launch_base" pkg="crane_plus_moveit_config" type="launch_base.py" respawn="true">
+  <!-- Publish rviz arg to toggle publisher delay -->
+  <node name="launch_base" pkg="crane_plus_moveit_config" type="launch_base.py" respawn_delay="5" >
+    <param name="rviz" type="bool" value="$(arg rviz)" />
   </node>
 
 </launch>

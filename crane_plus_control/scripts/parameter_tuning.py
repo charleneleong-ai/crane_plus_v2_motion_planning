@@ -1,9 +1,12 @@
 #!/usr/bin/env python
-'''
-File Created: Wednesday, 16th January 2019 8:49:00 am
-Last Modified: Wednesday, 16th January 2019 10:02:20 am
-Author: Charlene Leong (charleneleong84@gmail.com)
-'''
+# -*- coding:utf-8 -*-
+###
+# File Created: Wednesday, 16th January 2019 1:56:33 pm
+# Modified By: charlene
+# Last Modified: Wed Jan 16 2019
+# Author: Charlene Leong (charleneleong84@gmail.com)
+###
+
 
 import sys
 import rospy

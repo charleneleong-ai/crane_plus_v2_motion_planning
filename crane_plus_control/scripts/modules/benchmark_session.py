@@ -1,9 +1,12 @@
 #!/usr/bin/env python
-'''
-File Created: Tuesday, 15th January 2019 4:11:24 pm
-Last Modified: Wednesday, 16th January 2019 10:06:47 am
-Author: Charlene Leong (charleneleong84@gmail.com)
-'''
+# -*- coding:utf-8 -*-
+###
+# File Created: Wednesday, 16th January 2019 2:10:34 pm
+# Modified By: charlene
+# Last Modified: Wed Jan 16 2019
+# Author: Charlene Leong (charleneleong84@gmail.com)
+###
+
 
 import sys
 import os
@@ -24,9 +27,10 @@ import shape_msgs
 import std_msgs
 from datetime import datetime as dt
 
-from session import Session                             
+from session import Session 
+from scene_object import Scene                            
 
-ROS_PKG_PATH =  rospkg.RosPack().get_path('crane_plus_control')
+ROS_PKG_PATH =  rospkg.RosPack().get_path('crane_plus_control')+'/scripts'
 
 # from objectives import objectives
 
@@ -60,138 +64,27 @@ class BenchmarkSession(Session):
         # # self.scene = moveit_commander.PlanningSceneInterface()
 
         #Configuration settings
-        self.scenes = ["scene_7", "scene_6"]
-
-        #Object Publishers, can alsu use PlanningSceneInterface, but this doesn throw any warnings
-        self.object_publisher = rospy.Publisher('/collision_object',
-                moveit_msgs.msg._CollisionObject.CollisionObject,
-                queue_size=100)
-
-        self.attached_object_publisher = rospy.Publisher('/attached_collision_object',
-                moveit_msgs.msg._AttachedCollisionObject.AttachedCollisionObject,
-            reboot    queue_size=30)
-
-        self.env_names = []                   
+        self.scenes = [ "narrow"]
+         
 
         self.states = rospy.get_param('~named_states')
-        #print(self.planners)
 
-    def _load_env(self, scene):
-        """ 
-        Function that parses a .scene file and loads the environment. Currently
-        Only supports the BOX type, but can be easily extended if needed
-        """   
-
-        with open(ROS_PKG_PATH+"/scripts/scenes/"+scene+".scene") as f:
-            
-            lines = 0   # get lines to know amount of blocks
-            for line in f:
-                lines += 1                
-            f.seek(0)   # reset readfile location
-               
-            title = f.readline()
-            rospy.loginfo("Loading scene:%s" % title)
-            
-            cnt = (lines-2)/7             # object data is 7 lines long, count amount of objects
-            
-            for objs in range (0, cnt):
-                name = f.readline()[2:]   # object name
-                number = f.readline()     # object number?
-                shape = f.readline()      # object shape
-                
-                self.env_names.append(name)   #adding name to list in order to clear later
-                
-                #****** Parsing dimension ******#
-                text = f.readline()
-                dim = []
-                for x in range (0, 3):          #3D dimension
-                    loc = text.find(" ")
-                    dim.append(float(text[:loc]))
-                    text = text[loc+1:]         #Remove used text
-                
-                #****** Parsing Location ******#
-                text = f.readline()
-                pos = []
-                for x in range (0, 3):          #3D dimension
-                    loc = text.find(" ")        
-                    pos.append(float(text[:loc]))
-                    text = text[loc+1:]
-                    
-                #****** Parsing Rotation ******#
-                text = f.readline()
-                rot = []
-                for x in range (0, 4):          #4D dimension
-                    loc = text.find(" ")
-                    rot.append(float(text[:loc]))
-                    text = text[loc+1:]
-                    
-                #****** Parsing Colour ******#
-                text = f.readline()
-                col = []
-                for x in range (0, 4):
-                    loc = text.find(" ")
-                    col.append(float(text[:loc]))
-                    text = text[loc+1:]
-                # Currently unused, also not needed for adding objects
-                    
-                
-                #******* adding the object ********#
-                object_shape = shape_msgs.msg._SolidPrimitive.SolidPrimitive()
-                object_shape.type = object_shape.BOX #extend support for other primitives?
-                object_shape.dimensions = dim
-                
-                object_pose = geometry_msgs.msg._Pose.Pose()
-                object_pose.position.x = pos[0]
-                object_pose.position.y = pos[1]
-                object_pose.position.z = pos[2]
-                
-                object_pose.orientation.x = rot[0]
-                object_pose.orientation.y = rot[1]
-                object_pose.orientation.z = rot[2]
-                object_pose.orientation.w = rot[3]
-                
-                object = moveit_msgs.msg.CollisionObject()
-                object.id = name
-                object.header.frame_id = self.planning_frame
-                object.primitives.append(object_shape)
-                object.primitive_poses.append(object_pose)
-                
-                assert type(object) == moveit_msgs.msg.CollisionObject
-                
-                object.header.stamp = rospy.Time.now()
-                object.operation = object.ADD
-                self.object_publisher.publish(object)
-                time.sleep(self.PUBLISHER_DELAY)
-
-            scene.
-
-    
-    def _clear_env(self):        
-        """  
-        Clears the collision model for a new scene to be loaded 
-        """    
-        for x in xrange(len(self.env_names)):
-            # print (self.env_names[x])
-            self.scene.remove_world_object(self.env_names[x])
-        self.env_names = []
 
     def run(self):
         
+
         prog_counter = 0   			#progression counter that counts to 2*amount of scenes
 
         self.group.set_planning_time(self.PLANNING_TIME)     
 
         self.results = {}                       #create empty results dict
         for x1 in xrange(len(self.scenes)):     #scene loop            
-    	    
-            # if (os.path.isfile('/home/ruben/moveit_ompl/new.db')):
-    	    #     os.remove('/home/ruben/moveit_ompl/new.db') # remove the new database in case of thunder
-               
+    	      
             scene_name = self.scenes[x1]
 
-            self._load_env(scene_name)           #load environment into collision model
-       
-            scene = {"name":scene_name}         #create scene dict
+            Scene(self.scenes[x1])           # Load scene 
+            
+            scene = {"name":scene_name}         # create scene dict
             query_count = 0             
             for x2 in xrange(len(self.states)):
 
@@ -217,11 +110,11 @@ class BenchmarkSession(Session):
                     
             self.results[x1] = scene                            #add scene dict to results dict
     	    
-            with open(ROS_PKG_PATH+'/scripts/benchmark_data.p', 'wb') as fp:    #store this scene's data
+            with open(ROS_PKG_PATH+'/benchmark_data.p', 'wb') as fp:    #store this scene's data
                 	pickle.dump(self.results, fp)                
-            self._clear_env()
+            
 
-        data_string = ROS_PKG_PATH+'/scripts/bm_' + str(dt.now().month) + '.' + str(dt.now().day) + '_' + str(dt.now().hour) + '.' + str(dt.now().minute) + '_' + str(self.iter) + '.p'
+        data_string = ROS_PKG_PATH+'/bm_' + str(dt.now().month) + '.' + str(dt.now().day) + '_' + str(dt.now().hour) + '.' + str(dt.now().minute) + '_' + str(self.iter) + '.p'
     
         # with open(data_string, 'wb') as fp:    #final data store
         #     pickle.dump(self.results, fp)

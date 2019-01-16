@@ -1,4 +1,11 @@
 #!/usr/bin/env python
+# -*- coding:utf-8 -*-
+###
+# File Created: Tuesday, 15th January 2019 3:19:44 pm
+# Modified By: charlene
+# Last Modified: Wed Jan 16 2019
+# Author: Charlene Leong (charleneleong84@gmail.com)
+###
 
 from timeit import default_timer as timer
 

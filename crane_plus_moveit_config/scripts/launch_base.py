@@ -1,20 +1,17 @@
 #!/usr/bin/env python
-'''
-File Created: Wednesday, 16th January 2019 9:59:14 am
-Last Modified: Wednesday, 16th January 2019 10:00:54 am
-Author: Charlene Leong (charleneleong84@gmail.com)
-'''
+# -*- coding:utf-8 -*-
+###
+# File Created: Wednesday, 16th January 2019 2:03:37 pm
+# Modified By: charlene
+# Last Modified: Wed Jan 16 2019
+# Author: Charlene Leong (charleneleong84@gmail.com)
+###
 
 import sys
-import copy
 import rospkg
 import rospy
 import moveit_commander
-import moveit_msgs.msg
 import geometry_msgs.msg
-from math import pi
-from std_msgs.msg import String
-from moveit_commander.conversions import pose_to_list
 
 ROS_PKG_PATH =  rospkg.RosPack().get_path('crane_plus_moveit_config') + '/scripts'
 
@@ -25,7 +22,6 @@ class Base(object):
         self.robot = moveit_commander.RobotCommander()
         self.planning_frame = self.robot.get_planning_frame()
         self.scene = moveit_commander.PlanningSceneInterface()
-
         self._load_base_scene()
         
     def _load_base_scene(self):
@@ -51,22 +47,6 @@ class Base(object):
                 self.pos.append(float(text[:loc]))
                 text = text[loc+1:]
             
-            # #****** Parsing Rotation ******#
-            # text = f.readline()
-            # self.rot = []
-            # for x in range (0, 4):          #4D dimension
-            #     loc = text.find(" ")
-            #     self.rot.append(float(text[:loc]))
-            #     text = text[loc+1:]
-                
-            # #****** Parsing Colour ******#
-            # text = f.readline()
-            # self.col = []
-            # for x in range (0, 4):
-            #     loc = text.find(" ")
-            #     self.col.append(float(text[:loc]))
-            #     text = text[loc+1:]
-            # # Currently unused, also not needed for adding objects
 
     def wait_for_state_update(self, base_is_known=False, base_is_attached=False, timeout=4):
         start = rospy.get_time()
@@ -99,7 +79,7 @@ class Base(object):
         pose.pose.position.x = self.pos[0]
         pose.pose.position.y = self.pos[1]
         pose.pose.position.z = self.pos[2]
-        self.scene.add_box("base", pose, (self.dim[0], self.dim[1], self.dim[2]))
+        self.scene.add_box(self.name, pose, (self.dim[0], self.dim[1], self.dim[2]))
        
         return self.wait_for_state_update(base_is_known=True, timeout=timeout)
 
@@ -109,7 +89,6 @@ def main():
     rospy.init_node('launch_base', anonymous=True)
     base = Base()
     base.add_base()
-    moveit_commander.roscpp_shutdown()
-
+   
 if __name__ == '__main__':
     main()

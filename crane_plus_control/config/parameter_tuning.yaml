@@ -1,10 +1,4 @@
 
-/*
- * File Created: Tuesday, 15th January 2019 2:32:31 pm
- * Last Modified: Wednesday, 16th January 2019 10:05:38 am
- * Author: Charlene Leong (charleneleong84@gmail.com)
- */
-
 
 #named_states: [vertical, backbend, resting, pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, pose9, pose10, pose11, pose12, pose13, pose14]
 named_states: [vertical, backbend, resting]
