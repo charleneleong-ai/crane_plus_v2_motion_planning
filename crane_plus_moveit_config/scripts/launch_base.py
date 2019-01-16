@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+'''
+File Created: Wednesday, 16th January 2019 9:59:14 am
+Last Modified: Wednesday, 16th January 2019 10:00:54 am
+Author: Charlene Leong (charleneleong84@gmail.com)
+'''
 
 import sys
 import copy
@@ -11,11 +16,7 @@ from math import pi
 from std_msgs.msg import String
 from moveit_commander.conversions import pose_to_list
 
-
-
-
 ROS_PKG_PATH =  rospkg.RosPack().get_path('crane_plus_moveit_config') + '/scripts'
-
 
 class Base(object):
     def __init__(self):
@@ -67,28 +68,28 @@ class Base(object):
             #     text = text[loc+1:]
             # # Currently unused, also not needed for adding objects
 
-    # def wait_for_state_update(self, base_is_known=False, base_is_attached=False, timeout=4):
-    #     start = rospy.get_time()
-    #     seconds = rospy.get_time()
-    #     while (seconds - start < timeout) and not rospy.is_shutdown():
-    #         # Test if the base is in attached objects
-    #         attached_objects = self.scene.get_attached_objects([self.name])
-    #         is_attached = len(attached_objects.keys()) > 0
+    def wait_for_state_update(self, base_is_known=False, base_is_attached=False, timeout=4):
+        start = rospy.get_time()
+        seconds = rospy.get_time()
+        while (seconds - start < timeout) and not rospy.is_shutdown():
+            # Test if the base is in attached objects
+            attached_objects = self.scene.get_attached_objects([self.name])
+            is_attached = len(attached_objects.keys()) > 0
 
-    #         # Test if the base is in the scene.
-    #         # Note that attaching the base will remove it from known_objects
-    #         is_known = self.name in self.scene.get_known_object_names()
+            # Test if the base is in the scene.
+            # Note that attaching the base will remove it from known_objects
+            is_known = self.name in self.scene.get_known_object_names()
 
-    #         # Test if we are in the expected state
-    #         if (base_is_attached == is_attached) and (base_is_known == is_known):
-    #             return True
+            # Test if we are in the expected state
+            if (base_is_attached == is_attached) and (base_is_known == is_known):
+                return True
 
-    #         # Sleep so that we give other threads time on the processor
-    #         rospy.sleep(0.01)
-    #         seconds = rospy.get_time()
+            # Sleep so that we give other threads time on the processor
+            rospy.sleep(0.01)
+            seconds = rospy.get_time()
 
-    #     # If we exited the while loop without returning then we timed out
-    #     return False
+        # If we exited the while loop without returning then we timed out
+        return False
 
 
     def add_base(self, timeout=4):
@@ -99,8 +100,8 @@ class Base(object):
         pose.pose.position.y = self.pos[1]
         pose.pose.position.z = self.pos[2]
         self.scene.add_box("base", pose, (self.dim[0], self.dim[1], self.dim[2]))
-
-        # return self.wait_for_state_update(box_is_known=True, timeout=timeout)
+       
+        return self.wait_for_state_update(base_is_known=True, timeout=timeout)
 
 
 def main():

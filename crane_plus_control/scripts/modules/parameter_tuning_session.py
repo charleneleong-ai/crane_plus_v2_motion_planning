@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+'''
+File Created: Wednesday, 16th January 2019 8:36:58 am
+Last Modified: Wednesday, 16th January 2019 10:02:13 am
+Author: Charlene Leong (charleneleong84@gmail.com)
+'''
 
 import sys
 from timeit import default_timer as timer
@@ -71,7 +76,7 @@ class ParamTuningSession(Session):
             list(result.items()) + [('params', str(params_set))])
         result = OrderedDict(list(result.items()) +
                              [('params', params_set), ('status', STATUS_OK)])
-        #print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
+        # print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
 
         result_df = pd.DataFrame(
             dict(result_csv), columns=result.keys(), index=[0])

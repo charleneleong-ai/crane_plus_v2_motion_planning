@@ -1,9 +1,10 @@
-# This is an example configuration that loads the "Kitchen" scene from the
-# local MoveIt! warehouse and benchmarks the "manipulator" group in the Pick1
-# query using the Start1 initial state (all pre-stored in the local warehouse)
+/*
+ * File Created: Tuesday, 15th January 2019 3:51:20 pm
+ * Last Modified: Wednesday, 16th January 2019 10:04:03 am
+ * Author: Charlene Leong (charleneleong84@gmail.com)
+ */
 
-# Three different planners from OMPL are run a total of 50 times each, with a
-# maximum of 10 seconds per run.  Output is stored in the /tmp/moveit_benchmarks directory.
+ # Please make sure this config matches your database.
 
 benchmark_config:
     warehouse:
@@ -15,6 +16,8 @@ benchmark_config:
         runs: 150
         group: arm       # Required
         timeout: 10.0
+
+        # Please edit the /home/<user> dir to your orn $USER 
         output_directory:  /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/results/benchmarks/logs/
         queries: [query_1, query_2, query_3]
         start_states: vertical

@@ -1,3 +1,8 @@
+<!--
+File Created: Friday, 11th January 2019 9:17:17 am
+Last Modified: Wednesday, 16th January 2019 10:02:52 am
+Author: Charlene Leong (charleneleong84@gmail.com)
+-->
 <launch>
   <rosparam
     file="$(find crane_plus_simulation)/config/crane_plus.yaml"

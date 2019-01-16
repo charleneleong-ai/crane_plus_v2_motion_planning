@@ -1,3 +1,10 @@
+
+/*
+ * File Created: Wednesday, 26th December 2018 7:14:52 pm
+ * Last Modified: Wednesday, 16th January 2019 10:08:53 am
+ * Author: Charlene Leong (charleneleong84@gmail.com)
+ */
+
 crane_plus:
   type: "position_controllers/JointTrajectoryController"
   joints:

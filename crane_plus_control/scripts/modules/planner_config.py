@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+'''
+File Created: Tuesday, 15th January 2019 2:01:08 pm
+Last Modified: Wednesday, 16th January 2019 10:01:21 am
+Author: Charlene Leong (charleneleong84@gmail.com)
+'''
+
 import sys
 import rospy
 
