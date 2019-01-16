@@ -65,21 +65,17 @@ class BenchmarkSession(Session):
 
         #Configuration settings
         self.scenes = [ "narrow"]
-         
 
         self.states = rospy.get_param('~named_states')
 
 
     def run(self):
-        
-
-        prog_counter = 0   			#progression counter that counts to 2*amount of scenes
+        prog_counter = 0   			# Progression counter that counts to 2*amount of scenes
 
         self.group.set_planning_time(self.PLANNING_TIME)     
 
-        self.results = {}                       #create empty results dict
-        for x1 in xrange(len(self.scenes)):     #scene loop            
-    	      
+        self.results = {}                       # Create empty results dict
+        for x1 in xrange(len(self.scenes)):     # Scene loop           
             scene_name = self.scenes[x1]
 
             Scene(self.scenes[x1])           # Load scene 
@@ -110,17 +106,17 @@ class BenchmarkSession(Session):
                     
             self.results[x1] = scene                            #add scene dict to results dict
     	    
-            with open(ROS_PKG_PATH+'/benchmark_data.p', 'wb') as fp:    #store this scene's data
-                	pickle.dump(self.results, fp)                
+                   
             
 
-        data_string = ROS_PKG_PATH+'/bm_' + str(dt.now().month) + '.' + str(dt.now().day) + '_' + str(dt.now().hour) + '.' + str(dt.now().minute) + '_' + str(self.iter) + '.p'
-    
-        # with open(data_string, 'wb') as fp:    #final data store
-        #     pickle.dump(self.results, fp)
+        data_string = ROS_PKG_PATH+'/benchmark_' + str(dt.now().year) + '.' + str(dt.now().month) + '.' + str(dt.now().day) + '_' + str(dt.now().hour) + '.' + str(dt.now().minute) + '_' + str(self.iter) + '.p'
+       
+        with open(data_string, 'wb') as fp:    # Dump with run
+            pickle.dump(self.results, fp)
 
-        # with open(ROS_PKG_PATH+'/scripts/benchmark_data.p', 'wb') as fp:    #final data store
-        #     pickle.dump(self.results, fp)
+        with open(ROS_PKG_PATH+'/benchmark_latest.p', 'wb') as fp:    # Dump as latest benchmark
+            pickle.dump(self.results, fp)
+
 
         pprint.pprint(self.results)
         #print(json.dumps(self.results))

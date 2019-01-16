@@ -1,8 +1,10 @@
 <!--
-File Created: Wednesday, 16th January 2019 9:20:48 am
-Last Modified: Wednesday, 16th January 2019 10:03:29 am
+File Created: Wednesday, 16th January 2019 2:26:06 pm
+Modified By: 
+Last Modified: 
 Author: Charlene Leong (charleneleong84@gmail.com)
 -->
+
 <launch>
   <!-- By default, will execute for simulation -->
   <arg name="robot_execution" default="false" />
@@ -20,18 +22,15 @@ Author: Charlene Leong (charleneleong84@gmail.com)
   <node pkg="tf" type="static_transform_publisher" name="world_to_base_link" args="0 0 0 0 0 0 /world /base_link 100"/>
 
   <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
-  <include unless="$(arg robot_execution)" file="$(find crane_plus_moveit_config)/launch/planning_context.launch" required="true">
+  <include unless="$(arg robot_execution)" file="$(find crane_plus_moveit_config)/launch/planning_context.launch">
     <arg name="load_robot_description" value="true"/>
   </include>
 
   <!-- We do not have a robot connected, so publish fake joint states -->
-  <node unless="$(arg robot_execution)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" required="true">
+  <node unless="$(arg robot_execution)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="/use_gui" value="false"/>
     <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
   </node>
-
-  <!-- Given the published joint states, publish tf for the robot links -->
-  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" /> -->
 
   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
   <include if="$(arg robot_execution)"  file="$(find crane_plus_moveit_config)/launch/move_group.launch"> 
