@@ -2,11 +2,10 @@
 # -*- coding:utf-8 -*-
 ###
 # File Created: Wednesday, 16th January 2019 1:56:33 pm
-# Modified By: charlene
-# Last Modified: Thu Jan 17 2019
+# Modified By: Charlene Leong
+# Last Modified: Thursday, January 17th 2019, 10:14:58 am
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
-
 
 import sys
 import rospy

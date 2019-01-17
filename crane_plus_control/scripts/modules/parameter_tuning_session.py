@@ -2,11 +2,10 @@
 # -*- coding:utf-8 -*-
 ###
 # File Created: Wednesday, 16th January 2019 10:02:24 am
-# Modified By: charlene
-# Last Modified: Wed Jan 16 2019
+# Modified By: Charlene Leong
+# Last Modified: Thursday, January 17th 2019, 10:23:42 am
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
-
 
 import sys
 from timeit import default_timer as timer
@@ -32,9 +31,6 @@ from hyperopt import hp, rand, tpe, Trials, fmin, STATUS_OK
 from hyperopt.pyll.stochastic import sample
 
 from session import Session
-
-# from objectives import objectives
-
 
 class ParamTuningSession(Session):
 
@@ -177,6 +173,7 @@ class ParamTuningSession(Session):
         return results_df
 
     def run(self):
+        
         if self.mode == "baseline":
             self._obtain_baseline(self.start_pose, self.target_pose)
         else:

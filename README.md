@@ -22,18 +22,18 @@ Based on the [TurtleBot Arm code](https://github.com/turtlebot/turtlebot_arm).
 <img src="imgs/cranev2_rviz.png" width="600" align="middle"/></div>
 
 
-
-
 ## Requirements
 
 - [Ubuntu 16.04 Xenial](http://releases.ubuntu.com/16.04/)
 - [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
-- [Moveit! Motion Planning Framework](http://moveit.ros.org/install/)
-- [Dynamixel Motor](http://wiki.ros.org/dynamixel_motor) ROS package
 
 This package has only been tested on Ubuntu 16.04 with ROS Kinetic. 
 
 ## Packages
+
+**camera_plus_control**
+
+​	Parameter tuning and benchmarking nodes
 
 **camera_plus_description**
 
@@ -119,38 +119,38 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
 
 ## ROS Installation and Configuration
 
-[Install](http://wiki.ros.org/kinetic/Installation/Ubuntu) ROS Kinetic 
+1. [Install](http://wiki.ros.org/kinetic/Installation/Ubuntu) ROS Kinetic 
 
-```bash
-$ sudo apt-get update && sudo apt-get upgrade
-$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-$ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
-$ sudo apt-get update && sudo apt-get install ros-kinetic-desktop-full -y
-$ sudo rosdep init && rosdep update
-$ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
-$ source ~/.bashrc
-$ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential -y
-```
+    ```bash
+    $ sudo apt-get update && sudo apt-get upgrade
+    $ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+    $ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+    $ sudo apt-get update && sudo apt-get install ros-kinetic-desktop-full -y
+    $ sudo rosdep init && rosdep update
+    $ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+    $ source ~/.bashrc
+    $ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential -y
+    ```
 
-[Configure](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment) your ROS environment
+2. [Configure](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment) your ROS environment
 
-```bash
-$ mkdir -p ~/catkin_ws/src
-$ cd ~/catkin_ws/ && catkin_make
-$ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
-$ source ~/.bashrc
-```
+    ```bash
+    $ mkdir -p ~/catkin_ws/src
+    $ cd ~/catkin_ws/ && catkin_make
+    $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+    $ source ~/.bashrc
+    ```
 
-Confirm the installation and configuration of ROS. You should see the following output.
+3. Confirm the installation and configuration of ROS. You should see the following output.
 
-```bash
-$ printenv | grep ROS
-ROS_ROOT=/opt/ros/kinetic/share/ros
-ROS_PACKAGE_PATH=/home/<username>/catkin_ws/src:/opt/ros/kinetic/share
-ROS_MASTER_URI=http://localhost:11311
-ROS_VERSION=1
-ROSLISP_PACKAGE_DIRECTORIES=/home/ubuntu/catkin_ws/devel/share/common-lisp
-ROS_DISTRO=kinetic
-ROS_ETC_DIR=/opt/ros/kinetic/etc/ros
-```
+    ```bash
+    $ printenv | grep ROS
+    ROS_ROOT=/opt/ros/kinetic/share/ros
+    ROS_PACKAGE_PATH=/home/<username>/catkin_ws/src:/opt/ros/kinetic/share
+    ROS_MASTER_URI=http://localhost:11311
+    ROS_VERSION=1
+    ROSLISP_PACKAGE_DIRECTORIES=/home/ubuntu/catkin_ws/devel/share/common-lisp
+    ROS_DISTRO=kinetic
+    ROS_ETC_DIR=/opt/ros/kinetic/etc/ros
+    ```
 

@@ -3,10 +3,9 @@
 ###
 # File Created: Wednesday, 16th January 2019 2:10:34 pm
 # Modified By: charlene
-# Last Modified: Thu Jan 17 2019
+# Last Modified: Thursday, January 17th 2019, 10:10:07 am
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
-
 
 import sys
 import os
@@ -35,8 +34,6 @@ from scene_object import Scene
 ROS_PKG_PATH =  rospkg.RosPack().get_path('crane_plus_control')+'/scripts'
 
 # from objectives import objectives
-
-
 class BenchmarkSession(Session):
     """Constructor for benchmarking session
     

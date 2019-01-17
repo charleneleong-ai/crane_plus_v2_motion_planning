@@ -2,8 +2,8 @@
 # -*- coding:utf-8 -*-
 ###
 # File Created: Wednesday, 16th January 2019 1:41:18 pm
-# Modified By: charlene
-# Last Modified: Wed Jan 16 2019
+# Modified By: Charlene Leong
+# Last Modified: Thursday, January 17th 2019, 10:23:25 am
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -52,8 +52,6 @@ class Scene(object):
         Arguments:
             scene {str} -- scene name
         """
-
-
         rospy.loginfo("Loading %s scene", scene)
         self._clear_env()
         with open(ROS_PKG_PATH+scene+".scene") as f:

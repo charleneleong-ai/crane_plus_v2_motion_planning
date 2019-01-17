@@ -2,15 +2,13 @@
 # -*- coding:utf-8 -*-
 ###
 # File Created: Wednesday, 16th January 2019 10:02:10 am
-# Modified By: charlene
-# Last Modified: Wed Jan 16 2019
+# Modified By: Charlene Leong
+# Last Modified: Thursday, January 17th 2019, 10:22:44 am
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
-
 import sys
 import rospy
-
 from moveit_msgs.srv import GetPlannerParams, SetPlannerParams
 
 class PlannerConfig(object):
@@ -65,10 +63,10 @@ class PlannerConfig(object):
         """Calls GetPlannerParams moveit ROS service and returns params for select planenr
         
         Arguments:
-            planner_id {str} -- planner_name
+            planner_id {str} -- planner name
         
         Returns:
-            dict -- planner_params
+            dict -- planner params
         """
         # rospy.loginfo('Waiting for get_planner_params')
         rospy.wait_for_service('get_planner_params')
@@ -85,6 +83,12 @@ class PlannerConfig(object):
         return params
 
     def set_planner_params(self, planner_id, params):
+        """Calls SetPlannerParams moveit Ros service to set planner params for select planner
+        
+        Args:
+            planner_id (str): planner name
+            params (dict): planner params
+        """
         # rospy.loginfo('Waiting for set_planner_params')
         rospy.wait_for_service('set_planner_params')
         set_planner_params = rospy.ServiceProxy(

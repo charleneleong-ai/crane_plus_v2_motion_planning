@@ -2,8 +2,8 @@
 # -*- coding:utf-8 -*-
 ###
 # File Created: Tuesday, 15th January 2019 3:19:44 pm
-# Modified By: charlene
-# Last Modified: Thu Jan 17 2019
+# Modified By: Charlene Leong
+# Last Modified: Thursday, January 17th 2019, 10:14:43 am
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -20,14 +20,11 @@ import std_msgs.msg
 import moveit_commander
 import moveit_msgs.msg
 
-
 from planner_config import PlannerConfig
 
 ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
 
 # from objectives import objectives
-
-
 class Session(object):
     """"""
     Session Base Class

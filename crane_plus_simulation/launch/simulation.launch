@@ -20,6 +20,7 @@ Author: Charlene Leong (charleneleong84@gmail.com)
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
  </include> 
+ 
   <!-- Spawn the manipulator model -->
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model crane_plus" />
 
