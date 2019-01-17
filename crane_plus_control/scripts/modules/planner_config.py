@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 10:02:10 am
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 2:42:44 pm
+# Last Modified: Thursday, January 17th 2019, 4:43:47 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -29,7 +29,7 @@ class PlannerConfig(object):
                 '~planner_configs_'+self.planner_select+'_tune')
             self.name = self.planner_select+'_tune'
        
-        self.planners = list(self.planner_config.keys())
+        self.planners = self.planner_config.keys()
 
         # Override with OMPL config for above planners in ompl mode
         if rospy.get_param('~mode') == 'ompl':

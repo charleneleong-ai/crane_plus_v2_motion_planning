@@ -3,13 +3,13 @@
 ###
 # File Created: Wednesday, 16th January 2019 10:02:24 am
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 3:28:04 pm
+# Last Modified: Thursday, January 17th 2019, 4:27:18 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
 import sys
 from timeit import default_timer as timer
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 import itertools
 
 import csv
@@ -39,7 +39,7 @@ class HyperOptSession(Session):
     Args:
         Session (object): Session object initiates session with default funcitons
     """
-    PLANNING_TIME = 2  # seconds
+    PLANNING_TIME = 3  # seconds
 
     def __init__(self, mode):
         super(HyperOptSession, self).__init__(mode)
@@ -56,11 +56,20 @@ class HyperOptSession(Session):
             params_config['planner'], params_set)
 
         # Execute experiment for iter times and get planning and run_time stats
-        stats = super(HyperOptSession, self)._get_stats(
-            params_config['start_pose'], params_config['target_pose'])
+        # stats = super(HyperOptSession, self)._get_stats(
+        #     params_config['start_pose'], params_config['target_pose'])
+        results = super(HyperOptSession, self)._run_problem_set()
 
+        
         # loss = sum(stats.values())
         loss = stats['avg_path_length']
+
+        # means = defaultdict(RunningMean())
+        # for v in 
+
+
+        for v in d.values():
+            means[v["start date"]] += (v["qty"])
 
         rospy.loginfo('n_trial: %d loss: %.4f avg_run_time: %.4f avg_plan_time: %.4f avg_dist: %.4f avg_path_length: %.4f',
                       self.n_trial, loss, stats['avg_run_time'], stats['avg_plan_time'], stats['avg_dist'], stats['avg_path_length'])
@@ -80,8 +89,8 @@ class HyperOptSession(Session):
                              [('params', params_set), ('status', STATUS_OK)])
         # print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
 
-        result_df = pd.DataFrame(
-            dict(result_csv), columns=result.keys(), index=[0])
+        result_df = pd.DataFrame(dict(result_csv), columns=result.keys(), index=[0])
+
         with open(self.results_path, 'a') as f:
             result_df.to_csv(f, header=False, index=False)
 
@@ -181,5 +190,22 @@ class HyperOptSession(Session):
         #     # pprint.pprint(trials.results)
 
         # pprint.pprint(self.results_df)
-
+        
         rospy.loginfo('Saved results to %s', self.results_path)
+        print("\n")
+
+class RunningMean(object):
+    def __init__(self, total=0.0, n=0):
+        self.total=total
+        self.n = n
+
+    def __iadd__(self, other):
+        self.total += other
+        self.n += 1
+        return self
+
+    def mean(self): 
+        return (self.total/self.n if self.n else 0)
+
+    def __repr__(self):
+        return "RunningMean(total=%f, n=%i)" %(self.total, self.n)
