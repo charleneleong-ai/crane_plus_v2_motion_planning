@@ -3,7 +3,7 @@
 ###
 # File Created: Tuesday, 15th January 2019 3:19:44 pm
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 6:50:16 pm
+# Last Modified: Thursday, January 17th 2019, 7:40:09 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -195,9 +195,13 @@ class Session(object):
         return {'avg_runs': self.iter, 'avg_run_time': avg_run_time, 'avg_plan_time': avg_plan_time,
                 'avg_dist': avg_dist, 'avg_path_length': avg_path_length}
 
-    def _run_problem_set(self, planner_id, append=False, results_path=""):
-        
-        result = {}
+    def _run_problem_set(self, planner_id, save=False, results_path=""):
+        result_log = {}
+        t_avg_run_time = 0      # Totals
+        t_avg_plan_time = 0
+        t_avg_dist = 0
+        t_avg_path_length = 0
+
         for x1 in xrange(len(self.scenes)):     # Scene loop
             query_count = 0                    # Initiate query count for each scene
             scene_name = self.scenes[x1]
@@ -229,19 +233,24 @@ class Session(object):
                     # Update query with planner results
                     query.update(planner_results)
 
-                    if append == True:        # Append results to csv if in benchmark session
+                    t_avg_run_time += planner_results['avg_run_time']
+                    t_avg_plan_time += planner_results['avg_plan_time']
+                    t_avg_dist += planner_results['avg_dist']
+                    t_avg_path_length += planner_results['avg_path_length']
+
+                    if save is True:        # Append results to csv if in benchmark session
                         with open(results_path, 'a') as f:
                             writer = csv.writer(f)
-                            writer.writerow([planner_id, scene_name, query_count, start_pose, target_pose, planner_results['avg_runs'],
-                                             planner_results['avg_run_time'], planner_results[
-                                                 'avg_plan_time'], planner_results['avg_dist'],
-                                             planner_results['avg_path_length'], self.planner_config_obj.get_planner_params(planner_id)])
+                            writer.writerow([planner_id, scene_name, query_count, start_pose, target_pose, planner_results['avg_runs'], planner_results['avg_run_time'],
+                                             planner_results['avg_plan_time'], planner_results['avg_dist'], planner_results['avg_path_length'], self.planner_config_obj.get_planner_params(planner_id)])
 
                     # Add query dict to scene dict
                     scene[query_count] = query
                     query_count += 1
-            result[x1] = scene        # Add scene dict to results
-        return result
+            result_log[x1] = scene        # Add scene dict to results
+            stats = {'t_avg_run_time': t_avg_run_time, 't_avg_plan_time': t_avg_plan_time,
+                     't_avg_dist': t_avg_dist, 't_avg_path_length': t_avg_path_length}
+        return result_log, stats
 
     def run(self):
         raise NotImplementedError, 'Should be implemented in child class'
@@ -260,73 +269,3 @@ class Session(object):
                 'loss', ascending=True, inplace=True)
             planner_df.reset_index(inplace=True, drop=True)
             print(planner_df.head())
-
-       # def _run_problem_set(self):
-    #     """Runs the problem set
-
-    #     Returns:
-    #         dict: results of all scenes, queries, poses and stats
-    #     """
-
-    #     if self.mode in ['default', 'ompl']:
-    #         with open(self.results_path, 'w') as f:
-    #             writer = csv.writer(f)
-    #             writer.writerow(['scene', 'query', 'planner', 'start_pose', 'target_pose', 'avg_runs', 'avg_run_time',
-    #                             'avg_plan_time', 'avg_dist', 'avg_path_length', 'params'])
-
-    #     results = {}                       # Create empty results dict
-    #     for x1 in xrange(len(self.scenes)):     # Scene loop
-    #         scene_name = self.scenes[x1]
-
-    #         # Clears previous scene and loads scene to server, loads states
-    #         scene_obj = Scene(self.scenes[x1])
-    #         states = scene_obj.states                    # Gets loaded states
-
-    #         query_count = 1
-    #         scene = {'name': scene_name}         # Create scene dict
-    #         scene['query_count'] = query_count
-
-    #         for x2 in xrange(len(states)):
-
-    #             start_pose = states[x2]
-
-    #             # Loops to decide start_pose and target_pose states
-    #             for x3 in range(x2+1, len(states)):
-
-    #                 target_pose = states[x3]
-
-    #                 query = {'start_pose': start_pose, 'target_pose': target_pose}  # Create query dict
-
-    #                 for x4 in xrange(len(self.planners)):
-    #                     planner_name = self.planners[x4]
-    #                     self.group.set_planner_id(planner_name)     #set new planner ID
-
-    #                     rospy.loginfo('%d Executing %s from %s to %s for average over %d runs',
-    #                         query_count, planner_name, start_pose, target_pose, self.iter)
-
-    #                     planner_results = self._get_stats(
-    #                         start_pose, target_pose)    # Plan path and add results to planner dict
-
-    #                     query[planner_name] = planner_results   # Add planner results to query dict
-
-    #                     # Append results to csv if in benchmark session
-    #                     if self.mode in ['default', 'ompl']:
-    #                         with open(self.results_path, 'a') as f:
-    #                             writer = csv.writer(f)
-    #                             writer.writerow([scene_name, query_count, planner_name, start_pose, target_pose, planner_results['avg_runs'],
-    #                                             planner_results['avg_run_time'], planner_results['avg_plan_time'], planner_results['avg_dist'],
-    #                                             planner_results['avg_path_length'], self.planner_config_obj.get_planner_params(planner_name)])
-
-    #                 scene['query'] = query      # Add query dict to scene dict
-    #                 results['scene'] = scene
-
-    #                 query_count += 1
-
-    #     # data_string = ROS_PKG_PATH+'/benchmark_' + str(dt.now().year) + '.' + str(dt.now().month) + '.' + str(dt.now().day) + '_' + str(dt.now().hour) + '.' + str(dt.now().minute) + '_' + str(self.iter) + '.p'
-
-    #     # with open(data_string, 'wb') as fp:    # Dump with run
-    #     #     pickle.dump(results, fp)
-    #     pprint.pprint(results)
-    #     rospy.loginfo('Saved results to %s', self.results_path)
-
-    #     return results

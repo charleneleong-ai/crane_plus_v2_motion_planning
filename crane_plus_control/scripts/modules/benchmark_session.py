@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 2:10:34 pm
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 6:50:24 pm
+# Last Modified: Thursday, January 17th 2019, 7:41:43 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -37,7 +37,6 @@ class BenchmarkSession(Session):
         super(BenchmarkSession, self).__init__(mode)
         rospy.loginfo('Initialising benchmarking session in %s mode', mode)
 
-
     def run(self):
         self.group.set_planning_time(self.PLANNING_TIME)
 
@@ -45,16 +44,19 @@ class BenchmarkSession(Session):
         with open(self.results_path, 'w') as f:
             writer = csv.writer(f)
             writer.writerow(['planner', 'scene', 'query', 'start_pose', 'target_pose', 'avg_runs', 'avg_run_time',
-                            'avg_plan_time', 'avg_dist', 'avg_path_length', 'params'])
-    
+                             'avg_plan_time', 'avg_dist', 'avg_path_length', 'params'])
+
         results = {}
         for p in self.planners:
-            result = super(BenchmarkSession, self)._run_problem_set(planner_id=p, append=True, results_path=self.results_path)
+            result = super(BenchmarkSession, self)._run_problem_set(
+                planner_id=p, save=True, results_path=self.results_path)
             results[p] = result
         # pprint.pprint(results)
-                    
-        with open(ROS_PKG_PATH+'/'+self.planner_config_obj.planner_select+'_'+self.mode+'.p', 'wb') as f:    # Dump as latest benchmark
+
+        # Dump as latest benchmark
+        with open(ROS_PKG_PATH+'/'+self.planner_config_obj.planner_select+'_'+self.mode+'.p', 'wb') as f:
             pickle.dump(results, f)
 
-
-                        
+        print("\n")
+        rospy.loginfo('Saved results to %s', self.results_path)
+        print("\n")
