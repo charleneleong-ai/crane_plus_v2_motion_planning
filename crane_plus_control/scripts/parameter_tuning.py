@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 1:56:33 pm
 # Modified By: charlene
-# Last Modified: Wed Jan 16 2019
+# Last Modified: Thu Jan 17 2019
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -15,6 +15,7 @@ from modules.parameter_tuning_session import ParamTuningSession
 from modules.benchmark_session import BenchmarkSession
 
 def main():
+    
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('parameter_tuning', anonymous=True)
     # session = ParamTuningSession()

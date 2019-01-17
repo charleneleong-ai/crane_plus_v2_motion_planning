@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 2:10:34 pm
 # Modified By: charlene
-# Last Modified: Wed Jan 16 2019
+# Last Modified: Thu Jan 17 2019
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -38,11 +38,12 @@ ROS_PKG_PATH =  rospkg.RosPack().get_path('crane_plus_control')+'/scripts'
 
 
 class BenchmarkSession(Session):
-    """Constructor for Benchmarking Session
+    """Constructor for benchmarking session
     
-    Arguments:
-        Session {[object]} -- Inherits the Session class
+    Args:
+        Session (object): Session object initiates session with default functions
     """
+
     PLANNING_TIME = 2 # second, 
 
     def __init__(self):
@@ -52,8 +53,9 @@ class BenchmarkSession(Session):
         # self.states = rospy.get_param('~named_states')
 
     def run(self):
-        """[Runs benchmarking session]
+        """Runs benchmarking session
         """
+
         prog_counter = 0   			# Progression counter that counts to 2*amount of scenes
 
         self.group.set_planning_time(self.PLANNING_TIME)     

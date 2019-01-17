@@ -3,7 +3,7 @@
 ###
 # File Created: Tuesday, 15th January 2019 3:19:44 pm
 # Modified By: charlene
-# Last Modified: Wed Jan 16 2019
+# Last Modified: Thu Jan 17 2019
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -29,9 +29,9 @@ ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
 
 
 class Session(object):
-    """
+    """"""
     Session Base Class
-    """
+    """"""
 
     def __init__(self):
         self.planner_config_obj = PlannerConfig()
@@ -55,6 +55,7 @@ class Session(object):
         self.scene = moveit_commander.PlanningSceneInterface()
 
     def _move_arm(self, pose):
+        
         self.group.set_named_target(pose)
         plan = self.group.plan()
         display_trajectory_publisher = rospy.Publisher('/group/display_planned_path',
@@ -70,6 +71,15 @@ class Session(object):
         self.group.stop()
 
     def _plan_path(self, start_pose, target_pose):
+        """Returns path (RobotTrajectory) given a start pose and target pose
+        
+        Args:
+            start_pose (str): desired start pose
+            target_pose (str): desired target psoe
+        
+        Returns:
+            (dict{str}): path info {path, planning time, path length}
+        """
         # start_state = self.robot.get_current_state()
         # start_state.joint_state.position = start_pose
         # self.group.set_start_state(start_state)
@@ -86,11 +96,15 @@ class Session(object):
         return {"path": planned_path, "plan_time": plan_time, "length": length}
 
     def _get_path_length(self, path):
+        """Returns the eucld dist and path length of given motion plan (RobotTrajectory)
+        
+        Args:
+            path (RobotTrajectory) -- MoveIt RobotTrajectory Message
+        
+        Returns:
+            (dict{str}) -- eucld dist of path and path length in jointspace
         """
-        Function to calculate both dist path lengths and actual path both in jointspace and workspace
-        :param path: plan from move_group
-        :return: dict of lengths in jointspace and workspace
-        """
+
         pts = path.joint_trajectory.points
         j_length = 0    # j = jointspace
         # w_length = 0    # w = workspace
@@ -114,9 +128,8 @@ class Session(object):
         return {'joint_dist': j_dist, 'joint_length': j_length}
 
     def _get_forward_kinematics(self, joint_pos):
-        """
-        Function that gets the forward kinematics using the move_group service
-        """
+        
+
         rospy.wait_for_service('compute_fk')
         try:
             moveit_fk = rospy.ServiceProxy(
