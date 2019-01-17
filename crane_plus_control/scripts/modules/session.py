@@ -3,12 +3,13 @@
 ###
 # File Created: Tuesday, 15th January 2019 3:19:44 pm
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 1:22:58 pm
+# Last Modified: Thursday, January 17th 2019, 3:22:50 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
 from timeit import default_timer as timer
-
+import time
+import csv
 import pprint
 import pandas as pd
 import numpy as np
@@ -21,6 +22,7 @@ import moveit_commander
 import moveit_msgs.msg
 
 from planner_config import PlannerConfig
+from scene_object import Scene
 
 ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
 
@@ -33,38 +35,39 @@ class Session(object):
     def __init__(self, mode):
         self.planner_config_obj = PlannerConfig()
         self.mode = mode
-        self.name = self.planner_config_obj.name
         self.planner_config = self.planner_config_obj.planner_config
         self.planners = self.planner_config_obj.planners
 
         self.n_trial = 0
-        if self.mode not in ['baseline', 'ompl']:
+        if self.mode not in ['default', 'ompl']:
             self.max_trials = rospy.get_param('~max_trials')
         self.iter = rospy.get_param('~iter')
         self.start_pose = self.planner_config_obj.start_pose
         self.target_pose = self.planner_config_obj.target_pose
 
-        self.results_path = ROS_PKG_PATH+'/results/'+self.name+'.csv'
+        self.results_path = ROS_PKG_PATH+'/results/'+self.planner_config_obj.planner_select+'_'+self.mode+'.csv'
 
         self.robot = moveit_commander.RobotCommander()
         self.group = moveit_commander.MoveGroupCommander('arm')
-        self.planning_frame = self.group.get_planning_frame()  # '/world'
+        self.planning_frame = self.group.get_planning_frame()  
         self.scene = moveit_commander.PlanningSceneInterface()
+        self.display_trajectory_publisher = rospy.Publisher('/group/display_planned_path',
+                                                       moveit_msgs.msg.DisplayTrajectory,
+                                                       queue_size=20)
+
+        self.scenes = ['narrow']
 
     def _move_arm(self, pose, plan=None):
         
         self.group.set_named_target(pose)
 
-        if(plan==None):
+        if plan is None:
             plan = self.group.plan()
         
-        display_trajectory_publisher = rospy.Publisher('/group/display_planned_path',
-                                                       moveit_msgs.msg.DisplayTrajectory,
-                                                       queue_size=20)
         display_trajectory = moveit_msgs.msg.DisplayTrajectory()
         display_trajectory.trajectory_start = self.robot.get_current_state()
         display_trajectory.trajectory.append(plan)
-        display_trajectory_publisher.publish(display_trajectory)
+        self.display_trajectory_publisher.publish(display_trajectory)
 
         #rospy.loginfo('Moving to %s pose', pose)
         self.group.go(wait=True)
@@ -91,7 +94,6 @@ class Session(object):
         length = 0
         if len(planned_path.joint_trajectory.points) != 0:  # not sure how to figure out a failure otherwise
             length = self._get_path_length(planned_path)
-            # success = 1
 
         return {'planned_path': planned_path, 'plan_time': plan_time, 'length': length}
 
@@ -179,6 +181,71 @@ class Session(object):
                   'avg_dist': avg_dist, 'avg_path_length': avg_path_length}
 
         return result
+   
+    def _run_problem_set(self):
+        if self.mode in ['default', 'ompl']:
+            with open(self.results_path, 'w') as f:
+                writer = csv.writer(f)
+                writer.writerow(['scene', 'query', 'planner', 'start_pose', 'target_pose', 'avg_runs', 'avg_run_time',
+                                'avg_plan_time', 'avg_dist', 'avg_path_length', 'params'])
+
+        results = {}                       # Create empty results dict
+        for x1 in xrange(len(self.scenes)):     # Scene loop
+            scene_name = self.scenes[x1]
+
+            # Clears previous scene and loads scene to server, loads states
+            scene_obj = Scene(self.scenes[x1])
+            states = scene_obj.states                    # Gets loaded states
+
+            query_count = 1
+            scene = {'name': scene_name}         # Create scene dict
+            scene['query_count'] = query_count
+            
+            for x2 in xrange(len(states)):
+
+                start_pose = states[x2]
+
+                # Loops to decide start_pose and target_pose states
+                for x3 in range(x2+1, len(states)):
+
+                    target_pose = states[x3]
+
+                    query = {'start_pose': start_pose,
+                             'target_pose': target_pose}  # Create query dict
+
+                    for x4 in xrange(len(self.planners)):
+                        planner_name = self.planners[x4]
+                        self.group.set_planner_id(planner_name)     #set new planner ID
+
+                        rospy.loginfo('%d Executing %s from %s to %s for average over %d runs',
+                            query_count, planner_name, start_pose, target_pose, self.iter)
+                        
+                        planner_results = self._get_stats(
+                            start_pose, target_pose)    # Plan path and add results to planner dict
+                        
+                        query[planner_name] = planner_results   # Add planner results to query dict
+
+                        # Append results to csv if in benchmark session
+                        if self.mode in ['default', 'ompl']:
+                            with open(self.results_path, 'a') as f:
+                                writer = csv.writer(f)
+                                writer.writerow([scene_name, query_count, planner_name, start_pose, target_pose, planner_results['avg_runs'],
+                                                planner_results['avg_run_time'], planner_results['avg_plan_time'], planner_results['avg_dist'],
+                                                planner_results['avg_path_length'], self.planner_config_obj.get_planner_params(planner_name)])
+
+                    scene['query'] = query      # Add query dict to scene dict
+                    results['scene'] = scene
+
+                    query_count += 1
+
+        # data_string = ROS_PKG_PATH+'/benchmark_' + str(dt.now().year) + '.' + str(dt.now().month) + '.' + str(dt.now().day) + '_' + str(dt.now().hour) + '.' + str(dt.now().minute) + '_' + str(self.iter) + '.p'
+       
+        # with open(data_string, 'wb') as fp:    # Dump with run
+        #     pickle.dump(results, fp)
+            
+        rospy.loginfo('Saved results to %s', self.results_path)
+
+        return results
 
     def run(self):
         raise NotImplementedError, 'Should be implemented in child class'

@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 1:56:33 pm
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 1:31:30 pm
+# Last Modified: Thursday, January 17th 2019, 3:09:34 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -14,13 +14,15 @@ from modules.hyperopt_session import HyperOptSession
 from modules.benchmark_session import BenchmarkSession
 
 def check_params(mode):
-    if mode not in ['baseline', 'tpe', 'rand', 'ompl']:
+    if mode not in ['default', 'tpe', 'rand', 'ompl']:
         rospy.logerr('Invalid mode.')
+        rospy.logerr('Please choose from %s', str(['default', 'tpe', 'rand', 'ompl']))
         sys.exit(1)
 
     planner_select = rospy.get_param('~planner_config')
     if planner_select not in ['Cano_etal']:
-        rospy.logerr('Invalid planner config select')
+        rospy.logerr('Invalid planner config select.')
+        rospy.logerr('Please choose from %s', str(['Cano_etal']))
         sys.exit(1)
     
     start_pose = rospy.get_param('~start_pose')
@@ -29,11 +31,11 @@ def check_params(mode):
 
     if target_pose not in named_states:
         rospy.logerr('target_pose not in list of named_states')
-        rospy.logerr(named_states)
+        rospy.logerr('Please choose from %s', str(named_states))
         sys.exit(1)
     elif start_pose not in named_states:
         rospy.logerr('start_pose not in list of named_states')
-        rospy.logerr(named_states)
+        rospy.logerr('Please choose from %s', str(named_states))
         sys.exit(1)
 
 
@@ -45,12 +47,12 @@ def main():
     mode = rospy.get_param('~mode')
     check_params(mode)
 
-    if(mode in ['baseline', 'ompl']):
+    if(mode in ['default', 'ompl']):
         session = BenchmarkSession(mode)
     elif(mode in ['tpe', 'rand']):
         session = HyperOptSession(mode)
 
-    # session.run()
+    session.run()
     # session.get_results()
     moveit_commander.roscpp_shutdown()
 

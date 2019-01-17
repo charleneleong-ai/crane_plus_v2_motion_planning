@@ -10,8 +10,8 @@ Author: Charlene Leong (charleneleong84@gmail.com)
   <!-- option to choose target -->
   <arg name="start_pose" default="backbend"/>       <!-- [vertical, backbend, resting] -->
   <arg name="target_pose" default="resting"/>
-  <arg name="planner_config" default="Cano_etal"/>  <!-- ["Cano_etal, rand, tpe] -->
-  <arg name="mode" default="tpe"/>                  <!-- [baseline, rand, tpe] -->
+  <arg name="planner_config" default="Cano_etal"/>  <!-- [Cano_etal] -->
+  <arg name="mode" default="tpe"/>                  <!-- [default, ompl, rand, tpe] -->
   
   <arg name="max_trials" default="30" />
   <arg name="iter" default="1" />
@@ -20,7 +20,7 @@ Author: Charlene Leong (charleneleong84@gmail.com)
   <arg name="param_mode" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>
   <arg name="planner_configs" default="$(find crane_plus_control)/config/planner_configs.yaml"/>
 
-  <node pkg="crane_plus_control" name="parameter_tuning" type="parameter_tuning.py" output="screen" required="true">
+  <node pkg="crane_plus_control" name="parameter_tuning" type="parameter_tuning.py" output="screen">
     <rosparam command="load" file="$(arg param_mode)"/>
     <rosparam command="load" file="$(arg planner_configs)"/>
     <param name="start_pose" type="str" value="$(arg start_pose)" />
@@ -28,7 +28,7 @@ Author: Charlene Leong (charleneleong84@gmail.com)
     <param name="planner_config" type="str" value="$(arg planner_config)" />
     
     <param name="mode" type="str" value="$(arg mode)" />
-    <param unless="$(eval arg('mode') == 'baseline')" name="max_trials" type="int" value="$(arg max_trials)" />
+    <param name="max_trials" type="int" value="$(arg max_trials)" />
     <param name="iter" type="int" value="$(arg iter)" />
   </node>
   
