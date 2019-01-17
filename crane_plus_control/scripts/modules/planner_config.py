@@ -3,58 +3,50 @@
 ###
 # File Created: Wednesday, 16th January 2019 10:02:10 am
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 10:22:44 am
+# Last Modified: Thursday, January 17th 2019, 1:52:05 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
 import sys
 import rospy
+import moveit_msgs.msg
 from moveit_msgs.srv import GetPlannerParams, SetPlannerParams
+
 
 class PlannerConfig(object):
     def __init__(self):
-        self.planning_time = 2  # seconds
+        self.planner_select = rospy.get_param('~planner_config')
 
-        self.planner_select = rospy.get_param(
-            "~planner_config")
-        if self.planner_select not in ['Cano_etal']:
-                rospy.logerr("Invalid planner config select")
-                sys.exit(1)
+        self.start_pose = rospy.get_param('~start_pose')
+        self.target_pose = rospy.get_param('~target_pose')
+        self.named_states = rospy.get_param('~named_states')
 
-        self.start_pose = rospy.get_param("~start_pose")
-        self.target_pose = rospy.get_param("~target_pose")
-        self.named_states = rospy.get_param("~named_states")
-
-        if self.target_pose not in self.named_states:
-            rospy.logerr('target_pose not in list of named_states')
-            rospy.logerr(self.named_states)
-            sys.exit(1)
-        elif self.start_pose not in self.named_states:
-            rospy.logerr('start_pose not in list of named_states')
-            rospy.logerr(self.named_states)
-            sys.exit(1)
-
-        self.mode = rospy.get_param("~mode")
-        if self.mode not in ['baseline', 'tpe', 'rand']:
-            rospy.logerr("Invalid mode.")
-            sys.exit(1)
-
-        if self.mode is "baseline":
+        if rospy.get_param('~mode') == 'ompl':
             self.planner_config = rospy.get_param(
-                "~planner_configs_"+self.planner_select+"_default")       
+                '/move_group/planner_configs/')
+
+        elif rospy.get_param('~mode') == 'baseline':
+            self.planner_config = rospy.get_param(
+                '~planner_configs_'+self.planner_select+'_default')
+            self.name = self.planner_select+'_default'
+
         else:
             self.planner_config = rospy.get_param(
-                "~planner_configs_"+self.planner_select+"_tune")
-        assert isinstance(self.planner_config, dict)
+                '~planner_configs_'+self.planner_select+'_tune')
+            self.name = self.planner_select+'_tune'
 
+        assert isinstance(self.planner_config, dict)
+        
         self.planners = list(self.planner_config.keys())
-        self.name = self.planner_select+"_"+self.mode
+
+        for k, v in self.planner_config.iteritems():
+            self.set_planner_params(k, v)
 
     def get_planner_config(self):
         return self.planner_config
-        
-    def get_planner_mode(self):
-        return self.mode
+
+    def get_planner_name(self):
+        return self.name
 
     def get_planners(self):
         return self.planners
@@ -73,30 +65,33 @@ class PlannerConfig(object):
         get_planner_params = rospy.ServiceProxy(
             'get_planner_params', GetPlannerParams)
         try:
-            req = get_planner_params(planner_id, "arm")
+            req = get_planner_params(planner_id, 'arm')
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
 
         params = {}
-        for idx, k in enumerate(req.params.keys):         
+        for idx, k in enumerate(req.params.keys):
             params[k] = req.params.values[idx]
         return params
 
-    def set_planner_params(self, planner_id, params):
+    def set_planner_params(self, planner_id, params_set):
         """Calls SetPlannerParams moveit Ros service to set planner params for select planner
         
         Args:
             planner_id (str): planner name
-            params (dict): planner params
-        """
+            params_set (dict): planner params
+        """       
+        # Convert dict to PlannerParams msg
+        params = moveit_msgs.msg.PlannerParams()
+        params.keys = params_set.keys()
+        params.values = [str(v) for v in params_set.values()]
+
         # rospy.loginfo('Waiting for set_planner_params')
         rospy.wait_for_service('set_planner_params')
         set_planner_params = rospy.ServiceProxy(
             'set_planner_params', SetPlannerParams)
         try:
-            set_planner_params(planner_id, "arm", params, True)
-            rospy.loginfo('Parameters updated')
+            set_planner_params(planner_id, 'arm', params, True)
+            rospy.loginfo('%s parameters updated', planner_id)
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
-
-    

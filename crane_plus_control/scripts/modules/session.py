@@ -3,7 +3,7 @@
 ###
 # File Created: Tuesday, 15th January 2019 3:19:44 pm
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 10:14:43 am
+# Last Modified: Thursday, January 17th 2019, 1:22:58 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -26,35 +26,38 @@ ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
 
 # from objectives import objectives
 class Session(object):
-    """"""
+    """
     Session Base Class
-    """"""
+    """
 
-    def __init__(self):
+    def __init__(self, mode):
         self.planner_config_obj = PlannerConfig()
-        self.mode = self.planner_config_obj.mode
+        self.mode = mode
         self.name = self.planner_config_obj.name
         self.planner_config = self.planner_config_obj.planner_config
         self.planners = self.planner_config_obj.planners
 
         self.n_trial = 0
-        if self.mode != "baseline":
-            self.max_trials = rospy.get_param("~max_trials")
-        self.iter = rospy.get_param("~iter")
+        if self.mode not in ['baseline', 'ompl']:
+            self.max_trials = rospy.get_param('~max_trials')
+        self.iter = rospy.get_param('~iter')
         self.start_pose = self.planner_config_obj.start_pose
         self.target_pose = self.planner_config_obj.target_pose
 
-        self.results_path = ROS_PKG_PATH+'/results/'+self.name+".csv"
+        self.results_path = ROS_PKG_PATH+'/results/'+self.name+'.csv'
 
         self.robot = moveit_commander.RobotCommander()
-        self.group = moveit_commander.MoveGroupCommander("arm")
-        self.planning_frame = self.group.get_planning_frame()  # "/world"
+        self.group = moveit_commander.MoveGroupCommander('arm')
+        self.planning_frame = self.group.get_planning_frame()  # '/world'
         self.scene = moveit_commander.PlanningSceneInterface()
 
-    def _move_arm(self, pose):
+    def _move_arm(self, pose, plan=None):
         
         self.group.set_named_target(pose)
-        plan = self.group.plan()
+
+        if(plan==None):
+            plan = self.group.plan()
+        
         display_trajectory_publisher = rospy.Publisher('/group/display_planned_path',
                                                        moveit_msgs.msg.DisplayTrajectory,
                                                        queue_size=20)
@@ -63,7 +66,7 @@ class Session(object):
         display_trajectory.trajectory.append(plan)
         display_trajectory_publisher.publish(display_trajectory)
 
-        #rospy.loginfo("Moving to %s pose", pose)
+        #rospy.loginfo('Moving to %s pose', pose)
         self.group.go(wait=True)
         self.group.stop()
 
@@ -85,12 +88,12 @@ class Session(object):
         planned_path = self.group.plan()
         plan_time = timer() - start_time
 
-        # not sure how to figure out a failure otherwise
-        if len(planned_path.joint_trajectory.points) != 0:
+        length = 0
+        if len(planned_path.joint_trajectory.points) != 0:  # not sure how to figure out a failure otherwise
             length = self._get_path_length(planned_path)
             # success = 1
 
-        return {"path": planned_path, "plan_time": plan_time, "length": length}
+        return {'planned_path': planned_path, 'plan_time': plan_time, 'length': length}
 
     def _get_path_length(self, path):
         """Returns the eucld dist and path length of given motion plan (RobotTrajectory)
@@ -125,19 +128,17 @@ class Session(object):
         return {'joint_dist': j_dist, 'joint_length': j_length}
 
     def _get_forward_kinematics(self, joint_pos):
-        
-
         rospy.wait_for_service('compute_fk')
         try:
             moveit_fk = rospy.ServiceProxy(
                 'compute_fk', moveit_msgs.srv._GetPositionFK.GetPositionFK)
         except rospy.ServiceException, e:
-            rospy.logerror("Service call failed: %s" % e)
+            rospy.logerror('Service call failed: %s' % e)
 
         fkln = ['ee_link']  # forward kinematic link to be calculated
 
         # make header for the argument to moveit_fk
-        header = std_msgs.msg.Header(0, rospy.Time.now(), "/world")
+        header = std_msgs.msg.Header(0, rospy.Time.now(), '/world')
 
         rs = self.robot.get_current_state()
         rs.joint_state.position = joint_pos  # robot state for argument to moveit_fk
@@ -160,7 +161,7 @@ class Session(object):
             self._move_arm(start_pose)  # reset to start pose
             start_time = timer()
             path = self._plan_path(start_pose, target_pose)
-            self._move_arm(target_pose)
+            self._move_arm(target_pose, path['planned_path'])
             run_time = timer() - start_time
 
             run_times.append(run_time)
@@ -180,7 +181,7 @@ class Session(object):
         return result
 
     def run(self):
-        raise NotImplementedError, "Should be implemented in child class"
+        raise NotImplementedError, 'Should be implemented in child class'
 
     def get_results(self):
         # try:

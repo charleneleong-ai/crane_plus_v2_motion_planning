@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 1:41:18 pm
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 10:23:25 am
+# Last Modified: Thursday, January 17th 2019, 1:11:51 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -42,7 +42,7 @@ class Scene(object):
         #         moveit_msgs.msg._AttachedCollisionObject.AttachedCollisionObject,
         #         queue_size=30)
         self.rviz = rospy.get_param('/launch_base/rviz')
-        self.name = "box"
+        self.name = 'box'
         self._load_scene(scene_file)
         self._load_states(scene_file)
 
@@ -52,9 +52,9 @@ class Scene(object):
         Arguments:
             scene {str} -- scene name
         """
-        rospy.loginfo("Loading %s scene", scene)
+        rospy.loginfo('Loading %s scene', scene)
         self._clear_env()
-        with open(ROS_PKG_PATH+scene+".scene") as f:
+        with open(ROS_PKG_PATH+scene+'.scene') as f:
 
             lines = 0   # get lines to know amount of blocks
             for line in f:
@@ -75,7 +75,7 @@ class Scene(object):
                 text = f.readline()
                 dim = []
                 for x in range(0, 3):  # 3D dimension
-                    loc = text.find(" ")
+                    loc = text.find(' ')
                     dim.append(float(text[:loc]))
                     text = text[loc+1:]  # Remove used text
 
@@ -83,7 +83,7 @@ class Scene(object):
                 text = f.readline()
                 pos = []
                 for x in range(0, 3):  # 3D dimension
-                    loc = text.find(" ")
+                    loc = text.find(' ')
                     pos.append(float(text[:loc]))
                     text = text[loc+1:]
 
@@ -91,7 +91,7 @@ class Scene(object):
                 text = f.readline()
                 rot = []
                 for x in range(0, 4):  # 4D dimension
-                    loc = text.find(" ")
+                    loc = text.find(' ')
                     rot.append(float(text[:loc]))
                     text = text[loc+1:]
 
@@ -99,7 +99,7 @@ class Scene(object):
                 text = f.readline()
                 col = []
                 for x in range(0, 4):
-                    loc = text.find(" ")
+                    loc = text.find(' ')
                     col.append(float(text[:loc]))
                     text = text[loc+1:]
                 # Currently unused, also not needed for adding objects
@@ -133,7 +133,7 @@ class Scene(object):
                 # object.operation = object.ADD
                 # self.object_publisher.publish(object)
 
-        rospy.loginfo("Scene loaded")
+        rospy.loginfo('Scene loaded')
 
     def _add_object(self, dim, pos, rot, col):
 
@@ -190,6 +190,6 @@ class Scene(object):
         Arguments:
             scene {str} -- scene name
         """
-        with open(ROS_PKG_PATH+scene+".states") as f:
+        with open(ROS_PKG_PATH+scene+'.states') as f:
             content = f.readlines()
         self.states = [x.strip() for x in content] 

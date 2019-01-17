@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 10:02:24 am
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 10:23:42 am
+# Last Modified: Thursday, January 17th 2019, 1:27:58 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -32,13 +32,19 @@ from hyperopt.pyll.stochastic import sample
 
 from session import Session
 
-class ParamTuningSession(Session):
 
-    def __init__(self):
-        super(ParamTuningSession, self).__init__()
+class HyperOptSession(Session):
+    """Constructor for parameter tuning session
+    
+    Args:
+        Session (object): Session object initiates session with default funcitons
+    """
+
+    def __init__(self, mode):
+        super(HyperOptSession, self).__init__(mode)
+        rospy.loginfo('Initialising hyperopt parameter tuning session')
 
     def _objective(self, params):
-        # raise NotImplementedError, "Should be implemented in child class"
         self.n_trial += 1
         # Extract param set
         params_config = params['params_config']
@@ -49,17 +55,17 @@ class ParamTuningSession(Session):
         planner_params.keys = params_set.keys()
         planner_params.values = [str(v) for v in params_set.values()]
         self.group.set_planner_id(params_config['planner'])
-        self.planner_config_obj.set_planner_params(
+        self.planner_config.set_planner_params(
             params_config['planner'], planner_params)
 
         # Execute experiment for iter times and get planning and run_time stats
-        stats = super(ParamTuningSession, self)._get_stats(
+        stats = super(HyperOptSession, self)._get_stats(
             params_config['start_pose'], params_config['target_pose'])
 
         # loss = sum(stats.values())
         loss = stats['avg_path_length']
 
-        rospy.loginfo("n_trial: %d loss: %.4f avg_run_time: %.4f avg_plan_time: %.4f avg_dist: %.4f avg_path_length: %.4f",
+        rospy.loginfo('n_trial: %d loss: %.4f avg_run_time: %.4f avg_plan_time: %.4f avg_dist: %.4f avg_path_length: %.4f',
                       self.n_trial, loss, stats['avg_run_time'], stats['avg_plan_time'], stats['avg_dist'], stats['avg_path_length'])
 
         # Create OrderedDict to write to CSV
@@ -107,11 +113,11 @@ class ParamTuningSession(Session):
             params['params_config'] = {
                 'planner': planner, 'start_pose': start_pose, 'target_pose': target_pose}
 
-            print("\n")
-            rospy.loginfo("Executing %s on %s:  Max trials: %d Averaging over %d runs", self.mode,
+            print('\n')
+            rospy.loginfo('Executing %s on %s:  Max trials: %d Averaging over %d runs', self.mode,
                           params['params_config']['planner'], self.max_trials, self.iter)
             self.n_trial = 0        # Reset to n_trials to zero for each planner
-            if self.mode == "tpe":
+            if self.mode == 'tpe':
                 algo = partial(tpe.suggest,
                                # Sample 1000 candidate and select candidate that has highest Expected Improvement (EI)
                                n_EI_candidates=100,
@@ -119,7 +125,7 @@ class ParamTuningSession(Session):
                                gamma=0.2,
                                # First 20 trials are going to be random
                                n_startup_jobs=20)
-            elif self.mode == "rand":
+            elif self.mode == 'rand':
                 algo = rand.suggest
 
             trials = Trials()
@@ -130,51 +136,6 @@ class ParamTuningSession(Session):
         #     # pprint.pprint(trials.results)
 
         # pprint.pprint(self.results_df)
-        # #self.results_df.to_csv(self.results_path, index=False)
-
-    def _obtain_baseline(self, start_pose, target_pose):
-        # for OMPL defaults
-        # self.planner_config = rospy.get_param('/group/planner_configs/')
-        # self.planner_config = dict((k, self.planner_config[k]) for k in self.planners if k in self.planner_config)
-        headers = ['planner', 'start_pose', 'target_pose', 'avg_runs', 'avg_runtime',
-                   'avg_plan_time', 'avg_dist', 'avg_path_length', 'params']
-
-        results = []
-        for p in self.planners:
-            rospy.loginfo(
-                "Executing %s baseline: Averaging over %d runs", p, self.iter)
-            self.group.set_planner_id(p)
-
-            stats = super(ParamTuningSession, self)._get_stats(
-                start_pose, target_pose)
-            params = self.planner_config_obj.get_planner_params(p)
-
-            result = OrderedDict([('planner', p),
-                                  ('start_pose', start_pose),
-                                  ('target_pose', target_pose),
-                                  ('avg_runs', self.iter),
-                                  ('avg_run_time', stats['avg_run_time']),
-                                  ('avg_plan_time', stats['avg_plan_time']),
-                                  ('avg_dist', stats['avg_dist']),
-                                  ('avg_path_length',
-                                   stats['avg_path_length']),
-                                  ('params', str(params))])
-
-            results.append(dict(result))
-
-        results_df = pd.DataFrame(results, columns=headers)
-        results_df.to_csv(self.results_path, index=False)
-
-        results = pd.DataFrame(
-            {'planners': self.planners, 'run_time (s)': stats['avg_run_time'], 'path_length': stats['avg_path_length']})
-        print("\n")
-        print(results)
-
-        return results_df
 
     def run(self):
-        
-        if self.mode == "baseline":
-            self._obtain_baseline(self.start_pose, self.target_pose)
-        else:
-            self._optimise_obj(self.start_pose, self.target_pose)
+        pass

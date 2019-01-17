@@ -2,8 +2,8 @@
 # -*- coding:utf-8 -*-
 ###
 # File Created: Wednesday, 16th January 2019 2:03:37 pm
-# Modified By: charlene
-# Last Modified: Wed Jan 16 2019
+# Modified By: Charlene Leong
+# Last Modified: Thursday, January 17th 2019, 1:16:32 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -18,14 +18,14 @@ ROS_PKG_PATH =  rospkg.RosPack().get_path('crane_plus_moveit_config') + '/script
 class Base(object):
     def __init__(self):
         
-        self.group = moveit_commander.MoveGroupCommander("arm")
+        self.group = moveit_commander.MoveGroupCommander('arm')
         self.robot = moveit_commander.RobotCommander()
         self.planning_frame = self.robot.get_planning_frame()
         self.scene = moveit_commander.PlanningSceneInterface()
         self._load_base_scene()
         
     def _load_base_scene(self):
-        with open(ROS_PKG_PATH+"/base.scene") as f:
+        with open(ROS_PKG_PATH+'/base.scene') as f:
             title = f.readline()
             self.name = f.readline()[2:]
             number = f.readline()     # object number?
@@ -35,7 +35,7 @@ class Base(object):
             text = f.readline()
             self.dim = []
             for x in range (0, 3):          #3D dimension
-                loc = text.find(" ")
+                loc = text.find(' ')
                 self.dim.append(float(text[:loc]))
                 text = text[loc+1:]         #Remove used text
 
@@ -43,7 +43,7 @@ class Base(object):
             text = f.readline()
             self.pos = []
             for x in range (0, 3):          #3D dimension
-                loc = text.find(" ")        
+                loc = text.find(' ')        
                 self.pos.append(float(text[:loc]))
                 text = text[loc+1:]
             
