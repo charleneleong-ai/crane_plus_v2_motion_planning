@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 10:02:10 am
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 1:52:05 pm
+# Last Modified: Thursday, January 17th 2019, 4:43:47 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -16,16 +16,10 @@ from moveit_msgs.srv import GetPlannerParams, SetPlannerParams
 class PlannerConfig(object):
     def __init__(self):
         self.planner_select = rospy.get_param('~planner_config')
-
         self.start_pose = rospy.get_param('~start_pose')
         self.target_pose = rospy.get_param('~target_pose')
-        self.named_states = rospy.get_param('~named_states')
-
-        if rospy.get_param('~mode') == 'ompl':
-            self.planner_config = rospy.get_param(
-                '/move_group/planner_configs/')
-
-        elif rospy.get_param('~mode') == 'baseline':
+        
+        if rospy.get_param('~mode') in ['default', 'ompl']:
             self.planner_config = rospy.get_param(
                 '~planner_configs_'+self.planner_select+'_default')
             self.name = self.planner_select+'_default'
@@ -34,18 +28,26 @@ class PlannerConfig(object):
             self.planner_config = rospy.get_param(
                 '~planner_configs_'+self.planner_select+'_tune')
             self.name = self.planner_select+'_tune'
+       
+        self.planners = self.planner_config.keys()
 
+        # Override with OMPL config for above planners in ompl mode
+        if rospy.get_param('~mode') == 'ompl':
+            self.name = self.planner_select+'_ompl'
+            ompl = rospy.get_param('/move_group/planner_configs/')
+            for p in self.planner_config.keys():
+                self.planner_config[p] = ompl[p]
+                
         assert isinstance(self.planner_config, dict)
-        
-        self.planners = list(self.planner_config.keys())
 
+        # Set params
         for k, v in self.planner_config.iteritems():
             self.set_planner_params(k, v)
 
     def get_planner_config(self):
         return self.planner_config
 
-    def get_planner_name(self):
+    def get_planner_config_name(self):
         return self.name
 
     def get_planners(self):
