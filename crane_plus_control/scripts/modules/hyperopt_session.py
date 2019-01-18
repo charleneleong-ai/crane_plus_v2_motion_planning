@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 10:02:24 am
 # Modified By: Charlene Leong
-# Last Modified: Friday, January 18th 2019, 3:50:48 pm
+# Last Modified: Friday, January 18th 2019, 5:07:48 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -68,11 +68,14 @@ class HyperOptSession(Session):
         if(success_rate != 1):
             loss = loss + success_rate*100
 
-        rospy.loginfo('n_trial: %d loss: %.4f t_avg_run_time: %.4f t_avg_plan_time: %.4f t_avg_dist: %.4f t_avg_path_length: %.4f t_avg_success: %.4f\n',
-                      self.n_trial, loss, stats['t_avg_run_time'], stats['t_avg_plan_time'], stats['t_avg_dist'], stats['t_avg_path_length'], stats['t_avg_success'])
+        current = time.time()
+        elapsed_time = (current - params['start_time'])
 
+        rospy.loginfo('elapsed_time(s): %.4f n_trial: %d loss: %.4f t_avg_run_time: %.4f t_avg_plan_time: %.4f t_avg_dist: %.4f t_avg_path_length: %.4f t_avg_success: %.4f\n',
+                      elapsed_time, self.n_trial, loss, stats['t_avg_run_time'], stats['t_avg_plan_time'], stats['t_avg_dist'], stats['t_avg_path_length'], stats['t_avg_success'])
+        
         # Create OrderedDict to write to CSV
-        result = OrderedDict([('n_trial', self.n_trial), ('loss', loss), ('planner', planner), ('avg_runs', self.avg_runs), 
+        result = OrderedDict([('elapsed_time', elapsed_time), ('n_trial', self.n_trial), ('loss', loss), ('planner', planner), ('avg_runs', self.avg_runs), 
                              ('t_avg_run_time', stats['t_avg_run_time']), ('t_avg_plan_time', stats['t_avg_dist']),
                              ('t_avg_dist', stats['t_avg_dist']), ('t_avg_path_length', stats['t_avg_path_length']), 
                              ('t_avg_success', stats['t_avg_success'])])
@@ -80,14 +83,14 @@ class HyperOptSession(Session):
         result_csv = OrderedDict(list(result.items()) + [('params', str(params_set))])
         result = OrderedDict(list(result.items()) + [('params', params_set), ('status', STATUS_OK)])
         # print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
+        
 
         result_df = pd.DataFrame(dict(result_csv), columns=result.keys(), index=[0])
         with open(self.results_path, 'a') as f:
             result_df.to_csv(f, header=False, index=False)
 
-        
-        if(time.time()  > params['end_time']):
-            rospy.loginfo("Program has run for allotted time %.4f", (params['end_time']- params['start_time'])/60)
+        if(time.time() > params['end_time']):
+            rospy.loginfo("Program has run for allotted time (s) %.4f", (params['end_time']- params['start_time']))
             sys.exit(1)
 
         return dict(result)
@@ -97,7 +100,7 @@ class HyperOptSession(Session):
         
         with open(self.results_path, 'w') as f:
             writer = csv.writer(f)
-            writer.writerow(['n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
+            writer.writerow(['elapsed_time', 'n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
                              't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params'])
         
         self.max_trials = 1000000000000000000000000000000000000000000000000 # Infinitely large number 
