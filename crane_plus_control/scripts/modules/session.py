@@ -3,7 +3,7 @@
 ###
 # File Created: Tuesday, 15th January 2019 3:19:44 pm
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 7:40:09 pm
+# Last Modified: Friday, January 18th 2019, 11:39:10 am
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -34,7 +34,6 @@ class Session(object):
     """
     Session Base Class
     """
-
     def __init__(self, mode):
         self.planner_config_obj = PlannerConfig()
         self.mode = mode
@@ -44,7 +43,7 @@ class Session(object):
         self.n_trial = 0
         if self.mode not in ['default', 'ompl']:
             self.max_trials = rospy.get_param('~max_trials')
-        self.iter = rospy.get_param('~iter')
+        self.avg_runs = rospy.get_param('~avg_runs')
         self.start_pose = self.planner_config_obj.start_pose
         self.target_pose = self.planner_config_obj.target_pose
 
@@ -58,24 +57,105 @@ class Session(object):
         self.display_trajectory_publisher = rospy.Publisher('/group/display_planned_path',
                                                             moveit_msgs.msg.DisplayTrajectory,
                                                             queue_size=20)
-
         self.scenes = ['narrow']
 
-    def _move_arm(self, pose, plan=None):
+    def run(self):
+        raise NotImplementedError, 'Should be implemented in child class'
+    
+    def _run_problem_set(self, planner_id, save=False, results_path=""):
+        result_log = {}
+        t_avg_run_time = 0      # Totals
+        t_avg_plan_time = 0
+        t_avg_dist = 0
+        t_avg_path_length = 0
+        t_avg_success = 0
 
-        self.group.set_named_target(pose)
+        for x1 in xrange(len(self.scenes)):     # Scene loop
+            query_count = 0                    # Initiate query count for each scene
+            scene_name = self.scenes[x1]
 
-        if plan is None:
-            plan = self.group.plan()
+            # Clears previous scene and loads scene to server, loads states
+            scene_obj = Scene(self.scenes[x1])
+            states = scene_obj.states
 
-        display_trajectory = moveit_msgs.msg.DisplayTrajectory()
-        display_trajectory.trajectory_start = self.robot.get_current_state()
-        display_trajectory.trajectory.append(plan)
-        self.display_trajectory_publisher.publish(display_trajectory)
+            scene = {'name': scene_name}         # Create scene dict
 
-        #rospy.loginfo('Moving to %s pose', pose)
-        self.group.go(wait=True)
-        self.group.stop()
+            # Loops over all states for start and target poses
+            for x2 in xrange(len(states)):
+                start_pose = states[x2]
+
+                for x3 in range(x2+1, len(states)):
+                    target_pose = states[x3]
+
+                    query = {'start_pose': start_pose,
+                             'target_pose': target_pose}  # Create query dict
+
+                    self.group.set_planner_id(planner_id)  # set new planner ID
+
+                    rospy.loginfo('%d Executing %s from %s to %s for average over %d runs',
+                                  query_count, planner_id, start_pose, target_pose, self.avg_runs)
+
+                    planner_results = self._get_stats(start_pose, target_pose)    # Plan path and add results to planner dict
+
+                    query.update(planner_results)       # Update query with planner results
+
+                    t_avg_run_time += planner_results['avg_run_time']
+                    t_avg_plan_time += planner_results['avg_plan_time']
+                    t_avg_dist += planner_results['avg_dist']
+                    t_avg_path_length += planner_results['avg_path_length']
+                    t_avg_success += planner_results['avg_success']
+
+                    if save is True:        # Append results to csv if save is true
+                        with open(results_path, 'a') as f:
+                            writer = csv.writer(f)
+                            writer.writerow([planner_id, scene_name, query_count, start_pose, target_pose, 
+                                             planner_results['avg_runs'], planner_results['avg_run_time'],
+                                             planner_results['avg_plan_time'], planner_results['avg_dist'], 
+                                             planner_results['avg_path_length'], planner_results['avg_success'], 
+                                             self.planner_config_obj.get_planner_params(planner_id)])
+
+                        rospy.loginfo('avg_run_time: %.4f avg_plan_time: %.4f avg_dist: %4f avg_path_length: %.4f avg_success: %.4f\n',
+                                         planner_results['avg_run_time'],  planner_results['avg_plan_time'], 
+                                         planner_results['avg_dist'], planner_results['avg_path_length'], 
+                                         planner_results['avg_success'])
+
+                    # Add query dict to scene dict
+                    scene[query_count] = query
+                    query_count += 1
+            result_log[x1] = scene        # Add scene dict to results
+            stats = {'t_avg_run_time': t_avg_run_time, 't_avg_plan_time': t_avg_plan_time,
+                     't_avg_dist': t_avg_dist, 't_avg_path_length': t_avg_path_length}
+        return result_log, stats
+
+    def _get_stats(self, start_pose, target_pose):
+        run_times = []
+        path_stats = []
+        for _ in xrange(self.avg_runs):
+            self._move_arm(start_pose)  # reset to start pose
+            start_time = timer()
+            path = self._plan_path(start_pose, target_pose)
+            exec_success = self._move_arm(target_pose, path['planned_path'])
+            run_time = timer() - start_time
+
+            if (path['success'] == 0) or (exec_success is False):
+                run_time = 0
+                path = {'planned_path': 0, 'plan_time': 0, 'length':{'joint_dist': 0, 'joint_length': 0}, 'success': 0}
+    
+            run_times.append(run_time)
+            path_stats.append(path)
+
+        avg_run_time = sum(run_times) / float(len(run_times))
+        avg_plan_time = float(sum(d['plan_time']
+                                for d in path_stats)) / len(path_stats)
+        avg_dist = float(sum(d['length']['joint_dist']
+                                for d in path_stats)) / len(path_stats)
+        avg_path_length = float(sum(d['length']['joint_length'] 
+                                for d in path_stats)) / len(path_stats)
+        avg_success = float(sum(d['success']
+                                for d in path_stats)) / len(path_stats)
+
+        return {'avg_runs': self.avg_runs, 'avg_run_time': avg_run_time, 'avg_plan_time': avg_plan_time,
+                'avg_dist': avg_dist, 'avg_path_length': avg_path_length, 'avg_success': avg_success}
 
     def _plan_path(self, start_pose, target_pose):
         """Returns path (RobotTrajectory) given a start pose and target pose
@@ -94,15 +174,14 @@ class Session(object):
         start_time = timer()
         planned_path = self.group.plan()
         plan_time = timer() - start_time
-
-        success = 0
+        
         # If motion plan fails, length will be saved as 0
         length = {'joint_dist': 0, 'joint_length': 0}
-        # Not sure how to figure out a failure otherwise
+        success = 0
         if len(planned_path.joint_trajectory.points) != 0:
             length = self._get_path_length(planned_path)
             success = 1
-
+            
         return {'planned_path': planned_path, 'plan_time': plan_time, 'length': length, 'success': success}
 
     def _get_path_length(self, path):
@@ -114,7 +193,6 @@ class Session(object):
         Returns:
             (dict{str}) -- eucld dist of path and path length in jointspace
         """
-
         pts = path.joint_trajectory.points
         j_length = 0    # j = jointspace
         # w_length = 0    # w = workspace
@@ -164,96 +242,21 @@ class Session(object):
 
     #     return fwd_kin_coordinates
 
-    def _get_stats(self, start_pose, target_pose):
-        run_times = []
-        path_stats = []
-        for _ in xrange(self.iter):
-            self._move_arm(start_pose)  # reset to start pose
-            start_time = timer()
-            path = self._plan_path(start_pose, target_pose)
-            self._move_arm(target_pose, path['planned_path'])
-            run_time = timer() - start_time
+    def _move_arm(self, pose, plan=None):
+        self.group.set_named_target(pose)
 
-            run_times.append(run_time)
-            path_stats.append(path)
+        if plan is None:
+            plan = self.group.plan()
 
-        if path['success'] == 0:         # If any of the runs failed, set the stats to 0
-            avg_run_time = 0
-            avg_plan_time = 0
-            avg_dist = 0
-            avg_path_length = 0
-        else:
-            avg_run_time = sum(run_times) / \
-                float(len(run_times))     # Else return avg
-            avg_plan_time = float(sum(d['plan_time']
-                                      for d in path_stats)) / len(path_stats)
-            avg_dist = float(
-                sum(d['length']['joint_dist'] for d in path_stats)) / len(path_stats)
-            avg_path_length = float(
-                sum(d['length']['joint_length'] for d in path_stats)) / len(path_stats)
+        display_trajectory = moveit_msgs.msg.DisplayTrajectory()
+        display_trajectory.trajectory_start = self.robot.get_current_state()
+        display_trajectory.trajectory.append(plan)
+        self.display_trajectory_publisher.publish(display_trajectory)
 
-        return {'avg_runs': self.iter, 'avg_run_time': avg_run_time, 'avg_plan_time': avg_plan_time,
-                'avg_dist': avg_dist, 'avg_path_length': avg_path_length}
+        success = self.group.go(wait=True)
+        self.group.stop()
 
-    def _run_problem_set(self, planner_id, save=False, results_path=""):
-        result_log = {}
-        t_avg_run_time = 0      # Totals
-        t_avg_plan_time = 0
-        t_avg_dist = 0
-        t_avg_path_length = 0
-
-        for x1 in xrange(len(self.scenes)):     # Scene loop
-            query_count = 0                    # Initiate query count for each scene
-            scene_name = self.scenes[x1]
-
-            # Clears previous scene and loads scene to server, loads states
-            scene_obj = Scene(self.scenes[x1])
-            states = scene_obj.states
-
-            scene = {'name': scene_name}         # Create scene dict
-
-            # Loops over all states for start and target poses
-            for x2 in xrange(len(states)):
-                start_pose = states[x2]
-
-                for x3 in range(x2+1, len(states)):
-                    target_pose = states[x3]
-
-                    query = {'start_pose': start_pose,
-                             'target_pose': target_pose}  # Create query dict
-
-                    self.group.set_planner_id(planner_id)  # set new planner ID
-
-                    rospy.loginfo('%d Executing %s from %s to %s for average over %d runs',
-                                  query_count, planner_id, start_pose, target_pose, self.iter)
-
-                    planner_results = self._get_stats(
-                        start_pose, target_pose)    # Plan path and add results to planner dict
-
-                    # Update query with planner results
-                    query.update(planner_results)
-
-                    t_avg_run_time += planner_results['avg_run_time']
-                    t_avg_plan_time += planner_results['avg_plan_time']
-                    t_avg_dist += planner_results['avg_dist']
-                    t_avg_path_length += planner_results['avg_path_length']
-
-                    if save is True:        # Append results to csv if in benchmark session
-                        with open(results_path, 'a') as f:
-                            writer = csv.writer(f)
-                            writer.writerow([planner_id, scene_name, query_count, start_pose, target_pose, planner_results['avg_runs'], planner_results['avg_run_time'],
-                                             planner_results['avg_plan_time'], planner_results['avg_dist'], planner_results['avg_path_length'], self.planner_config_obj.get_planner_params(planner_id)])
-
-                    # Add query dict to scene dict
-                    scene[query_count] = query
-                    query_count += 1
-            result_log[x1] = scene        # Add scene dict to results
-            stats = {'t_avg_run_time': t_avg_run_time, 't_avg_plan_time': t_avg_plan_time,
-                     't_avg_dist': t_avg_dist, 't_avg_path_length': t_avg_path_length}
-        return result_log, stats
-
-    def run(self):
-        raise NotImplementedError, 'Should be implemented in child class'
+        return success
 
     def get_results(self):
         # try:

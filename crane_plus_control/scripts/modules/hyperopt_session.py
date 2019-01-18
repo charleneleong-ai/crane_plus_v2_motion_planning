@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 10:02:24 am
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 7:43:20 pm
+# Last Modified: Friday, January 18th 2019, 9:50:04 am
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -55,17 +55,18 @@ class HyperOptSession(Session):
         # Set new params
         self.planner_config_obj.set_planner_params(planner, params_set)
 
-        # Execute experiment for iter times and get planning and run_time stats
+        # Execute experiment and get planning and run_time stats
         results, stats = super(HyperOptSession, self)._run_problem_set(planner_id=planner)
 
         # loss = sum(stats.values())
         loss = stats['t_avg_path_length']
 
-        rospy.loginfo('n_trial: %d loss: %.4f t_avg_run_time: %.4f t_avg_plan_time: %.4f t_avg_dist: %.4f t_avg_path_length: %.4f',
+        rospy.loginfo('n_trial: %d loss: %.4f t_avg_run_time: %.4f t_avg_plan_time: %.4f t_avg_dist: %.4f t_avg_path_length: %.4f \n',
                       self.n_trial, loss, stats['t_avg_run_time'], stats['t_avg_plan_time'], stats['t_avg_dist'], stats['t_avg_path_length'])
+        
 
         # # Create OrderedDict to write to CSV
-        result = OrderedDict([('n_trial', self.n_trial), ('loss', loss), ('planner', 'planner'), ('avg_runs', self.iter), 
+        result = OrderedDict([('n_trial', self.n_trial), ('loss', loss), ('planner', 'planner'), ('avg_runs', self.avg_runs), 
                              ('t_avg_run_time', stats['t_avg_run_time']), ('t_avg_plan_time', stats['t_avg_dist']),
                              ('t_avg_dist', stats['t_avg_dist']), ('t_avg_path_length', stats['t_avg_path_length'])])
         # Need to save params as str for csv
