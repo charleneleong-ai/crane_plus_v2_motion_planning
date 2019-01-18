@@ -1,9 +1,9 @@
 
 planner_configs_Cano_etal_tune:
-  RRTConnectkConfigDefault:
-    type: geometric::RRTConnect
-    #[begin_range, end_range, step]
-    default: [0.1, 2.0, 0.1] # Max steering distance 
+  # RRTConnectkConfigDefault:
+  #   type: geometric::RRTConnect
+  #   #[begin_range, end_range, step]
+  #   default: [0.1, 2.0, 0.1] # Max steering distance 
   BKPIECEkConfigDefault:
     type: geometric::BKPIECE
     #[begin_range, end_range, step]
