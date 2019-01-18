@@ -3,7 +3,7 @@
 ###
 # File Created: Tuesday, 15th January 2019 3:19:44 pm
 # Modified By: Charlene Leong
-# Last Modified: Friday, January 18th 2019, 11:39:10 am
+# Last Modified: Friday, January 18th 2019, 3:10:35 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -57,7 +57,7 @@ class Session(object):
         self.display_trajectory_publisher = rospy.Publisher('/group/display_planned_path',
                                                             moveit_msgs.msg.DisplayTrajectory,
                                                             queue_size=20)
-        self.scenes = ['narrow']
+        self.scenes = ['narrow_passage']
 
     def run(self):
         raise NotImplementedError, 'Should be implemented in child class'
@@ -123,8 +123,19 @@ class Session(object):
                     scene[query_count] = query
                     query_count += 1
             result_log[x1] = scene        # Add scene dict to results
+            t_avg_success = t_avg_success / float(query_count)
+
             stats = {'t_avg_run_time': t_avg_run_time, 't_avg_plan_time': t_avg_plan_time,
-                     't_avg_dist': t_avg_dist, 't_avg_path_length': t_avg_path_length}
+                     't_avg_dist': t_avg_dist, 't_avg_path_length': t_avg_path_length, 't_avg_success': t_avg_success}
+
+            if save is True:
+                with open(results_path, 'a') as f:
+                    writer = csv.writer(f)
+                    writer.writerow([''])
+                    writer.writerow(['t_avg_run_time', 't_avg_plan_time', 't_avg_dist', 't_avg_success'])
+                    writer.writerow([stats['t_avg_run_time'], stats['t_avg_plan_time'], stats['t_avg_dist'], stats['t_avg_success']])
+                    writer.writerow([''])
+
         return result_log, stats
 
     def _get_stats(self, start_pose, target_pose):

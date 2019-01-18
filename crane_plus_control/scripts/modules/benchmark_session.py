@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 2:10:34 pm
 # Modified By: Charlene Leong
-# Last Modified: Friday, January 18th 2019, 9:46:43 am
+# Last Modified: Friday, January 18th 2019, 11:47:13 am
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -51,6 +51,7 @@ class BenchmarkSession(Session):
             result = super(BenchmarkSession, self)._run_problem_set(
                 planner_id=p, save=True, results_path=self.results_path)
             results[p] = result
+
         # pprint.pprint(results)
 
         # Dump as latest benchmark
