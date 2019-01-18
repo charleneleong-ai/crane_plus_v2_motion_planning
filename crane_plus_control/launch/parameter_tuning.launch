@@ -14,7 +14,7 @@ Author: Charlene Leong (charleneleong84@gmail.com)
   <arg name="mode" default="tpe"/>                  <!-- [default, ompl, rand, tpe] -->
   
   <arg name="max_trials" default="30" />
-  <arg name="iter" default="1" />
+  <arg name="avg_runs" default="1" />
 
   <!-- parameter tuning file -->
   <arg name="param_mode" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>
@@ -29,7 +29,7 @@ Author: Charlene Leong (charleneleong84@gmail.com)
     
     <param name="mode" type="str" value="$(arg mode)" />
     <param name="max_trials" type="int" value="$(arg max_trials)" />
-    <param name="iter" type="int" value="$(arg iter)" />
+    <param name="avg_runs" type="int" value="$(arg avg_runs)" />
   </node>
   
 </launch>

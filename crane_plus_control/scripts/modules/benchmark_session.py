@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 2:10:34 pm
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 7:41:43 pm
+# Last Modified: Friday, January 18th 2019, 9:46:43 am
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -44,7 +44,7 @@ class BenchmarkSession(Session):
         with open(self.results_path, 'w') as f:
             writer = csv.writer(f)
             writer.writerow(['planner', 'scene', 'query', 'start_pose', 'target_pose', 'avg_runs', 'avg_run_time',
-                             'avg_plan_time', 'avg_dist', 'avg_path_length', 'params'])
+                             'avg_plan_time', 'avg_dist', 'avg_path_length', 'avg_success', 'params'])
 
         results = {}
         for p in self.planners:
