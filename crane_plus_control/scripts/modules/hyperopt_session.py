@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 10:02:24 am
 # Modified By: Charlene Leong
-# Last Modified: Friday, January 18th 2019, 3:50:48 pm
+# Last Modified: Friday, January 18th 2019, 4:49:27 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -86,9 +86,9 @@ class HyperOptSession(Session):
             result_df.to_csv(f, header=False, index=False)
 
         
-        if(time.time()  > params['end_time']):
-            rospy.loginfo("Program has run for allotted time %.4f", (params['end_time']- params['start_time'])/60)
-            sys.exit(1)
+        # if(time.time()  > params['end_time']):
+        #     rospy.loginfo("Program has run for allotted time %.4f", (params['end_time']- params['start_time'])/60)
+        #     sys.exit(1)
 
         return dict(result)
 
@@ -100,9 +100,9 @@ class HyperOptSession(Session):
             writer.writerow(['n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
                              't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params'])
         
-        self.max_trials = 1000000000000000000000000000000000000000000000000 # Infinitely large number 
-        end_time = time.time() + 60 * 120  # Running for 2 hours
-        start_time = time.time()
+        #self.max_trials = 1000000000000000000000000000000000000000000000000 # Infinitely large number 
+        # end_time = time.time() + 60 * 120  # Running for 2 hours
+        # start_time = time.time()
         # Setting up the parameter search space and parameters
         for planner, params_set in self.planner_config.iteritems():
             params_set = dict(self.planner_config[planner].items())
