@@ -1,12 +1,10 @@
 #!/usr/bin/env python
-# -*- coding:utf-8 -*-
 ###
-# File Created: Wednesday, 16th January 2019 1:41:18 pm
+# File Created: Wednesday, January 16th 2019, 7:18:59 pm
+# Author: Charlene Leong
+# Last Modified: Sunday, January 20th 2019, 12:14:38 am
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 1:11:51 pm
-# Author: Charlene Leong (charleneleong84@gmail.com)
 ###
-
 
 import rospkg
 import rospy

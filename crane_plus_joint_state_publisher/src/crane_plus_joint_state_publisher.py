@@ -1,16 +1,14 @@
 #!/usr/bin/env python
-# -*- coding:utf-8 -*-
 ###
-# File Created: Wednesday, 26th December 2018 7:14:52 pm
-# Modified By: charlene
-# Last Modified: Wed Jan 16 2019
-# Author: Charlene Leong (charleneleong84@gmail.com)
+# File Created: Saturday, December 12th 2018, 11:23:55 am
+# Author: Charlene Leong charleneleong84@gmail.com
+# Last Modified: Sunday, January 20th 2019, 12:11:31 am
+# Modified By: Charlene Leong
 ###
 
 import sys
 
 import rospy
-
 from sensor_msgs.msg import JointState
 from dynamixel_msgs.msg import JointState as DynamixelJointState
 

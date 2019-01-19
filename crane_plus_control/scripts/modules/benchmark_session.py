@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-# -*- coding:utf-8 -*-
 ###
-# File Created: Wednesday, 16th January 2019 2:10:34 pm
+# File Created: Wednesday, January 16th 2019, 7:18:59 pm
+# Author: Charlene Leong
+# Last Modified: Sunday, January 20th 2019, 12:14:50 am
 # Modified By: Charlene Leong
-# Last Modified: Friday, January 18th 2019, 11:47:13 am
-# Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
 import sys
