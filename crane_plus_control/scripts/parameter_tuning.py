@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-# -*- coding:utf-8 -*-
 ###
-# File Created: Wednesday, 16th January 2019 1:56:33 pm
+# File Created: Saturday, January 12th 2019, 11:23:55 am
+# Author: Charlene Leong
+# Last Modified: Monday, January 21st 2019, 8:39:21 am
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 3:09:34 pm
-# Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
 import sys
@@ -13,10 +12,12 @@ import moveit_commander
 from modules.hyperopt_session import HyperOptSession
 from modules.benchmark_session import BenchmarkSession
 
+
 def check_params(mode):
     if mode not in ['default', 'tpe', 'rand', 'ompl']:
         rospy.logerr('Invalid mode.')
-        rospy.logerr('Please choose from %s', str(['default', 'tpe', 'rand', 'ompl']))
+        rospy.logerr('Please choose from %s', str(
+            ['default', 'tpe', 'rand', 'ompl']))
         sys.exit(1)
 
     planner_select = rospy.get_param('~planner_config')
@@ -24,7 +25,7 @@ def check_params(mode):
         rospy.logerr('Invalid planner config select.')
         rospy.logerr('Please choose from %s', str(['Cano_etal']))
         sys.exit(1)
-    
+
     start_pose = rospy.get_param('~start_pose')
     target_pose = rospy.get_param('~target_pose')
     named_states = rospy.get_param('~named_states')
@@ -40,7 +41,7 @@ def check_params(mode):
 
 
 def main():
-    
+
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('parameter_tuning', anonymous=True)
 
@@ -55,6 +56,7 @@ def main():
     session.run()
     # session.get_results()
     moveit_commander.roscpp_shutdown()
+
 
 if __name__ == '__main__':
     main()

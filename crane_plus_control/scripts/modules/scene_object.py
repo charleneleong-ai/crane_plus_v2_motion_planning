@@ -1,12 +1,10 @@
 #!/usr/bin/env python
-# -*- coding:utf-8 -*-
 ###
-# File Created: Wednesday, 16th January 2019 1:41:18 pm
+# File Created: Wednesday, January 16th 2019, 7:18:59 pm
+# Author: Charlene Leong
+# Last Modified: Monday, January 21st 2019, 8:40:33 am
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 1:11:51 pm
-# Author: Charlene Leong (charleneleong84@gmail.com)
 ###
-
 
 import rospkg
 import rospy
@@ -20,7 +18,6 @@ ROS_PKG_PATH = rospkg.RosPack().get_path(
 
 
 class Scene(object):
-
     PUBLISHER_DELAY = 0.3
 
     def __init__(self, scene_file):

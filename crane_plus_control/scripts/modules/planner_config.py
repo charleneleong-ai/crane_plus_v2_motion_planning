@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-# -*- coding:utf-8 -*-
 ###
-# File Created: Wednesday, 16th January 2019 10:02:10 am
+# File Created: Wednesday, January 16th 2019, 7:18:59 pm
+# Author: Charlene Leong
+# Last Modified: Monday, January 21st 2019, 8:40:51 am
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 17th 2019, 4:43:47 pm
-# Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
 import sys
@@ -18,7 +17,7 @@ class PlannerConfig(object):
         self.planner_select = rospy.get_param('~planner_config')
         self.start_pose = rospy.get_param('~start_pose')
         self.target_pose = rospy.get_param('~target_pose')
-        
+
         if rospy.get_param('~mode') in ['default', 'ompl']:
             self.planner_config = rospy.get_param(
                 '~planner_configs_'+self.planner_select+'_default')
@@ -28,7 +27,7 @@ class PlannerConfig(object):
             self.planner_config = rospy.get_param(
                 '~planner_configs_'+self.planner_select+'_tune')
             self.name = self.planner_select+'_tune'
-       
+
         self.planners = self.planner_config.keys()
 
         # Override with OMPL config for above planners in ompl mode
@@ -37,7 +36,7 @@ class PlannerConfig(object):
             ompl = rospy.get_param('/move_group/planner_configs/')
             for p in self.planner_config.keys():
                 self.planner_config[p] = ompl[p]
-                
+
         assert isinstance(self.planner_config, dict)
 
         # Set params
@@ -82,7 +81,7 @@ class PlannerConfig(object):
         Args:
             planner_id (str): planner name
             params_set (dict): planner params
-        """       
+        """
         # Convert dict to PlannerParams msg
         params = moveit_msgs.msg.PlannerParams()
         params.keys = params_set.keys()

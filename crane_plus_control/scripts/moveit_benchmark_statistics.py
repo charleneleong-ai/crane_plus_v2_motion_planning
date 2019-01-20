@@ -1,12 +1,18 @@
 #!/usr/bin/env python
-# -*- coding:utf-8 -*-
 ###
-# File Created: Wednesday, 16th January 2019 10:07:21 am
-# Modified By: charlene
-# Last Modified: Wed Jan 16 2019
-# Author: Charlene Leong (charleneleong84@gmail.com)
+# File Created: Saturday, December 12th 2018, 11:23:55 am
+# Author: Charlene Leong
+# Last Modified: Sunday, January 20th 2019, 12:14:08 am
+# Modified By: Charlene Leong
 ###
 
+import rospkg
+from optparse import OptionParser, OptionGroup
+from math import floor
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
+from matplotlib import __version__ as matplotlibversion
 from sys import argv, exit
 from os.path import basename, splitext, join
 import os
@@ -14,18 +20,13 @@ import sqlite3
 import datetime
 import matplotlib
 matplotlib.use('pdf')
-from matplotlib import __version__ as matplotlibversion
-from matplotlib.backends.backend_pdf import PdfPages
-import matplotlib.pyplot as plt
-import numpy as np
-from math import floor
-from optparse import OptionParser, OptionGroup
-import rospkg
 
 # Given a text line, split it into tokens (by space) and return the token
 # at the desired index. Additionally, test that some expected tokens exist.
 # Return None if they do not.
-def readLogValue(filevar, desired_token_index, expected_tokens) :
+
+
+def readLogValue(filevar, desired_token_index, expected_tokens):
     start_pos = filevar.tell()
     tokens = filevar.readline().split()
     for token_index in expected_tokens:
@@ -35,19 +36,23 @@ def readLogValue(filevar, desired_token_index, expected_tokens) :
             return None
     return tokens[desired_token_index]
 
-def readOptionalLogValue(filevar, desired_token_index, expected_tokens = {}) :
+
+def readOptionalLogValue(filevar, desired_token_index, expected_tokens={}):
     return readLogValue(filevar, desired_token_index, expected_tokens)
 
-def readRequiredLogValue(name, filevar, desired_token_index, expected_tokens = {}) :
+
+def readRequiredLogValue(name, filevar, desired_token_index, expected_tokens={}):
     result = readLogValue(filevar, desired_token_index, expected_tokens)
     if result == None:
         raise Exception("Unable to read " + name)
     return result
 
+
 def ensurePrefix(line, prefix):
     if not line.startswith(prefix):
         raise Exception("Expected prefix " + prefix + " was not found")
     return line
+
 
 def readOptionalMultilineValue(filevar):
     start_pos = filevar.tell()
@@ -63,6 +68,7 @@ def readOptionalMultilineValue(filevar):
         if line == None:
             raise Exception("Expected token |>>> missing")
     return value
+
 
 def readRequiredMultilineValue(filevar):
     ensurePrefix(filevar.readline(), "<<<|")
@@ -83,7 +89,7 @@ def readBenchmarkLog(dbname, filenames):
     c = conn.cursor()
     c.execute('PRAGMA FOREIGN_KEYS = ON')
 
-    # create all tables if they don't already exist
+    # Create all tables if they don't already exist
     c.executescript("""CREATE TABLE IF NOT EXISTS experiments
         (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(512),
         totaltime REAL, timelimit REAL, memorylimit REAL, runcount INTEGER,
@@ -105,32 +111,40 @@ def readBenchmarkLog(dbname, filenames):
 
     for filename in filenames:
         print('Processing ' + filename)
-        logfile = open(filename,'r')
+        logfile = open(filename, 'r')
         start_pos = logfile.tell()
-        libname = readOptionalLogValue(logfile, 0, {1 : "version"})
+        libname = readOptionalLogValue(logfile, 0, {1: "version"})
         if libname == None:
             libname = "OMPL"
         logfile.seek(start_pos)
-        version = readOptionalLogValue(logfile, -1, {1 : "version"})
+        version = readOptionalLogValue(logfile, -1, {1: "version"})
         if version == None:
             # set the version number to make Planner Arena happy
             version = "0.0.0"
         version = ' '.join([libname, version])
-        expname = readRequiredLogValue("experiment name", logfile, -1, {0 : "Experiment"})
-        hostname = readRequiredLogValue("hostname", logfile, -1, {0 : "Running"})
-        date = ' '.join(ensurePrefix(logfile.readline(), "Starting").split()[2:])
+        expname = readRequiredLogValue(
+            "experiment name", logfile, -1, {0: "Experiment"})
+        hostname = readRequiredLogValue(
+            "hostname", logfile, -1, {0: "Running"})
+        date = ' '.join(ensurePrefix(
+            logfile.readline(), "Starting").split()[2:])
         expsetup = readRequiredMultilineValue(logfile)
         cpuinfo = readOptionalMultilineValue(logfile)
-        rseed = int(readRequiredLogValue("random seed", logfile, 0, {-2 : "random", -1 : "seed"}))
-        timelimit = float(readRequiredLogValue("time limit", logfile, 0, {-3 : "seconds", -2 : "per", -1 : "run"}))
-        memorylimit = float(readRequiredLogValue("memory limit", logfile, 0, {-3 : "MB", -2 : "per", -1 : "run"}))
-        nrrunsOrNone = readOptionalLogValue(logfile, 0, {-3 : "runs", -2 : "per", -1 : "planner"})
+        rseed = int(readRequiredLogValue("random seed",
+                                         logfile, 0, {-2: "random", -1: "seed"}))
+        timelimit = float(readRequiredLogValue(
+            "time limit", logfile, 0, {-3: "seconds", -2: "per", -1: "run"}))
+        memorylimit = float(readRequiredLogValue(
+            "memory limit", logfile, 0, {-3: "MB", -2: "per", -1: "run"}))
+        nrrunsOrNone = readOptionalLogValue(
+            logfile, 0, {-3: "runs", -2: "per", -1: "planner"})
         nrruns = -1
         if nrrunsOrNone != None:
             nrruns = int(nrrunsOrNone)
-        totaltime = float(readRequiredLogValue("total time", logfile, 0, {-3 : "collect", -2 : "the", -1 : "data"}))
+        totaltime = float(readRequiredLogValue(
+            "total time", logfile, 0, {-3: "collect", -2: "the", -1: "data"}))
         numEnums = 0
-        numEnumsOrNone = readOptionalLogValue(logfile, 0, {-2 : "enum"})
+        numEnumsOrNone = readOptionalLogValue(logfile, 0, {-2: "enum"})
         if numEnumsOrNone != None:
             numEnums = int(numEnumsOrNone)
         for i in range(numEnums):
@@ -139,12 +153,13 @@ def readBenchmarkLog(dbname, filenames):
             if c.fetchone() == None:
                 for j in range(len(enum)-1):
                     c.execute('INSERT INTO enums VALUES (?,?,?)',
-                        (enum[0],j,enum[j+1]))
+                              (enum[0], j, enum[j+1]))
         c.execute('INSERT INTO experiments VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
-              (None, expname, totaltime, timelimit, memorylimit, nrruns,
-              version, hostname, cpuinfo, date, rseed, expsetup) )
+                  (None, expname, totaltime, timelimit, memorylimit, nrruns,
+                   version, hostname, cpuinfo, date, rseed, expsetup))
         experimentId = c.lastrowid
-        numPlanners = int(readRequiredLogValue("planner count", logfile, 0, {-1 : "planners"}))
+        numPlanners = int(readRequiredLogValue(
+            "planner count", logfile, 0, {-1: "planners"}))
         for i in range(numPlanners):
             plannerName = logfile.readline()[:-1]
             print('Parsing data for ' + plannerName)
@@ -157,11 +172,11 @@ def readBenchmarkLog(dbname, filenames):
 
             # find planner id
             c.execute('SELECT id FROM plannerConfigs WHERE (name=? AND settings=?)',
-                (plannerName, settings,))
+                      (plannerName, settings,))
             p = c.fetchone()
-            if p==None:
+            if p == None:
                 c.execute('INSERT INTO plannerConfigs VALUES (?,?,?)',
-                    (None, plannerName, settings,))
+                          (None, plannerName, settings,))
                 plannerId = c.lastrowid
             else:
                 plannerId = p[0]
@@ -178,7 +193,8 @@ def readBenchmarkLog(dbname, filenames):
                 propertyType = field[-1]
                 propertyName = '_'.join(field[:-1])
                 if propertyName not in columnNames:
-                    c.execute('ALTER TABLE runs ADD %s %s' % (propertyName, propertyType))
+                    c.execute('ALTER TABLE runs ADD %s %s' %
+                              (propertyName, propertyType))
                 propertyNames.append(propertyName)
             # read measurements
             insertFmtStr = 'INSERT INTO runs (' + ','.join(propertyNames) + \
@@ -186,9 +202,9 @@ def readBenchmarkLog(dbname, filenames):
             numRuns = int(logfile.readline().split()[0])
             runIds = []
             for j in range(numRuns):
-                values = tuple([experimentId, plannerId] + \
-                    [None if len(x) == 0 or x == 'nan' or x == 'inf' else x
-                    for x in logfile.readline().split('; ')[:-1]])
+                values = tuple([experimentId, plannerId] +
+                               [None if len(x) == 0 or x == 'nan' or x == 'inf' else x
+                                for x in logfile.readline().split('; ')[:-1]])
                 c.execute(insertFmtStr, values)
                 # extract primary key of each run row so we can reference them
                 # in the planner progress data table if needed
@@ -211,7 +227,7 @@ def readBenchmarkLog(dbname, filenames):
                     progressPropertyName = "_".join(field[:-1])
                     if progressPropertyName not in columnNames:
                         c.execute('ALTER TABLE progress ADD %s %s' %
-                            (progressPropertyName, progressPropertyType))
+                                  (progressPropertyName, progressPropertyType))
                     progressPropertyNames.append(progressPropertyName)
                 # read progress measurements
                 insertFmtStr = 'INSERT INTO progress (' + \
@@ -221,19 +237,21 @@ def readBenchmarkLog(dbname, filenames):
                 for j in range(numRuns):
                     dataSeries = logfile.readline().split(';')[:-1]
                     for dataSample in dataSeries:
-                        values = tuple([runIds[j]] + \
-                            [None if len(x) == 0 or x == 'nan' or x == 'inf' else x
-                            for x in dataSample.split(',')[:-1]])
+                        values = tuple([runIds[j]] +
+                                       [None if len(x) == 0 or x == 'nan' or x == 'inf' else x
+                                        for x in dataSample.split(',')[:-1]])
                         try:
                             c.execute(insertFmtStr, values)
                         except sqlite3.IntegrityError:
-                            print('Ignoring duplicate progress data. Consider increasing ompl::tools::Benchmark::Request::timeBetweenUpdates.')
+                            print(
+                                'Ignoring duplicate progress data. Consider increasing ompl::tools::Benchmark::Request::timeBetweenUpdates.')
                             pass
 
                 logfile.readline()
         logfile.close()
     conn.commit()
     c.close()
+
 
 def plotAttribute(cur, planners, attribute, typename):
     """Create a plot for a particular attribute. It will include data for
@@ -242,25 +260,27 @@ def plotAttribute(cur, planners, attribute, typename):
     measurements = []
     nanCounts = []
     if typename == 'ENUM':
-        cur.execute('SELECT description FROM enums where name IS "%s"' % attribute)
-        descriptions = [ t[0] for t in cur.fetchall() ]
+        cur.execute(
+            'SELECT description FROM enums where name IS "%s"' % attribute)
+        descriptions = [t[0] for t in cur.fetchall()]
         numValues = len(descriptions)
     for planner in planners:
-        cur.execute('SELECT %s FROM runs WHERE plannerid = %s AND %s IS NOT NULL' \
-            % (attribute, planner[0], attribute))
-        measurement = [ t[0] for t in cur.fetchall() if t[0] != None ]
+        cur.execute('SELECT %s FROM runs WHERE plannerid = %s AND %s IS NOT NULL'
+                    % (attribute, planner[0], attribute))
+        measurement = [t[0] for t in cur.fetchall() if t[0] != None]
         if len(measurement) > 0:
-            cur.execute('SELECT count(*) FROM runs WHERE plannerid = %s AND %s IS NULL' \
-                % (planner[0], attribute))
+            cur.execute('SELECT count(*) FROM runs WHERE plannerid = %s AND %s IS NULL'
+                        % (planner[0], attribute))
             nanCounts.append(cur.fetchone()[0])
             labels.append(planner[1])
             if typename == 'ENUM':
                 scale = 100. / len(measurement)
-                measurements.append([measurement.count(i)*scale for i in range(numValues)])
+                measurements.append(
+                    [measurement.count(i)*scale for i in range(numValues)])
             else:
                 measurements.append(measurement)
 
-    if len(measurements)==0:
+    if len(measurements) == 0:
         print('Skipping "%s": no available measurements' % attribute)
         return
 
@@ -271,52 +291,59 @@ def plotAttribute(cur, planners, attribute, typename):
         measurements = np.transpose(np.vstack(measurements))
         colsum = np.sum(measurements, axis=1)
         rows = np.where(colsum != 0)[0]
-        heights = np.zeros((1,measurements.shape[1]))
+        heights = np.zeros((1, measurements.shape[1]))
         ind = range(measurements.shape[1])
         legend_labels = []
         for i in rows:
             plt.bar(ind, measurements[i], width, bottom=heights[0],
-                color=matplotlib.cm.hot(int(floor(i*256/numValues))),
-                label=descriptions[i])
+                    color=matplotlib.cm.hot(int(floor(i*256/numValues))),
+                    label=descriptions[i])
             heights = heights + measurements[i]
         xtickNames = plt.xticks([x+width/2. for x in ind], labels, rotation=30)
-        ax.set_ylabel(attribute.replace('_',' ') + ' (%)')
+        ax.set_ylabel(attribute.replace('_', ' ') + ' (%)')
         box = ax.get_position()
         ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
         props = matplotlib.font_manager.FontProperties()
         props.set_size('small')
-        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), prop = props)
+        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), prop=props)
     elif typename == 'BOOLEAN':
         width = .5
         measurementsPercentage = [sum(m) * 100. / len(m) for m in measurements]
         ind = range(len(measurements))
         plt.bar(ind, measurementsPercentage, width)
-        xtickNames = plt.xticks([x + width / 2. for x in ind], labels, rotation=30, fontsize=8)
-        ax.set_ylabel(attribute.replace('_',' ') + ' (%)')
-        plt.subplots_adjust(bottom=0.3) # Squish the plot into the upper 2/3 of the page.  Leave room for labels
+        xtickNames = plt.xticks(
+            [x + width / 2. for x in ind], labels, rotation=30, fontsize=8)
+        ax.set_ylabel(attribute.replace('_', ' ') + ' (%)')
+        # Squish the plot into the upper 2/3 of the page.  Leave room for labels
+        plt.subplots_adjust(bottom=0.3)
     else:
-        if int(matplotlibversion.split('.')[0])<1:
+        if int(matplotlibversion.split('.')[0]) < 1:
             plt.boxplot(measurements, notch=0, sym='k+', vert=1, whis=1.5)
         else:
-            plt.boxplot(measurements, notch=0, sym='k+', vert=1, whis=1.5, bootstrap=1000)
-        ax.set_ylabel(attribute.replace('_',' '))
+            plt.boxplot(measurements, notch=0, sym='k+',
+                        vert=1, whis=1.5, bootstrap=1000)
+        ax.set_ylabel(attribute.replace('_', ' '))
 
         #xtickNames = plt.xticks(labels, rotation=30, fontsize=10)
         #plt.subplots_adjust(bottom=0.3) # Squish the plot into the upper 2/3 of the page.  Leave room for labels
 
-        xtickNames = plt.setp(ax,xticklabels=labels)
+        xtickNames = plt.setp(ax, xticklabels=labels)
         plt.setp(xtickNames, rotation=30)
-        for tick in ax.xaxis.get_major_ticks(): # shrink the font size of the x tick labels
+        for tick in ax.xaxis.get_major_ticks():  # shrink the font size of the x tick labels
             tick.label.set_fontsize(8)
-        plt.subplots_adjust(bottom=0.3) # Squish the plot into the upper 2/3 of the page.  Leave room for labels
+        # Squish the plot into the upper 2/3 of the page.  Leave room for labels
+        plt.subplots_adjust(bottom=0.3)
     ax.set_xlabel('Motion planning algorithm')
-    ax.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.5)
-    if max(nanCounts)>0:
+    ax.yaxis.grid(True, linestyle='-', which='major',
+                  color='lightgrey', alpha=0.5)
+    if max(nanCounts) > 0:
         maxy = max([max(y) for y in measurements])
         for i in range(len(labels)):
-            x = i+width/2 if typename=='BOOLEAN' else i+1
-            ax.text(x, .95*maxy, str(nanCounts[i]), horizontalalignment='center', size='small')
+            x = i+width/2 if typename == 'BOOLEAN' else i+1
+            ax.text(
+                x, .95*maxy, str(nanCounts[i]), horizontalalignment='center', size='small')
     plt.show()
+
 
 def plotProgressAttribute(cur, planners, attribute):
     """
@@ -329,13 +356,13 @@ def plotProgressAttribute(cur, planners, attribute):
     plt.clf()
     ax = plt.gca()
     ax.set_xlabel('time (s)')
-    ax.set_ylabel(attribute.replace('_',' '))
+    ax.set_ylabel(attribute.replace('_', ' '))
     plannerNames = []
     for planner in planners:
         cur.execute("""SELECT count(progress.%s) FROM progress INNER JOIN runs
             ON progress.runid = runs.id AND runs.plannerid=%s
-            AND progress.%s IS NOT NULL""" \
-            % (attribute, planner[0], attribute))
+            AND progress.%s IS NOT NULL"""
+                    % (attribute, planner[0], attribute))
         if cur.fetchone()[0] > 0:
             plannerNames.append(planner[1])
             cur.execute("""SELECT DISTINCT progress.runid FROM progress INNER JOIN runs
@@ -345,7 +372,8 @@ def plotProgressAttribute(cur, planners, attribute):
             dataTable = []
             for r in runids:
                 # Select data for given run
-                cur.execute('SELECT time, %s FROM progress WHERE runid = %s ORDER BY time' % (attribute,r))
+                cur.execute(
+                    'SELECT time, %s FROM progress WHERE runid = %s ORDER BY time' % (attribute, r))
                 (time, data) = zip(*(cur.fetchall()))
                 timeTable.append(time)
                 dataTable.append(data)
@@ -356,18 +384,21 @@ def plotProgressAttribute(cur, planners, attribute):
             fewestSamples = min(len(time[:]) for time in timeTable)
             times = np.array(timeTable[0][:fewestSamples])
             dataArrays = np.array([data[:fewestSamples] for data in dataTable])
-            filteredData = ma.masked_array(dataArrays, np.equal(dataArrays, None), dtype=float)
+            filteredData = ma.masked_array(
+                dataArrays, np.equal(dataArrays, None), dtype=float)
 
             means = np.mean(filteredData, axis=0)
             stddevs = np.std(filteredData, axis=0, ddof=1)
 
             # plot average with error bars
-            plt.errorbar(times, means, yerr=2*stddevs, errorevery=max(1, len(times) // 20))
+            plt.errorbar(times, means, yerr=2*stddevs,
+                         errorevery=max(1, len(times) // 20))
             ax.legend(plannerNames)
-    if len(plannerNames)>0:
+    if len(plannerNames) > 0:
         plt.show()
     else:
         plt.clf()
+
 
 def plotStatistics(dbname, fname):
     """
@@ -378,8 +409,8 @@ def plotStatistics(dbname, fname):
     c = conn.cursor()
     c.execute('PRAGMA FOREIGN_KEYS = ON')
     c.execute('SELECT id, name FROM plannerConfigs')
-    planners = [(t[0],t[1].replace('geometric_','').replace('control_',''))
-        for t in c.fetchall()]
+    planners = [(t[0], t[1].replace('geometric_', '').replace('control_', ''))
+                for t in c.fetchall()]
     c.execute('PRAGMA table_info(runs)')
     colInfo = c.fetchall()[3:]
 
@@ -409,12 +440,15 @@ def plotStatistics(dbname, fname):
 
         plt.figtext(pagex, pagey, 'Experiment "%s"' % experiment[1])
         plt.figtext(pagex, pagey-0.05, 'Number of averaged runs: %d' % numRuns)
-        plt.figtext(pagex, pagey-0.10, "Time limit per run: %g seconds" % experiment[2])
-        plt.figtext(pagex, pagey-0.15, "Memory limit per run: %g MB" % experiment[3])
+        plt.figtext(pagex, pagey-0.10,
+                    "Time limit per run: %g seconds" % experiment[2])
+        plt.figtext(pagex, pagey-0.15,
+                    "Memory limit per run: %g MB" % experiment[3])
         pagey -= 0.22
     plt.show()
     pp.savefig(plt.gcf())
     pp.close()
+
 
 def saveAsMysql(dbname, mysqldump):
     # See http://stackoverflow.com/questions/1067060/perl-to-python
@@ -422,12 +456,12 @@ def saveAsMysql(dbname, mysqldump):
     print("Saving as MySQL dump file...")
 
     conn = sqlite3.connect(dbname)
-    mysqldump = open(mysqldump,'w')
+    mysqldump = open(mysqldump, 'w')
 
     # make sure all tables are dropped in an order that keepd foreign keys valid
     c = conn.cursor()
     c.execute("SELECT name FROM sqlite_master WHERE type='table'")
-    table_names = [ str(t[0]) for t in c.fetchall() ]
+    table_names = [str(t[0]) for t in c.fetchall()]
     c.close()
     last = ['experiments', 'planner_configs']
     for table in table_names:
@@ -441,17 +475,19 @@ def saveAsMysql(dbname, mysqldump):
 
     for line in conn.iterdump():
         process = False
-        for nope in ('BEGIN TRANSACTION','COMMIT',
-            'sqlite_sequence','CREATE UNIQUE INDEX', 'CREATE VIEW'):
-            if nope in line: break
+        for nope in ('BEGIN TRANSACTION', 'COMMIT',
+                     'sqlite_sequence', 'CREATE UNIQUE INDEX', 'CREATE VIEW'):
+            if nope in line:
+                break
         else:
             process = True
-        if not process: continue
+        if not process:
+            continue
         line = re.sub(r"[\n\r\t ]+", " ", line)
         m = re.search('CREATE TABLE ([a-zA-Z0-9_]*)(.*)', line)
         if m:
             name, sub = m.groups()
-            sub = sub.replace('"','`')
+            sub = sub.replace('"', '`')
             line = '''CREATE TABLE IF NOT EXISTS %(name)s%(sub)s'''
             line = line % dict(name=name, sub=sub)
             # make sure we use an engine that supports foreign keys
@@ -470,6 +506,7 @@ def saveAsMysql(dbname, mysqldump):
         line = line.replace('AUTOINCREMENT', 'AUTO_INCREMENT')
         mysqldump.write(line)
     mysqldump.close()
+
 
 def computeViews(dbname):
     conn = sqlite3.connect(dbname)
@@ -503,20 +540,22 @@ def computeViews(dbname):
     conn.commit()
     c.close()
 
+
 if __name__ == "__main__":
-     
-    ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control') + "/results/benchmarks"
+
+    ROS_PKG_PATH = rospkg.RosPack().get_path(
+        'crane_plus_control') + "/results/benchmarks"
 
     usage = """%prog [<benchmark.log> ...] [options] """
     parser = OptionParser("A script to parse benchmarking results.\n" + usage)
     parser.add_option("-d", "--database", dest="dbname", default=ROS_PKG_PATH+"/benchmark.db",
-        help="Filename of benchmark database [default: %default]")
+                      help="Filename of benchmark database [default: %default]")
     parser.add_option("-v", "--view", action="store_true", dest="view", default=False,
-        help="Compute the views for best planner configurations")
+                      help="Compute the views for best planner configurations")
     parser.add_option("-p", "--plot", dest="plot", default=ROS_PKG_PATH+"/benchmark_plots",
-        help="Create a PDF of plots with the filename provided")
+                      help="Create a PDF of plots with the filename provided")
     parser.add_option("-m", "--mysql", dest="mysqldb", default=None,
-        help="Save SQLite3 database as a MySQL dump file")
+                      help="Save SQLite3 database as a MySQL dump file")
     (options, args) = parser.parse_args()
 
     if len(args) == 0:
@@ -525,8 +564,9 @@ if __name__ == "__main__":
         try:
             latest_log = os.listdir(log_path)[0]
         except IndexError:
-            parser.error("No logs in crane_plus_control/results/benchmarks/logs/ directory.\nPlease 'roslaunch crane_plus_control benchmark.launch' or provide path to log file.")
-    	
+            parser.error(
+                "No logs in crane_plus_control/results/benchmarks/logs/ directory.\nPlease 'roslaunch crane_plus_control benchmark.launch' or provide path to log file.")
+
         latest_log_path = [join(log_path, latest_log)]
     	print('Loading benchmarks from latest log: %s' % latest_log)
     	readBenchmarkLog(options.dbname, latest_log_path)
@@ -545,4 +585,3 @@ if __name__ == "__main__":
 
     if options.mysqldb:
         saveAsMysql(options.dbname, options.mysqldb)
-

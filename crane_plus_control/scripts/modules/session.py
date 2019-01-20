@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-# -*- coding:utf-8 -*-
 ###
-# File Created: Tuesday, 15th January 2019 3:19:44 pm
+# File Created: Wednesday, January 16th 2019, 7:18:59 pm
+# Author: Charlene Leong
+# Last Modified: Monday, January 21st 2019, 8:39:58 am
 # Modified By: Charlene Leong
-# Last Modified: Friday, January 18th 2019, 3:10:35 pm
-# Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
 from timeit import default_timer as timer
@@ -61,7 +60,7 @@ class Session(object):
 
     def run(self):
         raise NotImplementedError, 'Should be implemented in child class'
-    
+
     def _run_problem_set(self, planner_id, save=False, results_path=""):
         result_log = {}
         t_avg_run_time = 0      # Totals
@@ -95,9 +94,11 @@ class Session(object):
                     rospy.loginfo('%d Executing %s from %s to %s for average over %d runs',
                                   query_count, planner_id, start_pose, target_pose, self.avg_runs)
 
-                    planner_results = self._get_stats(start_pose, target_pose)    # Plan path and add results to planner dict
+                    # Plan path and add results to planner dict
+                    planner_results = self._get_stats(start_pose, target_pose)
 
-                    query.update(planner_results)       # Update query with planner results
+                    # Update query with planner results
+                    query.update(planner_results)
 
                     t_avg_run_time += planner_results['avg_run_time']
                     t_avg_plan_time += planner_results['avg_plan_time']
@@ -108,16 +109,16 @@ class Session(object):
                     if save is True:        # Append results to csv if save is true
                         with open(results_path, 'a') as f:
                             writer = csv.writer(f)
-                            writer.writerow([planner_id, scene_name, query_count, start_pose, target_pose, 
+                            writer.writerow([planner_id, scene_name, query_count, start_pose, target_pose,
                                              planner_results['avg_runs'], planner_results['avg_run_time'],
-                                             planner_results['avg_plan_time'], planner_results['avg_dist'], 
-                                             planner_results['avg_path_length'], planner_results['avg_success'], 
+                                             planner_results['avg_plan_time'], planner_results['avg_dist'],
+                                             planner_results['avg_path_length'], planner_results['avg_success'],
                                              self.planner_config_obj.get_planner_params(planner_id)])
 
                         rospy.loginfo('avg_run_time: %.4f avg_plan_time: %.4f avg_dist: %4f avg_path_length: %.4f avg_success: %.4f\n',
-                                         planner_results['avg_run_time'],  planner_results['avg_plan_time'], 
-                                         planner_results['avg_dist'], planner_results['avg_path_length'], 
-                                         planner_results['avg_success'])
+                                      planner_results['avg_run_time'],  planner_results['avg_plan_time'],
+                                      planner_results['avg_dist'], planner_results['avg_path_length'],
+                                      planner_results['avg_success'])
 
                     # Add query dict to scene dict
                     scene[query_count] = query
@@ -132,8 +133,10 @@ class Session(object):
                 with open(results_path, 'a') as f:
                     writer = csv.writer(f)
                     writer.writerow([''])
-                    writer.writerow(['t_avg_run_time', 't_avg_plan_time', 't_avg_dist', 't_avg_success'])
-                    writer.writerow([stats['t_avg_run_time'], stats['t_avg_plan_time'], stats['t_avg_dist'], stats['t_avg_success']])
+                    writer.writerow(
+                        ['t_avg_run_time', 't_avg_plan_time', 't_avg_dist', 't_avg_success'])
+                    writer.writerow([stats['t_avg_run_time'], stats['t_avg_plan_time'],
+                                     stats['t_avg_dist'], stats['t_avg_success']])
                     writer.writerow([''])
 
         return result_log, stats
@@ -150,18 +153,19 @@ class Session(object):
 
             if (path['success'] == 0) or (exec_success is False):
                 run_time = 0
-                path = {'planned_path': 0, 'plan_time': 0, 'length':{'joint_dist': 0, 'joint_length': 0}, 'success': 0}
-    
+                path = {'planned_path': 0, 'plan_time': 0, 'length': {
+                    'joint_dist': 0, 'joint_length': 0}, 'success': 0}
+
             run_times.append(run_time)
             path_stats.append(path)
 
         avg_run_time = sum(run_times) / float(len(run_times))
         avg_plan_time = float(sum(d['plan_time']
-                                for d in path_stats)) / len(path_stats)
+                                  for d in path_stats)) / len(path_stats)
         avg_dist = float(sum(d['length']['joint_dist']
-                                for d in path_stats)) / len(path_stats)
-        avg_path_length = float(sum(d['length']['joint_length'] 
-                                for d in path_stats)) / len(path_stats)
+                             for d in path_stats)) / len(path_stats)
+        avg_path_length = float(sum(d['length']['joint_length']
+                                    for d in path_stats)) / len(path_stats)
         avg_success = float(sum(d['success']
                                 for d in path_stats)) / len(path_stats)
 
@@ -185,19 +189,11 @@ class Session(object):
         start_time = timer()
         planned_path = self.group.plan()
         plan_time = timer() - start_time
-        
         # If motion plan fails, length will be saved as 0
         length = {'joint_dist': 0, 'joint_length': 0}
         success = 0
-        if len(planned_path.joint_trajectory.points) != 0:
-            length = self._get_path_length(planned_path)
-            success = 1
-            
         return {'planned_path': planned_path, 'plan_time': plan_time, 'length': length, 'success': success}
-
-    def _get_path_length(self, path):
         """Returns the eucld dist and path length of given motion plan (RobotTrajectory)
-        
         Args:
             path (RobotTrajectory) -- MoveIt RobotTrajectory Message
         
