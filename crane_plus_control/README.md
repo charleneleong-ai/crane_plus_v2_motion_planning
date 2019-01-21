@@ -6,31 +6,27 @@ This package aims to implement the following two papers in researching global bl
 
 Cano, J. et al. “Automatic Parameter Tuning of Motion Planning Algorithms,” 2018 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain,  October, 1-5, 2018
 
-- Motion Planning Algorithms: BKPiece and RRTConnect
+- **Motion Planning Algorithms:** BKPiece and RRTConnect
 
   *Note:* The Simplification trails (P5) parameter is specific to the simulator used in paper, therefore this parameter is omitted in our experiment.
 
   ![](imgs/Canoetal_defaults.png)
 
-  *
+- **Optimisation Algorithms Explored:** Random Search, Bayesian Optimisation (Gaussian Process),  Random Forest and AUC Bandit
 
-- Optimisation Algorithms Explored: Random Search, Bayesian Optimisation (Gaussian Process),  Random Forest and AUC Bandit
+- **Experiment Setup:** Simulation only testing for 7DOF KUKA LWR robot arm
 
-- Experiment Setup:Simulation only testing for 7DOF KUKA LWR robot arm
+  - ***Environment 1:*** Tuning planning time on Narrow Passage problem to get optimal parameters with each method  run for a period of 2 hours (7200s) 
+  - ***Environment 2:*** Tuning planning time on random scenarios with increasing number of objects 
 
-  - Environment 1: Tuning planning time on Narrow Passage problem to get optimal parameters with each method  run for a period of 2 hours (7200s) 
-  - Environment 2: Tuning planning time on random scenarios with increasing number of objects 
+  ![](imgs/Canoetal_test_env.png)
 
-![](imgs/Canoetal_test_env.png)
+- **Results:**
+  - ***Environment 1:*** AUC Bandit gives 4.5x speedup for BKPiece and Random Forest gives 1.26x speedup for RRTConnect
 
-- Results:
-  - Environment 1: AUC Bandit gives 4.5x speedup for BKPiece and Random Forest gives 1.26x speedup for RRTConnect
+  ![](imgs/Canoetal_results_speedup.png)
 
-![](imgs/Canoetal_results_speedup.png)
-
-  - Environment 2: 
-
-
+  - ***Environment 2:*** 
 
 ___
 
