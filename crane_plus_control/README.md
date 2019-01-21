@@ -6,32 +6,29 @@ This package aims to implement the following two papers in researching global bl
 
 Cano, J. et al. “Automatic Parameter Tuning of Motion Planning Algorithms,” 2018 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain,  October, 1-5, 2018
 
-1.  Motion Planning Algorithms: BKPiece and RRTConnect
+- Motion Planning Algorithms: BKPiece and RRTConnect
+  ![](imgs/Canoetal_defaults.png)
 
-    ![](imgs/Canoetal_defaults.png)
+  *Note:* The Simplification trails (P5) parameter is specific to the simulator used in paper, therefore this parameter is omitted in our experiment.
 
-    *Note:* The Simplification trails (P5) parameter is specific to the simulator used in paper, therefore this parameter is omitted in our experiment.
+- Optimisation Algorithms Explored: Random Search, Bayesian Optimisation (Gaussian Process),  Random Forest and AUC Bandit
 
-2. Optimisation Algorithms Explored: Random Search, Bayesian Optimisation (Gaussian Process),  Random Forest and AUC Bandit
+- Experiment Setup:
 
-3. Experiment Setup:
+  Simulation only testing for 7DOF KUKA LWR robot arm
+  - Environment 1: Tuning planning time on Narrow Passage problem to get optimal parameters with each method  run for a period of 2 hours (7200s) 
+  - Environment 2: Tuning planning time on random scenarios with increasing number of objects 
 
-    Simulation only testing for 7DOF KUKA LWR robot arm
+![](imgs/Canoetal_test_env.png)
 
-    - Environment 1: Tuning planning time on Narrow Passage problem to get optimal parameters with each method  run for a period of 2 hours (7200s) 
-    - Environment 2: Tuning planning time on random scenarios with increasing number of objects 
+- Results:
+  - Environment 1: AUC Bandit gives 4.5x speedup for BKPiece and Random Forest gives 1.26x speedup for RRTConnect
 
-    ![](imgs/Canoetal_test_env.png)
+![](imgs/Canoetal_results_speedup.png)
 
-4. Results:
+  - Environment 2:
 
-    - Environment 1: AUC Bandit gives 4.5x speedup for BKPiece and Random Forest gives 1.26x speedup for RRTConnect
 
-    ![](imgs/Canoetal_results_speedup.png)
-
-    - Environment 2:
-
-    
 
 ___
 

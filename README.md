@@ -28,9 +28,9 @@ Based on the [TurtleBot Arm code](https://github.com/turtlebot/turtlebot_arm).
 - [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
 - Python 2.7
 
-This package has only been tested on Ubuntu 16.04 with ROS Kinetic which is only stable on Python 2.7. 
+This package has only been tested on Ubuntu 16.04 with ROS Kinetic which is only stable on Python 2.7 due to compatibility with packages. 
 
-If you wish to run this package along with Python 3 in Anaconda, please [create a py2.7 conda environment](https://www.youtube.com/watch?v=EMF20z-gT5s) for ROS.
+If you wish to run ROS along with Python 3 in Anaconda, please [create a py2.7 conda environment](https://www.youtube.com/watch?v=EMF20z-gT5s) for ROS.
 
 ## Packages
 
