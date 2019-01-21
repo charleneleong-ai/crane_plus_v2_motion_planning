@@ -14,9 +14,9 @@ The meshes (STL) for the motors and brackets are identical to the arm of [Bioloi
 
 Download the full assembly [here](https://a360.co/2FbPt1S).
 
-![](../imgs/fusion360_crane.png)
+![](imgs/fusion360_crane.png)
 
-![](../imgs/dimensions.png)
+![](imgs/dimensions.png)
 
 
 

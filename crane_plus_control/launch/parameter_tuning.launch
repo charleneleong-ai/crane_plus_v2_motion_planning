@@ -16,11 +16,11 @@ Modified By:
   <arg name="avg_runs" default="1" />
 
   <!-- parameter tuning file -->
-  <arg name="param_mode" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>
+  <arg name="param_tuning_config" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>
   <arg name="planner_configs" default="$(find crane_plus_control)/config/planner_configs.yaml"/>
 
   <node pkg="crane_plus_control" name="parameter_tuning" type="parameter_tuning.py" output="screen">
-    <rosparam command="load" file="$(arg param_mode)"/>
+    <rosparam command="load" file="$(arg param_tuning_config)"/>
     <rosparam command="load" file="$(arg planner_configs)"/>
     <param name="start_pose" type="str" value="$(arg start_pose)" />
     <param name="target_pose" type="str" value="$(arg target_pose)" />
