@@ -1,10 +1,11 @@
 planner,scene,query,start_pose,target_pose,avg_runs,avg_run_time,avg_plan_time,avg_dist,avg_path_length,avg_success,params
-BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,10,1.829541707,0.4229638338,1.7029456828,7.5514303205,1,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.5', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.0', 'failed_expansion_score_factor': '0.5', 'min_valid_path_fraction': '0.5', 'type': 'geometric::BKPIECE'}"
-,,,,,,,,,,,
-t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_success,,,,,,,,
-1.829541707,0.4229638338,1.7029456828,1,,,,,,,,
-,,,,,,,,,,,
-RRTConnectkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,10,1.4484702587,0.2135815144,1.7029193605,7.8672136754,1,"{'default': '1.0', 'type': 'geometric::RRTConnect'}"
-,,,,,,,,,,,
-t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_success,,,,,,,,
-1.4484702587,0.2135815144,1.7029193605,1,,,,,,,,
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,5,1.0834717273712158,0.5620529651641846,1.7029370835929165,7.879293124779022,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.5', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.0', 'failed_expansion_score_factor': '0.5', 'min_valid_path_fraction': '0.5', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_success
+1.0834717273712158,0.5620529651641846,1.7029370835929165,1.0
+""
+RRTConnectkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,5,0.8816122055053711,0.20639996528625487,1.3623475431787353,7.237303506058458,1.0,"{'default': '1.0', 'type': 'geometric::RRTConnect'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_success
+0.8816122055053711,0.20639996528625487,1.3623475431787353,1.0
+""
