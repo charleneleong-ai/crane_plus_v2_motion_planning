@@ -22,9 +22,12 @@ Cano, J. et al. “Automatic Parameter Tuning of Motion Planning Algorithms,” 
   ![](imgs/Canoetal_test_env.png)
 
 - **Results:**
+
   - ***Environment 1:*** AUC Bandit gives 4.5x speedup for BKPiece and Random Forest gives 1.26x speedup for RRTConnect
 
-  ![](imgs/Canoetal_results_speedup.png)
+    
+
+    ![](imgs/Canoetal_results_speedup.png)
 
   - ***Environment 2:*** 
 
@@ -64,25 +67,25 @@ $ roslaunch crane_plus_control parameter_tuning.launch planner_config:=<planner_
 
 1. TPE using [Hyperopt](http://hyperopt.github.io/hyperopt/)
 
-   ```bash
-   $ pip install hyperopt
-   $ roslaunch crane_plus_control parameter_tuning.launch mode:=tpe max_trials:=30 avg_runs:=1
-   ```
+    ```bash
+    $ pip install hyperopt
+    $ roslaunch crane_plus_control parameter_tuning.launch mode:=tpe max_trials:=30 avg_runs:=1
+    ```
 
-1. Random Search using [Hyperopt](http://hyperopt.github.io/hyperopt/)
+2. Random Search using [Hyperopt](http://hyperopt.github.io/hyperopt/)
 
-   ```bash
-   $ pip install hyperopt
-   $ roslaunch crane_plus_control parameter_tuning.launch mode:=rand max_trials:=30 avg_runs:=1
-   ```
+    ```bash
+    $ pip install hyperopt
+    $ roslaunch crane_plus_control parameter_tuning.launch mode:=rand max_trials:=30 avg_runs:=1
+    ```
 
-1. Random Forest using [SMAC](http://www.cs.ubc.ca/labs/beta/Projects/SMAC/v2.10.03/quickstart.html#news)
+3. Random Forest using [SMAC](http://www.cs.ubc.ca/labs/beta/Projects/SMAC/v2.10.03/quickstart.html#news)
 
-   Installed from source, located in [/scripts/modules/smac)](./scripts/modules/smac).
+    Installed from source, located in [/scripts/modules/smac)](./scripts/modules/smac).
 
-   ```bash
-   $ roslaunch crane_plus_control parameter_tuning.launch mode:=smac max_trials:=30 avg_runs:=1
-   ```
+    ```bash
+    $ roslaunch crane_plus_control parameter_tuning.launch mode:=smac max_trials:=30 avg_runs:=1
+    ```
 
    
 
