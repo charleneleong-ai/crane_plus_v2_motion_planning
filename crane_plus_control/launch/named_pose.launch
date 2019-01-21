@@ -1,0 +1,24 @@
+<!--
+File Created: Monday, 21st January 2019 4:49:38 pm
+Author:  Charlene Leong (charleneleong84@gmail.com>)
+Modified By: 
+Last Modified: 
+-->
+<launch>
+  <!-- option to choose target -->
+  <arg name="planner_config" default="Cano_etal"/>  <!-- [Cano_etal] -->
+  
+  <!-- parameter tuning file -->
+  <arg name="param_tuning_config" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>
+  <arg name="planner_configs" default="$(find crane_plus_control)/config/planner_configs.yaml"/>
+
+  <node pkg="crane_plus_control" name="named_pose" type="named_pose" output="screen">
+    <rosparam command="load" file="$(arg param_tuning_config)"/>
+    <rosparam command="load" file="$(arg planner_configs)"/>
+    
+    <param name="pose" type="str" value="$(arg pose)" />
+    <param name="planner_config" type="str" value="$(arg planner_config)" />
+  
+  </node>
+  
+</launch>

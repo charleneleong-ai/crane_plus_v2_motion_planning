@@ -1,7 +1,7 @@
 /*
  * File Created: Saturday, December 27th 2018, 11:23:55 am
  * Author: Charlene Leong charleneleong84@gmail.com
- * Last Modified: Sunday, January 20th 2019, 12:15:54 am
+ * Last Modified: Monday, January 21st 2019, 6:04:24 pm
  * Modified By: Charlene Leong
  */
 
@@ -17,40 +17,32 @@
 
 #include <moveit_visual_tools/moveit_visual_tools.h>
 
+
+
 int main(int argc, char **argv)
 {
-  std::string named_pose;
 
   //getNamedTargets
   //https://docs.ros.org/api/moveit_ros_planning_interface/html/classmoveit_1_1planning__interface_1_1MoveGroupInterface.html#a8fdc429c39a619d9935d9d15efbed87d
 
-  if (argc == 1 || argc > 2)
-  {
-    printf("rosrun crane_plus_control named_pose [<pose>] \n");
-    return 1;
-  }
-  else if (argc == 2)
-  {
-    
-    if (strcmp(argv[1], "vertical") == 0)
-    {
-      named_pose = "vertical";
-    }
-    else if (strcmp(argv[1], "backbend") == 0)
-    {
-      named_pose = "backbend";
-    }
-    else if (strcmp(argv[1], "resting") == 0)
-    {
-      named_pose = "resting";
-    }else{
-      printf("Invalid pose \n");
-      return 1;
-    }
-  }
+  // if (argc == 1 || argc > 2)
+  // {
+  //   printf("rosrun crane_plus_control named_pose <pose> \n");
+  //   return 1;
+  // }
 
   ros::init(argc, argv, "named_pose");
-  ros::NodeHandle nh;
+  ros::NodeHandle nh("~");
+
+  std::string named_pose, named_states;
+  if(nh.getParam("pose", named_pose)){
+    ROS_INFO("Got param: %s", named_pose.c_str());
+  }
+
+  if (!nh.hasParam("pose"))
+  {
+    ROS_INFO("No param named 'pose'");
+  }
 
   //MoveIt requires asynchronous calculation
   ros::AsyncSpinner spinner(2);
