@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 21st 2019, 8:39:58 am
+# Last Modified: Monday, January 21st 2019, 10:37:12 am
 # Modified By: Charlene Leong
 ###
 
@@ -59,7 +59,7 @@ class Session(object):
         self.scenes = ['narrow_passage']
 
     def run(self):
-        raise NotImplementedError, 'Should be implemented in child class'
+        raise NotImplementedError
 
     def _run_problem_set(self, planner_id, save=False, results_path=""):
         result_log = {}
@@ -155,7 +155,7 @@ class Session(object):
                 run_time = 0
                 path = {'planned_path': 0, 'plan_time': 0, 'length': {
                     'joint_dist': 0, 'joint_length': 0}, 'success': 0}
-
+            
             run_times.append(run_time)
             path_stats.append(path)
 
@@ -192,7 +192,14 @@ class Session(object):
         # If motion plan fails, length will be saved as 0
         length = {'joint_dist': 0, 'joint_length': 0}
         success = 0
+
+        if len(planned_path.joint_trajectory.points) != 0:
+            length = self._get_path_length(planned_path)
+            success = 1
+
         return {'planned_path': planned_path, 'plan_time': plan_time, 'length': length, 'success': success}
+    
+    def _get_path_length(self, path): 
         """Returns the eucld dist and path length of given motion plan (RobotTrajectory)
         Args:
             path (RobotTrajectory) -- MoveIt RobotTrajectory Message

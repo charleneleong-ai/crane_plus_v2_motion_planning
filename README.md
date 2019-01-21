@@ -149,7 +149,7 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     ROS_PACKAGE_PATH=/home/<username>/catkin_ws/src:/opt/ros/kinetic/share
     ROS_MASTER_URI=http://localhost:11311
     ROS_VERSION=1
-    ROSLISP_PACKAGE_DIRECTORIES=/home/ubuntu/catkin_ws/devel/share/common-lisp
+    ROSLISP_PACKAGE_DIRECTORIES=/home/<username>/catkin_ws/devel/share/common-lisp
     ROS_DISTRO=kinetic
     ROS_ETC_DIR=/opt/ros/kinetic/etc/ros
     ```

@@ -1,0 +1,2814 @@
+[ {
+  "@pi-id" : 2,
+  "pi-name" : "example_scenarios/spear/instances/train/qcplin2006.10085.cnf",
+  "pi-instance-specific-info" : "0",
+  "pi-features" : {
+    "Feature1" : 935.0,
+    "Feature10" : 1.0,
+    "Feature100" : 0.0,
+    "Feature101" : 0.0,
+    "Feature102" : 21.8879,
+    "Feature103" : 4.1047,
+    "Feature104" : 350.899,
+    "Feature105" : 0.0606,
+    "Feature106" : 350.0,
+    "Feature107" : 333.0,
+    "Feature108" : 372.0,
+    "Feature109" : 2.9829,
+    "Feature11" : 1.0,
+    "Feature110" : 0.19799,
+    "Feature111" : 0.9787,
+    "Feature112" : 0.043592,
+    "Feature113" : 20.3798,
+    "Feature114" : 1.2881,
+    "Feature115" : 351.656,
+    "Feature116" : 0.068297,
+    "Feature117" : 353.0,
+    "Feature118" : 333.0,
+    "Feature119" : 371.0,
+    "Feature12" : 0.0,
+    "Feature120" : 1.7876,
+    "Feature121" : 0.56434,
+    "Feature122" : 0.98209,
+    "Feature123" : 0.019205,
+    "Feature124" : 0.2613,
+    "Feature125" : 0.92618,
+    "Feature13" : 0.002378,
+    "Feature14" : 0.46189,
+    "Feature15" : 0.002139,
+    "Feature16" : 0.012834,
+    "Feature17" : 0.32047,
+    "Feature18" : 0.0,
+    "Feature19" : 0.9455,
+    "Feature2" : 8348.0,
+    "Feature20" : 0.94957,
+    "Feature21" : 0.002378,
+    "Feature22" : 0.21232,
+    "Feature23" : 0.0010781,
+    "Feature24" : 0.003953,
+    "Feature25" : 2.8438,
+    "Feature26" : 0.6821,
+    "Feature27" : 0.077023,
+    "Feature28" : 0.33333,
+    "Feature29" : 0.81818,
+    "Feature3" : 935.0,
+    "Feature30" : 2.7802,
+    "Feature31" : 0.0020186,
+    "Feature32" : 0.25012,
+    "Feature33" : 7.1873E-4,
+    "Feature34" : 0.0035937,
+    "Feature35" : 2.8438,
+    "Feature36" : 0.9437,
+    "Feature37" : 0.0020186,
+    "Feature38" : 0.25012,
+    "Feature39" : 7.1873E-4,
+    "Feature4" : 8348.0,
+    "Feature40" : 0.0035937,
+    "Feature41" : 0.0011304,
+    "Feature42" : 2.1836,
+    "Feature43" : 5.9895E-4,
+    "Feature44" : 0.02839,
+    "Feature45" : 0.4911,
+    "Feature46" : 0.31636,
+    "Feature47" : 0.22023,
+    "Feature48" : 0.0084034,
+    "Feature49" : 0.33333,
+    "Feature5" : 0.0,
+    "Feature50" : 0.31833,
+    "Feature51" : 5.8223,
+    "Feature52" : 0.067087,
+    "Feature53" : 5.0,
+    "Feature54" : 7.0,
+    "Feature55" : 0.49382,
+    "Feature56" : 0.0,
+    "Feature57" : 0.0,
+    "Feature58" : 0.0,
+    "Feature59" : 0.0,
+    "Feature6" : 0.0,
+    "Feature60" : 0.0,
+    "Feature61" : 0.0,
+    "Feature62" : 0.0,
+    "Feature63" : 0.0,
+    "Feature64" : 0.0,
+    "Feature65" : 0.0,
+    "Feature66" : 0.0,
+    "Feature67" : 0.0,
+    "Feature68" : 0.0,
+    "Feature69" : 0.0,
+    "Feature7" : 0.112,
+    "Feature70" : 0.0,
+    "Feature71" : 0.0,
+    "Feature72" : 0.0,
+    "Feature73" : 0.0,
+    "Feature74" : 0.78927,
+    "Feature75" : 0.12298,
+    "Feature76" : 0.097286,
+    "Feature77" : 0.91654,
+    "Feature78" : 0.87238,
+    "Feature79" : 0.6782,
+    "Feature8" : 1.0,
+    "Feature80" : 0.85183,
+    "Feature81" : 0.76174,
+    "Feature82" : 0.81467,
+    "Feature83" : 0.015025,
+    "Feature84" : 0.10004,
+    "Feature85" : 0.010584,
+    "Feature86" : 0.018512,
+    "Feature87" : 0.017009,
+    "Feature88" : 0.012998,
+    "Feature89" : 0.016138,
+    "Feature9" : 0.0,
+    "Feature90" : 0.013975,
+    "Feature91" : 0.015014,
+    "Feature92" : 0.0,
+    "Feature93" : 0.0,
+    "Feature94" : 0.025668,
+    "Feature95" : 0.13476,
+    "Feature96" : 0.13476,
+    "Feature97" : 0.0,
+    "Feature98" : 0.0,
+    "Feature99" : 0.0
+  },
+  "pi-instance-id(deprecated)" : 1
+}, {
+  "@pi-id" : 3,
+  "pi-name" : "example_scenarios/spear/instances/train/qcplin2006.10218.cnf",
+  "pi-instance-specific-info" : "0",
+  "pi-features" : {
+    "Feature1" : 1066.0,
+    "Feature10" : 1.0,
+    "Feature100" : 0.0,
+    "Feature101" : 0.0,
+    "Feature102" : 46.5791,
+    "Feature103" : 0.30028,
+    "Feature104" : 380.695,
+    "Feature105" : 0.062285,
+    "Feature106" : 382.0,
+    "Feature107" : 362.0,
+    "Feature108" : 401.0,
+    "Feature109" : 2.5199,
+    "Feature11" : 1.0,
+    "Feature110" : 0.2704,
+    "Feature111" : 0.9753,
+    "Feature112" : 0.0098068,
+    "Feature113" : 42.271,
+    "Feature114" : 0.83229,
+    "Feature115" : 380.046,
+    "Feature116" : 0.075446,
+    "Feature117" : 382.0,
+    "Feature118" : 358.0,
+    "Feature119" : 402.0,
+    "Feature12" : 0.0,
+    "Feature120" : 1.3969,
+    "Feature121" : 0.83235,
+    "Feature122" : 0.97336,
+    "Feature123" : 0.027477,
+    "Feature124" : 0.23286,
+    "Feature125" : 0.87774,
+    "Feature13" : 0.0021046,
+    "Feature14" : 0.41421,
+    "Feature15" : 0.0018762,
+    "Feature16" : 0.0093809,
+    "Feature17" : 0.41945,
+    "Feature18" : 0.0,
+    "Feature19" : 0.91997,
+    "Feature2" : 7672.0,
+    "Feature20" : 0.93418,
+    "Feature21" : 0.0021046,
+    "Feature22" : 0.21199,
+    "Feature23" : 9.1241E-4,
+    "Feature24" : 0.0033889,
+    "Feature25" : 2.6377,
+    "Feature26" : 0.60945,
+    "Feature27" : 0.093701,
+    "Feature28" : 0.14286,
+    "Feature29" : 0.76923,
+    "Feature3" : 1066.0,
+    "Feature30" : 2.6342,
+    "Feature31" : 0.0017135,
+    "Feature32" : 0.26037,
+    "Feature33" : 5.2138E-4,
+    "Feature34" : 0.0029979,
+    "Feature35" : 2.6377,
+    "Feature36" : 0.91332,
+    "Feature37" : 0.0017135,
+    "Feature38" : 0.26037,
+    "Feature39" : 5.2138E-4,
+    "Feature4" : 7672.0,
+    "Feature40" : 0.0029979,
+    "Feature41" : 0.0011905,
+    "Feature42" : 1.6977,
+    "Feature43" : 6.5172E-4,
+    "Feature44" : 0.0189,
+    "Feature45" : 0.68581,
+    "Feature46" : 0.30878,
+    "Feature47" : 0.25999,
+    "Feature48" : 0.013699,
+    "Feature49" : 0.33333,
+    "Feature5" : 0.0,
+    "Feature50" : 0.48948,
+    "Feature51" : 6.185,
+    "Feature52" : 0.062778,
+    "Feature53" : 6.0,
+    "Feature54" : 7.0,
+    "Feature55" : 0.47886,
+    "Feature56" : 0.0,
+    "Feature57" : 0.0,
+    "Feature58" : 0.0,
+    "Feature59" : 0.0,
+    "Feature6" : 0.0,
+    "Feature60" : 0.0,
+    "Feature61" : 0.0,
+    "Feature62" : 0.0,
+    "Feature63" : 0.0,
+    "Feature64" : 0.0,
+    "Feature65" : 0.0,
+    "Feature66" : 0.0,
+    "Feature67" : 0.0,
+    "Feature68" : 0.0,
+    "Feature69" : 0.0,
+    "Feature7" : 0.13895,
+    "Feature70" : 0.0,
+    "Feature71" : 0.0,
+    "Feature72" : 0.0,
+    "Feature73" : 0.0,
+    "Feature74" : 0.72941,
+    "Feature75" : 0.18347,
+    "Feature76" : 0.0043595,
+    "Feature77" : 0.89512,
+    "Feature78" : 0.84669,
+    "Feature79" : 0.5685,
+    "Feature8" : 1.0,
+    "Feature80" : 0.81923,
+    "Feature81" : 0.68127,
+    "Feature82" : 0.76554,
+    "Feature83" : 0.014779,
+    "Feature84" : 0.11474,
+    "Feature85" : 0.0092442,
+    "Feature86" : 0.018196,
+    "Feature87" : 0.016936,
+    "Feature88" : 0.012474,
+    "Feature89" : 0.016134,
+    "Feature9" : 0.0,
+    "Feature90" : 0.013566,
+    "Feature91" : 0.014821,
+    "Feature92" : 0.0,
+    "Feature93" : 0.0084428,
+    "Feature94" : 0.0394,
+    "Feature95" : 0.15572,
+    "Feature96" : 0.15572,
+    "Feature97" : 0.0,
+    "Feature98" : 0.0,
+    "Feature99" : 0.0
+  },
+  "pi-instance-id(deprecated)" : 2
+}, {
+  "@pi-id" : 4,
+  "pi-name" : "example_scenarios/spear/instances/train/qcplin2006.10408.cnf",
+  "pi-instance-specific-info" : "0",
+  "pi-features" : {
+    "Feature1" : 1721.0,
+    "Feature10" : 0.0,
+    "Feature100" : 0.0,
+    "Feature101" : 0.0,
+    "Feature102" : 48.8358,
+    "Feature103" : 0.65121,
+    "Feature104" : 634.985,
+    "Feature105" : 0.078208,
+    "Feature106" : 639.0,
+    "Feature107" : 612.0,
+    "Feature108" : 667.0,
+    "Feature109" : 2.6443,
+    "Feature11" : 1.0,
+    "Feature110" : 0.22036,
+    "Feature111" : 0.97992,
+    "Feature112" : 0.012694,
+    "Feature113" : 60.3191,
+    "Feature114" : 0.52788,
+    "Feature115" : 643.887,
+    "Feature116" : 0.031085,
+    "Feature117" : 644.0,
+    "Feature118" : 620.0,
+    "Feature119" : 669.0,
+    "Feature12" : 0.0035371,
+    "Feature120" : 2.1956,
+    "Feature121" : 0.79372,
+    "Feature122" : 0.98332,
+    "Feature123" : 0.0091764,
+    "Feature124" : 0.46261,
+    "Feature125" : 0.87109,
+    "Feature13" : 0.0012929,
+    "Feature14" : 0.45771,
+    "Feature15" : 0.0011628,
+    "Feature16" : 0.0087209,
+    "Feature17" : 0.33486,
+    "Feature18" : 0.0,
+    "Feature19" : 0.94266,
+    "Feature2" : 14964.0,
+    "Feature20" : 0.94921,
+    "Feature21" : 0.0012929,
+    "Feature22" : 0.23081,
+    "Feature23" : 4.6779E-4,
+    "Feature24" : 0.0026063,
+    "Feature25" : 2.8941,
+    "Feature26" : 0.67173,
+    "Feature27" : 0.083237,
+    "Feature28" : 0.14286,
+    "Feature29" : 0.84615,
+    "Feature3" : 1720.0,
+    "Feature30" : 2.8487,
+    "Feature31" : 0.0010925,
+    "Feature32" : 0.27297,
+    "Feature33" : 2.6731E-4,
+    "Feature34" : 0.0024058,
+    "Feature35" : 2.8932,
+    "Feature36" : 0.93959,
+    "Feature37" : 0.0010923,
+    "Feature38" : 0.27338,
+    "Feature39" : 2.6731E-4,
+    "Feature4" : 14964.0,
+    "Feature40" : 0.0024058,
+    "Feature41" : 6.2798E-4,
+    "Feature42" : 2.1462,
+    "Feature43" : 3.3413E-4,
+    "Feature44" : 0.022053,
+    "Feature45" : 0.53654,
+    "Feature46" : 0.3152,
+    "Feature47" : 0.22637,
+    "Feature48" : 0.0060423,
+    "Feature49" : 0.33333,
+    "Feature5" : 5.8139E-4,
+    "Feature50" : 0.35791,
+    "Feature51" : 6.0419,
+    "Feature52" : 0.033156,
+    "Feature53" : 6.0,
+    "Feature54" : 7.0,
+    "Feature55" : 0.17389,
+    "Feature56" : 3180.3333,
+    "Feature57" : 0.5458,
+    "Feature58" : 735.0,
+    "Feature59" : 4590.0,
+    "Feature6" : 0.0,
+    "Feature60" : 4590.0,
+    "Feature61" : 735.0,
+    "Feature62" : 4590.0,
+    "Feature63" : 735.0,
+    "Feature64" : 4216.0,
+    "Feature65" : 37.7139,
+    "Feature66" : 0.19677,
+    "Feature67" : 27.5497,
+    "Feature68" : 45.0595,
+    "Feature69" : 45.0595,
+    "Feature7" : 0.11494,
+    "Feature70" : 27.5497,
+    "Feature71" : 45.0595,
+    "Feature72" : 27.5497,
+    "Feature73" : 40.5325,
+    "Feature74" : 0.77978,
+    "Feature75" : 0.13838,
+    "Feature76" : 0.071938,
+    "Feature77" : 0.9318,
+    "Feature78" : 0.87493,
+    "Feature79" : 0.65653,
+    "Feature8" : 0.9996,
+    "Feature80" : 0.84757,
+    "Feature81" : 0.74761,
+    "Feature82" : 0.80882,
+    "Feature83" : 0.014649,
+    "Feature84" : 0.12107,
+    "Feature85" : 0.0026125,
+    "Feature86" : 0.018617,
+    "Feature87" : 0.016903,
+    "Feature88" : 0.012434,
+    "Feature89" : 0.015959,
+    "Feature9" : 0.020028,
+    "Feature90" : 0.013516,
+    "Feature91" : 0.014712,
+    "Feature92" : 0.0,
+    "Feature93" : 0.0,
+    "Feature94" : 0.019186,
+    "Feature95" : 0.019186,
+    "Feature96" : 0.019186,
+    "Feature97" : 0.0,
+    "Feature98" : 0.0,
+    "Feature99" : 0.0
+  },
+  "pi-instance-id(deprecated)" : 3
+}, {
+  "@pi-id" : 5,
+  "pi-name" : "example_scenarios/spear/instances/train/qcplin2006.10422.cnf",
+  "pi-instance-specific-info" : "0",
+  "pi-features" : {
+    "Feature1" : 1759.0,
+    "Feature10" : 1.0,
+    "Feature100" : 0.0,
+    "Feature101" : 0.0,
+    "Feature102" : 79.0674,
+    "Feature103" : 0.23361,
+    "Feature104" : 633.15,
+    "Feature105" : 0.031444,
+    "Feature106" : 633.0,
+    "Feature107" : 610.0,
+    "Feature108" : 658.0,
+    "Feature109" : 2.4932,
+    "Feature11" : 1.0,
+    "Feature110" : 0.25685,
+    "Feature111" : 0.97671,
+    "Feature112" : 0.0071727,
+    "Feature113" : 75.1091,
+    "Feature114" : 0.45976,
+    "Feature115" : 628.945,
+    "Feature116" : 0.10153,
+    "Feature117" : 634.0,
+    "Feature118" : 611.0,
+    "Feature119" : 660.0,
+    "Feature12" : 0.0,
+    "Feature120" : 1.5964,
+    "Feature121" : 0.87832,
+    "Feature122" : 0.97614,
+    "Feature123" : 0.013577,
+    "Feature124" : 0.14052,
+    "Feature125" : 0.6459,
+    "Feature13" : 0.0012728,
+    "Feature14" : 0.42367,
+    "Feature15" : 0.001137,
+    "Feature16" : 0.0068221,
+    "Feature17" : 0.4079,
+    "Feature18" : 0.0,
+    "Feature19" : 0.924,
+    "Feature2" : 13119.0,
+    "Feature20" : 0.93704,
+    "Feature21" : 0.0012728,
+    "Feature22" : 0.22936,
+    "Feature23" : 5.3358E-4,
+    "Feature24" : 0.002363,
+    "Feature25" : 2.7443,
+    "Feature26" : 0.62034,
+    "Feature27" : 0.09328,
+    "Feature28" : 0.14286,
+    "Feature29" : 0.80645,
+    "Feature3" : 1759.0,
+    "Feature30" : 2.7282,
+    "Feature31" : 0.0010441,
+    "Feature32" : 0.27959,
+    "Feature33" : 3.049E-4,
+    "Feature34" : 0.0021343,
+    "Feature35" : 2.7443,
+    "Feature36" : 0.91829,
+    "Feature37" : 0.0010441,
+    "Feature38" : 0.27959,
+    "Feature39" : 3.049E-4,
+    "Feature4" : 13119.0,
+    "Feature40" : 0.0021343,
+    "Feature41" : 6.9997E-4,
+    "Feature42" : 1.7965,
+    "Feature43" : 3.8113E-4,
+    "Feature44" : 0.017074,
+    "Feature45" : 0.65974,
+    "Feature46" : 0.30995,
+    "Feature47" : 0.25429,
+    "Feature48" : 0.0088889,
+    "Feature49" : 0.33333,
+    "Feature5" : 0.0,
+    "Feature50" : 0.46455,
+    "Feature51" : 6.6661,
+    "Feature52" : 0.070747,
+    "Feature53" : 6.0,
+    "Feature54" : 7.0,
+    "Feature55" : 0.63691,
+    "Feature56" : 0.0,
+    "Feature57" : 0.0,
+    "Feature58" : 0.0,
+    "Feature59" : 0.0,
+    "Feature6" : 0.0,
+    "Feature60" : 0.0,
+    "Feature61" : 0.0,
+    "Feature62" : 0.0,
+    "Feature63" : 0.0,
+    "Feature64" : 0.0,
+    "Feature65" : 0.0,
+    "Feature66" : 0.0,
+    "Feature67" : 0.0,
+    "Feature68" : 0.0,
+    "Feature69" : 0.0,
+    "Feature7" : 0.13408,
+    "Feature70" : 0.0,
+    "Feature71" : 0.0,
+    "Feature72" : 0.0,
+    "Feature73" : 0.0,
+    "Feature74" : 0.73814,
+    "Feature75" : 0.17349,
+    "Feature76" : 0.0050335,
+    "Feature77" : 0.90803,
+    "Feature78" : 0.85558,
+    "Feature79" : 0.57366,
+    "Feature8" : 1.0,
+    "Feature80" : 0.82281,
+    "Feature81" : 0.68932,
+    "Feature82" : 0.77455,
+    "Feature83" : 0.014638,
+    "Feature84" : 0.12053,
+    "Feature85" : 0.0054737,
+    "Feature86" : 0.018267,
+    "Feature87" : 0.01694,
+    "Feature88" : 0.012285,
+    "Feature89" : 0.015923,
+    "Feature9" : 0.0,
+    "Feature90" : 0.013406,
+    "Feature91" : 0.014753,
+    "Feature92" : 0.0,
+    "Feature93" : 0.0,
+    "Feature94" : 0.011939,
+    "Feature95" : 0.1751,
+    "Feature96" : 0.1751,
+    "Feature97" : 0.0,
+    "Feature98" : 0.0,
+    "Feature99" : 0.0
+  },
+  "pi-instance-id(deprecated)" : 4
+}, {
+  "@pi-id" : 6,
+  "pi-name" : "example_scenarios/spear/instances/train/qcplin2006.10427.cnf",
+  "pi-instance-specific-info" : "0",
+  "pi-features" : {
+    "Feature1" : 1143.0,
+    "Feature10" : 1.0,
+    "Feature100" : 0.0,
+    "Feature101" : 0.0,
+    "Feature102" : 56.8337,
+    "Feature103" : 0.28962,
+    "Feature104" : 404.645,
+    "Feature105" : 0.039127,
+    "Feature106" : 404.0,
+    "Feature107" : 385.0,
+    "Feature108" : 424.0,
+    "Feature109" : 2.372,
+    "Feature11" : 1.0,
+    "Feature110" : 0.29203,
+    "Feature111" : 0.97343,
+    "Feature112" : 0.010978,
+    "Feature113" : 46.1279,
+    "Feature114" : 0.43443,
+    "Feature115" : 404.676,
+    "Feature116" : 0.039816,
+    "Feature117" : 404.0,
+    "Feature118" : 384.0,
+    "Feature119" : 425.0,
+    "Feature12" : 0.0,
+    "Feature120" : 1.1726,
+    "Feature121" : 0.87764,
+    "Feature122" : 0.96772,
+    "Feature123" : 0.012502,
+    "Feature124" : 0.33486,
+    "Feature125" : 0.7937,
+    "Feature13" : 0.0019684,
+    "Feature14" : 0.39614,
+    "Feature15" : 0.0017498,
+    "Feature16" : 0.007874,
+    "Feature17" : 0.4495,
+    "Feature18" : 0.0,
+    "Feature19" : 0.91026,
+    "Feature2" : 7678.0,
+    "Feature20" : 0.92706,
+    "Feature21" : 0.0019684,
+    "Feature22" : 0.19875,
+    "Feature23" : 9.117E-4,
+    "Feature24" : 0.0029956,
+    "Feature25" : 2.5084,
+    "Feature26" : 0.58538,
+    "Feature27" : 0.092625,
+    "Feature28" : 0.14286,
+    "Feature29" : 0.73913,
+    "Feature3" : 1143.0,
+    "Feature30" : 2.5084,
+    "Feature31" : 0.0015777,
+    "Feature32" : 0.24797,
+    "Feature33" : 5.2097E-4,
+    "Feature34" : 0.0026048,
+    "Feature35" : 2.5084,
+    "Feature36" : 0.90167,
+    "Feature37" : 0.0015777,
+    "Feature38" : 0.24797,
+    "Feature39" : 5.2097E-4,
+    "Feature4" : 7678.0,
+    "Feature40" : 0.0026048,
+    "Feature41" : 0.0011744,
+    "Feature42" : 1.5443,
+    "Feature43" : 6.5121E-4,
+    "Feature44" : 0.015499,
+    "Feature45" : 0.74752,
+    "Feature46" : 0.30598,
+    "Feature47" : 0.27282,
+    "Feature48" : 0.016667,
+    "Feature49" : 0.33333,
+    "Feature5" : 0.0,
+    "Feature50" : 0.54436,
+    "Feature51" : 6.5114,
+    "Feature52" : 0.076769,
+    "Feature53" : 6.0,
+    "Feature54" : 7.0,
+    "Feature55" : 0.69289,
+    "Feature56" : 0.0,
+    "Feature57" : 0.0,
+    "Feature58" : 0.0,
+    "Feature59" : 0.0,
+    "Feature6" : 0.0,
+    "Feature60" : 0.0,
+    "Feature61" : 0.0,
+    "Feature62" : 0.0,
+    "Feature63" : 0.0,
+    "Feature64" : 0.0,
+    "Feature65" : 0.0,
+    "Feature66" : 0.0,
+    "Feature67" : 0.0,
+    "Feature68" : 0.0,
+    "Feature69" : 0.0,
+    "Feature7" : 0.14887,
+    "Feature70" : 0.0,
+    "Feature71" : 0.0,
+    "Feature72" : 0.0,
+    "Feature73" : 0.0,
+    "Feature74" : 0.7115,
+    "Feature75" : 0.18947,
+    "Feature76" : 0.064797,
+    "Feature77" : 0.8888,
+    "Feature78" : 0.83432,
+    "Feature79" : 0.53919,
+    "Feature8" : 1.0,
+    "Feature80" : 0.80035,
+    "Feature81" : 0.66786,
+    "Feature82" : 0.74832,
+    "Feature83" : 0.014803,
+    "Feature84" : 0.11454,
+    "Feature85" : 0.0095613,
+    "Feature86" : 0.018214,
+    "Feature87" : 0.016945,
+    "Feature88" : 0.012416,
+    "Feature89" : 0.016065,
+    "Feature9" : 0.0,
+    "Feature90" : 0.013641,
+    "Feature91" : 0.015007,
+    "Feature92" : 0.0,
+    "Feature93" : 0.020122,
+    "Feature94" : 0.1951,
+    "Feature95" : 0.55993,
+    "Feature96" : 0.55993,
+    "Feature97" : 0.0,
+    "Feature98" : 0.0,
+    "Feature99" : 0.0
+  },
+  "pi-instance-id(deprecated)" : 5
+} ] {
+  "r-rc" : {
+    "@rc-id" : 2,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2,
+      "algo-exec" : "example_scenarios/spear/wrapper.py",
+      "algo-exec-dir" : "/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac",
+      "algo-pcs" : {
+        "@pcs-id" : 2,
+        "pcs-filename" : "/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/example_scenarios/spear/params.pcs",
+        "pcs-text" : "sp-var-dec-heur categorical {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19}[0]    # Originally, 3,4,9,10 not used following Domagoj's advice. 20 requires modular arithmetic input format\nsp-learned-clause-sort-heur categorical {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19}[0]   # All values make sense here. 20 requires modular arithmetic input format\nsp-orig-clause-sort-heur categorical {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19}[0]   # All values make sense here. 20 requires modular arithmetic input format\nsp-res-order-heur categorical {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19}[0]     # All values make sense here. 20 requires modular arithmetic input format \nsp-clause-del-heur categorical {0,1,2}[2]                         # All values make sense here.\nsp-phase-dec-heur categorical {0,1,2,3,4,5,6}[5]                  # All values make sense here. \nsp-resolution categorical {0,1,2}[1]                              # 0 renders a whole bunch of conditionals irrelevant.\nsp-variable-decay real [1, 2] [1.4] log                   # Should be bigger than 1 (o/w increase not decay).  Was:  in 1.1,1.4,2.0, def 1.4\nsp-clause-decay real [1, 2] [1.4] log                     # Same thing.\nsp-restart-inc real [1.1, 1.9] [1.5]                      # Uniform because multiplicative. Was: in 1.1,1.3,1.5,1.7,1.9, def 1.5\nsp-learned-size-factor real [0.1, 1.6] [0.4] log          # Uniform on logarithmic scale (starting value). Was: in 0.1,0.2,0.4,0.8,1.6, def 0.4\nsp-learned-clauses-inc real [1.1, 1.5] [1.3]              # 1.2 and 1.4 were introduced later. Uniform because multiplicative Was: in1.1,1.2,1.3,1.4,1.5, def 1.3\nsp-clause-activity-inc real [0.5, 1.5] [1]                # Was: in 0.5,1,1.5, def 1\nsp-var-activity-inc real [0.5, 1.5] [1]                   # Was: in 0.5,1,1.5, def 1\nsp-rand-phase-dec-freq ordinal {0, 0.0001, 0.001, 0.005, 0.01, 0.05}[0.001] # Used discretized version to preserve 0. Never picked 0.05 in previous experiments, always zero.\nsp-rand-var-dec-freq ordinal {0, 0.0001, 0.001, 0.005, 0.01, 0.05}[0.001]  # Used discretized version to preserve 0. Never picked 0.05 in previous experiments, always zero.\nsp-rand-var-dec-scaling real [0.3, 1.1] [1]               # Domagoj said the previous values were too coarse, so finer discretization now.\nsp-rand-phase-scaling real [0.3, 1.1] [1]                 # Same thing. Was: in 0.3,0.6,0.9,1,1.1, def 1\nsp-max-res-lit-inc real [0.25, 4][1] log                  # 0.5 and 2 were introduced later. Was: in 0.25,0.5,1,2,4, def 1\nsp-first-restart integer [25, 3200] [100] log                 # Uniform on logarithmic scale (starting value). Was: in 25,50,100,200,400,800,1600,3200, def 100\nsp-res-cutoff-cls integer [2, 20] [8] log                     # Only up to 20 allowed, would've used 32 otherwise.\nsp-res-cutoff-lits integer [100, 1600] [400] log              # Was: in 100,200,400,800,1600, def 400\nsp-max-res-runs integer [1, 32] [4] log                       # Was: in 1,2,4,8,16,32, def 4\nsp-update-dec-queue categorical {0,1}[1]                          # Enable by default.\nsp-use-pure-literal-rule categorical {0,1}[1]                     # Enable by default. \nsp-clause-inversion categorical {0,1}[1]                          # Enable by default. Enable reversion of learned clauses if fixed order (sp-learned-clause-sort-heur=19) \n\nConditionals:\nsp-rand-phase-dec-freq|sp-phase-dec-heur in {0,1,3,4,5,6} # when heuristic is random, then additional random steps don't change anything\nsp-rand-var-dec-scaling|sp-rand-var-dec-freq in {0.0001, 0.001, 0.005, 0.01, 0.05}  # not 0\nsp-rand-phase-scaling|sp-rand-phase-dec-freq in {0.0001, 0.001, 0.005, 0.01, 0.05}  # not 0\nsp-clause-inversion|sp-learned-clause-sort-heur in {19}\n\nsp-res-order-heur|sp-resolution in {1,2}\nsp-max-res-lit-inc|sp-resolution in {1,2}\nsp-res-cutoff-cls|sp-resolution in {1,2}\nsp-res-cutoff-lits|sp-resolution in {1,2}\nsp-max-res-runs|sp-resolution in {1,2}\n",
+        "pcs-subspace" : { }
+      },
+      "algo-cutoff" : 1.0,
+      "algo-deterministic" : false,
+      "algo-tae-context" : { }
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 2,
+      "pisp-pi" : {
+        "@pi-id" : 3
+      },
+      "pisp-seed" : 8765092
+    },
+    "rc-pc" : {
+      "@pc-id" : 2,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "1.0",
+        "sp-clause-decay" : "1.4",
+        "sp-clause-del-heur" : "2",
+        "sp-clause-inversion" : "1",
+        "sp-first-restart" : "100",
+        "sp-learned-clause-sort-heur" : "0",
+        "sp-learned-clauses-inc" : "1.3",
+        "sp-learned-size-factor" : "0.4",
+        "sp-max-res-lit-inc" : "1.0",
+        "sp-max-res-runs" : "4",
+        "sp-orig-clause-sort-heur" : "0",
+        "sp-phase-dec-heur" : "5",
+        "sp-rand-phase-dec-freq" : "0.001",
+        "sp-rand-phase-scaling" : "1.0",
+        "sp-rand-var-dec-freq" : "0.001",
+        "sp-rand-var-dec-scaling" : "1.0",
+        "sp-res-cutoff-cls" : "8",
+        "sp-res-cutoff-lits" : "400",
+        "sp-res-order-heur" : "0",
+        "sp-resolution" : "1",
+        "sp-restart-inc" : "1.5",
+        "sp-update-dec-queue" : "1",
+        "sp-use-pure-literal-rule" : "1",
+        "sp-var-activity-inc" : "1.0",
+        "sp-var-dec-heur" : "0",
+        "sp-variable-decay" : "1.4"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-max-res-lit-inc", "sp-max-res-runs", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-phase-scaling", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-res-cutoff-cls", "sp-res-cutoff-lits", "sp-res-order-heur", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : true
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0383341312408,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8765092,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.382
+} {
+  "r-rc" : {
+    "@rc-id" : 3,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 3,
+      "pisp-pi" : {
+        "@pi-id" : 6
+      },
+      "pisp-seed" : 7163446
+    },
+    "rc-pc" : {
+      "@pc-id" : 2
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0839729309082,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 7163446,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.219
+} {
+  "r-rc" : {
+    "@rc-id" : 4,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 2
+    },
+    "rc-pc" : {
+      "@pc-id" : 4,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "1.3273145818708794",
+        "sp-clause-decay" : "1.1475097163869201",
+        "sp-clause-del-heur" : "0",
+        "sp-clause-inversion" : "0",
+        "sp-first-restart" : "144",
+        "sp-learned-clause-sort-heur" : "3",
+        "sp-learned-clauses-inc" : "1.1634259900929116",
+        "sp-learned-size-factor" : "0.18998841534152477",
+        "sp-max-res-lit-inc" : "1.8030639755238278",
+        "sp-max-res-runs" : "5",
+        "sp-orig-clause-sort-heur" : "0",
+        "sp-phase-dec-heur" : "0",
+        "sp-rand-phase-dec-freq" : "0.005",
+        "sp-rand-phase-scaling" : "0.918382728792994",
+        "sp-rand-var-dec-freq" : "0.005",
+        "sp-rand-var-dec-scaling" : "1.0751142521159547",
+        "sp-res-cutoff-cls" : "5",
+        "sp-res-cutoff-lits" : "339",
+        "sp-res-order-heur" : "9",
+        "sp-resolution" : "0",
+        "sp-restart-inc" : "1.333213789001852",
+        "sp-update-dec-queue" : "0",
+        "sp-use-pure-literal-rule" : "0",
+        "sp-var-activity-inc" : "1.203764454858129",
+        "sp-var-dec-heur" : "8",
+        "sp-variable-decay" : "1.0415497488838992"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-phase-scaling", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.043576002121,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8765092,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.13
+} {
+  "r-rc" : {
+    "@rc-id" : 5,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 5,
+      "pisp-pi" : {
+        "@pi-id" : 2
+      },
+      "pisp-seed" : 5320365
+    },
+    "rc-pc" : {
+      "@pc-id" : 2
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0507740974426,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 5320365,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.104
+} {
+  "r-rc" : {
+    "@rc-id" : 6,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 2
+    },
+    "rc-pc" : {
+      "@pc-id" : 6,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "1.1756352712089524",
+        "sp-clause-decay" : "1.1446179036229582",
+        "sp-clause-del-heur" : "2",
+        "sp-clause-inversion" : "1",
+        "sp-first-restart" : "60",
+        "sp-learned-clause-sort-heur" : "3",
+        "sp-learned-clauses-inc" : "1.1662825037783815",
+        "sp-learned-size-factor" : "0.7370035788992196",
+        "sp-max-res-lit-inc" : "0.5931387437676995",
+        "sp-max-res-runs" : "4",
+        "sp-orig-clause-sort-heur" : "15",
+        "sp-phase-dec-heur" : "3",
+        "sp-rand-phase-dec-freq" : "0",
+        "sp-rand-phase-scaling" : "0.4786351963674509",
+        "sp-rand-var-dec-freq" : "0.01",
+        "sp-rand-var-dec-scaling" : "0.9411960853573935",
+        "sp-res-cutoff-cls" : "3",
+        "sp-res-cutoff-lits" : "367",
+        "sp-res-order-heur" : "19",
+        "sp-resolution" : "0",
+        "sp-restart-inc" : "1.8932081573941715",
+        "sp-update-dec-queue" : "0",
+        "sp-use-pure-literal-rule" : "0",
+        "sp-var-activity-inc" : "1.3277187234336574",
+        "sp-var-dec-heur" : "7",
+        "sp-variable-decay" : "1.9075200903941114"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.025710105896,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8765092,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.102
+} {
+  "r-rc" : {
+    "@rc-id" : 7,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 5
+    },
+    "rc-pc" : {
+      "@pc-id" : 6
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0294289588928,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 5320365,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.094
+} {
+  "r-rc" : {
+    "@rc-id" : 8,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 3
+    },
+    "rc-pc" : {
+      "@pc-id" : 6
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0327699184418,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 7163446,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.093
+} {
+  "r-rc" : {
+    "@rc-id" : 9,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 9,
+      "pisp-pi" : {
+        "@pi-id" : 4
+      },
+      "pisp-seed" : 8435516
+    },
+    "rc-pc" : {
+      "@pc-id" : 6
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "TIMEOUT",
+  "r-runtime" : 2.30218505859,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8435516,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 2.374
+} {
+  "r-rc" : {
+    "@rc-id" : 10,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 5
+    },
+    "rc-pc" : {
+      "@pc-id" : 10,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "1.265751156124993",
+        "sp-clause-decay" : "1.989749164323902",
+        "sp-clause-del-heur" : "2",
+        "sp-clause-inversion" : "0",
+        "sp-first-restart" : "1005",
+        "sp-learned-clause-sort-heur" : "4",
+        "sp-learned-clauses-inc" : "1.4227087819160884",
+        "sp-learned-size-factor" : "0.2285494717475162",
+        "sp-max-res-lit-inc" : "0.6892992477247646",
+        "sp-max-res-runs" : "2",
+        "sp-orig-clause-sort-heur" : "3",
+        "sp-phase-dec-heur" : "3",
+        "sp-rand-phase-dec-freq" : "0.05",
+        "sp-rand-phase-scaling" : "1.087659848112571",
+        "sp-rand-var-dec-freq" : "0",
+        "sp-rand-var-dec-scaling" : "1.0432699890697006",
+        "sp-res-cutoff-cls" : "3",
+        "sp-res-cutoff-lits" : "466",
+        "sp-res-order-heur" : "13",
+        "sp-resolution" : "0",
+        "sp-restart-inc" : "1.8379998291718334",
+        "sp-update-dec-queue" : "0",
+        "sp-use-pure-literal-rule" : "0",
+        "sp-var-activity-inc" : "0.6336244849745811",
+        "sp-var-dec-heur" : "9",
+        "sp-variable-decay" : "1.274571069353812"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-phase-scaling", "sp-rand-var-dec-freq", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0135037899017,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 5320365,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.113
+} {
+  "r-rc" : {
+    "@rc-id" : 11,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 2
+    },
+    "rc-pc" : {
+      "@pc-id" : 10
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0120968818665,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8765092,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.054
+} {
+  "r-rc" : {
+    "@rc-id" : 12,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 9
+    },
+    "rc-pc" : {
+      "@pc-id" : 10
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "TIMEOUT",
+  "r-runtime" : 2.36933612823,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8435516,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 2.402
+} {
+  "r-rc" : {
+    "@rc-id" : 13,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 3
+    },
+    "rc-pc" : {
+      "@pc-id" : 10
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0219750404358,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 7163446,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.045
+} {
+  "r-rc" : {
+    "@rc-id" : 14,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 14,
+      "pisp-pi" : {
+        "@pi-id" : 5
+      },
+      "pisp-seed" : 16049169
+    },
+    "rc-pc" : {
+      "@pc-id" : 10
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0598578453064,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 16049169,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.138
+} {
+  "r-rc" : {
+    "@rc-id" : 15,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 9
+    },
+    "rc-pc" : {
+      "@pc-id" : 15,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "0.9592753351964085",
+        "sp-clause-decay" : "1.8621715409807533",
+        "sp-clause-del-heur" : "2",
+        "sp-clause-inversion" : "0",
+        "sp-first-restart" : "106",
+        "sp-learned-clause-sort-heur" : "16",
+        "sp-learned-clauses-inc" : "1.3805880303176727",
+        "sp-learned-size-factor" : "1.0660768635363946",
+        "sp-max-res-lit-inc" : "1.789908110189167",
+        "sp-max-res-runs" : "4",
+        "sp-orig-clause-sort-heur" : "8",
+        "sp-phase-dec-heur" : "4",
+        "sp-rand-phase-dec-freq" : "0",
+        "sp-rand-phase-scaling" : "0.9635355724105767",
+        "sp-rand-var-dec-freq" : "0",
+        "sp-rand-var-dec-scaling" : "0.6344034675297021",
+        "sp-res-cutoff-cls" : "8",
+        "sp-res-cutoff-lits" : "258",
+        "sp-res-order-heur" : "7",
+        "sp-resolution" : "1",
+        "sp-restart-inc" : "1.50087987793543",
+        "sp-update-dec-queue" : "1",
+        "sp-use-pure-literal-rule" : "1",
+        "sp-var-activity-inc" : "0.8985764903438735",
+        "sp-var-dec-heur" : "15",
+        "sp-variable-decay" : "1.4821609711623556"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-max-res-lit-inc", "sp-max-res-runs", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-var-dec-freq", "sp-res-cutoff-cls", "sp-res-cutoff-lits", "sp-res-order-heur", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "TIMEOUT",
+  "r-runtime" : 2.2421309948,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8435516,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 2.318
+} {
+  "r-rc" : {
+    "@rc-id" : 16,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 5
+    },
+    "rc-pc" : {
+      "@pc-id" : 15
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0169320106506,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 5320365,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.054
+} {
+  "r-rc" : {
+    "@rc-id" : 17,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 3
+    },
+    "rc-pc" : {
+      "@pc-id" : 15
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0452740192413,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 7163446,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.135
+} {
+  "r-rc" : {
+    "@rc-id" : 18,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 18,
+      "pisp-pi" : {
+        "@pi-id" : 5
+      },
+      "pisp-seed" : 15375424
+    },
+    "rc-pc" : {
+      "@pc-id" : 10
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0227580070496,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 15375424,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.061
+} {
+  "r-rc" : {
+    "@rc-id" : 19,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 14
+    },
+    "rc-pc" : {
+      "@pc-id" : 19,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "0.5726006094339926",
+        "sp-clause-decay" : "1.6419290676408522",
+        "sp-clause-del-heur" : "2",
+        "sp-clause-inversion" : "0",
+        "sp-first-restart" : "173",
+        "sp-learned-clause-sort-heur" : "8",
+        "sp-learned-clauses-inc" : "1.3027453057270384",
+        "sp-learned-size-factor" : "0.1019953605351102",
+        "sp-max-res-lit-inc" : "0.31317105892544317",
+        "sp-max-res-runs" : "1",
+        "sp-orig-clause-sort-heur" : "17",
+        "sp-phase-dec-heur" : "3",
+        "sp-rand-phase-dec-freq" : "0",
+        "sp-rand-phase-scaling" : "0.7148000584767906",
+        "sp-rand-var-dec-freq" : "0.01",
+        "sp-rand-var-dec-scaling" : "0.7712118636848101",
+        "sp-res-cutoff-cls" : "13",
+        "sp-res-cutoff-lits" : "844",
+        "sp-res-order-heur" : "4",
+        "sp-resolution" : "2",
+        "sp-restart-inc" : "1.8500008771067136",
+        "sp-update-dec-queue" : "1",
+        "sp-use-pure-literal-rule" : "0",
+        "sp-var-activity-inc" : "1.289779102666949",
+        "sp-var-dec-heur" : "16",
+        "sp-variable-decay" : "1.2977431844158944"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-max-res-lit-inc", "sp-max-res-runs", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-res-cutoff-cls", "sp-res-cutoff-lits", "sp-res-order-heur", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0390839576721,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 16049169,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.099
+} {
+  "r-rc" : {
+    "@rc-id" : 20,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 2
+    },
+    "rc-pc" : {
+      "@pc-id" : 19
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0156118869781,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8765092,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.054
+} {
+  "r-rc" : {
+    "@rc-id" : 21,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 5
+    },
+    "rc-pc" : {
+      "@pc-id" : 19
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.015007019043,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 5320365,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.077
+} {
+  "r-rc" : {
+    "@rc-id" : 22,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 22,
+      "pisp-pi" : {
+        "@pi-id" : 6
+      },
+      "pisp-seed" : 15753149
+    },
+    "rc-pc" : {
+      "@pc-id" : 10
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0585238933563,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 15753149,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.105
+} {
+  "r-rc" : {
+    "@rc-id" : 23,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 9
+    },
+    "rc-pc" : {
+      "@pc-id" : 23,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "1.1923202585522232",
+        "sp-clause-decay" : "1.3432160100839856",
+        "sp-clause-del-heur" : "0",
+        "sp-clause-inversion" : "0",
+        "sp-first-restart" : "277",
+        "sp-learned-clause-sort-heur" : "13",
+        "sp-learned-clauses-inc" : "1.1984071668605605",
+        "sp-learned-size-factor" : "0.4031975211305418",
+        "sp-max-res-lit-inc" : "3.3966176723544943",
+        "sp-max-res-runs" : "1",
+        "sp-orig-clause-sort-heur" : "3",
+        "sp-phase-dec-heur" : "4",
+        "sp-rand-phase-dec-freq" : "0.001",
+        "sp-rand-phase-scaling" : "0.8569070680673403",
+        "sp-rand-var-dec-freq" : "0.005",
+        "sp-rand-var-dec-scaling" : "0.33077783522772997",
+        "sp-res-cutoff-cls" : "3",
+        "sp-res-cutoff-lits" : "1318",
+        "sp-res-order-heur" : "19",
+        "sp-resolution" : "2",
+        "sp-restart-inc" : "1.359173794036572",
+        "sp-update-dec-queue" : "1",
+        "sp-use-pure-literal-rule" : "0",
+        "sp-var-activity-inc" : "0.6954398340548646",
+        "sp-var-dec-heur" : "4",
+        "sp-variable-decay" : "1.980522143075132"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-max-res-lit-inc", "sp-max-res-runs", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-phase-scaling", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-res-cutoff-cls", "sp-res-cutoff-lits", "sp-res-order-heur", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.354681015015,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8435516,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.471
+} {
+  "r-rc" : {
+    "@rc-id" : 24,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 22
+    },
+    "rc-pc" : {
+      "@pc-id" : 23
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0283010005951,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 15753149,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.068
+} {
+  "r-rc" : {
+    "@rc-id" : 25,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 14
+    },
+    "rc-pc" : {
+      "@pc-id" : 23
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0349149703979,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 16049169,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.059
+} {
+  "r-rc" : {
+    "@rc-id" : 26,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 18
+    },
+    "rc-pc" : {
+      "@pc-id" : 23
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0415949821472,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 15375424,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.085
+} {
+  "r-rc" : {
+    "@rc-id" : 27,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 2
+    },
+    "rc-pc" : {
+      "@pc-id" : 23
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0302670001984,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8765092,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.068
+} {
+  "r-rc" : {
+    "@rc-id" : 28,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 3
+    },
+    "rc-pc" : {
+      "@pc-id" : 23
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.025083065033,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 7163446,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.056
+} {
+  "r-rc" : {
+    "@rc-id" : 29,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 5
+    },
+    "rc-pc" : {
+      "@pc-id" : 23
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0102548599243,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 5320365,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.053
+} {
+  "r-rc" : {
+    "@rc-id" : 30,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 30,
+      "pisp-pi" : {
+        "@pi-id" : 4
+      },
+      "pisp-seed" : 1009110
+    },
+    "rc-pc" : {
+      "@pc-id" : 23
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.695241928101,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 1009110,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.726
+} {
+  "r-rc" : {
+    "@rc-id" : 31,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 5
+    },
+    "rc-pc" : {
+      "@pc-id" : 31,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "1.463695548651955",
+        "sp-clause-decay" : "1.4331590783636956",
+        "sp-clause-del-heur" : "2",
+        "sp-clause-inversion" : "0",
+        "sp-first-restart" : "589",
+        "sp-learned-clause-sort-heur" : "19",
+        "sp-learned-clauses-inc" : "1.1594483332876058",
+        "sp-learned-size-factor" : "0.16350701686431107",
+        "sp-max-res-lit-inc" : "0.4789514874053119",
+        "sp-max-res-runs" : "15",
+        "sp-orig-clause-sort-heur" : "7",
+        "sp-phase-dec-heur" : "1",
+        "sp-rand-phase-dec-freq" : "0",
+        "sp-rand-phase-scaling" : "0.8324024138968555",
+        "sp-rand-var-dec-freq" : "0.005",
+        "sp-rand-var-dec-scaling" : "0.7302287399386755",
+        "sp-res-cutoff-cls" : "19",
+        "sp-res-cutoff-lits" : "118",
+        "sp-res-order-heur" : "6",
+        "sp-resolution" : "0",
+        "sp-restart-inc" : "1.3996294142418324",
+        "sp-update-dec-queue" : "1",
+        "sp-use-pure-literal-rule" : "0",
+        "sp-var-activity-inc" : "1.1541962410447355",
+        "sp-var-dec-heur" : "13",
+        "sp-variable-decay" : "1.2284218872962218"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-clause-inversion", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0283989906311,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 5320365,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.062
+} {
+  "r-rc" : {
+    "@rc-id" : 32,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 32,
+      "pisp-pi" : {
+        "@pi-id" : 2
+      },
+      "pisp-seed" : 15686777
+    },
+    "rc-pc" : {
+      "@pc-id" : 23
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0352070331573,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 15686777,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.127
+} {
+  "r-rc" : {
+    "@rc-id" : 33,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 9
+    },
+    "rc-pc" : {
+      "@pc-id" : 33,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "1.2184105703116326",
+        "sp-clause-decay" : "1.0371849243122122",
+        "sp-clause-del-heur" : "1",
+        "sp-clause-inversion" : "1",
+        "sp-first-restart" : "662",
+        "sp-learned-clause-sort-heur" : "9",
+        "sp-learned-clauses-inc" : "1.156224955634644",
+        "sp-learned-size-factor" : "0.11473111316307993",
+        "sp-max-res-lit-inc" : "0.5002680014096149",
+        "sp-max-res-runs" : "1",
+        "sp-orig-clause-sort-heur" : "14",
+        "sp-phase-dec-heur" : "6",
+        "sp-rand-phase-dec-freq" : "0.005",
+        "sp-rand-phase-scaling" : "0.5173160130479173",
+        "sp-rand-var-dec-freq" : "0.01",
+        "sp-rand-var-dec-scaling" : "0.3694596121632018",
+        "sp-res-cutoff-cls" : "2",
+        "sp-res-cutoff-lits" : "141",
+        "sp-res-order-heur" : "0",
+        "sp-resolution" : "2",
+        "sp-restart-inc" : "1.542053345733335",
+        "sp-update-dec-queue" : "1",
+        "sp-use-pure-literal-rule" : "0",
+        "sp-var-activity-inc" : "1.3857198570850566",
+        "sp-var-dec-heur" : "6",
+        "sp-variable-decay" : "1.8374739296476439"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-max-res-lit-inc", "sp-max-res-runs", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-phase-scaling", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-res-cutoff-cls", "sp-res-cutoff-lits", "sp-res-order-heur", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.704870939255,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8435516,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.782
+} {
+  "r-rc" : {
+    "@rc-id" : 34,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 34,
+      "pisp-pi" : {
+        "@pi-id" : 3
+      },
+      "pisp-seed" : 14371703
+    },
+    "rc-pc" : {
+      "@pc-id" : 23
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.033940076828,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 14371703,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.079
+} {
+  "r-rc" : {
+    "@rc-id" : 35,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 22
+    },
+    "rc-pc" : {
+      "@pc-id" : 35,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "0.7049376380374532",
+        "sp-clause-decay" : "1.5997003448188836",
+        "sp-clause-del-heur" : "1",
+        "sp-clause-inversion" : "1",
+        "sp-first-restart" : "33",
+        "sp-learned-clause-sort-heur" : "9",
+        "sp-learned-clauses-inc" : "1.1300293474484941",
+        "sp-learned-size-factor" : "0.25135425567495595",
+        "sp-max-res-lit-inc" : "0.46239483753421745",
+        "sp-max-res-runs" : "1",
+        "sp-orig-clause-sort-heur" : "3",
+        "sp-phase-dec-heur" : "6",
+        "sp-rand-phase-dec-freq" : "0.005",
+        "sp-rand-phase-scaling" : "0.7329058270338165",
+        "sp-rand-var-dec-freq" : "0.05",
+        "sp-rand-var-dec-scaling" : "0.4934108688327636",
+        "sp-res-cutoff-cls" : "12",
+        "sp-res-cutoff-lits" : "135",
+        "sp-res-order-heur" : "17",
+        "sp-resolution" : "1",
+        "sp-restart-inc" : "1.7810470097991895",
+        "sp-update-dec-queue" : "0",
+        "sp-use-pure-literal-rule" : "1",
+        "sp-var-activity-inc" : "1.046733887360352",
+        "sp-var-dec-heur" : "0",
+        "sp-variable-decay" : "1.021412564561335"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-max-res-lit-inc", "sp-max-res-runs", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-phase-scaling", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-res-cutoff-cls", "sp-res-cutoff-lits", "sp-res-order-heur", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0470979213715,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 15753149,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.112
+} {
+  "r-rc" : {
+    "@rc-id" : 36,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 36,
+      "pisp-pi" : {
+        "@pi-id" : 4
+      },
+      "pisp-seed" : 13757434
+    },
+    "rc-pc" : {
+      "@pc-id" : 23
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.5405189991,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 13757434,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.647
+} {
+  "r-rc" : {
+    "@rc-id" : 37,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 34
+    },
+    "rc-pc" : {
+      "@pc-id" : 37,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "1.2425168591761862",
+        "sp-clause-decay" : "1.0837723113314413",
+        "sp-clause-del-heur" : "1",
+        "sp-clause-inversion" : "0",
+        "sp-first-restart" : "350",
+        "sp-learned-clause-sort-heur" : "18",
+        "sp-learned-clauses-inc" : "1.3671047364115536",
+        "sp-learned-size-factor" : "1.0578457945348514",
+        "sp-max-res-lit-inc" : "0.6646927220332398",
+        "sp-max-res-runs" : "9",
+        "sp-orig-clause-sort-heur" : "3",
+        "sp-phase-dec-heur" : "6",
+        "sp-rand-phase-dec-freq" : "0.0001",
+        "sp-rand-phase-scaling" : "0.6450253166339182",
+        "sp-rand-var-dec-freq" : "0.005",
+        "sp-rand-var-dec-scaling" : "0.9851322004961123",
+        "sp-res-cutoff-cls" : "12",
+        "sp-res-cutoff-lits" : "183",
+        "sp-res-order-heur" : "15",
+        "sp-resolution" : "2",
+        "sp-restart-inc" : "1.6501787055361694",
+        "sp-update-dec-queue" : "1",
+        "sp-use-pure-literal-rule" : "1",
+        "sp-var-activity-inc" : "0.8532772830589497",
+        "sp-var-dec-heur" : "11",
+        "sp-variable-decay" : "1.8547104483920354"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-max-res-lit-inc", "sp-max-res-runs", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-phase-scaling", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-res-cutoff-cls", "sp-res-cutoff-lits", "sp-res-order-heur", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0486860275269,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 14371703,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.113
+} {
+  "r-rc" : {
+    "@rc-id" : 38,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 38,
+      "pisp-pi" : {
+        "@pi-id" : 5
+      },
+      "pisp-seed" : 5412823
+    },
+    "rc-pc" : {
+      "@pc-id" : 23
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.036698102951,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 5412823,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.079
+} {
+  "r-rc" : {
+    "@rc-id" : 39,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 3
+    },
+    "rc-pc" : {
+      "@pc-id" : 39,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "1.2797766556116197",
+        "sp-clause-decay" : "1.6664051174344499",
+        "sp-clause-del-heur" : "1",
+        "sp-clause-inversion" : "0",
+        "sp-first-restart" : "434",
+        "sp-learned-clause-sort-heur" : "15",
+        "sp-learned-clauses-inc" : "1.2719737460296026",
+        "sp-learned-size-factor" : "0.11797992276810707",
+        "sp-max-res-lit-inc" : "1.562335557411764",
+        "sp-max-res-runs" : "1",
+        "sp-orig-clause-sort-heur" : "17",
+        "sp-phase-dec-heur" : "4",
+        "sp-rand-phase-dec-freq" : "0.005",
+        "sp-rand-phase-scaling" : "0.8018569445443706",
+        "sp-rand-var-dec-freq" : "0.01",
+        "sp-rand-var-dec-scaling" : "1.0995813227388083",
+        "sp-res-cutoff-cls" : "2",
+        "sp-res-cutoff-lits" : "831",
+        "sp-res-order-heur" : "10",
+        "sp-resolution" : "1",
+        "sp-restart-inc" : "1.3361091074861655",
+        "sp-update-dec-queue" : "1",
+        "sp-use-pure-literal-rule" : "1",
+        "sp-var-activity-inc" : "1.0725937246789714",
+        "sp-var-dec-heur" : "15",
+        "sp-variable-decay" : "1.4653923567380531"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-max-res-lit-inc", "sp-max-res-runs", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-phase-scaling", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-res-cutoff-cls", "sp-res-cutoff-lits", "sp-res-order-heur", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0330860614777,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 7163446,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.085
+} {
+  "r-rc" : {
+    "@rc-id" : 40,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 40,
+      "pisp-pi" : {
+        "@pi-id" : 2
+      },
+      "pisp-seed" : 8756526
+    },
+    "rc-pc" : {
+      "@pc-id" : 23
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0288760662079,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8756526,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.079
+} {
+  "r-rc" : {
+    "@rc-id" : 41,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 22
+    },
+    "rc-pc" : {
+      "@pc-id" : 41,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "1.2184105703116326",
+        "sp-clause-decay" : "1.0371849243122122",
+        "sp-clause-del-heur" : "1",
+        "sp-clause-inversion" : "1",
+        "sp-first-restart" : "662",
+        "sp-learned-clause-sort-heur" : "18",
+        "sp-learned-clauses-inc" : "1.3014046504603425",
+        "sp-learned-size-factor" : "0.11473111316307993",
+        "sp-max-res-lit-inc" : "0.5002680014096149",
+        "sp-max-res-runs" : "1",
+        "sp-orig-clause-sort-heur" : "14",
+        "sp-phase-dec-heur" : "6",
+        "sp-rand-phase-dec-freq" : "0.005",
+        "sp-rand-phase-scaling" : "0.5173160130479173",
+        "sp-rand-var-dec-freq" : "0.01",
+        "sp-rand-var-dec-scaling" : "0.3694596121632018",
+        "sp-res-cutoff-cls" : "2",
+        "sp-res-cutoff-lits" : "141",
+        "sp-res-order-heur" : "0",
+        "sp-resolution" : "2",
+        "sp-restart-inc" : "1.542053345733335",
+        "sp-update-dec-queue" : "1",
+        "sp-use-pure-literal-rule" : "0",
+        "sp-var-activity-inc" : "1.3857198570850566",
+        "sp-var-dec-heur" : "11",
+        "sp-variable-decay" : "1.8374739296476439"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-max-res-lit-inc", "sp-max-res-runs", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-phase-scaling", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-res-cutoff-cls", "sp-res-cutoff-lits", "sp-res-order-heur", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0139961242676,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 15753149,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.059
+} {
+  "r-rc" : {
+    "@rc-id" : 42,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 40
+    },
+    "rc-pc" : {
+      "@pc-id" : 41
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0118341445923,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8756526,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.067
+} {
+  "r-rc" : {
+    "@rc-id" : 43,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 3
+    },
+    "rc-pc" : {
+      "@pc-id" : 41
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0223109722137,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 7163446,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.066
+} {
+  "r-rc" : {
+    "@rc-id" : 44,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 5
+    },
+    "rc-pc" : {
+      "@pc-id" : 41
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0134871006012,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 5320365,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.057
+} {
+  "r-rc" : {
+    "@rc-id" : 45,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 32
+    },
+    "rc-pc" : {
+      "@pc-id" : 41
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0356121063232,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 15686777,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.127
+} {
+  "r-rc" : {
+    "@rc-id" : 46,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 38
+    },
+    "rc-pc" : {
+      "@pc-id" : 41
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0402810573578,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 5412823,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.114
+} {
+  "r-rc" : {
+    "@rc-id" : 47,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 36
+    },
+    "rc-pc" : {
+      "@pc-id" : 41
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "TIMEOUT",
+  "r-runtime" : 2.39432811737,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 13757434,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 2.438
+} {
+  "r-rc" : {
+    "@rc-id" : 48,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 48,
+      "pisp-pi" : {
+        "@pi-id" : 3
+      },
+      "pisp-seed" : 12908281
+    },
+    "rc-pc" : {
+      "@pc-id" : 23
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0250270366669,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 12908281,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.067
+} {
+  "r-rc" : {
+    "@rc-id" : 49,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 14
+    },
+    "rc-pc" : {
+      "@pc-id" : 49,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "1.3273145818708794",
+        "sp-clause-decay" : "1.1475097163869201",
+        "sp-clause-del-heur" : "0",
+        "sp-clause-inversion" : "0",
+        "sp-first-restart" : "144",
+        "sp-learned-clause-sort-heur" : "7",
+        "sp-learned-clauses-inc" : "1.1634259900929116",
+        "sp-learned-size-factor" : "0.10944064085271574",
+        "sp-max-res-lit-inc" : "1.8030639755238278",
+        "sp-max-res-runs" : "5",
+        "sp-orig-clause-sort-heur" : "16",
+        "sp-phase-dec-heur" : "0",
+        "sp-rand-phase-dec-freq" : "0.005",
+        "sp-rand-phase-scaling" : "0.918382728792994",
+        "sp-rand-var-dec-freq" : "0.005",
+        "sp-rand-var-dec-scaling" : "1.0751142521159547",
+        "sp-res-cutoff-cls" : "5",
+        "sp-res-cutoff-lits" : "339",
+        "sp-res-order-heur" : "9",
+        "sp-resolution" : "0",
+        "sp-restart-inc" : "1.333213789001852",
+        "sp-update-dec-queue" : "0",
+        "sp-use-pure-literal-rule" : "0",
+        "sp-var-activity-inc" : "1.470434718471111",
+        "sp-var-dec-heur" : "6",
+        "sp-variable-decay" : "1.0415497488838992"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-phase-scaling", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0158801078796,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 16049169,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.035
+} {
+  "r-rc" : {
+    "@rc-id" : 50,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 48
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0186171531677,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 12908281,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.079
+} {
+  "r-rc" : {
+    "@rc-id" : 51,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 3
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0219061374664,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 7163446,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.078
+} {
+  "r-rc" : {
+    "@rc-id" : 52,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 34
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0192539691925,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 14371703,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.053
+} {
+  "r-rc" : {
+    "@rc-id" : 53,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 22
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0180521011353,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 15753149,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.077
+} {
+  "r-rc" : {
+    "@rc-id" : 54,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 32
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0102028846741,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 15686777,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.052
+} {
+  "r-rc" : {
+    "@rc-id" : 55,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 2
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0105180740356,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8765092,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.052
+} {
+  "r-rc" : {
+    "@rc-id" : 56,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 5
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0214188098907,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 5320365,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.059
+} {
+  "r-rc" : {
+    "@rc-id" : 57,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 9
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.414196014404,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8435516,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.433
+} {
+  "r-rc" : {
+    "@rc-id" : 58,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 38
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0285348892212,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 5412823,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.084
+} {
+  "r-rc" : {
+    "@rc-id" : 59,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 36
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.402244091034,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 13757434,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.46
+} {
+  "r-rc" : {
+    "@rc-id" : 60,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 18
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0400819778442,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 15375424,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.13
+} {
+  "r-rc" : {
+    "@rc-id" : 61,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 30
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.614233970642,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 1009110,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.722
+} {
+  "r-rc" : {
+    "@rc-id" : 62,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 40
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0210239887238,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 8756526,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.059
+} {
+  "r-rc" : {
+    "@rc-id" : 63,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 63,
+      "pisp-pi" : {
+        "@pi-id" : 6
+      },
+      "pisp-seed" : 6750928
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0233609676361,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 6750928,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.104
+} {
+  "r-rc" : {
+    "@rc-id" : 64,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 30
+    },
+    "rc-pc" : {
+      "@pc-id" : 64,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "0.6483127903914886",
+        "sp-clause-decay" : "1.624367921906888",
+        "sp-clause-del-heur" : "2",
+        "sp-clause-inversion" : "0",
+        "sp-first-restart" : "258",
+        "sp-learned-clause-sort-heur" : "0",
+        "sp-learned-clauses-inc" : "1.2279327438197816",
+        "sp-learned-size-factor" : "0.6878286282334655",
+        "sp-max-res-lit-inc" : "2.2556477575914333",
+        "sp-max-res-runs" : "18",
+        "sp-orig-clause-sort-heur" : "9",
+        "sp-phase-dec-heur" : "5",
+        "sp-rand-phase-dec-freq" : "0",
+        "sp-rand-phase-scaling" : "0.4371126008246943",
+        "sp-rand-var-dec-freq" : "0",
+        "sp-rand-var-dec-scaling" : "0.9635011274984111",
+        "sp-res-cutoff-cls" : "2",
+        "sp-res-cutoff-lits" : "104",
+        "sp-res-order-heur" : "13",
+        "sp-resolution" : "1",
+        "sp-restart-inc" : "1.7137821019798243",
+        "sp-update-dec-queue" : "1",
+        "sp-use-pure-literal-rule" : "1",
+        "sp-var-activity-inc" : "0.5408097592535698",
+        "sp-var-dec-heur" : "10",
+        "sp-variable-decay" : "1.4888045753827905"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-max-res-lit-inc", "sp-max-res-runs", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-var-dec-freq", "sp-res-cutoff-cls", "sp-res-cutoff-lits", "sp-res-order-heur", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "TIMEOUT",
+  "r-runtime" : 2.63828682899,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 1009110,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 2.714
+} {
+  "r-rc" : {
+    "@rc-id" : 65,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 65,
+      "pisp-pi" : {
+        "@pi-id" : 4
+      },
+      "pisp-seed" : 9751078
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.574858903885,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 9751078,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.703
+} {
+  "r-rc" : {
+    "@rc-id" : 66,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 34
+    },
+    "rc-pc" : {
+      "@pc-id" : 66,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "1.3273145818708794",
+        "sp-clause-decay" : "1.1475097163869201",
+        "sp-clause-del-heur" : "0",
+        "sp-clause-inversion" : "0",
+        "sp-first-restart" : "144",
+        "sp-learned-clause-sort-heur" : "15",
+        "sp-learned-clauses-inc" : "1.1523883969204398",
+        "sp-learned-size-factor" : "0.10944064085271574",
+        "sp-max-res-lit-inc" : "1.8030639755238278",
+        "sp-max-res-runs" : "5",
+        "sp-orig-clause-sort-heur" : "9",
+        "sp-phase-dec-heur" : "0",
+        "sp-rand-phase-dec-freq" : "0.005",
+        "sp-rand-phase-scaling" : "0.918382728792994",
+        "sp-rand-var-dec-freq" : "0.005",
+        "sp-rand-var-dec-scaling" : "1.0751142521159547",
+        "sp-res-cutoff-cls" : "5",
+        "sp-res-cutoff-lits" : "339",
+        "sp-res-order-heur" : "9",
+        "sp-resolution" : "0",
+        "sp-restart-inc" : "1.333213789001852",
+        "sp-update-dec-queue" : "0",
+        "sp-use-pure-literal-rule" : "0",
+        "sp-var-activity-inc" : "1.470434718471111",
+        "sp-var-dec-heur" : "6",
+        "sp-variable-decay" : "1.0415497488838992"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-phase-scaling", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0240671634674,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 14371703,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.089
+} {
+  "r-rc" : {
+    "@rc-id" : 67,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 67,
+      "pisp-pi" : {
+        "@pi-id" : 6
+      },
+      "pisp-seed" : 12680961
+    },
+    "rc-pc" : {
+      "@pc-id" : 49
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0461800098419,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 12680961,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.078
+} {
+  "r-rc" : {
+    "@rc-id" : 68,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 32
+    },
+    "rc-pc" : {
+      "@pc-id" : 68,
+      "pc-pcs" : {
+        "@pcs-id" : 2
+      },
+      "pc-settings" : {
+        "sp-clause-activity-inc" : "1.288290657680692",
+        "sp-clause-decay" : "1.4982954259677008",
+        "sp-clause-del-heur" : "2",
+        "sp-clause-inversion" : "0",
+        "sp-first-restart" : "69",
+        "sp-learned-clause-sort-heur" : "16",
+        "sp-learned-clauses-inc" : "1.2042893644959047",
+        "sp-learned-size-factor" : "0.9555600951863004",
+        "sp-max-res-lit-inc" : "2.3277735862950304",
+        "sp-max-res-runs" : "3",
+        "sp-orig-clause-sort-heur" : "4",
+        "sp-phase-dec-heur" : "6",
+        "sp-rand-phase-dec-freq" : "0.005",
+        "sp-rand-phase-scaling" : "0.5609739284276343",
+        "sp-rand-var-dec-freq" : "0.005",
+        "sp-rand-var-dec-scaling" : "0.5430098749787983",
+        "sp-res-cutoff-cls" : "4",
+        "sp-res-cutoff-lits" : "228",
+        "sp-res-order-heur" : "16",
+        "sp-resolution" : "1",
+        "sp-restart-inc" : "1.7047185477760731",
+        "sp-update-dec-queue" : "0",
+        "sp-use-pure-literal-rule" : "1",
+        "sp-var-activity-inc" : "1.0399225897804403",
+        "sp-var-dec-heur" : "19",
+        "sp-variable-decay" : "1.033356217339412"
+      },
+      "pc-active-parameters" : [ "sp-clause-activity-inc", "sp-clause-decay", "sp-clause-del-heur", "sp-first-restart", "sp-learned-clause-sort-heur", "sp-learned-clauses-inc", "sp-learned-size-factor", "sp-max-res-lit-inc", "sp-max-res-runs", "sp-orig-clause-sort-heur", "sp-phase-dec-heur", "sp-rand-phase-dec-freq", "sp-rand-phase-scaling", "sp-rand-var-dec-freq", "sp-rand-var-dec-scaling", "sp-res-cutoff-cls", "sp-res-cutoff-lits", "sp-res-order-heur", "sp-resolution", "sp-restart-inc", "sp-update-dec-queue", "sp-use-pure-literal-rule", "sp-var-activity-inc", "sp-var-dec-heur", "sp-variable-decay" ],
+      "pc-forbidden" : false,
+      "pc-default" : false
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0141088962555,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 15686777,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.053
+} {
+  "r-rc" : {
+    "@rc-id" : 69,
+    "rc-algo-exec-config" : {
+      "@algo-exec-config-id" : 2
+    },
+    "rc-cutoff" : 1.0,
+    "rc-pisp" : {
+      "@pisp-id" : 22
+    },
+    "rc-pc" : {
+      "@pc-id" : 68
+    },
+    "rc-sample-idx" : 0
+  },
+  "r-run-result" : "SAT",
+  "r-runtime" : 0.0460510253906,
+  "r-run-length" : 0.0,
+  "r-quality" : 0.0,
+  "r-result-seed" : 15753149,
+  "r-addl-run-data" : "",
+  "r-wallclock-time" : 0.155
+}
