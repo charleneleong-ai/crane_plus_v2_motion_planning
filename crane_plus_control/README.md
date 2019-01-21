@@ -1,6 +1,60 @@
-## Benchmarking 
+## Parameter Tuning
 
-### Planning Time
+This package aims to run implement the following two papers in researching global blackbox optimisation techniques for automated parameter tuning of motion planning algorithms. 
+
+[Automatic Parameter Tuning of Motion Planning Algorithms (IROS 2018)](http://homepages.inf.ed.ac.uk/jcanore/pub/2018_iros.pdf) 
+
+Cano, J. et al. “Automatic Parameter Tuning of Motion Planning Algorithms,” 2018 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain,  October, 1-5, 2018
+
+
+[Automated Tuning and Configuration of Path Planning Algorithms (ICRA 2017)](http://www.factory-in-a-day.eu/wp-content/uploads/2017/08/Automated_Tuning_SMAC_ICRA_2017.pdf)
+
+R. Burger, M. Bharatheesha, M. van Eert and R. Babuška, "Automated tuning and configuration of path planning algorithms," 2017 IEEE International Conference on Robotics and Automation (ICRA), Singapore, 2017, pp. 4371-4376.
+doi: 10.1109/ICRA.2017.7989504
+
+### Quick Launch
+
+Launch the simulation in tuning mode, moveit config with robot execution to talk to Gazebo and the parameter tuning launch file.
+
+```bash
+$ roslaunch crane_plus_simulation simulation.launch tuning:=true
+$ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true
+$ roslaunch crane_plus_control parameter_tuning.launch planner_config:=<planner_config> mode:=<mode> avg_runs:=<avg_runs>
+```
+
+- planner_config - Sets the desired planner config as outlined in [/config/planner_configs.yaml](/config/planner_configs.yaml).
+  - [default] Cano_etal
+- mode - Sets the mode of the parameter tuning session.
+  - ompl - Runs a benchmark session with [OMPL planner config defaults](../crane_plus_moveit_config/config/ompl_planning.yaml).
+  - default - Runs a benchmark session with planner config defaults in Cano etal paper.
+  - [default] tpe -  Runs a TPE parameter tuning session with parameter search space defined in Cano etal paper.
+  - rand -  Runs a random search parameter tuning session with parameter search space defined in Cano etal paper.
+
+
+
+### Libraries
+
+1. [Hyperopt](http://hyperopt.github.io/hyperopt/)
+
+   - TPE
+   - Random Search
+
+   ```bash
+   $ pip install hyperopt
+   $ roslaunch crane_plus_control parameter_tuning.launch
+   ```
+
+   
+
+1. [SMAC](http://www.cs.ubc.ca/labs/beta/Projects/SMAC/v2.10.03/quickstart.html#news)
+
+   Installed from source, located in [/scripts/modules/smac)](/scripts/modules/smac).
+
+   
+
+
+
+### MoveIt Planning Time Benchmark
 
 Adapted from [moveit_benchmark_statistics.py](https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_ros/benchmarks/scripts/moveit_benchmark_statistics.py) from MoveIt! framework. See [here](http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/benchmarking/benchmarking_tutorial.html) for more details on parameter input.
 
@@ -42,6 +96,5 @@ Adapted from [moveit_benchmark_statistics.py](https://github.com/ros-planning/mo
 
 
 ![](../imgs/plannerarena.png)
-
 
 

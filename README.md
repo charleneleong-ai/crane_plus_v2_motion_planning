@@ -26,8 +26,9 @@ Based on the [TurtleBot Arm code](https://github.com/turtlebot/turtlebot_arm).
 
 - [Ubuntu 16.04 Xenial](http://releases.ubuntu.com/16.04/)
 - [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
+- Python 2.7
 
-This package has only been tested on Ubuntu 16.04 with ROS Kinetic. 
+This package has only been tested on Ubuntu 16.04 with ROS Kinetic which is only stable on Python 2.7. If you wish to run this package along with Python 3 in Anaconda, please [create a py2.7 conda environment](https://www.youtube.com/watch?v=EMF20z-gT5s) for ROS.
 
 ## Packages
 
@@ -69,7 +70,7 @@ This package has only been tested on Ubuntu 16.04 with ROS Kinetic.
 
 1. [Quick Launch](#quick-launch)
 2. [ROS Installation and Configuration](#ros-installation-and-configuration)
-3. [Benchmarking](/crane_plus_control/README.md)
+3. [Parameter Tuning](/crane_plus_control/README.md)
 
 ## Quick Launch
 
@@ -80,13 +81,13 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
 
     ```bash
     $ cd ~/catkin_ws/src/ && git clone http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git
-    $ cd ~/catkin_ws && rosdep install -y --from-paths src --ignore-src --rosdistro kinetic && catkin_make
-    $ source ~/catkin_ws/devel/setup.bash
+    $ cd ~/catkin_ws && rosdep install -y --from-paths src --ignore-src --rosdistro kinetic 
+    $ catkin_make && source ~/catkin_ws/devel/setup.bash
     ```
 
-2. Launch the CRANE+V2 robot model either through hardware interface or through simulation.
+2. Launch the CRANE+V2 robot model either through the hardware interface or through simulation.
 
-    Launch robot model through hardware interface.
+    Launch robot model through the hardware interface.
 
     ```bash
     $ roslaunch crane_plus_hardware start_arm_standalone.launch
@@ -98,21 +99,19 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     $ roslaunch crane_plus_simulation simulation.launch
     ```
 
-3. Control either through MoveIt RViz or headlessly.
-
-    Control through MoveIt RViz.  To launch on real robot or Gazebo simulation, set `robot_execution:=true`.
+3. Control through MoveIt RViz.  Set `robot_execution:=true` to launch on real robot or Gazebo simulation.
 
     ```bash
     $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true
     ```
 
-    Control headlessly. Set `rviz:=false` if for faster execution in Gazebo simulation.
+    [OPTIONAL] Control headlessly for named poses. You can optionally set `rviz:=false` .
 
-    Select from list of named states: [vertical, backbend, resting, pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, pose9, pose10, pose11, pose12, pose13, pose14]
+    Select from list of named states: [vertical, backbend, resting, low_fwd_reach, pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, pose9, pose10, pose11, pose12, pose13, pose14]
 
     ```bash
-    $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true rviz:=false
-    $ roslaunch crane_plus_control parameter_tuning.launch target:=vertical
+    $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true <rviz:=false>
+    $ roslaunch crane_plus_control named_pose <pose>
     ```
 
 
@@ -122,23 +121,20 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
 1. [Install](http://wiki.ros.org/kinetic/Installation/Ubuntu) ROS Kinetic 
 
     ```bash
-    $ sudo apt-get update && sudo apt-get upgrade
+    $ sudo apt-get update && sudo apt-get upgrade -y
     $ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
     $ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
     $ sudo apt-get update && sudo apt-get install ros-kinetic-desktop-full -y
     $ sudo rosdep init && rosdep update
-    $ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
-    $ source ~/.bashrc
+    $ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc && source ~/.bashrc
     $ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential -y
     ```
 
 2. [Configure](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment) your ROS environment
 
     ```bash
-    $ mkdir -p ~/catkin_ws/src
-    $ cd ~/catkin_ws/ && catkin_make
-    $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
-    $ source ~/.bashrc
+    $ mkdir -p ~/catkin_ws/src && cd ~/catkin_ws/ && catkin_make
+    $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc && source ~/.bashrc
     ```
 
 3. Confirm the installation and configuration of ROS. You should see the following output.
