@@ -8,11 +8,11 @@ Cano, J. et al. “Automatic Parameter Tuning of Motion Planning Algorithms,” 
 
 - Motion Planning Algorithms: BKPiece and RRTConnect
 
-  
+  *Note:* The Simplification trails (P5) parameter is specific to the simulator used in paper, therefore this parameter is omitted in our experiment.
 
   ![](imgs/Canoetal_defaults.png)
 
-  *Note:* The Simplification trails (P5) parameter is specific to the simulator used in paper, therefore this parameter is omitted in our experiment.
+  *
 
 - Optimisation Algorithms Explored: Random Search, Bayesian Optimisation (Gaussian Process),  Random Forest and AUC Bandit
 
