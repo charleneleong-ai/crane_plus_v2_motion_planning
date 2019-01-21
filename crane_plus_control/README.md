@@ -2,20 +2,22 @@
 
 This package aims to implement the following two papers in researching global blackbox optimisation techniques for automated parameter tuning of motion planning algorithms. 
 
-[Automatic Parameter Tuning of Motion Planning Algorithms (IROS 2018)](http://homepages.inf.ed.ac.uk/jcanore/pub/2018_iros.pdf) 
+### [Automatic Parameter Tuning of Motion Planning Algorithms (IROS 2018)](http://homepages.inf.ed.ac.uk/jcanore/pub/2018_iros.pdf) 
 
 Cano, J. et al. “Automatic Parameter Tuning of Motion Planning Algorithms,” 2018 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain,  October, 1-5, 2018
 
 - Motion Planning Algorithms: BKPiece and RRTConnect
+
+  
+
   ![](imgs/Canoetal_defaults.png)
 
   *Note:* The Simplification trails (P5) parameter is specific to the simulator used in paper, therefore this parameter is omitted in our experiment.
 
 - Optimisation Algorithms Explored: Random Search, Bayesian Optimisation (Gaussian Process),  Random Forest and AUC Bandit
 
-- Experiment Setup:
+- Experiment Setup:Simulation only testing for 7DOF KUKA LWR robot arm
 
-  Simulation only testing for 7DOF KUKA LWR robot arm
   - Environment 1: Tuning planning time on Narrow Passage problem to get optimal parameters with each method  run for a period of 2 hours (7200s) 
   - Environment 2: Tuning planning time on random scenarios with increasing number of objects 
 
@@ -26,13 +28,13 @@ Cano, J. et al. “Automatic Parameter Tuning of Motion Planning Algorithms,” 
 
 ![](imgs/Canoetal_results_speedup.png)
 
-  - Environment 2:
+  - Environment 2: 
 
 
 
 ___
 
-[Automated Tuning and Configuration of Path Planning Algorithms (ICRA 2017)](http://www.factory-in-a-day.eu/wp-content/uploads/2017/08/Automated_Tuning_SMAC_ICRA_2017.pdf)
+### [Automated Tuning and Configuration of Path Planning Algorithms (ICRA 2017)](http://www.factory-in-a-day.eu/wp-content/uploads/2017/08/Automated_Tuning_SMAC_ICRA_2017.pdf)
 
 R. Burger, M. Bharatheesha, M. van Eert and R. Babuška, "Automated tuning and configuration of path planning algorithms," 2017 IEEE International Conference on Robotics and Automation (ICRA), Singapore, 2017, pp. 4371-4376.
 doi: 10.1109/ICRA.2017.7989504
@@ -80,7 +82,7 @@ $ roslaunch crane_plus_control parameter_tuning.launch planner_config:=<planner_
 
 1. Random Forest using [SMAC](http://www.cs.ubc.ca/labs/beta/Projects/SMAC/v2.10.03/quickstart.html#news)
 
-   Installed from source, located in [/scripts/modules/smac)](/scripts/modules/smac).
+   Installed from source, located in [/scripts/modules/smac)](./scripts/modules/smac).
 
    ```bash
    $ roslaunch crane_plus_control parameter_tuning.launch mode:=smac max_trials:=30 avg_runs:=1

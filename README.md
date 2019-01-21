@@ -72,7 +72,7 @@ If you wish to run ROS along with Python 3 in Anaconda, please [create a py2.7 c
 
 1. [Quick Launch](#quick-launch)
 2. [ROS Installation and Configuration](#ros-installation-and-configuration)
-3. [Parameter Tuning](/crane_plus_control/README.md)
+3. [Parameter Tuning](./crane_plus_control/README.md)
 
 ## Quick Launch
 
