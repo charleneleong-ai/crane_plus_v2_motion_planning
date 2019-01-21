@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 21st 2019, 10:23:56 am
+# Last Modified: Monday, January 21st 2019, 2:56:39 pm
 # Modified By: Charlene Leong
 ###
 
@@ -64,10 +64,10 @@ class HyperOptSession(Session):
         success_rate = 1 - stats['t_avg_success']        # Want to max this
         loss = stats['t_avg_plan_time']
         # Penalise loss relative to success rate
-        if(success_rate != 1):
-            loss = loss + success_rate*100
-        elif(stats['t_avg_success']  == 0):
-            loss = 100
+        if(stats['t_avg_success'] == 0) or (loss <= 0.08):     # To penalise aborted plans which are missed
+            loss = 10
+        elif(success_rate != 1):
+            loss = loss + success_rate*10
 
 
         current = time.time()

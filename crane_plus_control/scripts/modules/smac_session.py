@@ -1,58 +1,62 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 ###
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Last Modified: Monday, January 21st 2019, 11:56:25 am
+# Last Modified: Monday, January 21st 2019, 4:10:10 pm
 # Modified By: Charlene Leong
 ###
 
 # from session import Session
 # from __future__ import scipy
-import logging
-import numpy as np
+import sys
+import os
 
-from smac.configspace import ConfigurationSpace
-from ConfigSpace.hyperparameters import CategoricalHyperparameter, \
-    UniformFloatHyperparameter, UniformIntegerHyperparameter
-
-from smac.tae.execute_func import ExecuteTAFuncDict
-from smac.scenario.scenario import Scenario
-from smac.facade.smac_facade import SMAC
+import rospkg
 
 from session import Session
 
-class SMACSession(Session):
-    def __init__(self):
-        super(SMACSession, self).__init__()
+ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/scripts/modules'
 
-    def _objective(self, cfg, seed):
-        """
-            Creates a random forest regressor from sklearn and fits the given data on it.
-            This is the function-call we try to optimize. Chosen values are stored in
-            the configuration (cfg).
-            Parameters:
-            -----------
-            cfg: Configuration
-                configuration chosen by smac
-            seed: int or RandomState
-                used to initialize the rf's random generator
-            Returns:
-            -----------
-            np.mean(rmses): float
-                mean of root mean square errors of random-forest test predictions
-                per cv-fold
-        """
-        rfr = RandomForestRegressor(
-            n_estimators=cfg["num_trees"],
-            criterion=cfg["criterion"],
-            min_samples_split=cfg["min_samples_to_split"],
-            min_samples_leaf=cfg["min_samples_in_leaf"],
-            min_weight_fraction_leaf=cfg["min_weight_frac_leaf"],
-            max_features=cfg["max_features"],
-            max_leaf_nodes=cfg["max_leaf_nodes"],
-            bootstrap=cfg["do_bootstrapping"],
-            random_state=seed)
+# class SMACSession(Session):
+#     def __init__(self, mode):
+#         super(SMACSession, self).__init__(mode)
 
-        def run(self):
-            pass
 
+# def run(self):
+    
+#     # os.system("smac/smac --scenario-file " + name)
+#     os.system("smac/smac --scenario-file example_scenarios/branin/branin-scenario.txt --seed 1234")
+name = ROS_PKG_PATH+"/scenarios/tmpscenario.txt"
+
+planner_type = "geometric::BKPIECE"
+pcs_file = "BKPIECE_better.pcs"
+scene_number = "narrow_passage"
+problem_iterations = "1"
+smac_iterations = 10000
+walltime_limit = 30*60
+
+if __name__ == '__main__':
+    try:
+        tfile = open(name,'a') 
+        tfile.write("use-instances = false\n")
+        tfile.write("numberOfRunsLimit = " + str(smac_iterations) + "\n")
+        tfile.write("runtimeLimit = " + str(walltime_limit) + "\n")
+        tfile.write("runObj = QUALITY\n")
+        tfile.write("deterministic = 1\n")
+        tfile.write("pcs-file = pcs/" + pcs_file + "\n")
+        tfile.write("algo = python smac_runproblem.py " + planner_type + " " + scene + " " + problem_iterations + "\n")
+        
+        tfile.write("check-sat-consistency false \n")
+        tfile.write("check-sat-consistency-exception false \n")
+        tfile.write("algo-cutoff-time 40\n")
+        tfile.write("kill-run-exceeding-captime-factor 2\n")
+
+        # tfile.write("kill-run-exceeding-captime false")
+        # tfile.write("transform-crashed-quality false")
+
+        tfile.close()
+    except:
+        print('Something went wrong!')
+        sys.exit(0)
+        
+    # os.system("smac/./smac --scenario-file example_scenarios/branin/branin-scenario.txt --seed 1234")

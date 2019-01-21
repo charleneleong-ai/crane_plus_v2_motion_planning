@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 21st 2019, 10:37:12 am
+# Last Modified: Monday, January 21st 2019, 2:53:18 pm
 # Modified By: Charlene Leong
 ###
 
@@ -146,10 +146,9 @@ class Session(object):
         path_stats = []
         for _ in xrange(self.avg_runs):
             self._move_arm(start_pose)  # reset to start pose
-            start_time = timer()
+        
             path = self._plan_path(start_pose, target_pose)
-            exec_success = self._move_arm(target_pose, path['planned_path'])
-            run_time = timer() - start_time
+            run_time, exec_success = self._move_arm(target_pose, path['planned_path'])
 
             if (path['success'] == 0) or (exec_success is False):
                 run_time = 0
@@ -189,14 +188,17 @@ class Session(object):
         start_time = timer()
         planned_path = self.group.plan()
         plan_time = timer() - start_time
+        
         # If motion plan fails, length will be saved as 0
         length = {'joint_dist': 0, 'joint_length': 0}
         success = 0
-
         if len(planned_path.joint_trajectory.points) != 0:
             length = self._get_path_length(planned_path)
+            # plan_time_secs = planned_path.joint_trajectory.points[-1].time_from_start.secs
+            # plan_time_nsecs = planned_path.joint_trajectory.points[-1].time_from_start.nsecs
+            # plan_time = plan_time_secs + plan_time_nsecs*1e-9
             success = 1
-
+        
         return {'planned_path': planned_path, 'plan_time': plan_time, 'length': length, 'success': success}
     
     def _get_path_length(self, path): 
@@ -266,11 +268,11 @@ class Session(object):
         display_trajectory.trajectory_start = self.robot.get_current_state()
         display_trajectory.trajectory.append(plan)
         self.display_trajectory_publisher.publish(display_trajectory)
-
-        success = self.group.go(wait=True)
-        self.group.stop()
-
-        return success
+        start_time = timer()
+        success = self.group.execute(plan, wait=True)
+        run_time = timer() - start_time
+        
+        return run_time, success
 
     def get_results(self):
         # try:

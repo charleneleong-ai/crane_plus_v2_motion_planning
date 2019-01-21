@@ -1,12 +1,12 @@
-15:32:32.663 [main] INFO  c.u.c.b.a.l.ComplexLoggingOptions - Logging to: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/smac-output/branin-scenario/log-run1234.txt
-15:32:32.713 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Algorithm Execution & Abstraction Toolkit is v2.10.03-master-814 (ebf4c8c913d5) 
-15:32:32.715 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Java Runtime Environment is OpenJDK 64-Bit Server VM (1.8.0_191) 
-15:32:32.717 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of OS is Linux 4.15.0-43-generic (amd64) 
-15:32:32.720 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Random Forest Library is v1.10.01-master-120 (b68439c2c391) 
-15:32:32.721 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2) 
-15:32:32.725 [main] INFO  c.u.c.b.a.m.j.JCommanderHelper - Call String: smac --scenario-file example_scenarios/branin/branin-scenario.txt --seed 1234 
-15:32:32.727 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ********** The next bit of output can be ignored, it is merely useful for debugging **********
-15:32:32.727 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ==========Enviroment Variables===========
+15:42:10.587 [main] INFO  c.u.c.b.a.l.ComplexLoggingOptions - Logging to: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac-output/branin-scenario/log-run1234.txt
+15:42:10.600 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Algorithm Execution & Abstraction Toolkit is v2.10.03-master-814 (ebf4c8c913d5) 
+15:42:10.600 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Java Runtime Environment is OpenJDK 64-Bit Server VM (1.8.0_191) 
+15:42:10.600 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of OS is Linux 4.15.0-43-generic (amd64) 
+15:42:10.600 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Random Forest Library is v1.10.01-master-120 (b68439c2c391) 
+15:42:10.600 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2) 
+15:42:10.601 [main] INFO  c.u.c.b.a.m.j.JCommanderHelper - Call String: smac --scenario-file example_scenarios/branin/branin-scenario.txt --seed 1234 
+15:42:10.602 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ********** The next bit of output can be ignored, it is merely useful for debugging **********
+15:42:10.602 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ==========Enviroment Variables===========
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL=true
 CLUTTER_IM_MODULE=xim
 CMAKE_PREFIX_PATH=/home/charlene/catkin_ws/devel:/opt/ros/kinetic
@@ -52,7 +52,7 @@ NO_PROXY=localhost,127.0.0.0/8,::1,gojou,*10.74.27.248,https://bitbucket.org/*,i
 PAPERSIZE=letter
 PATH=/opt/ros/kinetic/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 PKG_CONFIG_PATH=/home/charlene/catkin_ws/devel/lib/pkgconfig:/opt/ros/kinetic/lib/pkgconfig:/opt/ros/kinetic/lib/x86_64-linux-gnu/pkgconfig
-PWD=/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac
+PWD=/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules
 PYTHONPATH=/home/charlene/catkin_ws/devel/lib/python2.7/dist-packages:/opt/ros/kinetic/lib/python2.7/dist-packages:/usr/lib/python2.7/dist-packages
 QT4_IM_MODULE=xim
 QT_ACCESSIBILITY=1
@@ -101,15 +101,15 @@ http_proxy=http://melinet:9515/
 https_proxy=https://melinet:9515/
 no_proxy=localhost,127.0.0.0/8,::1,gojou,*10.74.27.248,https://bitbucket.org/*,id.atlassian.com/*,https://messenger.com
 
-15:32:32.730 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - Hostname:charlene-NUC7i7BNH
-15:32:32.730 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ==========System Properties==============
-ERRLOG=/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/smac-output/branin-scenario/log-err1234.txt
+15:42:10.602 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - Hostname:charlene-NUC7i7BNH
+15:42:10.602 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ==========System Properties==============
+ERRLOG=/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac-output/branin-scenario/log-err1234.txt
 NUMRUN=1234
-OUTPUTDIR=/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/smac-output/branin-scenario
+OUTPUTDIR=/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac-output/branin-scenario
 ROOT-LEVEL=INFO
-RUNLOG=/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/smac-output/branin-scenario/log-run1234.txt
+RUNLOG=/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac-output/branin-scenario/log-run1234.txt
 STDOUT-LEVEL=INFO
-WARNLOG=/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/smac-output/branin-scenario/log-warn1234.txt
+WARNLOG=/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac-output/branin-scenario/log-warn1234.txt
 awt.toolkit=sun.awt.X11.XToolkit
 file.encoding=UTF-8
 file.encoding.pkg=sun.io
@@ -159,13 +159,13 @@ sun.jnu.encoding=UTF-8
 sun.management.compiler=HotSpot 64-Bit Tiered Compilers
 sun.os.patch.level=unknown
 user.country=US
-user.dir=/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac
+user.dir=/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules
 user.home=/home/charlene
 user.language=en
 user.name=charlene
 user.timezone=Asia/Tokyo
 
-15:32:32.747 [main] INFO  c.u.c.b.a.m.j.JCommanderHelper - ==========Configuration Options==========
+15:42:10.620 [main] INFO  c.u.c.b.a.m.j.JCommanderHelper - ==========Configuration Options==========
 [SMACOptions]
  adaptiveCapping = false
  alwaysRunInitialConfiguration = false
@@ -186,7 +186,7 @@ ucip = [UnbiasChallengerInitializationProcedureOptions]
  deterministicInstanceOrdering = false
  doValidation = true
  execMode = SMAC
- experimentDir = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/
+ experimentDir = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/
  expFunc = null
 help = [HelpOptions]
 		 showHiddenParameters = false
@@ -267,12 +267,12 @@ scenarioConfig = [ScenarioOptions]
 				 testInstanceSuffix = null
 				 ignoreFeatures = false
 
-		 scenarioFile = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/example_scenarios/branin/branin-scenario.txt
-		 outputDirectory = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/smac-output
+		 scenarioFile = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/example_scenarios/branin/branin-scenario.txt
+		 outputDirectory = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac-output
 		 invalidScenarioReason = null
 		algoExecOptions = [AlgorithmExecutionOptions]
 				 algoExec = example_scenarios/branin/branin.py
-				 algoExecDir = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac
+				 algoExecDir = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules
 				 deterministic = true
 				 cutoffTime = 1.7976931348623157E308
 				 cutoffLength = -1.0
@@ -301,7 +301,7 @@ scenarioConfig = [ScenarioOptions]
 								 postCommand = null
 								 exceptionOnError = false
 								 logOutput = true
-								 directory = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/.
+								 directory = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/.
 
 						 checkResultOrderConsistent = false
 						 skipOutstandingEvaluationsTAE = false
@@ -342,8 +342,8 @@ scenarioConfig = [ScenarioOptions]
 						 warnIfNoResponseFromTAE = 120
 						 taeStopProcessingOnShutdown = true
 						 filecache = false
-						 fileCacheSource = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/./runcache
-						 fileCacheOutput = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/./runcache
+						 fileCacheSource = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/./runcache
+						 fileCacheOutput = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/./runcache
 						 fileCacheCrashOnMiss = false
 						 transformCrashedQuality = true
 						 transformCrashedQualityValue = 1.0E9
@@ -470,77 +470,77 @@ warmStartOptions = [WarmStartOptions]
  minResponse = 0.0
  observerFrequency = 500
  trendCoefficient = 0.0
- seed = 1548052351176
+ seed = 1548052929631
  persistent = false
  scaleDelay = 1.0
 
 
-15:32:33.546 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - SMAC started at: Jan 21, 2019 3:32:33 PM. Minimizing mean quality.
-15:32:34.053 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - First incumbent: config 1 (internal ID: 0x000B), with mean quality: 24.129964; estimate based on 1 runs.
-15:32:34.061 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 1 (internal ID: 0x000B): 
-cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '2.5' -x2 '7.5'  
-15:32:34.617 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 2 (internal ID: 0x4682), with mean quality: 10.506681; estimate based on 1 runs.
-15:32:34.627 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 2 (internal ID: 0x4682): 
-cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '1.6808768621513908' -x2 '2.4401710727323027'  
-15:32:35.125 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 6 (internal ID: 0x2FC1), with mean quality: 9.367661; estimate based on 1 runs.
-15:32:35.126 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 6 (internal ID: 0x2FC1): 
-cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '9.623702192673079' -x2 '5.611085635891073'  
-15:32:36.231 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 13 (internal ID: 0xB71D), with mean quality: 0.971436; estimate based on 1 runs.
-15:32:36.231 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 13 (internal ID: 0xB71D): 
-cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '9.771418789555621' -x2 '2.733846272217993'  
-15:32:38.545 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 34 (internal ID: 0x1D750), with mean quality: 0.946011; estimate based on 1 runs.
-15:32:38.545 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 34 (internal ID: 0x1D750): 
-cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '-2.802654282547766' -x2 '11.518206765464441'  
-15:32:41.461 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 62 (internal ID: 0x2C38C), with mean quality: 0.731499; estimate based on 1 runs.
-15:32:41.471 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 62 (internal ID: 0x2C38C): 
-cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '-3.363260312814255' -x2 '13.12818324558293'  
-15:32:45.268 [main] INFO  c.u.c.b.a.e.h.LogRuntimeStatistics - *****Developer Statistics*****
+15:42:11.367 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - SMAC started at: Jan 21, 2019 3:42:11 PM. Minimizing mean quality.
+15:42:11.882 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - First incumbent: config 1 (internal ID: 0x000B), with mean quality: 24.129964; estimate based on 1 runs.
+15:42:11.887 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 1 (internal ID: 0x000B): 
+cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '2.5' -x2 '7.5'  
+15:42:12.628 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 2 (internal ID: 0x4682), with mean quality: 10.506681; estimate based on 1 runs.
+15:42:12.634 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 2 (internal ID: 0x4682): 
+cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '1.6808768621513908' -x2 '2.4401710727323027'  
+15:42:13.101 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 6 (internal ID: 0x2FC1), with mean quality: 9.367661; estimate based on 1 runs.
+15:42:13.101 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 6 (internal ID: 0x2FC1): 
+cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '9.623702192673079' -x2 '5.611085635891073'  
+15:42:14.120 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 13 (internal ID: 0xB71D), with mean quality: 0.971436; estimate based on 1 runs.
+15:42:14.126 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 13 (internal ID: 0xB71D): 
+cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '9.771418789555621' -x2 '2.733846272217993'  
+15:42:16.750 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 34 (internal ID: 0x1D750), with mean quality: 0.946011; estimate based on 1 runs.
+15:42:16.757 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 34 (internal ID: 0x1D750): 
+cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '-2.802654282547766' -x2 '11.518206765464441'  
+15:42:19.645 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 62 (internal ID: 0x2C38C), with mean quality: 0.731499; estimate based on 1 runs.
+15:42:19.645 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 62 (internal ID: 0x2C38C): 
+cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '-3.363260312814255' -x2 '13.12818324558293'  
+15:42:24.715 [main] INFO  c.u.c.b.a.e.h.LogRuntimeStatistics - *****Developer Statistics*****
  Count: 11
  Incumbent ID: 62 (internal ID:0x2C38C)
  Number of PISPs for Incumbent: 1
  Number of Instances for Incumbent: 1
  Number of Configurations Run: 100
  Performance of the Incumbent: 0.731
- Configuration Time Budget used: 11.75 s (0%)
+ Configuration Time Budget used: 11.80 s (0%)
  Configuration Time Budget remaining: 2.15E9 s
- Wall-clock Time Budget used: 11.74 s (0%)
+ Wall-clock Time Budget used: 13.37 s (0%)
  Wall-clock Time Budget remaining: 2.15E9 s
  Algorithm Runs used: 100.00  (100%)
  Algorithm Runs remaining: 0.00 
  Model/Iteration used: 10.00  (0%)
  Model/Iteration remaining: 2.15E9 
  Sum of Target Algorithm Execution Times (treating minimum value as 0.1): 10.000 s
- CPU time of Configurator: 1.753 s
- User time of Configurator: 1.752 s
+ CPU time of Configurator: 1.795 s
+ User time of Configurator: 1.795 s
  Outstanding Runs on Target Algorithm Evaluator: 0
  Outstanding Requests on Target Algorithm Evaluator: 0
  Total Reported Algorithm Runtime: 0.000 s
- Sum of Measured Wallclock Runtime: 5.590 s
+ Sum of Measured Wallclock Runtime: 6.901 s
  Max Memory: 910 MB
  Total Java Memory: 608 MB
- Free Java Memory: 364 MB
+ Free Java Memory: 363 MB
  * PISP count is roughly the number of runs, but doesn't included redundant runs on the same problem instance & seed
-15:32:45.283 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - 
+15:42:24.732 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - 
 =======================================================================================
 SMAC has finished. Reason: algorithm run limit (100 runs) has been reached.   
 Total number of runs performed: 100, total configurations tried: 100.
-Total CPU time used: 12 s, total wallclock time used: 12 s.
+Total CPU time used: 12 s, total wallclock time used: 13 s.
 SMAC's final incumbent: config 62 (internal ID: 0x2C38C), with estimated mean quality: 0.731499, based on 1 run(s) on 1 training instance(s).
 Sample call for this final incumbent:
-cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '-3.363260312814255' -x2 '13.12818324558293'
+cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '-3.363260312814255' -x2 '13.12818324558293'
 =======================================================================================
-15:32:45.300 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - Now starting offline validation.
-15:32:45.327 [main] INFO  c.u.c.beta.smac.validation.Validator - Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
-15:32:45.328 [main] INFO  c.u.c.beta.smac.validation.Validator - Validation start time: Jan 21, 2019 3:32:45 PM. Approximate worst-case end time is unknown.
-15:32:45.504 [CLI TAE Callback Threads (108-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation Call Strings written to: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/smac-output/branin-scenario/validationCallStrings-traj-run-1234-walltime.csv
-15:32:45.509 [CLI TAE Callback Threads (108-1)] INFO  c.u.c.beta.smac.validation.Validator - Instance performance (for debug) written to: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/smac-output/branin-scenario/validationPerformanceDebug-traj-run-1234-walltime.csv
-15:32:45.517 [CLI TAE Callback Threads (108-1)] INFO  c.u.c.beta.smac.validation.Validator - Main validation results file written to: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/smac-output/branin-scenario/validationResults-traj-run-1234-walltime.csv
-15:32:45.522 [CLI TAE Callback Threads (108-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/smac-output/branin-scenario/validationObjectiveMatrix-traj-run-1234-walltime.csv
-15:32:45.524 [CLI TAE Callback Threads (108-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/smac-output/branin-scenario/validationRunResultLineMatrix-traj-run-1234-walltime.csv
-15:32:45.527 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - 
+15:42:24.741 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - Now starting offline validation.
+15:42:24.757 [main] INFO  c.u.c.beta.smac.validation.Validator - Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+15:42:24.758 [main] INFO  c.u.c.beta.smac.validation.Validator - Validation start time: Jan 21, 2019 3:42:24 PM. Approximate worst-case end time is unknown.
+15:42:24.918 [CLI TAE Callback Threads (108-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation Call Strings written to: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac-output/branin-scenario/validationCallStrings-traj-run-1234-walltime.csv
+15:42:24.927 [CLI TAE Callback Threads (108-1)] INFO  c.u.c.beta.smac.validation.Validator - Instance performance (for debug) written to: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac-output/branin-scenario/validationPerformanceDebug-traj-run-1234-walltime.csv
+15:42:24.928 [CLI TAE Callback Threads (108-1)] INFO  c.u.c.beta.smac.validation.Validator - Main validation results file written to: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac-output/branin-scenario/validationResults-traj-run-1234-walltime.csv
+15:42:24.929 [CLI TAE Callback Threads (108-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac-output/branin-scenario/validationObjectiveMatrix-traj-run-1234-walltime.csv
+15:42:24.929 [CLI TAE Callback Threads (108-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac-output/branin-scenario/validationRunResultLineMatrix-traj-run-1234-walltime.csv
+15:42:24.940 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Estimated mean quality of final incumbent config 62 (internal ID: 0x2C38C) on test set: 0.731499, based on 1 run(s) on 1 test instance(s).
 Sample call for the final incumbent:
-cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '-3.363260312814255' -x2 '13.12818324558293' 
-Additional information about run 1234 in:/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/smac-output/branin-scenario
+cd /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules; example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '-3.363260312814255' -x2 '13.12818324558293' 
+Additional information about run 1234 in:/home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac-output/branin-scenario
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
