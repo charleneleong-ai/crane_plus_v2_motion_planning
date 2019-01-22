@@ -109,4 +109,5 @@ $RECYCLE.BIN/
 #   SMAC
 #======================
 smac-output/*
+log-*.txt
 !smac/

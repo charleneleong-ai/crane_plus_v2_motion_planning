@@ -3,7 +3,7 @@
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author:  Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Tuesday, January 22nd 2019, 6:12:23 pm
+# Last Modified: Tuesday, January 22nd 2019, 6:20:16 pm
 ###
 
 import sys
@@ -77,7 +77,7 @@ class SMACSession(Session):
             self._write_pcs(planner, params_set, pcs_fp)
             self._write_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
 
-            # os.system('cd '+ROS_PKG_PATH +'/smac && ./smac --scenario-file '+scenario_fp+' --seed 123')
+            os.system('cd '+ROS_PKG_PATH +'/smac && ./smac --scenario-file '+scenario_fp+' --seed 123')
 
 
 # def run():
