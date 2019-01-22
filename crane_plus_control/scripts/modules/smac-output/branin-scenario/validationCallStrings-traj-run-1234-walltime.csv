@@ -1,2 +1,0 @@
-"Validation Configuration ID","Configuration ","Sample Call String"
-"1","-x1 '-3.363260312814255' -x2 '13.12818324558293'","example_scenarios/branin/branin.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '-3.363260312814255' -x2 '13.12818324558293' "

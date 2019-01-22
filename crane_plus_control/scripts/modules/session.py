@@ -2,13 +2,11 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 21st 2019, 2:53:18 pm
+# Last Modified: Tuesday, January 22nd 2019, 11:46:13 am
 # Modified By: Charlene Leong
 ###
 
 from timeit import default_timer as timer
-import os
-import time
 import csv
 import pprint
 import pandas as pd
@@ -16,38 +14,43 @@ import numpy as np
 
 import rospkg
 import rospy
-import std_msgs.msg
 
 import moveit_commander
 import moveit_msgs.msg
 
-from planner_config import PlannerConfig
-from scene_object import Scene
+from modules.planner_config import PlannerConfig
+from modules.scene_object import Scene
 
 ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
-
-# from objectives import objectives
-
 
 class Session(object):
     """
     Session Base Class
     """
-    def __init__(self, mode):
+    def __init__(self):
         self.planner_config_obj = PlannerConfig()
-        self.mode = mode
         self.planner_config = self.planner_config_obj.planner_config
+        self.planner_select = self.planner_config_obj.planner_select
         self.planners = self.planner_config_obj.planners
 
+        self.mode = rospy.get_param('~mode')
+        self.avg_runs = rospy.get_param('~avg_runs')
+        self.max_runtime = rospy.get_param('~max_runtime')
         self.n_trial = 0
+
         if self.mode not in ['default', 'ompl']:
             self.max_trials = rospy.get_param('~max_trials')
-        self.avg_runs = rospy.get_param('~avg_runs')
-        self.start_pose = self.planner_config_obj.start_pose
-        self.target_pose = self.planner_config_obj.target_pose
+            if self.max_runtime != 'None':
+                self.max_runtime = int(self.max_runtime)   
+                self.max_trials = 10000     # Set to arbitrary large number
 
-        self.results_path = ROS_PKG_PATH+'/results/' + \
-            self.planner_config_obj.planner_select+'_'+self.mode+'.csv'
+        self.start_pose = rospy.get_param('~start_pose')
+        self.target_pose = rospy.get_param('~target_pose')
+        self.path_tune = False
+        if (self.start_pose  != "None") and (self.target_pose  != "None"):
+            self.path_tune = True
+
+        self.scenes = ['narrow_passage']
 
         self.robot = moveit_commander.RobotCommander()
         self.group = moveit_commander.MoveGroupCommander('arm')
@@ -56,12 +59,13 @@ class Session(object):
         self.display_trajectory_publisher = rospy.Publisher('/group/display_planned_path',
                                                             moveit_msgs.msg.DisplayTrajectory,
                                                             queue_size=20)
-        self.scenes = ['narrow_passage']
+            
+        self.results_path = ROS_PKG_PATH+'/results/' +self.planner_select+'_'+self.mode+'.csv'
 
     def run(self):
         raise NotImplementedError
 
-    def _run_problem_set(self, planner_id, save=False, results_path=""):
+    def _run_problem_set(self, planner_id, save=False, results_path=''):
         result_log = {}
         t_avg_run_time = 0      # Totals
         t_avg_plan_time = 0
@@ -126,18 +130,16 @@ class Session(object):
             result_log[x1] = scene        # Add scene dict to results
             t_avg_success = t_avg_success / float(query_count)
 
-            stats = {'t_avg_run_time': t_avg_run_time, 't_avg_plan_time': t_avg_plan_time,
-                     't_avg_dist': t_avg_dist, 't_avg_path_length': t_avg_path_length, 't_avg_success': t_avg_success}
-
             if save is True:
                 with open(results_path, 'a') as f:
                     writer = csv.writer(f)
                     writer.writerow([''])
-                    writer.writerow(
-                        ['t_avg_run_time', 't_avg_plan_time', 't_avg_dist', 't_avg_success'])
-                    writer.writerow([stats['t_avg_run_time'], stats['t_avg_plan_time'],
-                                     stats['t_avg_dist'], stats['t_avg_success']])
+                    writer.writerow(['t_avg_run_time', 't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success'])
+                    writer.writerow([t_avg_run_time, t_avg_plan_time, t_avg_dist, t_avg_path_length, t_avg_success])
                     writer.writerow([''])
+
+            stats = {'t_avg_run_time': t_avg_run_time, 't_avg_plan_time': t_avg_plan_time,
+                     't_avg_dist': t_avg_dist, 't_avg_path_length': t_avg_path_length, 't_avg_success': t_avg_success}
 
         return result_log, stats
 
@@ -172,15 +174,6 @@ class Session(object):
                 'avg_dist': avg_dist, 'avg_path_length': avg_path_length, 'avg_success': avg_success}
 
     def _plan_path(self, start_pose, target_pose):
-        """Returns path (RobotTrajectory) given a start pose and target pose
-        
-        Args:
-            start_pose (str): desired start pose
-            target_pose (str): desired target psoe
-        
-        Returns:
-            (dict{str}): path info {path, planning time, path length}
-        """
         # start_state = self.robot.get_current_state()
         # start_state.joint_state.position = start_pose
         # self.group.set_start_state(start_state)
@@ -202,13 +195,6 @@ class Session(object):
         return {'planned_path': planned_path, 'plan_time': plan_time, 'length': length, 'success': success}
     
     def _get_path_length(self, path): 
-        """Returns the eucld dist and path length of given motion plan (RobotTrajectory)
-        Args:
-            path (RobotTrajectory) -- MoveIt RobotTrajectory Message
-        
-        Returns:
-            (dict{str}) -- eucld dist of path and path length in jointspace
-        """
         pts = path.joint_trajectory.points
         j_length = 0    # j = jointspace
         # w_length = 0    # w = workspace

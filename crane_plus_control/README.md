@@ -59,37 +59,38 @@ $ roslaunch crane_plus_control parameter_tuning.launch planner_config:=<planner_
   - rand -  Runs a random search parameter tuning session with parameter search space defined in Cano etal paper.
 - **avg_runs:** Sets the avg number of runs for each parameter configuration. 
   - [default] 1
-
 - **max_trials:** Sets the max number of trials when in parameter tuning mode.
   - [default] 30
+- **max_runtime:** Sets the max runtime (secs). If set, overrides the number of max_trials = 10000.
+  - [default] None
+- **start_pose:** Specifies a start pose from [named states](./config/parameter_tuning.yaml) for specific path tuning.
+  - [default] None
+- **target_pose:** Specifies a desired target pose from [named states](./config/parameter_tuning.yaml) for specific path tuning.
 
 ## Parameter Tuning Modes
 
-1. TPE using [Hyperopt](http://hyperopt.github.io/hyperopt/)
+1. TPE or Random Search using [Hyperopt](http://hyperopt.github.io/hyperopt/) on full problem set.
 
     ```bash
     $ pip install hyperopt
-    $ roslaunch crane_plus_control parameter_tuning.launch mode:=tpe max_trials:=30 avg_runs:=1
+    $ roslaunch crane_plus_control parameter_tuning.launch mode:=tpe max_runtime:=7200 
     ```
 
-2. Random Search using [Hyperopt](http://hyperopt.github.io/hyperopt/)
-
-    ```bash
-    $ pip install hyperopt
-    $ roslaunch crane_plus_control parameter_tuning.launch mode:=rand max_trials:=30 avg_runs:=1
-    ```
-
-3. Random Forest using [SMAC](http://www.cs.ubc.ca/labs/beta/Projects/SMAC/v2.10.03/quickstart.html#news)
+2. Random Forest using [SMAC](http://www.cs.ubc.ca/labs/beta/Projects/SMAC/v2.10.03/quickstart.html#news) on full problem set.
 
     Installed from source, located in [/scripts/modules/smac)](./scripts/modules/smac).
 
     ```bash
-    $ roslaunch crane_plus_control parameter_tuning.launch mode:=smac max_trials:=30 avg_runs:=1
+    $ roslaunch crane_plus_control parameter_tuning.launch mode:=smac max_trials:=30 
     ```
 
-   
+3. Tuning on a specific path between defined start pose and target pose.
 
-   
+    ```bash
+    $ roslaunch crane_plus_control parameter_tuning.launch start_pose:=backbend target_pose:=low_fwd_reach
+    ```
+
+​     
 
 ## MoveIt Planning Time Benchmark
 

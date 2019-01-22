@@ -1,0 +1,11 @@
+use-instances = false
+numberOfRunsLimit = 10000
+runtimeLimit = 1800
+runObj = QUALITY
+deterministic = 1
+pcs-file = ./smac/scenarios/BKPIECEkConfigDefault/Cano_etal_BKPIECEkConfigDefault.pcs
+algo = python smac_run.py BKPIECEkConfigDefault narrow_passage 1
+check-sat-consistency false 
+check-sat-consistency-exception false 
+algo-cutoff-time 40
+kill-run-exceeding-captime-factor 2

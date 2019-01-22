@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 21st 2019, 8:40:51 am
+# Last Modified: Tuesday, January 22nd 2019, 1:57:16 pm
 # Modified By: Charlene Leong
 ###
 
@@ -15,8 +15,6 @@ from moveit_msgs.srv import GetPlannerParams, SetPlannerParams
 class PlannerConfig(object):
     def __init__(self):
         self.planner_select = rospy.get_param('~planner_config')
-        self.start_pose = rospy.get_param('~start_pose')
-        self.target_pose = rospy.get_param('~target_pose')
 
         if rospy.get_param('~mode') in ['default', 'ompl']:
             self.planner_config = rospy.get_param(
@@ -43,14 +41,27 @@ class PlannerConfig(object):
         for k, v in self.planner_config.iteritems():
             self.set_planner_params(k, v)
 
-    def get_planner_config(self):
-        return self.planner_config
+    def set_planner_params(self, planner_id, params_set):
+        """Calls SetPlannerParams moveit ROS service to set planner params for select planner
+        
+        Args:
+            planner_id (str): planner name
+            params_set (dict): planner params
+        """
+        # Convert dict to PlannerParams msg
+        params = moveit_msgs.msg.PlannerParams()
+        params.keys = params_set.keys()
+        params.values = [str(v) for v in params_set.values()]
 
-    def get_planner_config_name(self):
-        return self.name
-
-    def get_planners(self):
-        return self.planners
+        # rospy.loginfo('Waiting for set_planner_params')
+        rospy.wait_for_service('set_planner_params')
+        set_planner_params = rospy.ServiceProxy(
+            'set_planner_params', SetPlannerParams)
+        try:
+            set_planner_params(planner_id, 'arm', params, True)
+            rospy.loginfo('%s parameters updated', planner_id)
+        except rospy.ServiceException as e:
+            rospy.logerr('Failed to get params: %s', e)
 
     def get_planner_params(self, planner_id):
         """Calls GetPlannerParams moveit ROS service and returns params for select planenr
@@ -75,24 +86,11 @@ class PlannerConfig(object):
             params[k] = req.params.values[idx]
         return params
 
-    def set_planner_params(self, planner_id, params_set):
-        """Calls SetPlannerParams moveit Ros service to set planner params for select planner
-        
-        Args:
-            planner_id (str): planner name
-            params_set (dict): planner params
-        """
-        # Convert dict to PlannerParams msg
-        params = moveit_msgs.msg.PlannerParams()
-        params.keys = params_set.keys()
-        params.values = [str(v) for v in params_set.values()]
+    def get_planner_config(self):
+        return self.planner_config
 
-        # rospy.loginfo('Waiting for set_planner_params')
-        rospy.wait_for_service('set_planner_params')
-        set_planner_params = rospy.ServiceProxy(
-            'set_planner_params', SetPlannerParams)
-        try:
-            set_planner_params(planner_id, 'arm', params, True)
-            rospy.loginfo('%s parameters updated', planner_id)
-        except rospy.ServiceException as e:
-            rospy.logerr('Failed to get params: %s', e)
+    def get_planner_config_name(self):
+        return self.name
+
+    def get_planners(self):
+        return self.planners

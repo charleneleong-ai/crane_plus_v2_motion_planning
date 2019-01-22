@@ -7,13 +7,13 @@ Modified By:
 
 <launch>
   <!-- option to choose target -->
-  <arg name="start_pose" default="backbend"/>       <!-- [vertical, backbend, resting] -->
-  <arg name="target_pose" default="resting"/>
+  <arg name="start_pose" default="None"/>       <!-- [vertical, backbend, resting, low_fwd_reach ...] -->
+  <arg name="target_pose" default="None"/>
   <arg name="planner_config" default="Cano_etal"/>  <!-- [Cano_etal] -->
-  <arg name="mode" default="tpe"/>                  <!-- [default, ompl, rand, tpe] -->
-  
-  <arg name="max_trials" default="30" />
+  <arg name="mode" default="tpe"/>                  <!-- [default, ompl, rand, tpe, smac] -->
   <arg name="avg_runs" default="1" />
+  <arg name="max_trials" default="30" />
+  <arg name="max_runtime" default="None" />            <!-- secs -->
 
   <!-- parameter tuning file -->
   <arg name="param_tuning_config" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>
@@ -25,10 +25,10 @@ Modified By:
     <param name="start_pose" type="str" value="$(arg start_pose)" />
     <param name="target_pose" type="str" value="$(arg target_pose)" />
     <param name="planner_config" type="str" value="$(arg planner_config)" />
-    
     <param name="mode" type="str" value="$(arg mode)" />
-    <param name="max_trials" type="int" value="$(arg max_trials)" />
     <param name="avg_runs" type="int" value="$(arg avg_runs)" />
+    <param name="max_trials" type="int" value="$(arg max_trials)" />
+    <param name="max_runtime" type="str" value="$(arg max_runtime)" />
   </node>
   
 </launch>

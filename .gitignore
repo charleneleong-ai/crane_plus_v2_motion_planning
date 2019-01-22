@@ -40,6 +40,7 @@ srv/_*.py
 *.pyc
 qtcreator-*
 *.user
+__pycache__
 
 /planning/cfg
 /planning/docs
@@ -104,3 +105,8 @@ $RECYCLE.BIN/
 #======================
 
 .vscode
+
+#======================
+#   SMAC
+#======================
+smac-output/

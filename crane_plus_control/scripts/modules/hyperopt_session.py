@@ -2,49 +2,45 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 21st 2019, 2:56:39 pm
+# Last Modified: Tuesday, January 22nd 2019, 1:54:29 pm
 # Modified By: Charlene Leong
 ###
 
 import sys
-from timeit import default_timer as timer
 import time
 from collections import OrderedDict
-import itertools
 import cPickle as pickle
+from functools import partial
 
 import csv
 import json
 import pprint
 import pandas as pd
-import numpy as np
-from functools import partial
 
 import rospkg
 import rospy
-import std_msgs.msg
-
-import moveit_commander
-from moveit_msgs.srv import GetPlannerParams, SetPlannerParams
-import moveit_msgs.msg
 
 from hyperopt import hp, rand, tpe, Trials, fmin, STATUS_OK
-from hyperopt.pyll.stochastic import sample
 
-from session import Session
+from modules.session import Session
 
 ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/scripts'
+
+
 class HyperOptSession(Session):
-    """Constructor for parameter tuning session
-    
-    Args:
-        Session (object): Session object initiates session with default funcitons
+    """
+    Hyperopt Session runs in rand and tpe mode
     """
     PLANNING_TIME = 3  # seconds
 
-    def __init__(self, mode):
-        super(HyperOptSession, self).__init__(mode)
-        rospy.loginfo('Initialising hyperopt parameter tuning session in %s mode', mode)
+    def __init__(self):
+        super(HyperOptSession, self).__init__()
+        if self.path_tune:
+            rospy.loginfo('Initialising hyperopt session in %s mode from %s to %s',
+                          self.mode, self.start_pose, self.target_pose)
+        else:
+            rospy.loginfo(
+                'Initialising hyperopt session in %s mode on full problem set', self.mode)
 
     def _objective(self, params):
         self.n_trial += 1
@@ -55,58 +51,72 @@ class HyperOptSession(Session):
         # Set new params
         self.planner_config_obj.set_planner_params(planner, params_set)
 
-        # Execute experiment and get planning and run_time stats
-        results, stats = super(HyperOptSession, self)._run_problem_set(planner_id=planner)
+        if self.path_tune:
+            results = super(HyperOptSession, self)._get_stats(
+                self.start_pose, self.target_pose)
+            stats = {'t_avg_run_time': results['avg_run_time'], 't_avg_plan_time': results['avg_plan_time'],
+                     't_avg_dist': results['avg_dist'], 't_avg_path_length': results['avg_path_length'], 't_avg_success': results['avg_success']}
+        else:
+            results, stats = super(
+                HyperOptSession, self)._run_problem_set(planner_id=planner)
 
-        # loss = sum(stats.values())   
-        # loss = stats['t_avg_path_length'] 
+        # loss = sum(stats.values())
+        # loss = stats['t_avg_path_length']
 
         success_rate = 1 - stats['t_avg_success']        # Want to max this
-        loss = stats['t_avg_plan_time']
-        # Penalise loss relative to success rate
-        if(stats['t_avg_success'] == 0) or (loss <= 0.08):     # To penalise aborted plans which are missed
+        loss = stats['t_avg_plan_time']     # Maxing avg plan time for Canoetal
+
+        # To penalise aborted plans which are missed
+        if(stats['t_avg_success'] == 0):
             loss = 10
         elif(success_rate != 1):
-            loss = loss + success_rate*10
-
+            loss = loss + success_rate*10       # Penalise loss relative to success rate
 
         current = time.time()
         elapsed_time = (current - params['start_time'])
 
         rospy.loginfo('elapsed_time(s): %.4f n_trial: %d loss: %.4f t_avg_run_time: %.4f t_avg_plan_time: %.4f t_avg_dist: %.4f t_avg_path_length: %.4f t_avg_success: %.4f\n',
                       elapsed_time, self.n_trial, loss, stats['t_avg_run_time'], stats['t_avg_plan_time'], stats['t_avg_dist'], stats['t_avg_path_length'], stats['t_avg_success'])
-        
-        # Create OrderedDict to write to CSV
-        result = OrderedDict([('elapsed_time', elapsed_time), ('n_trial', self.n_trial), ('loss', loss), ('planner', planner), ('avg_runs', self.avg_runs), 
-                             ('t_avg_run_time', stats['t_avg_run_time']), ('t_avg_plan_time', stats['t_avg_dist']),
-                             ('t_avg_dist', stats['t_avg_dist']), ('t_avg_path_length', stats['t_avg_path_length']), 
-                             ('t_avg_success', stats['t_avg_success'])])
-        # Need to save params as str for csv
-        result_csv = OrderedDict(list(result.items()) + [('params', str(params_set))])
-        result = OrderedDict(list(result.items()) + [('params', params_set), ('status', STATUS_OK)])
-        # print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
-        
 
-        result_df = pd.DataFrame(dict(result_csv), columns=result.keys(), index=[0])
+        # Create OrderedDict to write to CSV
+        result = OrderedDict([('elapsed_time', elapsed_time), ('n_trial', self.n_trial), ('loss', loss), ('planner', planner), ('avg_runs', self.avg_runs),
+                              ('t_avg_run_time', stats['t_avg_run_time']), (
+                                  't_avg_plan_time', stats['t_avg_dist']),
+                              ('t_avg_dist', stats['t_avg_dist']), (
+                                  't_avg_path_length', stats['t_avg_path_length']),
+                              ('t_avg_success', stats['t_avg_success'])])
+        # Save params as str for csv export
+        result_csv = OrderedDict(
+            list(result.items()) + [('params', str(params_set))])
+        # Saving results dict with STATUS_OK for hyperopt
+        result = OrderedDict(list(result.items()) +
+                             [('params', params_set), ('status', STATUS_OK)])
+        # print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
+
+        # Write to CSV
+        result_df = pd.DataFrame(
+            dict(result_csv), columns=result.keys(), index=[0])
         with open(self.results_path, 'a') as f:
             result_df.to_csv(f, header=False, index=False)
 
-        if(time.time() > params['end_time']):
-            rospy.loginfo("Program has run for allotted time (s) %.4f", (params['end_time']- params['start_time']))
+        if (self.max_runtime != "None") and (time.time() > params['end_time']):
+            rospy.loginfo(
+                'Program has run for allotted time (%d secs)', self.max_runtime)
             sys.exit(1)
 
         return dict(result)
 
     def run(self):
         self.group.set_planning_time(self.PLANNING_TIME)
-        
-        with open(self.results_path, 'w') as f:
+
+        with open(self.results_path, 'w') as f:     # Write headers
             writer = csv.writer(f)
             writer.writerow(['elapsed_time', 'n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
                              't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params'])
-        
-        self.max_trials = 1000000000000000000000000000000000000000000000000 # Infinitely large number 
-        end_time = time.time() + 60 * 120  # Running for 2 hours
+
+        if(self.max_runtime != "None"):
+            end_time = time.time() + self.max_runtime
+
         start_time = time.time()
         # Setting up the parameter search space and parameters
         for planner, params_set in self.planner_config.iteritems():
@@ -116,20 +126,29 @@ class HyperOptSession(Session):
                     # Discrete uniform dist [begin_range, end_range, step]
                     params_set[k] = hp.quniform(k, v[0], v[1], v[2])
                     # params_set[k] = hp.uniform(k, v[0], v[1])
-            params = {'planner': planner, 'params_set': params_set ,'start_time': start_time, 'end_time': end_time}
 
-            print('\n')
-            rospy.loginfo('Executing %s on %s:  Max trials: %d ', self.mode,
-                        params['planner'], self.max_trials)
+            if(self.max_runtime != "None"):
+                params = {'planner': planner, 'params_set': params_set,
+                          'start_time': start_time, 'end_time': end_time}
+                print('\n')
+                rospy.loginfo('Executing %s on %s for: %d secs',
+                              self.mode, params['planner'], self.max_runtime)
+            else:
+                params = {'planner': planner, 'params_set': params_set,
+                          'start_time': start_time}
+                print('\n')
+                rospy.loginfo('Executing %s on %s for %d trials',
+                              self.mode, params['planner'], self.max_trials)
+
             self.n_trial = 0        # Reset to n_trials to zero for each planner
             if self.mode == 'tpe':
                 algo = partial(tpe.suggest,
-                            # Sample 1000 candidate and select candidate that has highest Expected Improvement (EI)
-                            n_EI_candidates=100,
-                            # Use 20% of best observations to estimate next set of parameters
-                            gamma=0.2,
-                            # First 20 trials are going to be random
-                            n_startup_jobs=20)
+                               # Sample 100 candidates and select candidate that has highest Expected Improvement (EI)
+                               n_EI_candidates=100,
+                               # Use 20% of best observations to estimate next set of parameters
+                               gamma=0.2,
+                               # First 20 trials are going to be random
+                               n_startup_jobs=20)
             elif self.mode == 'rand':
                 algo = rand.suggest
 
@@ -137,12 +156,12 @@ class HyperOptSession(Session):
             best = fmin(fn=self._objective, space=params, algo=algo,
                         max_evals=self.max_trials, trials=trials)
 
-        # with open(ROS_PKG_PATH+'/'+self.planner_config_obj.planner_select+'_'+self.mode+'.p', 'wb') as f:
-        #     pickle.dump(trials, f)
+        with open(ROS_PKG_PATH+'/'+self.planner_select+'_'+self.mode+'.p', 'wb') as f:
+            pickle.dump(trials, f)
 
-        print("\n")
+        print('\n')
         rospy.loginfo('Saved results to %s', self.results_path)
-        print("\n")
+        print('\n')
 
 # class RunningMean(object):
 #     def __init__(self, t=0.0, n=0):
@@ -154,7 +173,7 @@ class HyperOptSession(Session):
 #         self.n += 1
 #         return self
 
-#     def mean(self): 
+#     def mean(self):
 #         return (self.t/self.n if self.n else 0)
 
 #     def __repr__(self):

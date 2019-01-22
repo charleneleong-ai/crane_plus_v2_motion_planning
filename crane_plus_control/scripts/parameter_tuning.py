@@ -2,7 +2,7 @@
 ###
 # File Created: Saturday, January 12th 2019, 11:23:55 am
 # Author: Charlene Leong
-# Last Modified: Monday, January 21st 2019, 8:39:21 am
+# Last Modified: Tuesday, January 22nd 2019, 11:46:46 am
 # Modified By: Charlene Leong
 ###
 
@@ -11,10 +11,15 @@ import rospy
 import moveit_commander
 from modules.hyperopt_session import HyperOptSession
 from modules.benchmark_session import BenchmarkSession
-
+from modules.smac_session import SMACSession
 
 def check_params(mode):
-    if mode not in ['default', 'tpe', 'rand', 'ompl']:
+    """Checks for valid ROS parameters and returns True if tuning path, False if tuning scene
+    
+    Args:
+        mode (str): Mode of parameter tuning session
+    """
+    if mode not in ['default', 'tpe', 'rand', 'ompl', 'smac']:
         rospy.logerr('Invalid mode.')
         rospy.logerr('Please choose from %s', str(
             ['default', 'tpe', 'rand', 'ompl']))
@@ -26,22 +31,32 @@ def check_params(mode):
         rospy.logerr('Please choose from %s', str(['Cano_etal']))
         sys.exit(1)
 
+    max_runtime = rospy.get_param('~max_runtime')
+    if max_runtime != 'None':
+        try:
+            max_runtime = int(max_runtime)
+        except ValueError:
+            rospy.logerr("Not an valid int value. Please express max_runtime in secs.")
+            sys.exit(1)
+
     start_pose = rospy.get_param('~start_pose')
     target_pose = rospy.get_param('~target_pose')
     named_states = rospy.get_param('~named_states')
 
-    if target_pose not in named_states:
-        rospy.logerr('target_pose not in list of named_states')
-        rospy.logerr('Please choose from %s', str(named_states))
-        sys.exit(1)
-    elif start_pose not in named_states:
+    if (start_pose  == "None") and (target_pose  == "None"):
+        return
+    # Will also return error is only start or only target is None
+    elif start_pose not in named_states:    
         rospy.logerr('start_pose not in list of named_states')
         rospy.logerr('Please choose from %s', str(named_states))
         sys.exit(1)
-
+    elif target_pose not in named_states:
+        rospy.logerr('target_pose not in list of named_states')
+        rospy.logerr('Please choose from %s', str(named_states))
+        sys.exit(1)
+    
 
 def main():
-
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('parameter_tuning', anonymous=True)
 
@@ -49,14 +64,14 @@ def main():
     check_params(mode)
 
     if(mode in ['default', 'ompl']):
-        session = BenchmarkSession(mode)
+        session = BenchmarkSession()
     elif(mode in ['tpe', 'rand']):
-        session = HyperOptSession(mode)
+        session = HyperOptSession()
+    elif(mode == 'smac'):
+        session = SMACSession()
 
     session.run()
-    # session.get_results()
     moveit_commander.roscpp_shutdown()
-
 
 if __name__ == '__main__':
     main()
