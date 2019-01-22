@@ -59,79 +59,88 @@ $ roslaunch crane_plus_control parameter_tuning.launch planner_config:=<planner_
   - rand -  Runs a random search parameter tuning session with parameter search space defined in Cano etal paper.
 - **avg_runs:** Sets the avg number of runs for each parameter configuration. 
   - [default] 1
+
 - **max_trials:** Sets the max number of trials when in parameter tuning mode.
   - [default] 30
-- **max_runtime:** Sets the max runtime (secs). If set, overrides the number of max_trials = 10000.
-  - [default] None
-- **start_pose:** Specifies a start pose from [named states](./config/parameter_tuning.yaml) for specific path tuning.
-  - [default] None
-- **target_pose:** Specifies a desired target pose from [named states](./config/parameter_tuning.yaml) for specific path tuning.
 
 ## Parameter Tuning Modes
 
-1. TPE or Random Search using [Hyperopt](http://hyperopt.github.io/hyperopt/) on full problem set.
+1. TPE using [Hyperopt](http://hyperopt.github.io/hyperopt/)
 
     ```bash
     $ pip install hyperopt
-    $ roslaunch crane_plus_control parameter_tuning.launch mode:=tpe max_runtime:=7200 
+    $ roslaunch crane_plus_control parameter_tuning.launch mode:=tpe max_trials:=30 avg_runs:=1
     ```
 
-2. Random Forest using [SMAC](http://www.cs.ubc.ca/labs/beta/Projects/SMAC/v2.10.03/quickstart.html#news) on full problem set.
+2. Random Search using [Hyperopt](http://hyperopt.github.io/hyperopt/)
+
+    ```bash
+    $ pip install hyperopt
+    $ roslaunch crane_plus_control parameter_tuning.launch mode:=rand max_trials:=30 avg_runs:=1
+    ```
+
+3. Random Forest using [SMAC](http://www.cs.ubc.ca/labs/beta/Projects/SMAC/v2.10.03/quickstart.html#news)
 
     Installed from source, located in [/scripts/modules/smac)](./scripts/modules/smac).
 
     ```bash
-    $ roslaunch crane_plus_control parameter_tuning.launch mode:=smac max_trials:=30 
+    $ roslaunch crane_plus_control parameter_tuning.launch mode:=smac max_trials:=30 avg_runs:=1
     ```
 
-3. Tuning on a specific path between defined start pose and target pose.
+   
 
-    ```bash
-    $ roslaunch crane_plus_control parameter_tuning.launch start_pose:=backbend target_pose:=low_fwd_reach
-    ```
-
-​     
+   
 
 ## MoveIt Planning Time Benchmark
 
 Adapted from [moveit_benchmark_statistics.py](https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_ros/benchmarks/scripts/moveit_benchmark_statistics.py) from MoveIt! framework. See [here](http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/benchmarking/benchmarking_tutorial.html) for more details on parameter input.
 
-1. Launch CRANE+V2 simulation. Adjust and save the desired scenes, queries and states to be benchmarked in the MongoDB Warehouse.
+1. Install necessary packages for Warehouse ROS Mongo Interface. See [Git repo](https://github.com/ros-planning/warehouse_ros_mongo) for details.
+
+    ```bash
+    $ cd ~/catkin_ws/src && git clone https://github.com/ros-planning/warehouse_ros_mongo.git && git clone https://github.com/ros-planning/warehouse_ros.git && git clone -b 26compat https://github.com/mongodb/mongo-cxx-driver.git
+    $ sudo apt-get install scons
+    $ cd mongo-cxx-driver && sudo scons --prefix=/usr/local/ --full --use-system-boost --disable-warnings-as-errors
+    ```
+
+    
+
+2. Launch CRANE+V2 simulation. Adjust and save the desired scenes, queries and states to be benchmarked in the MongoDB Warehouse.
 
     ```bash 
     $ roslaunch crane_plus_moveit_config demo.launch db:=true
     ```
 
-2. Within the *Motion Planning* RViz plugin, connect to the database by pressing the *Connect* button in the *Context* tab.
+3. Within the *Motion Planning* RViz plugin, connect to the database by pressing the *Connect* button in the *Context* tab.
 
-3. Save a scene on the *Stored Scenes* tab and name it `Scene1` by double clicking the scene in the list.
+4. Save a scene on the *Stored Scenes* tab and name it `Scene1` by double clicking the scene in the list.
 
-4. Move the start and goal states of the Crane arm by using the interactive markers.
+5. Move the start and goal states of the Crane arm by using the interactive markers.
 
-5. Save an associated query for the `Scene1` scene and name the query `Move1`. Save a start state for the robot on the *Stored States* tab and name it `Start1`. 
+6. Save an associated query for the `Scene1` scene and name the query `Move1`. Save a start state for the robot on the *Stored States* tab and name it `Start1`. 
 
-6. The config file `/scripts/benchmark_config.yaml` refers to the scenes, queries and start states used for benchmarking. Modify them appropriately.
+7. The config file `/scripts/benchmark_config.yaml` refers to the scenes, queries and start states used for benchmarking. Modify them appropriately.
 
-7. Set the username for the `output_directory` to export the benchmarked files. Log files will be saved to `/home/${USER}/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/results/benchmarks/` by default. 
+8. Set the username for the `output_directory` to export the benchmarked files. Log files will be saved to `/home/${USER}/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/results/benchmarks/` by default. 
 
     ```bash
     $ rosed crane_plus_control benchmark_config.yaml
     ```
 
-8. Bring down your previous `demo.launch` file ( <kbd>Ctrl</kbd> + <kbd>C</kbd>) and run the benchmarks. 
+9. Bring down your previous `demo.launch` file ( <kbd>Ctrl</kbd> + <kbd>C</kbd>) and run the benchmarks. 
 
     ```bash
     $ roslaunch crane_plus_control benchmark.launch 
     ```
 
-9. Run `moveit_benchmark_statistics.py`  to view results. A `benchmark.db`  and `benchmark_plots` file will appear in the `benchmarks` folder. See `--help` for more options.
+10. Run `moveit_benchmark_statistics.py`  to view results. A `benchmark.db`  and `benchmark_plots` file will appear in the `benchmarks` folder. See `--help` for more options.
 
     ```bash
     $ rosrun crane_plus_control moveit_benchmark_statistics.py 
     ```
 
-10. Click on the <kbd>Change Database</kbd> button to upload the `benchmark.db` file generated by script to [plannerarena.org](http://plannerarena.org/) to interactively visualise results. 
+11. Click on the <kbd>Change Database</kbd> button to upload the `benchmark.db` file generated by script to [plannerarena.org](http://plannerarena.org/) to interactively visualise results. 
 
-    ![](imgs/plannerarena.png)
+     ![](imgs/plannerarena.png)
 
 

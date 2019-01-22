@@ -11,7 +11,7 @@ Author: Charlene Leong (charleneleong84@gmail.com)
   <arg name="rviz" default="true" /> 
 
   <!-- By default, we do not start a database (it can be large) -->
-  <arg name="db" default="true" />
+  <arg name="db" default="false" />
   <!-- Allow user to specify database location -->
   <arg name="db_path" default="$(find crane_plus_moveit_config)/default_warehouse_mongo_db" />
 

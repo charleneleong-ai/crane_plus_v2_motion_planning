@@ -82,7 +82,7 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
 1. Download the project files, install all dependent packages and compile the project.
 
     ```bash
-    $ cd ~/catkin_ws/src/ && git clone http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git
+    $ cd ~/catkin_ws/src/ && git clone http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git 
     $ cd ~/catkin_ws && rosdep install -y --from-paths src --ignore-src --rosdistro kinetic 
     $ catkin_make && source ~/catkin_ws/devel/setup.bash
     ```
@@ -112,15 +112,23 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     Select from list of named states: [vertical, backbend, resting, low_fwd_reach, pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, pose9, pose10, pose11, pose12, pose13, pose14]
 
     ```bash
-    $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true <rviz:=false>
-    $ roslaunch crane_plus_control named_pose pose:=<pose>
+    $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true rviz:=false
+    $ roslaunch crane_plus_control named_pose.launch pose:=resting
     ```
 
 
 
 ## ROS Installation and Configuration
 
-1. [Install](http://wiki.ros.org/kinetic/Installation/Ubuntu) ROS Kinetic 
+1. [OPTIONAL] Install ROS in its own conda environment with Python 2.7 with Anaconda. 
+
+    ```bash
+    $ conda create -n ros_env python=2.7 anaconda -y
+    $ source activate ros_env
+    (ros_env) $ pip install -U catkin_pkg rospkg
+    ```
+
+2. [Install](http://wiki.ros.org/kinetic/Installation/Ubuntu) ROS Kinetic 
 
     ```bash
     $ sudo apt-get update && sudo apt-get upgrade -y
@@ -132,14 +140,14 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     $ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential -y
     ```
 
-2. [Configure](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment) your ROS environment
+3. [Configure](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment) your ROS environment
 
     ```bash
     $ mkdir -p ~/catkin_ws/src && cd ~/catkin_ws/ && catkin_make
     $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc && source ~/.bashrc
     ```
 
-3. Confirm the installation and configuration of ROS. You should see the following output.
+4. Confirm the installation and configuration of ROS. You should see the following output.
 
     ```bash
     $ printenv | grep ROS

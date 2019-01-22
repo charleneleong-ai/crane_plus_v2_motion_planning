@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Tuesday, January 22nd 2019, 11:46:13 am
+# Last Modified: Tuesday, January 22nd 2019, 3:14:19 pm
 # Modified By: Charlene Leong
 ###
 
@@ -55,7 +55,6 @@ class Session(object):
         self.robot = moveit_commander.RobotCommander()
         self.group = moveit_commander.MoveGroupCommander('arm')
         self.planning_frame = self.group.get_planning_frame()
-        self.scene = moveit_commander.PlanningSceneInterface()
         self.display_trajectory_publisher = rospy.Publisher('/group/display_planned_path',
                                                             moveit_msgs.msg.DisplayTrajectory,
                                                             queue_size=20)

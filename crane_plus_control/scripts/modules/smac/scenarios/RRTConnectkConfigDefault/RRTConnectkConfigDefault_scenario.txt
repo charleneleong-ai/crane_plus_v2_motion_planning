@@ -1,0 +1,11 @@
+use-instances = false
+numberOfRunsLimit = 30
+runtimeLimit = None
+runObj = QUALITY
+deterministic = 1
+pcs-file = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/scenarios/RRTConnectkConfigDefault/Cano_etal_RRTConnectkConfigDefault.pcs
+algo = python /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac_run.py RRTConnectkConfigDefault narrow_passage 0
+check-sat-consistency false 
+check-sat-consistency-exception false 
+algo-cutoff-time 40
+kill-run-exceeding-captime-factor 2

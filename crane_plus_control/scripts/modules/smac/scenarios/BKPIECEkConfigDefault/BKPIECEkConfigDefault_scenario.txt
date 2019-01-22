@@ -1,10 +1,10 @@
 use-instances = false
-numberOfRunsLimit = 10000
-runtimeLimit = 1800
+numberOfRunsLimit = 30
+runtimeLimit = None
 runObj = QUALITY
 deterministic = 1
-pcs-file = ./smac/scenarios/BKPIECEkConfigDefault/Cano_etal_BKPIECEkConfigDefault.pcs
-algo = python smac_run.py BKPIECEkConfigDefault narrow_passage 1
+pcs-file = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/scenarios/BKPIECEkConfigDefault/Cano_etal_BKPIECEkConfigDefault.pcs
+algo = python /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac_run.py BKPIECEkConfigDefault narrow_passage 0
 check-sat-consistency false 
 check-sat-consistency-exception false 
 algo-cutoff-time 40
