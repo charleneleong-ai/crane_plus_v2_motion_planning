@@ -2,7 +2,7 @@
 ###
 # File Created: Monday, January 21st 2019, 10:55:57 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Last Modified: Tuesday, January 22nd 2019, 6:20:56 pm
+# Last Modified: Tuesday, January 22nd 2019, 7:16:27 pm
 # Modified By: Charlene Leong
 ###
 
@@ -56,7 +56,6 @@ if __name__ == "__main__":
 
 
 
-    
     # SMAC has a few different output fields; here, we only need the 4th output:
     print "Result of algorithm run: SUCCESS, 0, 0, %f, 0" % yValue
     

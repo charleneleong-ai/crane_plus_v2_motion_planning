@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Tuesday, January 22nd 2019, 1:57:16 pm
+# Last Modified: Tuesday, January 22nd 2019, 7:16:52 pm
 # Modified By: Charlene Leong
 ###
 
@@ -14,7 +14,7 @@ from moveit_msgs.srv import GetPlannerParams, SetPlannerParams
 
 class PlannerConfig(object):
     def __init__(self):
-        self.planner_select = rospy.get_param('~planner_config')
+        self.planner_select = rospy.get_param('~planner_select')
 
         if rospy.get_param('~mode') in ['default', 'ompl']:
             self.planner_config = rospy.get_param(

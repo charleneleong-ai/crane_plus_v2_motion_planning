@@ -2,7 +2,7 @@
 ###
 # File Created: Saturday, January 12th 2019, 11:23:55 am
 # Author: Charlene Leong
-# Last Modified: Tuesday, January 22nd 2019, 11:46:46 am
+# Last Modified: Tuesday, January 22nd 2019, 7:17:11 pm
 # Modified By: Charlene Leong
 ###
 
@@ -25,7 +25,7 @@ def check_params(mode):
             ['default', 'tpe', 'rand', 'ompl']))
         sys.exit(1)
 
-    planner_select = rospy.get_param('~planner_config')
+    planner_select = rospy.get_param('~planner_select')
     if planner_select not in ['Cano_etal']:
         rospy.logerr('Invalid planner config select.')
         rospy.logerr('Please choose from %s', str(['Cano_etal']))

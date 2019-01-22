@@ -40,56 +40,76 @@ doi: 10.1109/ICRA.2017.7989504
 
 
 
-## Quick Launch
+## Quick Start
 
 Launch the simulation in tuning mode, moveit config with robot execution to talk to Gazebo and the parameter tuning launch file.
 
 ```bash
 $ roslaunch crane_plus_simulation simulation.launch tuning:=true
 $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true
-$ roslaunch crane_plus_control parameter_tuning.launch planner_config:=<planner_config> mode:=<mode> avg_runs:=<avg_runs>
 ```
 
-- **planner_config:** Sets the desired planner config as outlined in [/config/planner_configs.yaml](./config/planner_configs.yaml).
+1. Benchmarking session with OMPL or planner select defaults.
+
+    ```bash
+    $ roslaunch crane_plus_control parameter_tuning.launch planner_select:=Cano_etal mode:=default avg_runs:=5
+    ```
+
+2. Parameter tuning session with TPE or Random Search using [Hyperopt](http://hyperopt.github.io/hyperopt/).
+
+    ```bash
+    $ roslaunch crane_plus_control parameter_tuning.launch mode:=tpe max_runtime:=7200
+    ```
+
+3. Parameter tuning session with random Forest using [SMAC](http://www.cs.ubc.ca/labs/beta/Projects/SMAC/v2.10.03/quickstart.html#news).
+
+    Installed from source, located in [/scripts/modules/smac)](./scripts/modules/smac).
+
+    ```bash
+    $ roslaunch crane_plus_control parameter_tuning.launch mode:=smac max_runtime:=7200
+    ```
+
+4. Benchmarking or tuning a specific path with defined start pose and target pose.
+
+    ```bash
+    $ roslaunch crane_plus_control parameter_tuning.launch mode:=ompl max_trials:=30 avg_runs:=3
+    ```
+
+
+
+## Parameter Tuning Parameters
+
+The default parameters are shown below. 
+```bash
+$ roslaunch crane_plus_control parameter_tuning.launch planner_select:=Cano_etal mode:=tpe avg_runs:=1 max_trials:=30
+```
+
+- **planner_select:** Sets the desired planner config as outlined in [/config/planner_configs.yaml](./config/planner_configs.yaml).
+
   - [default] Cano_etal
 - **mode:** Sets the mode of the parameter tuning session.
+
   - ompl - Runs a benchmark session with [OMPL planner config defaults](../crane_plus_moveit_config/config/ompl_planning.yaml).
   - default - Runs a benchmark session with planner config defaults in Cano etal paper.
   - [default] tpe -  Runs a TPE parameter tuning session with parameter search space defined in Cano etal paper.
   - rand -  Runs a random search parameter tuning session with parameter search space defined in Cano etal paper.
 - **avg_runs:** Sets the avg number of runs for each parameter configuration. 
+
   - [default] 1
-
 - **max_trials:** Sets the max number of trials when in parameter tuning mode.
+
   - [default] 30
+- **max_runtime: ** Sets the max runtime (secs) in parameter tuning mode. When set, overrides max_trials=10000.
 
-## Parameter Tuning Modes
+  - [default] None
+- **start_pose**: Sets the start pose for specific path tuning.
 
-1. TPE using [Hyperopt](http://hyperopt.github.io/hyperopt/)
+  - [default] None
+- **target_pose: ** Sets the target pose for specific path tuning.
 
-    ```bash
-    $ pip install hyperopt
-    $ roslaunch crane_plus_control parameter_tuning.launch mode:=tpe max_trials:=30 avg_runs:=1
-    ```
+  - [default] None 
 
-2. Random Search using [Hyperopt](http://hyperopt.github.io/hyperopt/)
-
-    ```bash
-    $ pip install hyperopt
-    $ roslaunch crane_plus_control parameter_tuning.launch mode:=rand max_trials:=30 avg_runs:=1
-    ```
-
-3. Random Forest using [SMAC](http://www.cs.ubc.ca/labs/beta/Projects/SMAC/v2.10.03/quickstart.html#news)
-
-    Installed from source, located in [/scripts/modules/smac)](./scripts/modules/smac).
-
-    ```bash
-    $ roslaunch crane_plus_control parameter_tuning.launch mode:=smac max_trials:=30 avg_runs:=1
-    ```
-
-   
-
-   
+    
 
 ## MoveIt Planning Time Benchmark
 
