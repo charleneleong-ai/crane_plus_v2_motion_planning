@@ -79,12 +79,13 @@ If you wish to run ROS along with Python 3 in Anaconda, please [create a py2.7 c
 Please see [instructions below](#ros-installation-and-configuration) for first time ROS installation and configuration.
 
 
-1. Download the project files, install all dependent packages and compile the project.
+1. Download the project files, install all dependent packages and compile the project. If you are working with a conda env, remember to `source activate ros_env` before installing pip requirements and before using `roslaunch`.
 
     ```bash
-    $ cd ~/catkin_ws/src/ && git clone http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git && pip install -r requirements.txt
+    $ cd ~/catkin_ws/src/ && git clone http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git 
+    $ cd crane_plus_v2_motion_planning && pip install -r requirements.txt
     $ cd ~/catkin_ws && rosdep install -y --from-paths src --ignore-src --rosdistro kinetic 
-    $ cd ~/catkin_ws&& catkin_make && source ~/catkin_ws/devel/setup.bash
+    $ cd ~/catkin_ws && catkin_make && source ~/catkin_ws/devel/setup.bash
     ```
 
 2. Launch the CRANE+V2 robot model either through the hardware interface or through simulation.
