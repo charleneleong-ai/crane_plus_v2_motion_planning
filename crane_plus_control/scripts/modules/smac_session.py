@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 ###
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author:  Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 23rd 2019, 11:45:47 am
+# Last Modified: Wednesday, January 23rd 2019, 4:54:09 pm
 ###
 
 import sys
@@ -55,7 +55,7 @@ class SMACSession(Session):
             scenario_file.write('runObj = QUALITY\n')
             scenario_file.write('deterministic = 1\n')
             scenario_file.write('pcs-file = ' + pcs_fp + '\n')
-            scenario_file.write('algo = python '+ROS_PKG_PATH+'/smac_run.py ' +
+            scenario_file.write('algo = python3 '+ROS_PKG_PATH+'/smac_run.py ' +
                                 planner + ' ' + scene + ' ' + str(self.n_trial) + '\n')
             scenario_file.write('check-sat-consistency false \n')
             scenario_file.write('check-sat-consistency-exception false \n')
@@ -130,7 +130,7 @@ class SMACSession(Session):
 #         scenario_file.write('runObj = QUALITY\n')
 #         scenario_file.write('deterministic = 1\n')
 #         scenario_file.write('pcs-file = ' + pcs_fp + '\n')
-#         scenario_file.write('algo = python smac_run.py ' +
+#         scenario_file.write('algo = python3 smac_run.py ' +
 #                             planner + ' ' + scene + ' ' + n_trial + '\n')
 #         scenario_file.write('check-sat-consistency false \n')
 #         scenario_file.write('check-sat-consistency-exception false \n')

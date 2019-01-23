@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 ###
 # File Created: Saturday, December 12th 2018, 11:23:55 am
 # Author: Charlene Leong
-# Last Modified: Sunday, January 20th 2019, 12:14:08 am
+# Last Modified: Wednesday, January 23rd 2019, 4:54:09 pm
 # Modified By: Charlene Leong
 ###
 
@@ -451,7 +451,7 @@ def plotStatistics(dbname, fname):
 
 
 def saveAsMysql(dbname, mysqldump):
-    # See http://stackoverflow.com/questions/1067060/perl-to-python
+    # See http://stackoverflow.com/questions/1067060/perl-to-python3
     import re
     print("Saving as MySQL dump file...")
 

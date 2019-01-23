@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 ###
 # File Created: Wednesday, 16th January 2019 2:03:37 pm
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 23rd 2019, 4:49:09 pm
+# Last Modified: Wednesday, January 23rd 2019, 5:17:35 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -84,7 +84,7 @@ class Base(object):
 
 
 def main():
-    moveit_commander.roscpp_initialize(sys.argv)
+    # moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('launch_base', anonymous=True)
     base = Base()
     base.add_base()
