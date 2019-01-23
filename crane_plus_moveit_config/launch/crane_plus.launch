@@ -9,6 +9,7 @@ Author: Charlene Leong (charleneleong84@gmail.com)
   <!-- By default, will execute for simulation -->
   <arg name="robot_execution" default="false" />
   <arg name="rviz" default="true" /> 
+  <arg name="tuning" default="false" />
 
   <!-- By default, we do not start a database (it can be large) -->
   <arg name="db" default="false" />
@@ -17,9 +18,6 @@ Author: Charlene Leong (charleneleong84@gmail.com)
 
   <!-- By default, we are not in debug mode -->
   <arg name="debug" default="false" />
-
-  <!-- Loading world to base link for Gazebo env -->
-  <node pkg="tf" type="static_transform_publisher" name="world_to_base_link" args="0 0 0 0 0 0 /world /base_link 100"/>
 
   <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
   <include unless="$(arg robot_execution)" file="$(find crane_plus_moveit_config)/launch/planning_context.launch">
@@ -49,12 +47,10 @@ Author: Charlene Leong (charleneleong84@gmail.com)
 
   <!-- Run Rviz and load the default config to see the state of the move_group node -->
   <include if="$(arg rviz)" file="$(find crane_plus_moveit_config)/launch/moveit_rviz.launch">
-    <arg name="config" value="true"/>
     <arg name="debug" value="$(arg debug)"/>
+    <arg name="tuning" value="$(arg tuning)"/>
   </include>
   
-
-
   <!-- If database loading was enabled, start mongodb as well -->
   <include file="$(find crane_plus_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)">
     <arg name="moveit_warehouse_database_path" value="$(arg db_path)"/>

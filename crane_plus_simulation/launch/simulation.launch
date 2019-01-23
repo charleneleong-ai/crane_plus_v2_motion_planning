@@ -7,6 +7,7 @@ Modified By:
 
 <launch>
   <arg name="tuning" default="false"/>       <!-- Changes the real time update rate for tuning -->
+  <arg name="gui" default="true"/>       <!-- Changes the real time update rate for tuning -->
   <rosparam file="$(find crane_plus_simulation)/config/crane_plus.yaml" command="load" />
   <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find crane_plus_simulation)/urdf/simulated_crane_plus.urdf.xacro'" />
 
@@ -16,7 +17,7 @@ Modified By:
     <arg if="$(arg tuning)" name="world_name" value="$(find crane_plus_simulation)/worlds/tuning_world.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
-    <arg name="gui" value="true"/>
+    <arg name="gui" value="$(arg gui)"/>
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
  </include> 

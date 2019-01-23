@@ -22,7 +22,7 @@ Based on the [TurtleBot Arm code](https://github.com/turtlebot/turtlebot_arm).
 <img src="imgs/cranev2_rviz.png" width="600" align="middle"/></div>
 
 
-## Requirements
+## Environment
 
 - [Ubuntu 16.04 Xenial](http://releases.ubuntu.com/16.04/)
 - [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
@@ -30,7 +30,15 @@ Based on the [TurtleBot Arm code](https://github.com/turtlebot/turtlebot_arm).
 
 This package has only been tested on Ubuntu 16.04 with ROS Kinetic which is only stable on Python 2.7 due to compatibility with packages. 
 
+If you do not have Ubuntu16.04, an option is to download the [ISO](http://releases.ubuntu.com/16.04/ubuntu-16.04.5-desktop-amd64.iso) and execute on a VM such as in [Virtualbox](https://www.youtube.com/watch?v=RBU1xMP-SGc).
+
 If you wish to run ROS along with Python 3 in Anaconda, please [create a py2.7 conda environment](https://www.youtube.com/watch?v=EMF20z-gT5s) for ROS.
+
+```bash
+$ conda create -n ros_env python=2.7 anaconda -y
+$ source activate ros_env
+(ros_env) $ pip install -U catkin_pkg rospkg
+```
 
 ## Packages
 
@@ -76,7 +84,7 @@ If you wish to run ROS along with Python 3 in Anaconda, please [create a py2.7 c
 
 ## Quick Start
 
-Please see [instructions below](#ros-installation-and-configuration) for first time ROS installation and configuration.
+Please run the [`ros-kinetic.sh`](./ros-kinetic.sh) script for first time ROS installation and configuration.
 
 
 1. Download the project files, install all dependent packages and compile the project. If you are working with a conda env, remember to `source activate ros_env` before installing pip requirements and before using `roslaunch`.
@@ -108,6 +116,8 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true
     ```
 
+    Click on the 
+
     [OPTIONAL] Control headlessly for named poses. You can optionally set `rviz:=false` .
 
     Select from list of named states: [vertical, backbend, resting, low_fwd_reach, pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, pose9, pose10, pose11, pose12, pose13, pose14]
@@ -116,48 +126,3 @@ Please see [instructions below](#ros-installation-and-configuration) for first t
     $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true rviz:=false
     $ roslaunch crane_plus_control named_pose.launch pose:=resting
     ```
-
-
-
-## ROS Installation and Configuration
-
-1. [OPTIONAL] Install ROS in its own conda environment with Python 2.7 with Anaconda. 
-
-    ```bash
-    $ conda create -n ros_env python=2.7 anaconda -y
-    $ source activate ros_env
-    (ros_env) $ pip install -U catkin_pkg rospkg
-    ```
-
-2. [Install](http://wiki.ros.org/kinetic/Installation/Ubuntu) ROS Kinetic 
-
-    ```bash
-    $ sudo apt-get update && sudo apt-get upgrade -y
-    $ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-    $ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
-    $ sudo apt-get update && sudo apt-get install ros-kinetic-desktop-full -y
-    $ sudo rosdep init && rosdep update
-    $ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc && source ~/.bashrc
-    $ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential -y
-    ```
-
-3. [Configure](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment) your ROS environment
-
-    ```bash
-    $ mkdir -p ~/catkin_ws/src && cd ~/catkin_ws/ && catkin_make
-    $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc && source ~/.bashrc
-    ```
-
-4. Confirm the installation and configuration of ROS. You should see the following output.
-
-    ```bash
-    $ printenv | grep ROS
-    ROS_ROOT=/opt/ros/kinetic/share/ros
-    ROS_PACKAGE_PATH=/home/<username>/catkin_ws/src:/opt/ros/kinetic/share
-    ROS_MASTER_URI=http://localhost:11311
-    ROS_VERSION=1
-    ROSLISP_PACKAGE_DIRECTORIES=/home/<username>/catkin_ws/devel/share/common-lisp
-    ROS_DISTRO=kinetic
-    ROS_ETC_DIR=/opt/ros/kinetic/etc/ros
-    ```
-
