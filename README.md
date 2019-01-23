@@ -2,7 +2,7 @@
 
 ## Crane+V2 Robot Arm
 
-Code and models for the [Crane+V2 5DOF](https://www.rt-net.jp/products/cranep2?lang=en) (4DOF arm + gripper) with the [MoveIt! Framework](http://moveit.ros.org/) in ROS.
+Code and models for the [Crane+V2](https://www.rt-net.jp/products/cranep2?lang=en) (4DOF arm + gripper) with the [MoveIt! Motion Planning Framework](http://moveit.ros.org/) for [ROS](http://wiki.ros.org/).
 
 ![](imgs/crane_plus_moveit.png)
 
@@ -21,11 +21,11 @@ Code and models for the [Crane+V2 5DOF](https://www.rt-net.jp/products/cranep2?l
 
 - [Ubuntu 16.04 Xenial](http://releases.ubuntu.com/16.04/)
 - [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
-- Python 2.7
+- [Python 2.7](https://www.python.org/download/releases/2.7/)
 
-This package has only been tested on Ubuntu 16.04 with ROS Kinetic which is only stable on Python 2.7 due to compatibility with packages. 
+This package has only been tested on Ubuntu 16.04 with ROS Kinetic. ROS is currently only stable on Python 2.7 due to compatibility with legacy packages. 
 
-If you do not have Ubuntu16.04, an option is to download the [ISO](http://releases.ubuntu.com/16.04/ubuntu-16.04.5-desktop-amd64.iso) and execute on a VM such as in [Virtualbox](https://www.youtube.com/watch?v=RBU1xMP-SGc).
+If you do not have Ubuntu16.04, an option is to download the Ubuntu16.04 [ISO](http://releases.ubuntu.com/16.04/ubuntu-16.04.5-desktop-amd64.iso) and install on a VM such as  [Virtualbox](https://www.youtube.com/watch?v=RBU1xMP-SGc).
 
 If you wish to run ROS along with Python 3 in Anaconda, please [create a py2.7 conda environment](https://www.youtube.com/watch?v=EMF20z-gT5s) for ROS.
 
@@ -39,37 +39,37 @@ $ source activate ros_env
 
 ## Package Description
 
-**camera_plus_control**
+**crane_plus_control**
 
 ​	Parameter tuning and benchmarking nodes
 
-**camera_plus_description**
+**crane_plus_description**
 
-​	CAD files and [URDF](http://wiki.ros.org/urdf) (Unified Robot Description Format) model of CRANE+V2
+​	[CAD files](./crane_plus_description/README.md) and [URDF](http://wiki.ros.org/urdf) (Unified Robot Description Format) model of CRANE+V2
 
-**camera_plus_gripper**
+**crane_plus_gripper**
 
 ​	Node that controls the gripper of CRANE+V2
 
-**camera_plus_hardware**
+**crane_plus_hardware**
 
-​	Launch file that launches and configures the settings for use with CRANE+V2 hardware
+​	Launch file that configures the settings for use with CRANE+V2 hardware
 
-**camera_plus_ikfast_arm_plugin**
+**crane_plus_ikfast_arm_plugin**
 
-​	Inverse kinematics plugin for CRANE+V2 in the MoveIt! framework
+​	Custom inverse kinematics plugin for CRANE+V2 in the MoveIt! framework
 
-**camera_plus_joint_state_publisher**
+**crane_plus_joint_state_publisher**
 
-​	Node that converts servo status messages (`dynamixel_msgs/JointState` type) output by the Dynamixel servo controller to ROS `sensor_msgs/JointState` type
+​	Node that converts servo status messages ([`dynamixel_msgs/JointState`](http://docs.ros.org/kinetic/api/dynamixel_msgs/html/msg/JointState.html) message type) output by the Dynamixel servo controller to ROS [`sensor_msgs/JointState`](http://docs.ros.org/melodic/api/sensor_msgs/html/msg/JointState.html) message type
 
-**camera_plus_moveit_config**
+**crane_plus_moveit_config**
 
 ​	Parameters and launch files for using CRANE+V2 with MoveIt! framework
 
-**camera_plus_simulation**
+**crane_plus_simulation**
 
-​	Launch file that launches and configures the settings for simulating CRANE+V2 in Gazebo
+​	Launch file that configures the settings for simulating CRANE+V2 in Gazebo
 
 
 
@@ -78,10 +78,11 @@ $ source activate ros_env
 Please run the [`ros-kinetic.sh`](./ros-kinetic.sh) script for first time ROS installation and configuration.
 
 
-1. Download the project files, install all dependent packages and compile the project. If you are working with a conda env, remember to `source activate ros_env` before installing pip requirements and before using `roslaunch`.
+1. Download the project files, install all dependent packages and compile the project. If you are working with a conda env, remember to `source activate ros_env` before installing pip requirements and before using `roslaunch`. 
 
     ```bash
     $ cd ~/catkin_ws/src/ && git clone http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git 
+    $ find ./ -name "*.py" -exec chmod +x {} \;
     $ cd crane_plus_v2_motion_planning && pip install -r requirements.txt
     $ cd ~/catkin_ws && rosdep install -y --from-paths src --ignore-src --rosdistro kinetic 
     $ cd ~/catkin_ws && catkin_make && source ~/catkin_ws/devel/setup.bash

@@ -1,6 +1,6 @@
 use-instances = false
-numberOfRunsLimit = 30
-runtimeLimit = None
+numberOfRunsLimit = 10000
+runtimeLimit = 3
 runObj = QUALITY
 deterministic = 1
 pcs-file = /home/charlene/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/smac/scenarios/BKPIECEkConfigDefault/Cano_etal_BKPIECEkConfigDefault.pcs

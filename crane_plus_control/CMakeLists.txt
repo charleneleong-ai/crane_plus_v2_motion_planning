@@ -61,7 +61,6 @@ catkin_package(
 	tf 
 	trajectory_msgs
 	message_runtime
-  DEPENDS system_lib
 )
 
 ###########

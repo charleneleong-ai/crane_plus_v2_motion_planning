@@ -9,8 +9,6 @@ Last Modified:
     <arg name="rviz" default="true" />
     <arg name="gui" value="true"/>
     
-    <!-- Launch node to reszie gazebo screen -->
-    <node pkg="crane_plus_simulation" name="resize_gazebo" type="resize_gazebo.py"/>
 
     <!-- Launch simulation in tuning mode -->
     <include file="$(find crane_plus_simulation)/launch/simulation.launch">

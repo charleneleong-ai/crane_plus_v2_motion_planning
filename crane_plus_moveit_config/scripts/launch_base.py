@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-# -*- coding:utf-8 -*-
 ###
 # File Created: Wednesday, 16th January 2019 2:03:37 pm
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 23rd 2019, 3:15:55 pm
+# Last Modified: Wednesday, January 23rd 2019, 4:49:09 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
