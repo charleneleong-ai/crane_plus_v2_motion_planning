@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Wednesday, January 23rd 2019, 9:02:18 am
+# Last Modified: Wednesday, January 23rd 2019, 5:51:15 pm
 # Modified By: Charlene Leong
 ###
 
@@ -103,7 +103,7 @@ class HyperOptSession(Session):
             print('\n')
             rospy.loginfo('Saved results to %s', self.results_path)
             print('\n')
-            sys.exit(1)
+            sys.exit(0)
 
         return dict(result)
 

@@ -19,7 +19,7 @@ crane_plus:
       arm_elbow_flex_joint: {trajectory: 0.1, goal: 0.1}
       arm_wrist_flex_joint: {trajectory: 0.1, goal: 0.1}
   stop_trajectory_duration: 0.5
-  state_publish_rate:  25
+  state_publish_rate:  100
   action_monitor_rate: 10
   
 crane_plus_finger:

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -i
 
 printf "\n==========Updating Ubuntu==========\n"
 sudo apt-get update -y

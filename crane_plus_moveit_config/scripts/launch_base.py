@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 2:03:37 pm
 # Modified By: Charlene Leong
-# Last Modified: Friday, January 18th 2019, 8:41:13 am
+# Last Modified: Wednesday, January 23rd 2019, 8:40:48 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -73,7 +73,7 @@ class Base(object):
 
 
     def add_base(self, timeout=4):
-        rospy.sleep(2)
+        rospy.sleep(4)
         pose = geometry_msgs.msg.PoseStamped()
         pose.header.frame_id = self.planning_frame
         pose.pose.position.x = self.pos[0]

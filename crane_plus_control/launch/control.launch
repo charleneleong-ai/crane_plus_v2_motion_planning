@@ -7,21 +7,19 @@ Last Modified:
 
 <launch>
     <arg name="rviz" default="true" />
-    <arg name="db" default="false" />
-
-    <!-- Launch node to reszie gazebo screen -->
-    <node pkg="crane_plus_simulation" name="resize_gazebo" type="resize_gazebo.py">
-
+    <arg name="gui" default="true"/>
+    
     <!-- Launch simulation in tuning mode -->
     <include file="$(find crane_plus_simulation)/launch/simulation.launch">
         <arg name="tuning" value="true"/>
+        <arg name="gui" value="$(arg gui)"/>
     </include>
 
     <!-- Launch crane_plus in robot execution mode -->
     <include file="$(find crane_plus_moveit_config)/launch/crane_plus.launch">
         <arg name="robot_execution" value="true"/>
         <arg name="rviz" value="$(arg rviz)"/>
-        <arg name="db" value="$(arg db)"/>
+        <arg name="tuning" default="true" />
     </include>
 
 </launch>
