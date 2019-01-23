@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Tuesday, January 22nd 2019, 1:54:29 pm
+# Last Modified: Wednesday, January 23rd 2019, 9:02:18 am
 # Modified By: Charlene Leong
 ###
 
@@ -39,8 +39,7 @@ class HyperOptSession(Session):
             rospy.loginfo('Initialising hyperopt session in %s mode from %s to %s',
                           self.mode, self.start_pose, self.target_pose)
         else:
-            rospy.loginfo(
-                'Initialising hyperopt session in %s mode on full problem set', self.mode)
+            rospy.loginfo('Initialising hyperopt session in %s mode on full problem set', self.mode)
 
     def _objective(self, params):
         self.n_trial += 1
@@ -100,8 +99,10 @@ class HyperOptSession(Session):
             result_df.to_csv(f, header=False, index=False)
 
         if (self.max_runtime != "None") and (time.time() > params['end_time']):
-            rospy.loginfo(
-                'Program has run for allotted time (%d secs)', self.max_runtime)
+            rospy.loginfo('Program has run for allotted time (%d secs)', self.max_runtime)
+            print('\n')
+            rospy.loginfo('Saved results to %s', self.results_path)
+            print('\n')
             sys.exit(1)
 
         return dict(result)
