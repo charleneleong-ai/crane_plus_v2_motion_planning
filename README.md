@@ -4,25 +4,20 @@
 
 Code and models for the [Crane+V2 5DOF](https://www.rt-net.jp/products/cranep2?lang=en) (4DOF arm + gripper) with the [MoveIt! Framework](http://moveit.ros.org/) in ROS.
 
-Based on the [TurtleBot Arm code](https://github.com/turtlebot/turtlebot_arm).
+![](imgs/crane_plus_moveit.png)
 
 
 
-#### Robot Arm Description
+## Contents
 
-<div style="width:image width px; font-size:80%; text-align:center;">
-<img src="imgs/cranev2_tf.png" width="600" align="middle"/></div>
-
-
-[Source](https://www.rt-shop.jp/blog/archives/6711)
-
-#### Motion Planning with MoveIt! Framework in RViz 
-
-<div style="width:image width px; font-size:80%; text-align:center;">
-<img src="imgs/cranev2_rviz.png" width="600" align="middle"/></div>
+1. [Environment Setup](#environment-setup)
+2. [Package Description](#package-description)
+3. [Quick Start](#quick-start)
+4. [Parameter Tuning](./crane_plus_control/README.md)
 
 
-## Environment
+
+## Environment Setup
 
 - [Ubuntu 16.04 Xenial](http://releases.ubuntu.com/16.04/)
 - [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
@@ -40,7 +35,9 @@ $ source activate ros_env
 (ros_env) $ pip install -U catkin_pkg rospkg
 ```
 
-## Packages
+
+
+## Package Description
 
 **camera_plus_control**
 
@@ -76,12 +73,6 @@ $ source activate ros_env
 
 
 
-## Contents
-
-1. [Quick Start](#quick-start)
-2. [ROS Installation and Configuration](#ros-installation-and-configuration)
-3. [Parameter Tuning](./crane_plus_control/README.md)
-
 ## Quick Start
 
 Please run the [`ros-kinetic.sh`](./ros-kinetic.sh) script for first time ROS installation and configuration.
@@ -115,8 +106,6 @@ Please run the [`ros-kinetic.sh`](./ros-kinetic.sh) script for first time ROS in
     ```bash
     $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true
     ```
-
-    Click on the 
 
     [OPTIONAL] Control headlessly for named poses. You can optionally set `rviz:=false` .
 
