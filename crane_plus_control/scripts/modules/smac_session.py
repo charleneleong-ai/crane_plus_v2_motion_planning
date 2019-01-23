@@ -3,7 +3,7 @@
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author:  Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Tuesday, January 22nd 2019, 6:20:16 pm
+# Last Modified: Wednesday, January 23rd 2019, 11:45:47 am
 ###
 
 import sys
@@ -26,7 +26,7 @@ class SMACSession(Session):
 
     def _write_pcs(self, planner, params_set, pcs_fp):
         try:
-            pcs_file = open(pcs_fp, 'w')
+            pcs_file = open(pcs_fp, 'w+')
             for k, v in params_set.iteritems():
                 if isinstance(v, list):
                     if(self.planner_select == "Cano_etal"):
@@ -46,7 +46,7 @@ class SMACSession(Session):
 
     def _write_scenario(self, planner, scene, scenario_fp, pcs_fp):
         try:
-            scenario_file = open(scenario_fp, 'w')
+            scenario_file = open(scenario_fp, 'w+')
             scenario_file.write('use-instances = false\n')
             scenario_file.write('numberOfRunsLimit = ' +
                                 str(self.max_trials) + '\n')

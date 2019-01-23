@@ -7,3 +7,7 @@ catkin_package()
 install(DIRECTORY urdf
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
+install(PROGRAMS
+  scripts/resize_gazebo.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)

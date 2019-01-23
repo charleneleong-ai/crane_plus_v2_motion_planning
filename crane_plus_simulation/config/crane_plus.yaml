@@ -10,9 +10,10 @@ crane_plus:
     crane_plus_shoulder_flex_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
     crane_plus_elbow_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
     crane_plus_wrist_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+    # Constraints from turtlebot arm https://github.com/joellutz/pincher_arm/blob/1f64d6f44f1a9a47c183186b77a6d92a61311223/turtlebot_arm_control/config/turtlebot_arm_control.yaml
   constraints:
       goal_time: 0.25
-      stopped_velocity_tolerance: 0.05
+      stopped_velocity_tolerance: 0.1
       arm_shoulder_pan_joint: {trajectory: 0.1, goal: 0.1}
       arm_shoulder_lift_joint: {trajectory: 0.1, goal: 0.1}
       arm_elbow_flex_joint: {trajectory: 0.1, goal: 0.1}
