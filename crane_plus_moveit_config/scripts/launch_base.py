@@ -3,7 +3,7 @@
 ###
 # File Created: Wednesday, 16th January 2019 2:03:37 pm
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 23rd 2019, 8:40:48 pm
+# Last Modified: Thursday, January 24th 2019, 2:36:04 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -16,13 +16,14 @@ import geometry_msgs.msg
 ROS_PKG_PATH =  rospkg.RosPack().get_path('crane_plus_moveit_config') + '/scripts'
 
 class Base(object):
-    def __init__(self):
+    def __init__(self, rviz):
         
         self.group = moveit_commander.MoveGroupCommander('arm')
         self.robot = moveit_commander.RobotCommander()
         self.planning_frame = self.robot.get_planning_frame()
         self.scene = moveit_commander.PlanningSceneInterface()
         self._load_base_scene()
+        self.rviz = rviz
         
     def _load_base_scene(self):
         with open(ROS_PKG_PATH+'/base.scene') as f:
@@ -73,7 +74,8 @@ class Base(object):
 
 
     def add_base(self, timeout=4):
-        rospy.sleep(4)
+        if self.rviz:
+            rospy.sleep(4)
         pose = geometry_msgs.msg.PoseStamped()
         pose.header.frame_id = self.planning_frame
         pose.pose.position.x = self.pos[0]
@@ -87,8 +89,11 @@ class Base(object):
 def main():
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('launch_base', anonymous=True)
-    base = Base()
-    base.add_base()
+    rviz = rospy.get_param('~rviz')
+    if not rviz:
+        rospy.sleep(2) # To wait for move base to laucnh
+    base = Base(rviz)
+    base.add_base(rviz)
    
 if __name__ == '__main__':
     main()
