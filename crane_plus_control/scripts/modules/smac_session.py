@@ -3,7 +3,7 @@
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author:  Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 24th 2019, 2:59:36 pm
+# Last Modified: Thursday, January 24th 2019, 7:23:40 pm
 ###
 
 import sys
@@ -24,6 +24,8 @@ class SMACSession(Session):
         rospy.loginfo('Initialising SMAC session')
         self.planner_configs_default = rospy.get_param(
             '~planner_configs_'+self.planner_select+'_default')
+
+        
 
     def _create_pcs(self, planner, params_set, pcs_fp):
         try:
@@ -47,39 +49,44 @@ class SMACSession(Session):
     def _create_scenario(self, planner, scene, scenario_fp, pcs_fp):
         try:
             scenario_file = open(scenario_fp, 'w+')
-            scenario_file.write('use-instances = false\n')
-            scenario_file.write('numberOfRunsLimit = ' +
-                                str(self.max_trials) + '\n')
-            scenario_file.write('runtimeLimit = ' +
-                                str(self.max_runtime) + '\n')
-            scenario_file.write('runObj = QUALITY\n')
-            scenario_file.write('deterministic = 1\n')
-            scenario_file.write('pcs-file = ' + pcs_fp + '\n')
+            scenario_file.write('always_race_default = true\n')
             scenario_file.write('algo = python '+ROS_PKG_PATH+'/smac_run.py ' +
                                 planner + ' ' + scene + ' ' + str(self.max_trials) + '\n')
-            scenario_file.write('check-sat-consistency false \n')
-            scenario_file.write('check-sat-consistency-exception false \n')
-            scenario_file.write('algo-cutoff-time 40\n')
-            scenario_file.write('kill-run-exceeding-captime-factor 2\n')
-            # scenario_file.write('kill-run-exceeding-captime false')para
-            # scenario_file.write('transform-crashed-quality false')
+            scenario_file.write('pcs_fn = ' + pcs_fp + '\n') 
+            scenario_file.write('run_obj = quality\n')
+            scenario_file.write('deterministic = 1\n')
+
+            if(self.max_runtime != 'None'):
+                scenario_file.write('wallclock_limit = ' + str(self.max_runtime) + '\n')
+            else:
+                scenario_file.write('ta_run_limit = ' + str(self.max_trials) + '\n')
+
+            # scenario_file.write('algo-cutoff-time 40\n')
             scenario_file.close()
+
             rospy.loginfo('Successful writing scenario file to \n%s\n.', pcs_fp)
         except IOError:
             rospy.logerr('Error writing scenario file to \n%s\n.', scenario_fp)
             sys.exit(1)
 
     def run(self):
+
+        scenario_dir =  ROS_PKG_PATH+'/SMAC3/scenarios/'
+        if not os.path.exists(scenario_dir):
+            os.makedirs(scenario_dir)
+
         for planner, params_set in self.planner_config.iteritems():
-            pcs_fp = ROS_PKG_PATH+'/smac/scenarios/'+planner +'/'+self.planner_select+'_'+planner+'.pcs'
-            scenario_fp = ROS_PKG_PATH+'/smac/scenarios/'+planner+'/'+planner+'_scenario.txt'
+            
 
-            # self._create_pcs(planner, params_set, pcs_fp)
-            # self._create_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
+            pcs_fp = scenario_dir + self.planner_select + '_' + planner+'.pcs'
+            scenario_fp = scenario_dir + planner + '_scenario.txt'
 
-            # os.system('cd '+ROS_PKG_PATH +'/smac && ./smac --scenario-file '+scenario_fp+' --seed 123')
+            self._create_pcs(planner, params_set, pcs_fp)
+            self._create_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
 
-            smac3_run = ROS_PKG_PATH+"/smac3_run.py"  
+            # os.system('python3 '+ ROS_PKG_PATH +'/SMAC3/scripts/smac --scenario '+scenario_fp)
+
+            smac3_run = ROS_PKG_PATH +'/SMAC3/scripts/smac --scenario '+scenario_fp
 
             process = subprocess.Popen(smac3_run.split(), stdout=subprocess.PIPE)
             output, error = process.communicate() 

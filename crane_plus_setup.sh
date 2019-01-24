@@ -65,4 +65,7 @@ sudo apt-get autoremove -y
 printf "\n==========  ROS Environment Variables  ==========\n"
 printenv | grep ROS
 
+printf "\n==========  CRANE V2+ INSTALLATION SUCCESSFUL!!!  ==========\n"
+
+
 

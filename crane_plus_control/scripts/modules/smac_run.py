@@ -2,7 +2,7 @@
 ###
 # File Created: Monday, January 21st 2019, 10:55:57 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Last Modified: Thursday, January 24th 2019, 11:15:47 am
+# Last Modified: Thursday, January 24th 2019, 7:23:02 pm
 # Modified By: Charlene Leong
 ###
 
@@ -62,4 +62,4 @@ if __name__ == "__main__":
     pprint.pprint(configMap)
 
     # SMAC has a few different output fields; here, we only need the 4th output:
-    print "Result of algorithm run: SUCCESS, 0, 0, %f, 0" % 1
+    print ("Result of algorithm run: SUCCESS, 0, 0, %f, 0" % 1)
