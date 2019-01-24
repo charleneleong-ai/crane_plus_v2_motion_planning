@@ -66,6 +66,8 @@ CATKIN_IGNORE
 # Database files
 crane_plus_moveit_config/default_warehouse_mongo_db/
 
+# Raw parameter tuning results
+raw/
 
 #======================
 #    IPython
@@ -108,6 +110,7 @@ $RECYCLE.BIN/
 #======================
 #   SMAC
 #======================
-smac-output/*
+smac-output/
+scenarios/
 log-*.txt
-!smac/
+
