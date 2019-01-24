@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Tuesday, January 22nd 2019, 3:14:19 pm
+# Last Modified: Thursday, January 24th 2019, 11:31:49 am
 # Modified By: Charlene Leong
 ###
 
@@ -18,8 +18,8 @@ import rospy
 import moveit_commander
 import moveit_msgs.msg
 
-from modules.planner_config import PlannerConfig
-from modules.scene_object import Scene
+from planner_config import PlannerConfig
+from scene_object import Scene
 
 ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
 
@@ -59,7 +59,7 @@ class Session(object):
                                                             moveit_msgs.msg.DisplayTrajectory,
                                                             queue_size=20)
             
-        self.results_path = ROS_PKG_PATH+'/results/' +self.planner_select+'_'+self.mode+'.csv'
+        self.results_path = ROS_PKG_PATH+'/results/raw/' +self.planner_select+'_'+self.mode+'.csv'
 
     def run(self):
         raise NotImplementedError

@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Wednesday, January 23rd 2019, 5:51:15 pm
+# Last Modified: Thursday, January 24th 2019, 11:15:22 am
 # Modified By: Charlene Leong
 ###
 
@@ -22,7 +22,7 @@ import rospy
 
 from hyperopt import hp, rand, tpe, Trials, fmin, STATUS_OK
 
-from modules.session import Session
+from session import Session
 
 ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/scripts'
 

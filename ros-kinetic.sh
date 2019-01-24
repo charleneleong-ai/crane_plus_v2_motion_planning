@@ -34,4 +34,3 @@ printf "\n==========ROS Environment Variables==========\n"
 # Confirming installation
 printenv | grep ROS
 
-

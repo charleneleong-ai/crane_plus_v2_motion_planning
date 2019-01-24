@@ -2,14 +2,16 @@
 ###
 # File Created: Monday, January 21st 2019, 10:55:57 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Last Modified: Tuesday, January 22nd 2019, 7:16:27 pm
+# Last Modified: Thursday, January 24th 2019, 11:15:47 am
 # Modified By: Charlene Leong
 ###
+
 
 import sys
 import os
 import time
 import logging
+import pprint
 
 import signal
 
@@ -24,10 +26,14 @@ import geometry_msgs
 import shape_msgs
 import std_msgs
 from datetime import datetime as dt
-import sys, math, random
+import sys
+import math
+import random
+
+from session import Session
 
 logging.basicConfig(level=logging.INFO)
-from modules.session import Session
+
 
 class SMACRun(Session):
     def __init__(self):
@@ -36,26 +42,24 @@ class SMACRun(Session):
 
 if __name__ == "__main__":
     moveit_commander.roscpp_initialize(sys.argv)
+    rospy.init_node('smac_run', anonymous=True, log_level=rospy.FATAL)
 
+    # Read in first arguments.
+    planner = sys.argv[1]
+    scene = sys.argv[2]
+    max_trials = sys.argv[3]
 
-# For black box function optimization, we can ignore the first 5 arguments. 
-# The remaining arguments specify parameters using this format: -name value 
+    instance = sys.argv[4]
+    specifics = sys.argv[5]
+    cutoff = int(float(sys.argv[6]) + 1)
+    runlength = int(sys.argv[7])
+    seed = int(sys.argv[8])
 
-    x1 = 0 
-    x2 = 0
-
-    for i in range(len(sys.argv)-1):  
-        if (sys.argv[i] == '-x1'):
-            x1 = float(sys.argv[i+1])
-        elif(sys.argv[i] == '-x2'):
-            x2 = float(sys.argv[i+1])   
-    
-    # Compute the branin function:
-    yValue = (x2 - (5.1 / (4 * math.pi * math.pi)) *x1*x1 + (5 / (math.pi)) *x1 -6) ** 2 + 10*(1- (1 / (8 * math.pi))) * math.cos(x1) + 10
-
-
-
+# Read in parameter setting and build a dictionary mapping param_name to param_value.
+    params = sys.argv[9:]
+    configMap = dict((name[1:], value)
+	                 for name, value in zip(params[::2], params[1::2]))
+    pprint.pprint(configMap)
 
     # SMAC has a few different output fields; here, we only need the 4th output:
-    print "Result of algorithm run: SUCCESS, 0, 0, %f, 0" % yValue
-    
+    print "Result of algorithm run: SUCCESS, 0, 0, %f, 0" % 1

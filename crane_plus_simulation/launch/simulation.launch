@@ -12,7 +12,7 @@ Modified By:
   <!-- Changes the real time update rate for tuning -->
   <rosparam file="$(find crane_plus_simulation)/config/crane_plus.yaml" command="load" />
   <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find crane_plus_simulation)/urdf/simulated_crane_plus.urdf.xacro'" />
-
+  
   <!-- Launch node to reszie gazebo screen -->
   <node pkg="crane_plus_simulation" name="resize_gazebo" type="resize_gazebo.py"/>
 
@@ -25,6 +25,8 @@ Modified By:
     <arg name="gui" value="$(arg gui)"/>
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
+     <arg name="verbose" value="true"/>
+    
   </include>
 
   <!-- Spawn the manipulator model -->
