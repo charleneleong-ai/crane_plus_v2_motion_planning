@@ -3,7 +3,7 @@
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author:  Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 24th 2019, 11:59:42 am
+# Last Modified: Thursday, January 24th 2019, 2:59:36 pm
 ###
 
 import sys
@@ -25,7 +25,7 @@ class SMACSession(Session):
         self.planner_configs_default = rospy.get_param(
             '~planner_configs_'+self.planner_select+'_default')
 
-    def _write_pcs(self, planner, params_set, pcs_fp):
+    def _create_pcs(self, planner, params_set, pcs_fp):
         try:
             pcs_file = open(pcs_fp, 'w+')
             for k, v in params_set.iteritems():
@@ -44,7 +44,7 @@ class SMACSession(Session):
             rospy.logerr('Error writing pcs file to \n%s\n.', pcs_fp)
             sys.exit(1)
 
-    def _write_scenario(self, planner, scene, scenario_fp, pcs_fp):
+    def _create_scenario(self, planner, scene, scenario_fp, pcs_fp):
         try:
             scenario_file = open(scenario_fp, 'w+')
             scenario_file.write('use-instances = false\n')
@@ -74,8 +74,8 @@ class SMACSession(Session):
             pcs_fp = ROS_PKG_PATH+'/smac/scenarios/'+planner +'/'+self.planner_select+'_'+planner+'.pcs'
             scenario_fp = ROS_PKG_PATH+'/smac/scenarios/'+planner+'/'+planner+'_scenario.txt'
 
-            # self._write_pcs(planner, params_set, pcs_fp)
-            # self._write_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
+            # self._create_pcs(planner, params_set, pcs_fp)
+            # self._create_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
 
             # os.system('cd '+ROS_PKG_PATH +'/smac && ./smac --scenario-file '+scenario_fp+' --seed 123')
 

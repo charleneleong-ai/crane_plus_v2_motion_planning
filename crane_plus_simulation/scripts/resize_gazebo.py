@@ -3,7 +3,7 @@
 # File Created: Wednesday, 23rd January 2019 11:41:51 am
 # Author:  Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 24th 2019, 10:17:13 am
+# Last Modified: Thursday, January 24th 2019, 4:00:20 pm
 ###
 
 import sys
@@ -12,8 +12,6 @@ import rospy
 
 
 if __name__ == "__main__":
-
-    os.system('killall -9 gzserver gzclient')
 
     rospy.init_node('resize_gazebo', anonymous=True)
     gazebo_ini_fp = os.path.join(os.environ['HOME'], '.gazebo/gui.ini')

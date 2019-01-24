@@ -13,7 +13,7 @@ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C
 # Install full ros kinetic
 sudo apt-get update && sudo apt-get install ros-kinetic-desktop-full -y
 # Installing dependencies for building packages
-sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential -y
+sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential ros-kinetic-gazebo9-* -y
 
 # http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment
 printf "\n==========Configuring ROS Kinetic==========\n"

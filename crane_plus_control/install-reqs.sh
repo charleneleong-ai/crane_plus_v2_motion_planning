@@ -18,4 +18,6 @@ sudo apt-get install build-essential swig
 curl https://raw.githubusercontent.com/automl/smac3/master/requirements.txt | xargs -n 1 -L 1 pip3 install
 pip3 install smac
 
-find ./ -name "*.py" -exec chmod +x {} \;
+# find ./ -name "*.py" -exec chmod +x {} \;
+
+find ./ -name "smac3_run.py" -exec chmod u+x {} \;

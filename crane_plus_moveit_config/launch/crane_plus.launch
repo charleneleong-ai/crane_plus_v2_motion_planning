@@ -25,9 +25,9 @@ Author: Charlene Leong (charleneleong84@gmail.com)
   </include>
 
    <!-- We do not have a robot connected, so publish fake joint states -->
-  <node  name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+  <node  unless="$(arg robot_execution)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="/use_gui" value="false"/>
-    <rosparam unless="$(arg robot_execution)" param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
+    <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
   </node>
 
   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->

@@ -48,8 +48,6 @@ doi: 10.1109/ICRA.2017.7989504
     $ chmod u+x install-reqs.sh && ./install-reqs.sh 
     ```
 
-    
-
 2. Launch `control.launch` to:
 
     - Launch Gazebo simulation in tuning mode `tuning:=true` which sets up the [physics properties](http://gazebosim.org/tutorials?tut=modifying_world#PhysicsProperties) in the [tuning_world.world](../crane_plus_simulation/worlds/tuning_world.world) file to speed up realtime simulation
