@@ -63,7 +63,7 @@ $ source activate ros_env
 
     ```bash
     $ curl --noproxy "*" -L -O 'http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning/raw/master/crane_plus_setup.sh'
-    $ chmod u+x crane_plus_setup.sh && ./crane_plus_setup.sh 
+    $ chmod u+x crane_plus_setup.sh && sudo ./crane_plus_setup.sh 
     ```
 
 2. Launch the CRANE+V2 robot model either through the hardware interface or through simulation.

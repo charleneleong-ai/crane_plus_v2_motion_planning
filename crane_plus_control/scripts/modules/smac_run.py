@@ -2,7 +2,7 @@
 ###
 # File Created: Monday, January 21st 2019, 10:55:57 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Last Modified: Thursday, January 24th 2019, 7:23:02 pm
+# Last Modified: Friday, January 25th 2019, 9:35:09 am
 # Modified By: Charlene Leong
 ###
 
@@ -40,6 +40,9 @@ class SMACRun(Session):
         super(SMACRun, self).__init__()
 
 
+def sigint_exit(signal, frame):
+	moveit_commander.roscpp_shutdown()
+
 if __name__ == "__main__":
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('smac_run', anonymous=True, log_level=rospy.FATAL)
@@ -55,11 +58,15 @@ if __name__ == "__main__":
     runlength = int(sys.argv[7])
     seed = int(sys.argv[8])
 
-# Read in parameter setting and build a dictionary mapping param_name to param_value.
+    # Read in parameter setting and build a dictionary mapping param_name to param_value.
     params = sys.argv[9:]
-    configMap = dict((name[1:], value)
-	                 for name, value in zip(params[::2], params[1::2]))
+    configMap = dict((name[1:], value) for name, value in zip(params[::2], params[1::2]))
     pprint.pprint(configMap)
 
-    # SMAC has a few different output fields; here, we only need the 4th output:
+    quality = 1000.0
+
+    signal.signal(signal.SIGINT, sigint_exit)
+
+    quality = bmclass.bm_run_cost(problem_config, configMap)
+
     print ("Result of algorithm run: SUCCESS, 0, 0, %f, 0" % 1)
