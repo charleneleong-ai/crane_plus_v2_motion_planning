@@ -10,8 +10,6 @@ Code and models for the [Crane+V2](https://www.rt-net.jp/products/cranep2?lang=e
 
 ## Contents
 
-- [Crane+V2 Robot Arm](#cranev2-robot-arm)
-- [Contents](#contents)
 - [Environment Setup](#environment-setup)
 - [Package Description](#package-description)
 - [Quick Start](#quick-start)
@@ -33,62 +31,45 @@ If you wish to run ROS along with Python 3 in Anaconda, please [create a py2.7 c
 ```bash
 $ conda create -n ros_env python=2.7 anaconda -y
 $ source activate ros_env
+(ros_env) $ pip install -U catkin_pkg rospkg
 ```
 
 
 
 ## Package Description
 
-**crane_plus_control**
+**crane_plus_control:** Parameter tuning and benchmarking nodes
 
-​	Parameter tuning and benchmarking nodes
+**crane_plus_description:** [CAD files](./crane_plus_description/README.md) and [URDF](http://wiki.ros.org/urdf) (Unified Robot Description Format) model of CRANE+V2
 
-**crane_plus_description**
+**crane_plus_gripper:** Node that controls the gripper of CRANE+V2
 
-​	[CAD files](./crane_plus_description/README.md) and [URDF](http://wiki.ros.org/urdf) (Unified Robot Description Format) model of CRANE+V2
+**crane_plus_hardware:** Launch file that configures the settings for use with CRANE+V2 hardware
 
-**crane_plus_gripper**
+**crane_plus_ikfast_arm_plugin:** Custom inverse kinematics plugin for CRANE+V2 in the MoveIt! framework
 
-​	Node that controls the gripper of CRANE+V2
+**crane_plus_joint_state_publisher:** Node that converts servo status messages ([`dynamixel_msgs/JointState`](http://docs.ros.org/kinetic/api/dynamixel_msgs/html/msg/JointState.html) message type) output by the Dynamixel servo controller to ROS [`sensor_msgs/JointState`](http://docs.ros.org/melodic/api/sensor_msgs/html/msg/JointState.html) message type
 
-**crane_plus_hardware**
+**crane_plus_moveit_config:**Parameters and launch files for using CRANE+V2 with MoveIt! framework
 
-​	Launch file that configures the settings for use with CRANE+V2 hardware
-
-**crane_plus_ikfast_arm_plugin**
-
-​	Custom inverse kinematics plugin for CRANE+V2 in the MoveIt! framework
-
-**crane_plus_joint_state_publisher**
-
-​	Node that converts servo status messages ([`dynamixel_msgs/JointState`](http://docs.ros.org/kinetic/api/dynamixel_msgs/html/msg/JointState.html) message type) output by the Dynamixel servo controller to ROS [`sensor_msgs/JointState`](http://docs.ros.org/melodic/api/sensor_msgs/html/msg/JointState.html) message type
-
-**crane_plus_moveit_config**
-
-​	Parameters and launch files for using CRANE+V2 with MoveIt! framework
-
-**crane_plus_simulation**
-
-​	Launch file that configures the settings for simulating CRANE+V2 in Gazebo
+**crane_plus_simulation:** Launch file that configures the settings for simulating CRANE+V2 in Gazebo
 
 
 
 ## Quick Start
 
 
-1. Run the [`ros-kinetic.sh`](./ros-kinetic.sh) script for first time ROS installation and configuration.
+1. Download and run the [`ros-kinetic.sh`](./ros-kinetic.sh) script for first time ROS installation and configuration.
 
     ```bash
-    $ wget https://github.com/charyeezy/crane_plus_v2_motion_planning/raw/smac/ros-kinetic.sh
-    $ chmod +x ros-kinetic.sh && ./ros-kinetic.sh 
+    $ curl --noproxy "*" -L -O 'http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning/raw/master/ros-kinetic.sh'
+    $ chmod u+x ros-kinetic.sh && ./ros-kinetic.sh 
     ```
 
 2. Download the project files, install all dependent packages and compile the project. If you are working with a conda env, remember to `source activate ros_env` before installing pip requirements and before using `roslaunch`. 
 
     ```bash
     $ cd ~/catkin_ws/src/ && git clone http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git 
-    $ find ./ -name "*.py" -exec chmod +x {} \;
-    $ cd crane_plus_v2_motion_planning && pip install -r requirements.txt
     $ cd ~/catkin_ws && rosdep install -y --from-paths src --ignore-src --rosdistro kinetic 
     $ cd ~/catkin_ws && catkin_make && source ~/catkin_ws/devel/setup.bash
     ```
