@@ -3,37 +3,115 @@
 # File Created: Thursday, 24th January 2019 11:53:12 am
 # Author:  Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 24th 2019, 1:51:21 pm
+# Last Modified: Thursday, January 24th 2019, 4:58:55 pm
 ###
-from __future__ import division, print_function
-
 import logging
+import numpy as np
+from sklearn import svm, datasets
+from sklearn.model_selection import cross_val_score
 
-from smac.facade.func_facade import fmin_smac
+# Import ConfigSpace and different types of parameters
+from smac.configspace import ConfigurationSpace
+from ConfigSpace.hyperparameters import CategoricalHyperparameter, \
+    UniformFloatHyperparameter, UniformIntegerHyperparameter
+from ConfigSpace.conditions import InCondition
+
+# Import SMAC-utilities
+from smac.tae.execute_func import ExecuteTAFuncDict
+from smac.scenario.scenario import Scenario
+from smac.facade.smac_facade import SMAC
 
 
-def rosenbrock_2d(x):
-    """ The 2 dimensional Rosenbrock function as a toy model
-    The Rosenbrock function is well know in the optimization community and
-    often serves as a toy problem. It can be defined for arbitrary
-    dimensions. The minimium is always at x_i = 1 with a function value of
-    zero. All input parameters are continuous. The search domain for
-    all x's is the interval [-5, 5].
+# We load the iris-dataset (a widely used benchmark)
+iris = datasets.load_iris()
+
+def svm_from_cfg(cfg):
+    """ Creates a SVM based on a configuration and evaluates it on the
+    iris-dataset using cross-validation.
+    Parameters:
+    -----------
+    cfg: Configuration (ConfigSpace.ConfigurationSpace.Configuration)
+        Configuration containing the parameters.
+        Configurations are indexable!
+    Returns:
+    --------
+    A crossvalidated mean score for the svm on the loaded data-set.
     """
-    x1 = x[0]
-    x2 = x[1]
+    # For deactivated parameters, the configuration stores None-values.
+    # This is not accepted by the SVM, so we remove them.
+    cfg = {k : cfg[k] for k in cfg if cfg[k]}
+    # We translate boolean values:
+    cfg["shrinking"] = True if cfg["shrinking"] == "true" else False
+    # And for gamma, we set it to a fixed value or to "auto" (if used)
+    if "gamma" in cfg:
+        cfg["gamma"] = cfg["gamma_value"] if cfg["gamma"] == "value" else "auto"
+        cfg.pop("gamma_value", None)  # Remove "gamma_value"
 
-    val = 100. * (x2 - x1 ** 2.) ** 2. + (1 - x1) ** 2.
-    return val
+    clf = svm.SVC(**cfg, random_state=42)
 
-# debug output
-logging.basicConfig(level=20)
-logger = logging.getLogger("Optimizer") # Enable to show Debug outputs
+    scores = cross_val_score(clf, iris.data, iris.target, cv=5)
+    return 1-np.mean(scores)  # Minimize!
 
-x, cost, _ = fmin_smac(func=rosenbrock_2d,
-                       x0=[-3, -4],
-                       bounds=[(-5, 5), (-5, 5)],
-                       maxfun=50,
-                       rng=3)  # Passing a seed makes fmin_smac determistic
+#logger = logging.getLogger("SVMExample")
+logging.basicConfig(level=logging.INFO)  # logging.DEBUG for debug output
 
-print("Best x: %s; with cost: %f"% (str(x), cost))
+# Build Configuration Space which defines all parameters and their ranges
+cs = ConfigurationSpace()
+
+# We define a few possible types of SVM-kernels and add them as "kernel" to our cs
+kernel = CategoricalHyperparameter("kernel", ["linear", "rbf", "poly", "sigmoid"], default_value="poly")
+cs.add_hyperparameter(kernel)
+
+# There are some hyperparameters shared by all kernels
+C = UniformFloatHyperparameter("C", 0.001, 1000.0, default_value=1.0)
+shrinking = CategoricalHyperparameter("shrinking", ["true", "false"], default_value="true")
+cs.add_hyperparameters([C, shrinking])
+
+# Others are kernel-specific, so we can add conditions to limit the searchspace
+degree = UniformIntegerHyperparameter("degree", 1, 5, default_value=3)     # Only used by kernel poly
+coef0 = UniformFloatHyperparameter("coef0", 0.0, 10.0, default_value=0.0)  # poly, sigmoid
+cs.add_hyperparameters([degree, coef0])
+use_degree = InCondition(child=degree, parent=kernel, values=["poly"])
+use_coef0 = InCondition(child=coef0, parent=kernel, values=["poly", "sigmoid"])
+cs.add_conditions([use_degree, use_coef0])
+
+# This also works for parameters that are a mix of categorical and values from a range of numbers
+# For example, gamma can be either "auto" or a fixed float
+gamma = CategoricalHyperparameter("gamma", ["auto", "value"], default_value="auto")  # only rbf, poly, sigmoid
+gamma_value = UniformFloatHyperparameter("gamma_value", 0.0001, 8, default_value=1)
+cs.add_hyperparameters([gamma, gamma_value])
+# We only activate gamma_value if gamma is set to "value"
+cs.add_condition(InCondition(child=gamma_value, parent=gamma, values=["value"]))
+# And again we can restrict the use of gamma in general to the choice of the kernel
+cs.add_condition(InCondition(child=gamma, parent=kernel, values=["rbf", "poly", "sigmoid"]))
+
+
+# Scenario object
+scenario = Scenario({"run_obj": "quality",   # we optimize quality (alternatively runtime)
+                     "runcount-limit": 200,  # maximum function evaluations
+                     "cs": cs,               # configuration space
+                     "deterministic": "true"
+                     })
+
+# Example call of the function
+# It returns: Status, Cost, Runtime, Additional Infos
+def_value = svm_from_cfg(cs.get_default_configuration())
+print("Default Value: %.2f" % (def_value))
+
+# Optimize, using a SMAC-object
+print("Optimizing! Depending on your machine, this might take a few minutes.")
+smac = SMAC(scenario=scenario, rng=np.random.RandomState(42),
+        tae_runner=svm_from_cfg)
+
+incumbent = smac.optimize()
+
+inc_value = svm_from_cfg(incumbent)
+
+print("Optimized Value: %.2f" % (inc_value))
+
+
+# We can also validate our results (though this makes a lot more sense with instances)
+smac.validate(config_mode='inc',      # We can choose which configurations to evaluate
+              #instance_mode='train+test',  # Defines what instances to validate
+              repetitions=100,        # Ignored, unless you set "deterministic" to "false" in line 95
+              n_jobs=1)               # How many cores to use in parallel for optimization

@@ -42,36 +42,30 @@ doi: 10.1109/ICRA.2017.7989504
 
 ## Quick Start
 
-1. Install requirements.
+Launch `control.launch` to:
 
-    ```bash
-    $ chmod u+x install-reqs.sh && ./install-reqs.sh 
-    ```
+- Launch Gazebo simulation in tuning mode `tuning:=true` which sets up the [physics properties](http://gazebosim.org/tutorials?tut=modifying_world#PhysicsProperties) in the [tuning_world.world](../crane_plus_simulation/worlds/tuning_world.world) file to speed up realtime simulation
+- Launch moveit config with `robot execution:=true` to execute on Gazebo.
+- You can optionally set`gui:=false` to launch Gazebo without gui.
+- You can optionally set `rviz:=false` to launch Moveit without rviz.
 
-2. Launch `control.launch` to:
+```bash
+$ roslaunch crane_plus_control.launch control.launch 
+```
 
-    - Launch Gazebo simulation in tuning mode `tuning:=true` which sets up the [physics properties](http://gazebosim.org/tutorials?tut=modifying_world#PhysicsProperties) in the [tuning_world.world](../crane_plus_simulation/worlds/tuning_world.world) file to speed up realtime simulation
-    - Launch moveit config with `robot execution:=true` to execute on Gazebo.
-    - You can optionally set`gui:=false` to launch Gazebo without gui.
-    - You can optionally set `rviz:=false` to launch Moveit without rviz.
-
-    ```bash
-    $ roslaunch crane_plus_control.launch control.launch 
-    ```
-
-3. Benchmarking session with OMPL or planner select defaults.
+1. Benchmarking session with OMPL or planner select defaults.
 
     ```bash
     $ roslaunch crane_plus_control parameter_tuning.launch planner_select:=Cano_etal mode:=default avg_runs:=5
     ```
 
-4. Parameter tuning session with TPE or Random Search using [Hyperopt](http://hyperopt.github.io/hyperopt/).
+2. Parameter tuning session with TPE or Random Search using [Hyperopt](http://hyperopt.github.io/hyperopt/).
 
     ```bash
     $ roslaunch crane_plus_control parameter_tuning.launch mode:=tpe max_runtime:=7200
     ```
 
-5. Parameter tuning session with random Forest using [SMAC](http://www.cs.ubc.ca/labs/beta/Projects/SMAC/v2.10.03/quickstart.html#news).
+3. Parameter tuning session with random Forest using [SMAC](http://www.cs.ubc.ca/labs/beta/Projects/SMAC/v2.10.03/quickstart.html#news).
 
     Installed from source, located in [/scripts/modules/smac](./scripts/modules/smac).
 
@@ -79,7 +73,7 @@ doi: 10.1109/ICRA.2017.7989504
     $ roslaunch crane_plus_control parameter_tuning.launch mode:=smac max_runtime:=7200
     ```
 
-6. Benchmarking or tuning a specific path with defined start pose and target pose.
+4. Benchmarking or tuning a specific path with defined start pose and target pose.
 
     ```bash
     $ roslaunch crane_plus_control parameter_tuning.launch mode:=ompl max_trials:=30 avg_runs:=3

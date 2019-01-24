@@ -59,22 +59,14 @@ $ source activate ros_env
 ## Quick Start
 
 
-1. Download and run the [`ros-kinetic.sh`](./ros-kinetic.sh) script for first time ROS installation and configuration.
+1. Download and run the [`setup.sh`](./setup.sh) script to install ROS, clone and builds the repository as well as other required packages. 
 
     ```bash
-    $ curl --noproxy "*" -L -O 'http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning/raw/master/ros-kinetic.sh'
-    $ chmod u+x ros-kinetic.sh && ./ros-kinetic.sh 
+    $ curl --noproxy "*" -L -O 'http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning/raw/master/setup.sh'
+    $ chmod u+x setup.sh && ./setup.sh 
     ```
 
-2. Download the project files, install all dependent packages and compile the project. If you are working with a conda env, remember to `source activate ros_env` before installing pip requirements and before using `roslaunch`. 
-
-    ```bash
-    $ cd ~/catkin_ws/src/ && git clone http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git 
-    $ cd ~/catkin_ws && rosdep install -y --from-paths src --ignore-src --rosdistro kinetic 
-    $ cd ~/catkin_ws && catkin_make && source ~/catkin_ws/devel/setup.bash
-    ```
-
-3. Launch the CRANE+V2 robot model either through the hardware interface or through simulation.
+2. Launch the CRANE+V2 robot model either through the hardware interface or through simulation.
 
     Launch robot model through the hardware interface.
 
@@ -88,7 +80,7 @@ $ source activate ros_env
     $ roslaunch crane_plus_simulation simulation.launch
     ```
 
-4. Control through MoveIt RViz.  Set `robot_execution:=true` to launch on real robot or Gazebo simulation.
+3. Control through MoveIt RViz.  Set `robot_execution:=true` to launch on real robot or Gazebo simulation.
 
     ```bash
     $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true
