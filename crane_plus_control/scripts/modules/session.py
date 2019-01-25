@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Thursday, January 24th 2019, 11:31:49 am
+# Last Modified: Friday, January 25th 2019, 10:07:42 am
 # Modified By: Charlene Leong
 ###
 
@@ -64,7 +64,7 @@ class Session(object):
     def run(self):
         raise NotImplementedError
 
-    def _run_problem_set(self, planner_id, save=False, results_path=''):
+    def run_problem_set(self, planner_id, save=False, results_path=''):
         result_log = {}
         t_avg_run_time = 0      # Totals
         t_avg_plan_time = 0

@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 2:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Thursday, January 24th 2019, 11:15:15 am
+# Last Modified: Friday, January 25th 2019, 10:07:42 am
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -44,7 +44,7 @@ class BenchmarkSession(Session):
 
         results = {}
         for p in self.planners:
-            result = super(BenchmarkSession, self)._run_problem_set(
+            result = super(BenchmarkSession, self).run_problem_set(
                 planner_id=p, save=True, results_path=self.results_path)
             results[p] = result
 

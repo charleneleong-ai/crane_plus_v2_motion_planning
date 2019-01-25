@@ -11,7 +11,7 @@ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main
 # Setup keyserver
 sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
 # Install ros kinetic
-sudo apt-get update -qq && sudo apt-get install ros-kinetic-desktop -y
+v
 # Installing dependencies for building packages
 sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential -y
 

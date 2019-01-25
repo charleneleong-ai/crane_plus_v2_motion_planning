@@ -14,7 +14,7 @@ Modified By:
   <rosparam file="$(find crane_plus_simulation)/config/crane_plus.yaml" command="load" />
   <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find crane_plus_simulation)/urdf/simulated_crane_plus.urdf.xacro'" />
   
-  <!-- Launch node to reszie gazebo screen -->
+  <!-- Launch node to resize gazebo screen -->
   <node pkg="crane_plus_simulation" name="resize_gazebo" type="resize_gazebo.py"/>
 
   <!-- Start the manipulator's world -->

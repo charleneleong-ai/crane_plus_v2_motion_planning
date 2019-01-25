@@ -50,7 +50,7 @@ $ source activate ros_env
 
 **crane_plus_joint_state_publisher:** Node that converts servo status messages ([`dynamixel_msgs/JointState`](http://docs.ros.org/kinetic/api/dynamixel_msgs/html/msg/JointState.html) message type) output by the Dynamixel servo controller to ROS [`sensor_msgs/JointState`](http://docs.ros.org/melodic/api/sensor_msgs/html/msg/JointState.html) message type
 
-**crane_plus_moveit_config:**Parameters and launch files for using CRANE+V2 with MoveIt! framework
+**crane_plus_moveit_config:** Parameters and launch files for using CRANE+V2 with MoveIt! framework
 
 **crane_plus_simulation:** Launch file that configures the settings for simulating CRANE+V2 in Gazebo
 
@@ -59,11 +59,12 @@ $ source activate ros_env
 ## Quick Start
 
 
-1. Download and run the [`crane_plus_setup.sh`](./crane_plus_setup.sh) script to install ROS, clone and builds the repository as well as other required packages. 
+1. Download and run the [`crane_plus_setup.sh`](./crane_plus_setup.sh) script to install ROS, clone and builds the repository as well as other required packages. Reboot after installation finishes.
 
     ```bash
     $ curl --noproxy "*" -L -O 'http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning/raw/master/crane_plus_setup.sh'
-    $ chmod u+x crane_plus_setup.sh && sudo ./crane_plus_setup.sh 
+    $ chmod u+x crane_plus_setup.sh && ./crane_plus_setup.sh 
+    $ sudo reboot
     ```
 
 2. Launch the CRANE+V2 robot model either through the hardware interface or through simulation.

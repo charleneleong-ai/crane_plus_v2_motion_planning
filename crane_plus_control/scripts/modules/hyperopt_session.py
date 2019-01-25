@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Thursday, January 24th 2019, 11:15:22 am
+# Last Modified: Friday, January 25th 2019, 10:07:42 am
 # Modified By: Charlene Leong
 ###
 
@@ -57,7 +57,7 @@ class HyperOptSession(Session):
                      't_avg_dist': results['avg_dist'], 't_avg_path_length': results['avg_path_length'], 't_avg_success': results['avg_success']}
         else:
             results, stats = super(
-                HyperOptSession, self)._run_problem_set(planner_id=planner)
+                HyperOptSession, self).run_problem_set(planner_id=planner)
 
         # loss = sum(stats.values())
         # loss = stats['t_avg_path_length']

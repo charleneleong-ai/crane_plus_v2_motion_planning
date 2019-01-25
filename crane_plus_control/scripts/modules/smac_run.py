@@ -2,7 +2,7 @@
 ###
 # File Created: Monday, January 21st 2019, 10:55:57 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Last Modified: Friday, January 25th 2019, 9:35:09 am
+# Last Modified: Friday, January 25th 2019, 10:07:42 am
 # Modified By: Charlene Leong
 ###
 
@@ -16,8 +16,8 @@ import pprint
 import signal
 
 import numpy
-#import cPickle as pickle
 
+import rospkg
 import rospy
 import moveit_commander
 import moveit_msgs.msg
@@ -34,10 +34,15 @@ from session import Session
 
 logging.basicConfig(level=logging.INFO)
 
+ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control') 
 
 class SMACRun(Session):
-    def __init__(self):
+    def __init__(self, scene):
         super(SMACRun, self).__init__()
+        self.scenes[scene]
+
+    # def run_problem_set(self):
+    #     super(SMACRun, self).run_problem_set(self, planner_id, save=False, results_path='')
 
 
 def sigint_exit(signal, frame):
@@ -58,10 +63,15 @@ if __name__ == "__main__":
     runlength = int(sys.argv[7])
     seed = int(sys.argv[8])
 
+
     # Read in parameter setting and build a dictionary mapping param_name to param_value.
     params = sys.argv[9:]
     configMap = dict((name[1:], value) for name, value in zip(params[::2], params[1::2]))
     pprint.pprint(configMap)
+
+    smac_run = SMACRun(scene)
+
+    result_log, stats = smac_run.run_problem_set(planner)
 
     quality = 1000.0
 
