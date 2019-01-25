@@ -8,6 +8,7 @@
 
 import sys
 import os
+import csv
 import subprocess
 import numpy as np
 
@@ -25,21 +26,19 @@ class SMACSession(Session):
         self.planner_configs_default = rospy.get_param(
             '~planner_configs_'+self.planner_select+'_default')
 
-        
-
     def _create_pcs(self, planner, params_set, pcs_fp):
         try:
             pcs_file = open(pcs_fp, 'w+')
             for k, v in params_set.iteritems():
                 if isinstance(v, list):
                     if(self.planner_select == "Cano_etal"):
-                        param_range = ",".join(
-                            [str(round(x, 2)) for x in np.arange(v[0], v[1], v[2])])
-                        param_default = str(
-                            self.planner_configs_default[planner][k])
+                        param_range = ",".join([str(round(x, 2)) for x in np.arange(v[0], v[1], v[2])])
+                        param_default = str(self.planner_configs_default[planner][k])
                         pcs_file.write(k + ' categorical {' + param_range + '} ['+param_default+']\n')
                     elif(self.planner_select == "Burger_etal"):
                         pass
+                # else:
+                #     pcs_file.write(k + ' categorical {'+v+'}')   
             pcs_file.close()
             rospy.loginfo('Successful writing pcs file to \n%s\n.', pcs_fp)
         except IOError:
@@ -70,19 +69,22 @@ class SMACSession(Session):
             sys.exit(1)
 
     def run(self):
-
         scenario_dir =  ROS_PKG_PATH+'/SMAC3/scenarios/'
         if not os.path.exists(scenario_dir):
             os.makedirs(scenario_dir)
 
         for planner, params_set in self.planner_config.iteritems():
-            
 
             pcs_fp = scenario_dir + self.planner_select + '_' + planner+'.pcs'
             scenario_fp = scenario_dir + planner + '_scenario.txt'
 
             self._create_pcs(planner, params_set, pcs_fp)
             self._create_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
+            
+            with open(self.results_path, 'w') as f:     # Write headers
+                writer = csv.writer(f)
+                writer.writerow(['elapsed_time', 'n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
+                                't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params'])
 
             os.system('python3 '+ ROS_PKG_PATH +'/SMAC3/scripts/smac --scenario '+scenario_fp)
 

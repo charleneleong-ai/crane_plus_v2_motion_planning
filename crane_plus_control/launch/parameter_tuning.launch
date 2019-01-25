@@ -13,7 +13,7 @@ Modified By:
   <arg name="mode" default="tpe"/>                  <!-- [default, ompl, rand, tpe, smac] -->
   <arg name="avg_runs" default="1" />
   <arg name="max_trials" default="30" />
-  <arg name="max_runtime" default="None" />            <!-- secs -->
+  <arg name="max_runtime" default="None" />         <!-- secs -->
 
   <!-- parameter tuning file -->
   <arg name="param_tuning_config" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>

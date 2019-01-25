@@ -69,17 +69,14 @@ $ source activate ros_env
 
 2. Launch the CRANE+V2 robot model either through the hardware interface or through simulation.
 
-    Launch robot model through the hardware interface.
-
     ```bash
-    $ roslaunch crane_plus_hardware start_arm_standalone.launch
+    $ roslaunch crane_plus_control control.launch
     ```
 
-    Launch robot model through simulation.
-
-    ```bash
-    $ roslaunch crane_plus_simulation simulation.launch
-    ```
+    - **sim:** ***[default=true]*** Launch robot model in simulation or in hardware.
+    - **rviz:** ***[default=true]*** Launch MoveIt! with Rviz.
+    - **gui:** ***[default=true]*** Launch the Gazebo GUI.
+    - **tuning:** ***[default=false]*** Launch in tuning mode or in normal mode.
 
 3. Control through MoveIt RViz.  Set `robot_execution:=true` to launch on real robot or Gazebo simulation.
 

@@ -20,9 +20,9 @@ if __name__ == "__main__":
         gazebo_ini_file = open(gazebo_ini_fp, 'w+')
         gazebo_ini_file.write('[geometry]\n')
         gazebo_ini_file.write('x=65\n')
-        gazebo_ini_file.write('y=1092\n')
-        gazebo_ini_file.write('width=1888\n')
-        gazebo_ini_file.write('height=1040\n')
+        gazebo_ini_file.write('y=415\n')
+        gazebo_ini_file.write('width=1000\n')
+        gazebo_ini_file.write('height=570\n')
         gazebo_ini_file.close()
     except IOError:
         rospy.logerr('Error writing gazebo ini file to \n%s\n.', gazebo_ini_fp)

@@ -1,0 +1,12 @@
+<!--
+File Created: Friday, 25th January 2019 2:37:50 pm
+Author:  Charlene Leong (charleneleong84@gmail.com>)
+Modified By: 
+Last Modified: 
+-->
+
+<launch>
+  <node name="launch_base" pkg="crane_plus_moveit_config" type="launch_base.py" respawn_delay="5" >
+    <param name="rviz" type="bool" value="true" />
+  </node>
+</launch>

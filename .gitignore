@@ -110,7 +110,8 @@ $RECYCLE.BIN/
 #======================
 #   SMAC
 #======================
-smac-output/
+
 scenarios/
+smac3-output*/
 log-*.txt
 

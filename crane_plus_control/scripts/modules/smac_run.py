@@ -2,76 +2,58 @@
 ###
 # File Created: Monday, January 21st 2019, 10:55:57 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Last Modified: Friday, January 25th 2019, 11:55:48 am
+# Last Modified: Friday, January 25th 2019, 6:05:29 pm
 # Modified By: Charlene Leong
 ###
-
-
 import sys
 import os
 import time
-import logging
+from collections import OrderedDict
 import pprint
 import signal
-
 import numpy
 
 import rospkg
 import rospy
-import moveit_commander
-import moveit_msgs.msg
-import moveit_msgs.srv
-import geometry_msgs
-import shape_msgs
-import std_msgs
+import pandas as pd
 
-import sys
-import math
-import random
+import moveit_commander
 
 from session import Session
 
-logging.basicConfig(level=logging.INFO)
+ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
 
-ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control') 
 
 class SMACRun(Session):
-    def __init__(self, scene):
-        self._set_rosparams()
-
+    def __init__(self, scene, planner):
         super(SMACRun, self).__init__()
-        
-        self.scenes[scene]
-
-    # Porting params from SMACSession
-    def _set_rosparams(self):
-        session_params = rospy.get_params('/parameter_tuning/'))
+        self.planners = [planner]
+        self.scenes = [scene]
+        self.max_trials = 1
         
 
-    def _objective(self, planner, params):
-        self.n_trial += 1
+    def _smac_obj(self, params):
+        for planner, params_set in self.planner_config.iteritems():
+            params_set = dict(self.planner_config[planner].items())
+            for k, v in params_set.iteritems():
+                if not isinstance(v, list):
+                    params[k] = v
+        print(params)
+        return super(SMACRun, self)._objective(params) 
 
-        # Set new params
-        self.planner_config_obj.set_planner_params(planner, params)
+# Porting params from SMAC session
+def set_session_params():
+    session_params = rospy.get_param('/parameter_tuning')
+    for k, v in session_params.iteritems():
+        rospy.set_param('~'+k, v)
 
-        if self.path_tune:
-            results = super(SMACRun, self)._get_stats(
-                self.start_pose, self.target_pose)
-            stats = {'t_avg_run_time': results['avg_run_time'], 't_avg_plan_time': results['avg_plan_time'],
-                     't_avg_dist': results['avg_dist'], 't_avg_path_length': results['avg_path_length'], 't_avg_success': results['avg_success']}
-        else:
-            results, stats = super(SMACRun, self).run_problem_set(planner_id=planner)
-
-
-
-
-        
 def sigint_exit(signal, frame):
 	moveit_commander.roscpp_shutdown()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('smac_run', anonymous=True, log_level=rospy.FATAL)
+    set_session_params()
 
     # Read in first arguments.
     planner = sys.argv[1]
@@ -82,22 +64,32 @@ if __name__ == "__main__":
     specifics = sys.argv[5]
     cutoff = int(float(sys.argv[6]) + 1)
     runlength = int(sys.argv[7])
-    seed = int(sys.argv[8])
-
+    seed = str(sys.argv[8])
 
     # Read in parameter setting and build a dictionary mapping param_name to param_value.
     params_args = sys.argv[9:]
-    params = dict((name[1:], value) for name, value in zip(params_args[::2], params_args[1::2]))
-    pprint.pprint(configMap)
+    params_set = dict((name[1:], value) for name, value in zip(params_args[::2], params_args[1::2]))
+    
+    # planner = "RRTConnectkConfigDefault"
+    # scene = "narrow_passage"
+    # params_set = {'default': [0.1, 2.0, 0.1]}
 
-    smac_run = SMACRun(scene)
+    smac_run = SMACRun(scene, planner)
 
-    result_log, stats = smac_run.run_problem_set(planner, )
+    start_time = time.time()
+    params = {'planner': planner, 'params_set': params_set, 'start_time': start_time}
+   
+    max_runtime = rospy.get_param('~max_runtime')
+    if(max_runtime != "None"):
+        params['end_time'] = time.time() + int(max_runtime)
+        
+    
+    result = smac_run._smac_obj(params)
 
     quality = 1000.0
 
     signal.signal(signal.SIGINT, sigint_exit)
+    #pprint.pprint(result)
+    quality = result['loss']
 
-    quality = bmclass.bm_run_cost(problem_config, configMap)
-
-    print ("Result of algorithm run: SUCCESS, 0, 0, %f, 0" % 1)
+    print('Result for SMAC: SUCCESS, ' + str(result['elapsed_time']) + ', 0, ' + str(quality) +', 0')

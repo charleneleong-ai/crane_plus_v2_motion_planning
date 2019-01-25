@@ -110,6 +110,7 @@ install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 install(PROGRAMS
   scripts/moveit_benchmark_statistics.py
   scripts/parameter_tuning.py
+  scripts/timed_roslaunch.sh
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

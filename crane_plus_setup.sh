@@ -64,7 +64,7 @@ cd ~/catkin_ws/src/crane_plus_v2_motion_planning && pip install -r requirements.
 cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules
 git clone https://github.com/automl/SMAC3.git && cd SMAC3
 cat requirements.txt | xargs -n 1 -L 1 pip3 install 
-python3 setup.py install
+sudo python3 setup.py install
 cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/SMAC3/scripts
 cat smac | sed 's/python/python3/' 	# Fixing error in smac
 

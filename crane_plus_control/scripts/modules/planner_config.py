@@ -20,7 +20,6 @@ class PlannerConfig(object):
             self.planner_config = rospy.get_param(
                 '~planner_configs_'+self.planner_select+'_default')
             self.name = self.planner_select+'_default'
-
         else:
             self.planner_config = rospy.get_param(
                 '~planner_configs_'+self.planner_select+'_tune')

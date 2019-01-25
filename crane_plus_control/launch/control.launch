@@ -6,20 +6,25 @@ Last Modified:
 -->
 
 <launch>
+    <arg name="sim" default="true" />
     <arg name="rviz" default="true" />
     <arg name="gui" default="true"/>
-    
+    <arg name="tuning" default="false" />
+
+    <!-- Launch hardware in tuning mode -->
+    <include unless="$(arg sim)" file="$(find crane_plus_hardware)/launch/start_arm.launch"/>
+
     <!-- Launch simulation in tuning mode -->
-    <include file="$(find crane_plus_simulation)/launch/simulation.launch">
-        <arg name="tuning" value="true"/>
+    <include if="$(arg sim)" file="$(find crane_plus_simulation)/launch/simulation.launch">
         <arg name="gui" value="$(arg gui)"/>
+        <arg name="tuning" value="$(arg tuning)"/>
     </include>
 
     <!-- Launch crane_plus in robot execution mode -->
     <include file="$(find crane_plus_moveit_config)/launch/crane_plus.launch">
         <arg name="robot_execution" value="true"/>
         <arg name="rviz" value="$(arg rviz)"/>
-        <arg name="tuning" default="true" />
+        <arg name="tuning" value="$(arg tuning)" />
     </include>
 
 </launch>

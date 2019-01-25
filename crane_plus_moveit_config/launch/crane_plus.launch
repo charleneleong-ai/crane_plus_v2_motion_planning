@@ -6,7 +6,7 @@ Author: Charlene Leong (charleneleong84@gmail.com)
 -->
 
 <launch>
-  <!-- By default, will execute for simulation -->
+  <!-- By default, will execute for simulation -->s
   <arg name="robot_execution" default="false" />
   <arg name="rviz" default="true" /> 
   <arg name="tuning" default="false" />

@@ -22,8 +22,6 @@ class BenchmarkSession(Session):
     """
     Benchmarking Sessions runs in ompl and default mode
     """
-    PLANNING_TIME = 2  # seconds
-
     def __init__(self):
         super(BenchmarkSession, self).__init__()
         if self.path_tune:

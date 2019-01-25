@@ -1,0 +1,15 @@
+<!--
+File Created: Friday, 25th January 2019 3:31:14 pm
+Author:  Charlene Leong (charleneleong84@gmail.com>)
+Modified By: 
+Last Modified: 
+-->
+<launch>
+  <arg name="time" default="0"/>
+  <arg name="pkg" default=""/>
+  <arg name="file" default=""/>
+  <arg name="value" default="" />
+  <arg name="node_name" default="timed_roslaunch_$(arg time)_$(arg pkg)" />
+
+  <node pkg="crane_plus_control" type="timed_roslaunch.sh" args="$(arg time) $(arg pkg) $(arg file) $(arg value)" name="$(arg node_name)" output="screen"/>
+</launch>
