@@ -3,7 +3,7 @@
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author:  Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Thursday, January 24th 2019, 7:23:40 pm
+# Last Modified: Friday, January 25th 2019, 11:41:35 am
 ###
 
 import sys
@@ -84,10 +84,9 @@ class SMACSession(Session):
             self._create_pcs(planner, params_set, pcs_fp)
             self._create_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
 
-            # os.system('python3 '+ ROS_PKG_PATH +'/SMAC3/scripts/smac --scenario '+scenario_fp)
+            os.system('python3 '+ ROS_PKG_PATH +'/SMAC3/scripts/smac --scenario '+scenario_fp)
 
-            smac3_run = ROS_PKG_PATH +'/SMAC3/scripts/smac --scenario '+scenario_fp
-
-            process = subprocess.Popen(smac3_run.split(), stdout=subprocess.PIPE)
-            output, error = process.communicate() 
-            print(output)
+            # smac3_run = ROS_PKG_PATH +'/SMAC3/scripts/smac --scenario '+scenario_fp
+            # process = subprocess.Popen(smac3_run.split(), stdout=subprocess.PIPE)
+            # output, error = process.communicate() 
+            # print(output)

@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 2:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Friday, January 25th 2019, 10:07:42 am
+# Last Modified: Friday, January 25th 2019, 11:27:40 am
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
@@ -13,7 +13,7 @@ import cPickle as pickle
 import rospkg
 import rospy
 
-from session import Session
+from modules.session import Session
 
 ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/scripts'
 

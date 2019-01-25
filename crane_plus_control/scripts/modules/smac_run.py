@@ -2,7 +2,7 @@
 ###
 # File Created: Monday, January 21st 2019, 10:55:57 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Last Modified: Friday, January 25th 2019, 10:07:42 am
+# Last Modified: Friday, January 25th 2019, 11:55:48 am
 # Modified By: Charlene Leong
 ###
 
@@ -12,7 +12,6 @@ import os
 import time
 import logging
 import pprint
-
 import signal
 
 import numpy
@@ -25,7 +24,7 @@ import moveit_msgs.srv
 import geometry_msgs
 import shape_msgs
 import std_msgs
-from datetime import datetime as dt
+
 import sys
 import math
 import random
@@ -38,13 +37,35 @@ ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
 
 class SMACRun(Session):
     def __init__(self, scene):
+        self._set_rosparams()
+
         super(SMACRun, self).__init__()
+        
         self.scenes[scene]
 
-    # def run_problem_set(self):
-    #     super(SMACRun, self).run_problem_set(self, planner_id, save=False, results_path='')
+    # Porting params from SMACSession
+    def _set_rosparams(self):
+        session_params = rospy.get_params('/parameter_tuning/'))
+        
+
+    def _objective(self, planner, params):
+        self.n_trial += 1
+
+        # Set new params
+        self.planner_config_obj.set_planner_params(planner, params)
+
+        if self.path_tune:
+            results = super(SMACRun, self)._get_stats(
+                self.start_pose, self.target_pose)
+            stats = {'t_avg_run_time': results['avg_run_time'], 't_avg_plan_time': results['avg_plan_time'],
+                     't_avg_dist': results['avg_dist'], 't_avg_path_length': results['avg_path_length'], 't_avg_success': results['avg_success']}
+        else:
+            results, stats = super(SMACRun, self).run_problem_set(planner_id=planner)
 
 
+
+
+        
 def sigint_exit(signal, frame):
 	moveit_commander.roscpp_shutdown()
 
@@ -65,13 +86,13 @@ if __name__ == "__main__":
 
 
     # Read in parameter setting and build a dictionary mapping param_name to param_value.
-    params = sys.argv[9:]
-    configMap = dict((name[1:], value) for name, value in zip(params[::2], params[1::2]))
+    params_args = sys.argv[9:]
+    params = dict((name[1:], value) for name, value in zip(params_args[::2], params_args[1::2]))
     pprint.pprint(configMap)
 
     smac_run = SMACRun(scene)
 
-    result_log, stats = smac_run.run_problem_set(planner)
+    result_log, stats = smac_run.run_problem_set(planner, )
 
     quality = 1000.0
 

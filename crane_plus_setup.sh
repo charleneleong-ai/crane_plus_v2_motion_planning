@@ -61,14 +61,16 @@ cd ~/catkin_ws/src/crane_plus_v2_motion_planning && pip install -r requirements.
 
 # SMAC3
 # https://automl.github.io/SMAC3/master/installation.html
-sudo apt-get install build-essential swig
-pip3 install pybind11
-curl https://raw.githubusercontent.com/automl/smac3/master/requirements.txt | xargs -n 1 -L 1 pip3 install || { echo message && exit 1; }
-pip3 install smac
+cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules
+git clone https://github.com/automl/SMAC3.git && cd SMAC3
+cat requirements.txt | xargs -n 1 -L 1 pip3 install 
+python3 setup.py install
+cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/SMAC3/scripts
+cat smac | sed 's/python/python3/' 	# Fixing error in smac
 
-sudo find ./ -name "smac3_run.py" -exec chmod u+x {} \;
+#cd ~/catkin_ws/src && sudo find ./ -name "*.py" -exec chmod u+x {} \;
+#sudo find ./ -name "smac" -exec chmod u+x {} \;
 
-# find ./ -name "*.py" -exec chmod +x {} \;
 # Clean
 sudo apt-get autoremove -y
 
