@@ -91,6 +91,7 @@ $ roslaunch crane_plus_control parameter_tuning.launch
 - **planner_select:** Sets the desired planner config as outlined in [planner_configs.yaml](./config/planner_configs.yaml).
 
   - ***[default]*** Cano_etal
+  - Burger_etal
 - **mode:** Sets the mode of the parameter tuning session.
 
   - ompl - Runs a benchmark session with [OMPL planner config defaults](../crane_plus_moveit_config/config/ompl_planning.yaml).
@@ -157,6 +158,3 @@ Adapted from [moveit_benchmark_statistics.py](https://github.com/ros-planning/mo
 
       ![](imgs/plannerarena.png)
 
-## Warnings
-
-Whan

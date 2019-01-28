@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Tuesday, January 22nd 2019, 3:14:04 pm
+# Last Modified: Monday, January 28th 2019, 5:12:23 pm
 # Modified By: Charlene Leong
 ###
 
@@ -19,7 +19,13 @@ ROS_PKG_PATH = rospkg.RosPack().get_path(
 
 class Scene(object):
     """
-    Scene Class which loads and clears scenes from scene file to planning interface
+    Scene Object
+    _wait_for_state_update(box_is_known=False, box_is_attached=False, timeout=4): 
+                    Validates if scene has been updated with object
+    _clear_scene(): Clears the planning scene
+    _add_object( dim, pos, rot, col): Adds object to scene
+    _load(scene_file): Reads objects from scene file and adds to planning scene interface
+    _load_states(scene_file): Loads corresponding states to scene
     """
 
     PUBLISHER_DELAY = 0.2
@@ -41,10 +47,55 @@ class Scene(object):
         self._load_scene(scene_file)
         self._load_states(scene_file)
 
-    def _load_scene(self, scene):
-        rospy.loginfo('Loading %s scene', scene)
-        self._clear_env()
-        with open(ROS_PKG_PATH+scene+'.scene') as f:
+    def _wait_for_state_update(self, box_is_known=False, box_is_attached=False, timeout=4):
+        start = rospy.get_time()
+        seconds = rospy.get_time()
+        while (seconds - start < timeout) and not rospy.is_shutdown():
+            # Test if the base is in attached objects
+            attached_objects = self.planning_scene.get_attached_objects([
+                                                                        self.name])
+            is_attached = len(attached_objects.keys()) > 0
+
+            # Test if the base is in the scene.
+            # Note that attaching the base will remove it from known_objects
+            is_known = self.name in self.planning_scene.get_known_object_names()
+
+            # Test if we are in the expected state
+            if (box_is_attached == is_attached) and (box_is_known == is_known):
+                return True
+
+            # Sleep so that we give other threads time on the processor
+            rospy.sleep(0.01)
+            seconds = rospy.get_time()
+
+        # If we exited the while loop without returning then we timed out
+        return False
+
+    def _clear_scene(self):
+        objects = self.planning_scene.get_known_object_names()
+        for x in xrange(len(objects)):
+            self.planning_scene.remove_world_object(objects[x])
+            if(self.rviz == True):
+                rospy.sleep(self.PUBLISHER_DELAY)
+
+        return self._wait_for_state_update(box_is_known=False)
+
+    def _add_object(self, dim, pos, rot, col):
+        if(self.rviz == True):
+            rospy.sleep(self.PUBLISHER_DELAY)
+        pose = geometry_msgs.msg.PoseStamped()
+        pose.header.frame_id = self.planning_frame
+        pose.pose.position.x = pos[0]
+        pose.pose.position.y = pos[1]
+        pose.pose.position.z = pos[2]
+        self.planning_scene.add_box(self.name, pose, (dim[0], dim[1], dim[2]))
+
+        return self._wait_for_state_update(box_is_known=True)
+
+    def _load_scene(self, scene_file):
+        rospy.loginfo('Loading %s scene', scene_file)
+        self._clear_scene()
+        with open(ROS_PKG_PATH+scene_file+'.scene') as f:
 
             lines = 0   # get lines to know amount of blocks
             for line in f:
@@ -122,53 +173,9 @@ class Scene(object):
                 # object.header.stamp = rospy.Time.now()
                 # object.operation = object.ADD
                 # self.object_publisher.publish(object)
-        rospy.loginfo('Scene loaded')
-
-    def _clear_env(self):
-        objects = self.planning_scene.get_known_object_names()
-        for x in xrange(len(objects)):
-            self.planning_scene.remove_world_object(objects[x])
-            if(self.rviz == True):
-                rospy.sleep(self.PUBLISHER_DELAY)
-
-        return self._wait_for_state_update(box_is_known=False)
-
-    def _add_object(self, dim, pos, rot, col):
-        if(self.rviz == True):
-            rospy.sleep(self.PUBLISHER_DELAY)
-        pose = geometry_msgs.msg.PoseStamped()
-        pose.header.frame_id = self.planning_frame
-        pose.pose.position.x = pos[0]
-        pose.pose.position.y = pos[1]
-        pose.pose.position.z = pos[2]
-        self.planning_scene.add_box(self.name, pose, (dim[0], dim[1], dim[2]))
-
         return self._wait_for_state_update(box_is_known=True)
 
-    def _wait_for_state_update(self, box_is_known=False, box_is_attached=False, timeout=4):
-        start = rospy.get_time()
-        seconds = rospy.get_time()
-        while (seconds - start < timeout) and not rospy.is_shutdown():
-            # Test if the base is in attached objects
-            attached_objects = self.planning_scene.get_attached_objects([self.name])
-            is_attached = len(attached_objects.keys()) > 0
-
-            # Test if the base is in the scene.
-            # Note that attaching the base will remove it from known_objects
-            is_known = self.name in self.planning_scene.get_known_object_names()
-
-            # Test if we are in the expected state
-            if (box_is_attached == is_attached) and (box_is_known == is_known):
-                return True
-
-            # Sleep so that we give other threads time on the processor
-            rospy.sleep(0.01)
-            seconds = rospy.get_time()
-
-        # If we exited the while loop without returning then we timed out
-        return False
-
-    def _load_states(self, scene):
-        with open(ROS_PKG_PATH+scene+'.states') as f:
+    def _load_states(self, scene_file):
+        with open(ROS_PKG_PATH+scene_file+'.states') as f:
             content = f.readlines()
         self.states = [x.strip() for x in content]

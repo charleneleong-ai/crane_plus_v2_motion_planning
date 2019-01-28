@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 3:44:34 pm
+# Last Modified: Monday, January 28th 2019, 5:44:46 pm
 # Modified By: Charlene Leong
 ###
 
@@ -93,7 +93,7 @@ class Session(object):
         else:
             results, stats = self.run_problem_set(planner_id=planner)
 
-        loss = self._loss(planner, stats)
+        loss = self._calc_loss(stats)
 
         current = time.time()
         elapsed_time = (current - params['start_time'])
@@ -104,7 +104,7 @@ class Session(object):
         # Create OrderedDict to write to CSV
         result = OrderedDict([('elapsed_time', elapsed_time), ('n_trial', self.n_trial), ('loss', loss), ('planner', planner), ('avg_runs', self.avg_runs),
                               ('t_avg_run_time', stats['t_avg_run_time']), (
-                                  't_avg_plan_time', stats['t_avg_dist']),
+                                  't_avg_plan_time', stats['t_avg_plan_time']),
                               ('t_avg_dist', stats['t_avg_dist']), (
                                   't_avg_path_length', stats['t_avg_path_length']),
                               ('t_avg_success', stats['t_avg_success'])])
@@ -131,20 +131,20 @@ class Session(object):
 
         return dict(result)
 
-    def _loss(self, planner, stats):
-        sucess_weight = 5
-        success_rate = (1 - stats['t_avg_success']) * \
-            sucess_weight        # Want to max this
+    def _calc_loss(self,  stats):
+        
+        success_rate = (1 - stats['t_avg_success'])*self.max_plan_time         # Want to max this
 
         # If no success rate penalty is proportional to how badly the plan failed (how short the plan time is).
         if stats['t_avg_success'] == 0:
             loss = self.max_plan_time
 
-        elif(stats['t_avg_success'] != 1):
-            loss = loss*success_rate       # Penalise loss relative to success rate
-
         elif(stats['t_avg_success'] == 1):
             loss = stats['t_avg_plan_time']     # Plan time is our metric
+
+        else:
+            loss = loss*success_rate       # Penalise loss relative to success rate
+
         return loss
     
     def _write_headers(self, headers, results_path):

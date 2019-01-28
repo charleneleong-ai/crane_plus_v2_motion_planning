@@ -88,16 +88,15 @@ BLUE "Installing SMAC3"
 # https://automl.github.io/SMAC3/master/installation.html
 blue "Cloning SMAC3 Git repo"
 cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules
-git clone https://github.com/automl/SMAC3.git && cd SMAC3
+git clone https://github.com/automl/SMAC3.git && cd SMAC3 || { echo message && exit 1; }
 blue "Installing requirements"
 sudo apt-get install swig -y
 pip3 install pybind11
 cat requirements.txt | xargs -n 1 -L 1 pip3 install 
 blue "python3 setup.py install"
 sudo python3 setup.py install
-cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/SMAC3/scripts
 blue "Fixing error in smac"
-cat smac | sed 's/python/python3/' 
+cd scripts && cat smac | sed 's/python/python3/' 
 
 CYAN "\n==========  Installing Gazebo 9 ==========\n"
 BLUE "Installing Gazebo 9"

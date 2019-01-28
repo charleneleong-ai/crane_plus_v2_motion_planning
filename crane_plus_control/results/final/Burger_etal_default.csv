@@ -1,0 +1,21 @@
+planner,scene,query,start_pose,target_pose,avg_runs,avg_run_time,avg_plan_time,avg_dist,avg_path_length,avg_success,params
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,5,1.3737043380737304,0.41246938705444336,1.7027308538582961,7.954064973242888,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.55', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.8', 'failed_expansion_score_factor': '0.684', 'min_valid_path_fraction': '0.139', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.3737043380737304,0.41246938705444336,1.7027308538582961,7.954064973242888,1.0
+""
+RRTConnectkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,5,1.2181058406829834,0.3816388130187988,1.7029244375443777,7.514381883694513,1.0,"{'range': '5.0', 'type': 'geometric::RRTConnect'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.2181058406829834,0.3816388130187988,1.7029244375443777,7.514381883694513,1.0
+""
+KPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,5,0.0,0.0,0.0,0.0,0.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.9', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '7.2', 'failed_expansion_score_factor': '0.5', 'goal_bias': '0.05', 'min_valid_path_fraction': '0.5', 'type': 'geometric::KPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.0,0.0,0.0,0.0,0.0
+""
+BiTRRTkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,5,1.2131234169006349,0.4218722343444824,1.7028178210813727,7.6401894500538745,1.0,"{'init_temperature': '1e-06', 'temp_change_factor': '0.1', 'cost_threshold': '100000', 'range': '5.0', 'frountier_node_ratio': '0.1', 'type': 'geometric::BiTRRT', 'frountier_threshold': '0.4'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.2131234169006349,0.4218722343444824,1.7028178210813727,7.6401894500538745,1.0
+""

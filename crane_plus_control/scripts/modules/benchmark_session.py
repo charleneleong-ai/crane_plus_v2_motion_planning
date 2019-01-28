@@ -2,12 +2,10 @@
 ###
 # File Created: Wednesday, January 16th 2019, 2:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 3:45:02 pm
+# Last Modified: Monday, January 28th 2019, 5:01:28 pm
 # Author: Charlene Leong (charleneleong84@gmail.com)
 ###
 
-import csv
-import pprint
 import cPickle as pickle
 
 import rospkg
@@ -20,7 +18,8 @@ ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/scripts'
 
 class BenchmarkSession(Session):
     """
-    Benchmarking Sessions runs in ompl and default mode
+    Benchmarking Sessions 
+    run(): Runs in ompl and default mode
     """
     def __init__(self):
         super(BenchmarkSession, self).__init__()
@@ -42,8 +41,7 @@ class BenchmarkSession(Session):
                 planner_id=p, save=True, results_path=self.results_path)
             results[p] = result
 
-        # Dump as latest benchmark
-        with open(ROS_PKG_PATH+'/'+self.planner_config_obj.planner_select+'_'+self.mode+'.p', 'wb') as f:
+        with open(ROS_PKG_PATH+'/'+self.planner_select+'_'+self.mode+'.p', 'wb') as f:
             pickle.dump(results, f)
 
         print('\n')

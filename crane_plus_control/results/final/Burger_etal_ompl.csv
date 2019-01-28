@@ -1,0 +1,21 @@
+planner,scene,query,start_pose,target_pose,avg_runs,avg_run_time,avg_plan_time,avg_dist,avg_path_length,avg_success,params
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,5,1.0240421295166016,1.2221141815185548,1.3624704650905568,6.024890046453576,0.8,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.9', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.0', 'failed_expansion_score_factor': '0.5', 'min_valid_path_fraction': '0.5', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.0240421295166016,1.2221141815185548,1.3624704650905568,6.024890046453576,0.8
+""
+RRTConnectkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,5,1.261059617996216,0.31337704658508303,1.7029868931358187,8.671380968631016,1.0,"{'range': '0.0', 'type': 'geometric::RRTConnect'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.261059617996216,0.31337704658508303,1.7029868931358187,8.671380968631016,1.0
+""
+KPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,5,0.0,0.0,0.0,0.0,0.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.9', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.0', 'failed_expansion_score_factor': '0.5', 'goal_bias': '0.05', 'min_valid_path_fraction': '0.5', 'type': 'geometric::KPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.0,0.0,0.0,0.0,0.0
+""
+BiTRRTkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,5,1.3195486545562745,1.354278326034546,1.7030159204938706,8.602064378272072,1.0,"{'init_temperature': '100', 'temp_change_factor': '0.1', 'cost_threshold': '1e300', 'range': '0.0', 'frountier_node_ratio': '0.1', 'type': 'geometric::BiTRRT', 'frountier_threshold': '0.0'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.3195486545562745,1.354278326034546,1.7030159204938706,8.602064378272072,1.0
+""

@@ -3,13 +3,11 @@
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author:  Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 3:45:32 pm
+# Last Modified: Monday, January 28th 2019, 5:04:39 pm
 ###
 
 import sys
 import os
-import csv
-import subprocess
 import numpy as np
 
 import rospkg
@@ -20,6 +18,12 @@ from session import Session
 ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/scripts/modules'
 
 class SMACSession(Session):
+    """
+    SMAC Session
+    _create_pcs(planner, params_set, pcs_fp): Creates pcs file
+    _create_scenario(planner, scene, scenario_fp, pcs_fp): Creates the scenario file
+    run(): Executes SMAC on the smac_run.py with pcs and scenario file
+    """
     def __init__(self):
         super(SMACSession, self).__init__()
         if self.path_tune:
@@ -36,12 +40,12 @@ class SMACSession(Session):
             pcs_file = open(pcs_fp, 'w+')
             for k, v in params_set.iteritems():
                 if isinstance(v, list):
+                    param_default = str(self.planner_configs_default[planner][k])
                     if(self.planner_select == "Cano_etal"):
                         param_range = ",".join([str(round(x, 2)) for x in np.arange(v[0], v[1], v[2])])
-                        param_default = str(self.planner_configs_default[planner][k])
                         pcs_file.write(k + ' categorical {' + param_range + '} ['+param_default+']\n')
                     elif(self.planner_select == "Burger_etal"):
-                        pass  
+                        pcs_file.write(k + ' real [' + str(v[0])+', '+ str(v[1]) +'] ['+param_default+']\n')
             pcs_file.close()
             rospy.loginfo('Successful writing pcs file to \n%s\n.', pcs_fp)
         except IOError:
@@ -88,3 +92,7 @@ class SMACSession(Session):
             self._create_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
         
             os.system('python3 '+ ROS_PKG_PATH +'/SMAC3/scripts/smac --scenario '+scenario_fp)
+
+        print('\n')
+        rospy.loginfo('Saved results to %s', self.results_path)
+        print('\n')

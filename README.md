@@ -59,7 +59,7 @@ $ source activate ros_env
 ## Quick Start
 
 
-1. Download and run the [`crane_plus_setup.sh`](./crane_plus_setup.sh) script to install ROS, clone and builds the repository as well as other required packages. Reboot after installation finishes.
+1. Download and run the [`crane_plus_setup.sh`](./crane_plus_setup.sh) script to install ROS, clone and builds the repository as well as other required packages. This will take some time. Reboot after installation finishes.
 
     ```bash
     $ wget --no-proxy 'http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning/raw/master/crane_plus_setup.sh'
@@ -67,23 +67,24 @@ $ source activate ros_env
     $ sudo reboot
     ```
 
-    
-
 2. Launch the CRANE+V2 robot model either through the hardware interface or through simulation.
 
     ```bash
     $ roslaunch crane_plus_control control.launch
     ```
 
-    - **sim:** ***[default=true]*** Launch robot model in simulation or in hardware.
-    - **rviz:** ***[default=true]*** Launch MoveIt! with Rviz.
-    - **gui:** ***[default=true]*** Launch the Gazebo GUI.
-    - **tuning:** ***[default=false]*** Launch in tuning mode or in normal mode.
+    **sim:** ***[default=true]*** Launch robot model in simulation or in hardware.
 
-3. Control through MoveIt RViz.  Set `robot_execution:=true` to launch on real robot or Gazebo simulation.
+    **rviz:** ***[default=true]*** Launch MoveIt! with Rviz.
+
+    **gui:** ***[default=true]*** Launch the Gazebo GUI.
+
+    **tuning:** ***[default=false]*** Launch in tuning mode or in normal mode.
+
+3. Visualise motion planning through MoveIt RViz.  
 
     ```bash
-    $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true
+    $ roslaunch crane_plus_moveit_config crane_plus.launch 
     ```
 
     [OPTIONAL] Control headlessly for named poses. You can optionally set `rviz:=false` .

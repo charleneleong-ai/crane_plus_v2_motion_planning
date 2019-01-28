@@ -2,17 +2,15 @@
 ###
 # File Created: Monday, January 21st 2019, 10:55:57 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Last Modified: Monday, January 28th 2019, 3:43:55 pm
+# Last Modified: Monday, January 28th 2019, 5:17:21 pm
 # Modified By: Charlene Leong
 ###
 import sys
 import time
-import pprint
 import signal
 
 import rospkg
 import rospy
-import pandas as pd
 
 import moveit_commander
 
@@ -22,11 +20,16 @@ ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
 
 
 class SMACRun(Session):
+    """
+    SMACRun Session
+    _smac_obj(params): Adds non tunable params from SMAC Session to params and executes the problem set
+    """
     def __init__(self, scene, planner):
         super(SMACRun, self).__init__()
         self.planners = [planner]
         self.scenes = [scene]
-        self.max_trials = 1
+        self.max_trials = 1 # Just running once
+        self.max_runtime = "None"
 
     def _smac_obj(self, params):
         for planner, params_set in self.planner_config.iteritems():     # Resetting str params not in scenario f
@@ -34,7 +37,6 @@ class SMACRun(Session):
             for k, v in params_set.iteritems():
                 if not isinstance(v, list):
                     params['params_set'][k] = v
-        pprint.pprint(params)
         return super(SMACRun, self)._objective(params) 
 
 # Porting params from SMAC session
@@ -66,10 +68,6 @@ if __name__ == '__main__':
     params_args = sys.argv[9:]
     params_set = dict((name[1:], value) for name, value in zip(params_args[::2], params_args[1::2]))
     
-    # planner = "RRTConnectkConfigDefault"
-    # scene = "narrow_passage"
-    # params_set = {'default': 0.1}
-
     smac_run = SMACRun(scene, planner)
 
     start_time = time.time()
@@ -84,7 +82,7 @@ if __name__ == '__main__':
     quality = 1000.0
 
     signal.signal(signal.SIGINT, sigint_exit)
-    #pprint.pprint(result)
+
     quality = result['loss']
 
     print('Result for SMAC: SUCCESS, ' + str(result['elapsed_time']) + ', 0, ' + str(quality) +', 0')

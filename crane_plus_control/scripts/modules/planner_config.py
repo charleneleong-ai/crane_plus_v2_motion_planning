@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Tuesday, January 22nd 2019, 7:16:52 pm
+# Last Modified: Monday, January 28th 2019, 5:13:51 pm
 # Modified By: Charlene Leong
 ###
 
@@ -13,6 +13,12 @@ from moveit_msgs.srv import GetPlannerParams, SetPlannerParams
 
 
 class PlannerConfig(object):
+    """
+    PlannerConfig Object
+    set_planner_params(planner_id, params_set): Sets planner params on the ROS Param server
+    get_planner_params(planner_id): Gets planner params from the ROS Param server
+    """
+
     def __init__(self):
         self.planner_select = rospy.get_param('~planner_select')
 

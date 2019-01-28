@@ -2,19 +2,13 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 3:45:09 pm
+# Last Modified: Monday, January 28th 2019, 5:05:39 pm
 # Modified By: Charlene Leong
 ###
 
-import sys
 import time
 import cPickle as pickle
 from functools import partial
-
-import csv
-import json
-import pprint
-import pandas as pd
 
 import rospkg
 import rospy
@@ -28,7 +22,9 @@ ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/scripts'
 
 class HyperOptSession(Session):
     """
-    Hyperopt Session runs in rand and tpe mode
+    Hyperopt Session
+    _hpt_obj(params): Hyperopt obj fn inherited from Session class
+    run(): Runs in tpe or rand mode
     """
     def __init__(self):
         super(HyperOptSession, self).__init__()
@@ -52,8 +48,11 @@ class HyperOptSession(Session):
             params_set = dict(self.planner_config[planner].items())
             for k, v in params_set.iteritems():
                 if isinstance(v, list):
-                    # Discrete uniform dist [begin_range, end_range, step]
-                    params_set[k] = hp.quniform(k, v[0], v[1], v[2])
+                    if self.planner_select == "Cano_etal":
+                        # Discrete uniform dist [begin_range, end_range, step]
+                        params_set[k] = hp.quniform(k, v[0], v[1], v[2])
+                    elif self.planner_select == "Burger_etal":
+                        params_set[k] = hp.uniform(k, v[0], v[1])
 
             params = {'planner': planner, 'params_set': params_set,
                           'start_time': start_time}
@@ -90,19 +89,3 @@ class HyperOptSession(Session):
         print('\n')
         rospy.loginfo('Saved results to %s', self.results_path)
         print('\n')
-
-# class RunningMean(object):
-#     def __init__(self, t=0.0, n=0):
-#         self.t=t
-#         self.n = n
-
-#     def __iadd__(self, other):
-#         self.t += other
-#         self.n += 1
-#         return self
-
-#     def mean(self):
-#         return (self.t/self.n if self.n else 0)
-
-#     def __repr__(self):
-#         return "RunningMean(t=%f, n=%i)" %(self.t, self.n)
