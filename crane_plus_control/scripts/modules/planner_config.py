@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 5:13:51 pm
+# Last Modified: Monday, January 28th 2019, 5:52:33 pm
 # Modified By: Charlene Leong
 ###
 
@@ -64,7 +64,7 @@ class PlannerConfig(object):
             'set_planner_params', SetPlannerParams)
         try:
             set_planner_params(planner_id, 'arm', params, True)
-            rospy.loginfo('%s parameters updated', planner_id)
+            rospy.loginfo('%s %s parameters updated', self.planner_select, planner_id)
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
 

@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 5:44:46 pm
+# Last Modified: Monday, January 28th 2019, 5:53:24 pm
 # Modified By: Charlene Leong
 ###
 
@@ -192,8 +192,8 @@ class Session(object):
                     query = {'start_pose': start_pose,
                              'target_pose': target_pose}  # Create query dict
 
-                    rospy.loginfo('%d Executing %s from %s to %s for average over %d runs',
-                                  query_count, planner_id, start_pose, target_pose, self.avg_runs)
+                    rospy.loginfo('%d Executing %s to %s for average over %d runs',
+                                  query_count, start_pose, target_pose, self.avg_runs)
 
                     # Plan path and add results to planner dict
                     planner_results = self._get_stats(start_pose, target_pose)
