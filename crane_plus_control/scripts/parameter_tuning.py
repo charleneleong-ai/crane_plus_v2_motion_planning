@@ -2,7 +2,7 @@
 ###
 # File Created: Saturday, January 12th 2019, 11:23:55 am
 # Author: Charlene Leong
-# Last Modified: Tuesday, January 22nd 2019, 7:17:11 pm
+# Last Modified: Monday, January 28th 2019, 2:05:00 pm
 # Modified By: Charlene Leong
 ###
 
@@ -26,7 +26,7 @@ def check_params(mode):
         sys.exit(1)
 
     planner_select = rospy.get_param('~planner_select')
-    if planner_select not in ['Cano_etal']:
+    if planner_select not in ['Cano_etal', 'Burger_etal']:
         rospy.logerr('Invalid planner config select.')
         rospy.logerr('Please choose from %s', str(['Cano_etal']))
         sys.exit(1)

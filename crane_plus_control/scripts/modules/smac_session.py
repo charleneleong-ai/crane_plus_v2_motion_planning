@@ -3,7 +3,7 @@
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author:  Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 9:59:23 am
+# Last Modified: Monday, January 28th 2019, 3:45:32 pm
 ###
 
 import sys
@@ -22,7 +22,12 @@ ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/scripts/modules
 class SMACSession(Session):
     def __init__(self):
         super(SMACSession, self).__init__()
-        rospy.loginfo('Initialising SMAC session')
+        if self.path_tune:
+            rospy.loginfo('Initialising SMAC session in %s mode from %s to %s',
+                          self.mode, self.start_pose, self.target_pose)
+        else:
+            rospy.loginfo('Initialising SMAC session in %s mode on full problem set', self.mode)
+
         self.planner_configs_default = rospy.get_param(
             '~planner_configs_'+self.planner_select+'_default')
 
@@ -67,26 +72,19 @@ class SMACSession(Session):
             sys.exit(1)
 
     def run(self):
+        headers = ['elapsed_time', 'n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
+                             't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params']
+        super(SMACSession, self)._write_headers(headers=headers, results_path=self.results_path)
+
         scenario_dir =  ROS_PKG_PATH+'/SMAC3/scenarios/'
         if not os.path.exists(scenario_dir):
             os.makedirs(scenario_dir)
 
         for planner, params_set in self.planner_config.iteritems():
-
             pcs_fp = scenario_dir + self.planner_select + '_' + planner+'.pcs'
             scenario_fp = scenario_dir + planner + '_scenario.txt'
 
             self._create_pcs(planner, params_set, pcs_fp)
             self._create_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
-            
-            with open(self.results_path, 'w') as f:     # Write headers
-                writer = csv.writer(f)
-                writer.writerow(['elapsed_time', 'n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
-                                't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params'])
-
+        
             os.system('python3 '+ ROS_PKG_PATH +'/SMAC3/scripts/smac --scenario '+scenario_fp)
-
-            # smac3_run = ROS_PKG_PATH +'/SMAC3/scripts/smac --scenario '+scenario_fp
-            # process = subprocess.Popen(smac3_run.split(), stdout=subprocess.PIPE)
-            # output, error = process.communicate() 
-            # print(output)

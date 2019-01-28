@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 11:24:33 am
+# Last Modified: Monday, January 28th 2019, 3:44:34 pm
 # Modified By: Charlene Leong
 ###
 
@@ -46,6 +46,7 @@ class Session(object):
         self.max_runtime = rospy.get_param('~max_runtime')
         self.n_trial = 0
         self.max_plan_time = rospy.get_param('~max_plan_time')
+        
 
         if self.mode not in ['default', 'ompl']:
             self.max_trials = rospy.get_param('~max_trials')
@@ -63,10 +64,12 @@ class Session(object):
 
         self.robot = moveit_commander.RobotCommander()
         self.group = moveit_commander.MoveGroupCommander('arm')
+        self.group.set_planning_time(self.max_plan_time)
         self.planning_frame = self.group.get_planning_frame()
         self.display_trajectory_publisher = rospy.Publisher('/group/display_planned_path',
                                                             moveit_msgs.msg.DisplayTrajectory,
                                                             queue_size=20)
+        
         raw_dir = ROS_PKG_PATH + '/results/raw'
         if not os.path.exists(raw_dir):
             os.makedirs(raw_dir)
@@ -143,6 +146,12 @@ class Session(object):
         elif(stats['t_avg_success'] == 1):
             loss = stats['t_avg_plan_time']     # Plan time is our metric
         return loss
+    
+    def _write_headers(self, headers, results_path):
+        with open(results_path, 'w') as f:
+            writer = csv.writer(f)
+            writer.writerow(headers)
+
 
     def run_problem_set(self, planner_id, save=False, results_path=''):
         """Returns resuls after iterating over all scenes and corresponding states

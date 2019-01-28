@@ -37,40 +37,24 @@ sudo apt-get install ros-kinetic-desktop -y
 BLUE "Installing dependencies for building packages"
 sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential -y
 
-BLUE "Installing Gazebo 9"
-# http://gazebosim.org/tutorials?cat=install&tut=install_ubuntu&ver=9.0
-blue "Setup sources list"
-sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
-blue "Setup keys"
-wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - 
-blue "sudo apt-get update"
-sudo apt-get update -qq
-
-BLUE "Installing ROS Kinetic Gazebo 9"
-sudo apt-get install gazebo9 ros-kinetic-gazebo9-* -y
-
 BLUE "Configuring ROS Kinetic"
 # http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment
 blue "Initialising rosdep"
 sudo rosdep init &&  rosdep update
 blue "Adding to ~/.bashrc"
-if [ $? -eq 1 ]
-then
-	echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
-	source ~/.bashrc
-fi
+echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
 
 blue "Creating and building catkin workspace"
 mkdir -p ~/catkin_ws/src 
 cd ~/catkin_ws/ && catkin_make
 
 blue "Adding to ~/.bashrc"
-if [ $? -eq 1 ]
-then
-	echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc 
-	source ~/.bashrc
-fi
+echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc 
+source ~/.bashrc
 
+
+CYAN "\n==========  Installing CRANE V2+ and dependencies ==========\n"
 BLUE "Cloning crane_plus_v2_motion_planning Git repo"
 cd ~/catkin_ws/src/ && git clone http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git || { echo message && exit 1; }
 #git clone git@github.com:charyeezy/crane_plus_v2_motion_planning.git || { echo message && exit 1; }
@@ -78,6 +62,7 @@ cd ~/catkin_ws/src/crane_plus_v2_motion_planning && git checkout smac3
 
 BLUE "Installing ROS dependencies"
 cd ~/catkin_ws && rosdep install -y --from-paths src --ignore-src --rosdistro kinetic 
+
 
 BLUE "Installing Warehouse ROS Mongo DB dependencies"
 # https://github.com/ros-planning/warehouse_ros_mongo
@@ -91,26 +76,41 @@ cd mongo-cxx-driver && sudo scons --prefix=/usr/local/ --full --use-system-boost
 
 cd ~/catkin_ws && catkin_make && source ~/catkin_ws/devel/setup.bash
 
-CYAN "\n==========  Installing Parameter Tuning Dependencies  ==========\n"
+CYAN "\n==========  Installing CRANE V2+ Parameter Tuning Dependencies  ==========\n"
 BLUE "Installing pip"
 sudo apt-get install python-pip python3-pip -y
 source ~/.bashrc
 
 BLUE "Installing pip requirements"
 cd ~/catkin_ws/src/crane_plus_v2_motion_planning && pip install -r requirements.txt
-
+sudo atp
 BLUE "Installing SMAC3"
 # https://automl.github.io/SMAC3/master/installation.html
 blue "Cloning SMAC3 Git repo"
 cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules
 git clone https://github.com/automl/SMAC3.git && cd SMAC3
 blue "Installing requirements"
+sudo apt-get install swig -y
+pip3 install pybind11
 cat requirements.txt | xargs -n 1 -L 1 pip3 install 
 blue "python3 setup.py install"
 sudo python3 setup.py install
 cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/SMAC3/scripts
 blue "Fixing error in smac"
-cat smac | sed 's/python/python3/' 	
+cat smac | sed 's/python/python3/' 
+
+CYAN "\n==========  Installing Gazebo 9 ==========\n"
+BLUE "Installing Gazebo 9"
+# http://gazebosim.org/tutorials?cat=install&tut=install_ubuntu&ver=9.0
+blue "Setup sources list"
+sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
+blue "Setup keys"
+wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - 
+blue "sudo apt-get update"
+sudo apt-get update -qq
+
+BLUE "Installing ROS Kinetic Gazebo 9"
+sudo apt-get install gazebo9 ros-kinetic-gazebo9-* -y
 
 #cd ~/catkin_ws/src && sudo find ./ -name "*.py" -exec chmod u+x {} \;
 #sudo find ./ -name "smac" -exec chmod u+x {} \;
@@ -121,6 +121,7 @@ sudo apt-get autoremove -y
 # Confirming installation
 CYAN "\n==========  ROS Environment Variables  ==========\n"
 printenv | grep ROS
+source ~/.bashrc
 
 CYAN "\n==========  CRANE V2+ INSTALLATION COMPLETE!!!  ==========\n"
 

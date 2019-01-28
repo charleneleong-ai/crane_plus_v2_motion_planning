@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 10:38:02 am
+# Last Modified: Monday, January 28th 2019, 3:45:09 pm
 # Modified By: Charlene Leong
 ###
 
@@ -37,16 +37,14 @@ class HyperOptSession(Session):
                           self.mode, self.start_pose, self.target_pose)
         else:
             rospy.loginfo('Initialising hyperopt session in %s mode on full problem set', self.mode)
-
+    
     def _hpt_obj(self, params):
         return super(HyperOptSession, self)._objective(params)
 
     def run(self):
-        self.group.set_planning_time(self.max_plan_time)
-        with open(self.results_path, 'w') as f:     # Write headers
-            writer = csv.writer(f)
-            writer.writerow(['elapsed_time', 'n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
-                             't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params'])
+        headers = ['elapsed_time', 'n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
+                             't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params']
+        super(HyperOptSession, self)._write_headers(headers=headers, results_path=self.results_path)
 
         start_time = time.time()
         # Setting up the parameter search space and parameters

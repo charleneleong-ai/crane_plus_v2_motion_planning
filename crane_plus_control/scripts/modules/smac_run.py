@@ -2,7 +2,7 @@
 ###
 # File Created: Monday, January 21st 2019, 10:55:57 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Last Modified: Monday, January 28th 2019, 9:28:27 am
+# Last Modified: Monday, January 28th 2019, 3:43:55 pm
 # Modified By: Charlene Leong
 ###
 import sys
@@ -27,7 +27,6 @@ class SMACRun(Session):
         self.planners = [planner]
         self.scenes = [scene]
         self.max_trials = 1
-        
 
     def _smac_obj(self, params):
         for planner, params_set in self.planner_config.iteritems():     # Resetting str params not in scenario f

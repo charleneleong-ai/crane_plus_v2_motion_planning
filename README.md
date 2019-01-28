@@ -62,10 +62,12 @@ $ source activate ros_env
 1. Download and run the [`crane_plus_setup.sh`](./crane_plus_setup.sh) script to install ROS, clone and builds the repository as well as other required packages. Reboot after installation finishes.
 
     ```bash
-    $ curl --noproxy "*" -L -O 'http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning/raw/master/crane_plus_setup.sh'
+    $ wget --no-proxy 'http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning/raw/master/crane_plus_setup.sh'
     $ chmod u+x crane_plus_setup.sh && ./crane_plus_setup.sh 
     $ sudo reboot
     ```
+
+    
 
 2. Launch the CRANE+V2 robot model either through the hardware interface or through simulation.
 
