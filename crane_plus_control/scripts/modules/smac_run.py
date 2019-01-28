@@ -2,16 +2,13 @@
 ###
 # File Created: Monday, January 21st 2019, 10:55:57 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Last Modified: Friday, January 25th 2019, 6:05:29 pm
+# Last Modified: Monday, January 28th 2019, 9:28:27 am
 # Modified By: Charlene Leong
 ###
 import sys
-import os
 import time
-from collections import OrderedDict
 import pprint
 import signal
-import numpy
 
 import rospkg
 import rospy
@@ -33,12 +30,12 @@ class SMACRun(Session):
         
 
     def _smac_obj(self, params):
-        for planner, params_set in self.planner_config.iteritems():
+        for planner, params_set in self.planner_config.iteritems():     # Resetting str params not in scenario f
             params_set = dict(self.planner_config[planner].items())
             for k, v in params_set.iteritems():
                 if not isinstance(v, list):
-                    params[k] = v
-        print(params)
+                    params['params_set'][k] = v
+        pprint.pprint(params)
         return super(SMACRun, self)._objective(params) 
 
 # Porting params from SMAC session
@@ -72,7 +69,7 @@ if __name__ == '__main__':
     
     # planner = "RRTConnectkConfigDefault"
     # scene = "narrow_passage"
-    # params_set = {'default': [0.1, 2.0, 0.1]}
+    # params_set = {'default': 0.1}
 
     smac_run = SMACRun(scene, planner)
 
@@ -82,7 +79,6 @@ if __name__ == '__main__':
     max_runtime = rospy.get_param('~max_runtime')
     if(max_runtime != "None"):
         params['end_time'] = time.time() + int(max_runtime)
-        
     
     result = smac_run._smac_obj(params)
 

@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Friday, January 25th 2019, 7:14:24 pm
+# Last Modified: Monday, January 28th 2019, 10:38:02 am
 # Modified By: Charlene Leong
 ###
 
@@ -21,7 +21,7 @@ import rospy
 
 from hyperopt import hp, rand, tpe, Trials, fmin
 
-from modules.session import Session
+from session import Session
 
 ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/scripts'
 
@@ -42,12 +42,11 @@ class HyperOptSession(Session):
         return super(HyperOptSession, self)._objective(params)
 
     def run(self):
-        self.group.set_planning_time(self.PLANNING_TIME)
+        self.group.set_planning_time(self.max_plan_time)
         with open(self.results_path, 'w') as f:     # Write headers
             writer = csv.writer(f)
             writer.writerow(['elapsed_time', 'n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
                              't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params'])
-
 
         start_time = time.time()
         # Setting up the parameter search space and parameters

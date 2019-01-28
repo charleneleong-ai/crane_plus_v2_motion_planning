@@ -3,7 +3,7 @@
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author:  Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Friday, January 25th 2019, 11:41:35 am
+# Last Modified: Monday, January 28th 2019, 9:59:23 am
 ###
 
 import sys
@@ -15,7 +15,7 @@ import numpy as np
 import rospkg
 import rospy
 
-from modules.session import Session
+from session import Session
 
 ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/scripts/modules'
 
@@ -36,9 +36,7 @@ class SMACSession(Session):
                         param_default = str(self.planner_configs_default[planner][k])
                         pcs_file.write(k + ' categorical {' + param_range + '} ['+param_default+']\n')
                     elif(self.planner_select == "Burger_etal"):
-                        pass
-                # else:
-                #     pcs_file.write(k + ' categorical {'+v+'}')   
+                        pass  
             pcs_file.close()
             rospy.loginfo('Successful writing pcs file to \n%s\n.', pcs_fp)
         except IOError:

@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Friday, January 25th 2019, 6:27:55 pm
+# Last Modified: Monday, January 28th 2019, 11:24:33 am
 # Modified By: Charlene Leong
 ###
 
@@ -34,6 +34,7 @@ class Session(object):
     """
     Session Base Class
     """
+
     def __init__(self):
         self.planner_config_obj = PlannerConfig()
         self.planner_config = self.planner_config_obj.planner_config
@@ -44,7 +45,7 @@ class Session(object):
         self.avg_runs = rospy.get_param('~avg_runs')
         self.max_runtime = rospy.get_param('~max_runtime')
         self.n_trial = 0
-        self.PLANNING_TIME = 3  # seconds
+        self.max_plan_time = rospy.get_param('~max_plan_time')
 
         if self.mode not in ['default', 'ompl']:
             self.max_trials = rospy.get_param('~max_trials')
@@ -66,7 +67,7 @@ class Session(object):
         self.display_trajectory_publisher = rospy.Publisher('/group/display_planned_path',
                                                             moveit_msgs.msg.DisplayTrajectory,
                                                             queue_size=20)
-        raw_dir = ROS_PKG_PATH +'/results/raw'
+        raw_dir = ROS_PKG_PATH + '/results/raw'
         if not os.path.exists(raw_dir):
             os.makedirs(raw_dir)
 
@@ -77,42 +78,19 @@ class Session(object):
 
     def _objective(self, params):
         self.n_trial += 1
-        # Extract param set
         planner = params['planner']
         params_set = params['params_set']
-        # Set new params
         self.planner_config_obj.set_planner_params(planner, params_set)
 
         if self.path_tune:
             results = self._get_stats(self.start_pose, self.target_pose)
             stats = {'t_avg_run_time': results['avg_run_time'], 't_avg_plan_time': results['avg_plan_time'],
-                     't_avg_dist': results['avg_dist'], 't_avg_path_length': results['avg_path_length'], 
+                     't_avg_dist': results['avg_dist'], 't_avg_path_length': results['avg_path_length'],
                      't_avg_success': results['avg_success']}
         else:
             results, stats = self.run_problem_set(planner_id=planner)
 
-        # loss = sum(stats.values())
-        # loss = stats['t_avg_path_length']
-        # sucess_weight = 5
-        # success_rate = (1 - stats['t_avg_success'])*sucess_weight        # Want to max this
-
-        # To penalise aborted plans which are missed (t_avg_success=1 but execution plan aborted (plan time <= 50ms)).
-        # This only happens with  BKPIECEkConfigDefault planner
-        # if  (stats['t_avg_success'] == 1) and (planner == "BKPIECEkConfigDefault") and (stats['t_avg_plan_time'] <= 0.05):
-        #     stats['t_avg_success']  = 0
-
-        # # If no success rate penalty is proportional to how badly the plan failed (how short the plan time is). 
-        # if stats['t_avg_success'] == 0:
-        #     loss = self.PLANNING_TIME
-
-        # elif(stats['t_avg_success'] != 1):
-        #     loss = loss*success_rate       # Penalise loss relative to success rate
-
-        # elif(stats['t_avg_success'] == 1):
-        #     loss = stats['t_avg_plan_time']     # Plan time is our metric
-
-        # loss = success_rate
-        loss = stats['t_avg_plan_time'] 
+        loss = self._loss(planner, stats)
 
         current = time.time()
         elapsed_time = (current - params['start_time'])
@@ -122,22 +100,27 @@ class Session(object):
 
         # Create OrderedDict to write to CSV
         result = OrderedDict([('elapsed_time', elapsed_time), ('n_trial', self.n_trial), ('loss', loss), ('planner', planner), ('avg_runs', self.avg_runs),
-                              ('t_avg_run_time', stats['t_avg_run_time']), ('t_avg_plan_time', stats['t_avg_dist']),
-                              ('t_avg_dist', stats['t_avg_dist']), ('t_avg_path_length', stats['t_avg_path_length']),
+                              ('t_avg_run_time', stats['t_avg_run_time']), (
+                                  't_avg_plan_time', stats['t_avg_dist']),
+                              ('t_avg_dist', stats['t_avg_dist']), (
+                                  't_avg_path_length', stats['t_avg_path_length']),
                               ('t_avg_success', stats['t_avg_success'])])
         # Save params as str for csv export
-        result_csv = OrderedDict(list(result.items()) + [('params', str(params_set))])
+        result_csv = OrderedDict(
+            list(result.items()) + [('params', str(params_set))])
         # Saving results dict with STATUS_OK for hyperopt
         result = OrderedDict(list(result.items()) +
                              [('params', params_set), ('status', STATUS_OK)])
         # print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
 
-        result_df = pd.DataFrame(dict(result_csv), columns=result.keys(), index=[0])
+        result_df = pd.DataFrame(
+            dict(result_csv), columns=result.keys(), index=[0])
         with open(self.results_path, 'a') as f:
             result_df.to_csv(f, header=False, index=False)
 
         if (self.max_runtime != "None") and (time.time() > params['end_time']):
-            rospy.loginfo('Program has run for allotted time (%d secs)', self.max_runtime)
+            rospy.loginfo(
+                'Program has run for allotted time (%d secs)', self.max_runtime)
             print('\n')
             rospy.loginfo('Saved results to %s', self.results_path)
             print('\n')
@@ -145,7 +128,34 @@ class Session(object):
 
         return dict(result)
 
+    def _loss(self, planner, stats):
+        sucess_weight = 5
+        success_rate = (1 - stats['t_avg_success']) * \
+            sucess_weight        # Want to max this
+
+        # If no success rate penalty is proportional to how badly the plan failed (how short the plan time is).
+        if stats['t_avg_success'] == 0:
+            loss = self.max_plan_time
+
+        elif(stats['t_avg_success'] != 1):
+            loss = loss*success_rate       # Penalise loss relative to success rate
+
+        elif(stats['t_avg_success'] == 1):
+            loss = stats['t_avg_plan_time']     # Plan time is our metric
+        return loss
+
     def run_problem_set(self, planner_id, save=False, results_path=''):
+        """Returns resuls after iterating over all scenes and corresponding states
+        
+        Args:
+            planner_id (str): planner type
+            save (bool, optional): Defaults to False. Save every runs results to CSV
+            results_path (str, optional): Defaults to ''. Overwrite default results path
+        
+        Returns:
+            results_log (dict): result_log of all queries (scenes and states)
+            stats (dict): stats of the whole problem set
+        """
         result_log = {}
         t_avg_run_time = 0      # Totals
         t_avg_plan_time = 0
@@ -156,12 +166,12 @@ class Session(object):
         for x1 in xrange(len(self.scenes)):     # Scene loop
             query_count = 0                     # Initiate query count for each scene
             scene_name = self.scenes[x1]
-            
+
             # Clears previous scene and loads scene to server, loads states
             scene = {'name': scene_name}        # Create scene dict
             scene_obj = Scene(self.scenes[x1])
             states = scene_obj.states
-            
+
             # Loops over all states for start and target poses
             for x2 in xrange(len(states)):
                 start_pose = states[x2]
@@ -202,8 +212,7 @@ class Session(object):
                                       planner_results['avg_dist'], planner_results['avg_path_length'],
                                       planner_results['avg_success'])
 
-                    # Add query dict to scene dict
-                    scene[query_count] = query
+                    scene[query_count] = query      # Add query dict to scene dict
                     query_count += 1
             result_log[x1] = scene        # Add scene dict to results
             t_avg_success = t_avg_success / float(query_count)
@@ -251,6 +260,11 @@ class Session(object):
         avg_success = float(sum(d['success']
                                 for d in path_stats)) / len(path_stats)
 
+        # To penalise aborted plans which are missed (t_avg_success=1 but execution plan aborted (plan time <= 50ms)).
+        # This only happens with BKPIECEkConfigDefault planner
+        if (avg_success == 1) and (avg_plan_time <= 0.01):
+            avg_success = 0
+
         return {'avg_runs': self.avg_runs, 'avg_run_time': avg_run_time, 'avg_plan_time': avg_plan_time,
                 'avg_dist': avg_dist, 'avg_path_length': avg_path_length, 'avg_success': avg_success}
 
@@ -271,7 +285,8 @@ class Session(object):
             # plan_time_secs = planned_path.joint_trajectory.points[-1].time_from_start.secs
             # plan_time_nsecs = planned_path.joint_trajectory.points[-1].time_from_start.nsecs
             # plan_time = plan_time_secs + plan_time_nsecs*1e-9
-            success = 1
+            if length['joint_length'] >= 0.001:
+                success=1
 
         return {'planned_path': planned_path, 'plan_time': plan_time, 'length': length, 'success': success}
 
@@ -328,7 +343,7 @@ class Session(object):
     def _move_arm(self, pose, plan=None):
         self.group.set_named_target(pose)
 
-        if plan is None:
+        if plan is None:    # When moving back to start
             plan = self.group.plan()
 
         display_trajectory = moveit_msgs.msg.DisplayTrajectory()

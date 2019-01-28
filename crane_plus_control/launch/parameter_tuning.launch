@@ -14,6 +14,7 @@ Modified By:
   <arg name="avg_runs" default="1" />
   <arg name="max_trials" default="30" />
   <arg name="max_runtime" default="None" />         <!-- secs -->
+  <arg name="max_plan_time" default="3" />         <!-- secs -->
 
   <!-- parameter tuning file -->
   <arg name="param_tuning_config" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>
@@ -29,6 +30,7 @@ Modified By:
     <param name="avg_runs" type="int" value="$(arg avg_runs)" />
     <param name="max_trials" type="int" value="$(arg max_trials)" />
     <param name="max_runtime" type="str" value="$(arg max_runtime)" />
+    <param name="max_plan_time" type="int" value="$(arg max_plan_time)" />
   </node>
   
 </launch>

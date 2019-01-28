@@ -1,0 +1,250 @@
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.04029989242553711,0.02988409996032715,0.0001646160239427141,0.0002014119008113999,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.45', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.5', 'failed_expansion_score_factor': '0.25', 'min_valid_path_fraction': '0.45', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.04029989242553711,0.02988409996032715,0.0001646160239427141,0.0002014119008113999,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.030049800872802734,0.047989845275878906,0.00037570235938240616,0.0004212931367043329,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.3', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.8', 'failed_expansion_score_factor': '0.35', 'min_valid_path_fraction': '0.3', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.030049800872802734,0.047989845275878906,0.00037570235938240616,0.0004212931367043329,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.2067391872406006,0.5632719993591309,1.703044037300118,6.898106226582514,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.55', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.4', 'failed_expansion_score_factor': '0.35', 'min_valid_path_fraction': '0.6', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.2067391872406006,0.5632719993591309,1.703044037300118,6.898106226582514,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.4048988819122314,0.48552894592285156,1.7031478794176675,8.076126007106657,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.5', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.3', 'failed_expansion_score_factor': '0.45', 'min_valid_path_fraction': '0.6', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.4048988819122314,0.48552894592285156,1.7031478794176675,8.076126007106657,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.0007939338684082,0.3566780090332031,1.7031796709658282,7.2348126809028495,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.35', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.3', 'failed_expansion_score_factor': '0.75', 'min_valid_path_fraction': '0.3', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.0007939338684082,0.3566780090332031,1.7031796709658282,7.2348126809028495,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.63972806930542,1.1764109134674072,1.702728191648892,10.567638402716685,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.7', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.5', 'failed_expansion_score_factor': '0.4', 'min_valid_path_fraction': '0.2', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.63972806930542,1.1764109134674072,1.702728191648892,10.567638402716685,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.8846230506896973,0.2548820972442627,1.7030647056077204,6.84865632272786,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.35', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.6', 'failed_expansion_score_factor': '0.85', 'min_valid_path_fraction': '0.3', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.8846230506896973,0.2548820972442627,1.7030647056077204,6.84865632272786,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.8802649974822998,0.5560870170593262,1.703082379938623,8.584051974693374,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.2', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.6', 'failed_expansion_score_factor': '0.55', 'min_valid_path_fraction': '0.9', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.8802649974822998,0.5560870170593262,1.703082379938623,8.584051974693374,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.03594708442687988,0.06355810165405273,0.00021153469456522016,0.0002171068805862327,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.05', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.9', 'failed_expansion_score_factor': '0.5', 'min_valid_path_fraction': '0.95', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.03594708442687988,0.06355810165405273,0.00021153469456522016,0.0002171068805862327,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.9190068244934082,0.28666090965270996,1.7028624902234888,8.125848621291404,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.75', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.8', 'failed_expansion_score_factor': '0.25', 'min_valid_path_fraction': '0.2', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.9190068244934082,0.28666090965270996,1.7028624902234888,8.125848621291404,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.0964090824127197,0.6426608562469482,1.7028841497147957,9.020390678841098,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.65', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.5', 'failed_expansion_score_factor': '0.6', 'min_valid_path_fraction': '0.45', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.0964090824127197,0.6426608562469482,1.7028841497147957,9.020390678841098,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.864238977432251,1.1979820728302002,1.7031037261587902,7.5756641128417055,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.65', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.3', 'failed_expansion_score_factor': '0.15', 'min_valid_path_fraction': '0.55', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.864238977432251,1.1979820728302002,1.7031037261587902,7.5756641128417055,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.037473201751709,0.8585250377655029,1.702869055819848,6.875235292924664,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.65', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.8', 'failed_expansion_score_factor': '0.35', 'min_valid_path_fraction': '0.55', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.037473201751709,0.8585250377655029,1.702869055819848,6.875235292924664,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.015700817108154297,0.04839897155761719,0.00033473193864465615,0.00034265210733162263,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.7', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.3', 'failed_expansion_score_factor': '0.75', 'min_valid_path_fraction': '0.15', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.015700817108154297,0.04839897155761719,0.00033473193864465615,0.00034265210733162263,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.03628802299499512,0.0811309814453125,0.00016142948738330143,0.00016769282009223413,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.9', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.9', 'failed_expansion_score_factor': '0.75', 'min_valid_path_fraction': '0.4', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.03628802299499512,0.0811309814453125,0.00016142948738330143,0.00016769282009223413,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.606874942779541,0.8629817962646484,1.7029354211043446,10.759625732694229,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '1.0', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.7', 'failed_expansion_score_factor': '0.6', 'min_valid_path_fraction': '0.15', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.606874942779541,0.8629817962646484,1.7029354211043446,10.759625732694229,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.5506911277770996,0.5852501392364502,1.702970296373241,11.638797901552708,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.7', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.5', 'failed_expansion_score_factor': '0.5', 'min_valid_path_fraction': '0.4', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.5506911277770996,0.5852501392364502,1.702970296373241,11.638797901552708,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.0,0.0,0.0,0.0,0.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.9', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.3', 'failed_expansion_score_factor': '0.7', 'min_valid_path_fraction': '0.7', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.0,0.0,0.0,0.0,0.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.2246158123016357,0.3985881805419922,1.7027822118201508,7.273652666823107,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.55', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '2.0', 'failed_expansion_score_factor': '0.7', 'min_valid_path_fraction': '0.55', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.2246158123016357,0.3985881805419922,1.7027822118201508,7.273652666823107,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.856316089630127,0.7522537708282471,1.7030212452388664,7.409265872736012,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.7', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.6', 'failed_expansion_score_factor': '0.35', 'min_valid_path_fraction': '0.3', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.856316089630127,0.7522537708282471,1.7030212452388664,7.409265872736012,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.01611185073852539,0.03480696678161621,0.00030059141638944176,0.0003051596572923898,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.05', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.1', 'failed_expansion_score_factor': '0.05', 'min_valid_path_fraction': '0.8', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.01611185073852539,0.03480696678161621,0.00030059141638944176,0.0003051596572923898,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.023170948028564453,0.026254892349243164,0.0002677526055609174,0.00027277166981782034,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.15', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.1', 'failed_expansion_score_factor': '1.0', 'min_valid_path_fraction': '0.05', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.023170948028564453,0.026254892349243164,0.0002677526055609174,0.00027277166981782034,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.01447296142578125,0.014447927474975586,0.00026196980015684977,0.0002681863112580788,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.15', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.1', 'failed_expansion_score_factor': '1.0', 'min_valid_path_fraction': '0.05', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.01447296142578125,0.014447927474975586,0.00026196980015684977,0.0002681863112580788,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.2620971202850342,1.6068520545959473,1.7030566050926854,8.94216640286936,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.15', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.1', 'failed_expansion_score_factor': '1.0', 'min_valid_path_fraction': '0.05', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.2620971202850342,1.6068520545959473,1.7030566050926854,8.94216640286936,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.0,0.0,0.0,0.0,0.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.8', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.4', 'failed_expansion_score_factor': '0.05', 'min_valid_path_fraction': '0.15', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.0,0.0,0.0,0.0,0.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.898798942565918,0.7587599754333496,1.7031966759450203,6.912202946421509,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.3', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.6', 'failed_expansion_score_factor': '0.75', 'min_valid_path_fraction': '0.95', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.898798942565918,0.7587599754333496,1.7031966759450203,6.912202946421509,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.1175158023834229,0.8493149280548096,1.7028644146524197,6.531114797400012,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.55', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.6', 'failed_expansion_score_factor': '0.8', 'min_valid_path_fraction': '0.55', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.1175158023834229,0.8493149280548096,1.7028644146524197,6.531114797400012,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.0,0.0,0.0,0.0,0.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.25', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.3', 'failed_expansion_score_factor': '0.85', 'min_valid_path_fraction': '0.45', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.0,0.0,0.0,0.0,0.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.883491039276123,0.6858949661254883,1.70315596053219,8.178077275515584,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.9', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.9', 'failed_expansion_score_factor': '0.9', 'min_valid_path_fraction': '0.2', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.883491039276123,0.6858949661254883,1.70315596053219,8.178077275515584,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.7725710868835449,0.9457409381866455,1.7028451987240865,6.81857775465377,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.65', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.9', 'failed_expansion_score_factor': '0.85', 'min_valid_path_fraction': '0.5', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.7725710868835449,0.9457409381866455,1.7028451987240865,6.81857775465377,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.8969058990478516,0.6689589023590088,1.703066236421697,6.8568712437367925,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.95', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.8', 'failed_expansion_score_factor': '0.15', 'min_valid_path_fraction': '0.5', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.8969058990478516,0.6689589023590088,1.703066236421697,6.8568712437367925,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.0,0.0,0.0,0.0,0.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.85', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.3', 'failed_expansion_score_factor': '0.3', 'min_valid_path_fraction': '0.5', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.0,0.0,0.0,0.0,0.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.3663220405578613,0.5163941383361816,1.7027076564179078,6.573563328387385,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.65', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.0', 'failed_expansion_score_factor': '0.4', 'min_valid_path_fraction': '0.7', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.3663220405578613,0.5163941383361816,1.7027076564179078,6.573563328387385,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.0,0.0,0.0,0.0,0.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.45', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.3', 'failed_expansion_score_factor': '0.4', 'min_valid_path_fraction': '0.3', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.0,0.0,0.0,0.0,0.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.178614854812622,0.19675588607788086,1.702875819300524,7.622930396301137,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.8', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.6', 'failed_expansion_score_factor': '0.9', 'min_valid_path_fraction': '0.15', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.178614854812622,0.19675588607788086,1.702875819300524,7.622930396301137,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.4024100303649902,0.4063248634338379,1.702795559311752,8.748731369286578,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.4', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.4', 'failed_expansion_score_factor': '0.45', 'min_valid_path_fraction': '0.45', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.4024100303649902,0.4063248634338379,1.702795559311752,8.748731369286578,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.0,0.0,0.0,0.0,0.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.1', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.4', 'failed_expansion_score_factor': '0.25', 'min_valid_path_fraction': '0.6', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.0,0.0,0.0,0.0,0.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.3437650203704834,1.0149528980255127,1.7029721893327094,8.500367200202339,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.15', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.2', 'failed_expansion_score_factor': '0.45', 'min_valid_path_fraction': '0.65', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.3437650203704834,1.0149528980255127,1.7029721893327094,8.500367200202339,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.0,0.0,0.0,0.0,0.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.55', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.3', 'failed_expansion_score_factor': '0.1', 'min_valid_path_fraction': '0.2', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.0,0.0,0.0,0.0,0.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.0227580070495605,0.39011096954345703,1.7029133847937763,8.96434145850188,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.9', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.9', 'failed_expansion_score_factor': '0.3', 'min_valid_path_fraction': '0.55', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.0227580070495605,0.39011096954345703,1.7029133847937763,8.96434145850188,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.682539939880371,1.1080219745635986,1.7029611365261823,7.814511624452852,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.6', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.6', 'failed_expansion_score_factor': '0.25', 'min_valid_path_fraction': '0.8', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.682539939880371,1.1080219745635986,1.7029611365261823,7.814511624452852,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.664262056350708,0.532599925994873,1.7028590011010556,6.992771238178983,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.4', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '2.0', 'failed_expansion_score_factor': '0.55', 'min_valid_path_fraction': '0.25', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.664262056350708,0.532599925994873,1.7028590011010556,6.992771238178983,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.0,0.0,0.0,0.0,0.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.2', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.6', 'failed_expansion_score_factor': '0.15', 'min_valid_path_fraction': '0.55', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.0,0.0,0.0,0.0,0.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.2986400127410889,0.38814210891723633,1.7029308310751003,7.65924742595549,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.3', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.5', 'failed_expansion_score_factor': '1.0', 'min_valid_path_fraction': '0.75', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.2986400127410889,0.38814210891723633,1.7029308310751003,7.65924742595549,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.1293320655822754,0.35413599014282227,1.7029821688954485,6.940558681426146,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.75', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.2', 'failed_expansion_score_factor': '0.65', 'min_valid_path_fraction': '0.05', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.1293320655822754,0.35413599014282227,1.7029821688954485,6.940558681426146,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.9259262084960938,0.3069419860839844,1.7028184237758464,7.47925442975721,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '1.0', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.8', 'failed_expansion_score_factor': '1.0', 'min_valid_path_fraction': '0.35', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.9259262084960938,0.3069419860839844,1.7028184237758464,7.47925442975721,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.948138952255249,0.243027925491333,1.7030996502236044,6.66168442666427,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.75', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.3', 'failed_expansion_score_factor': '0.65', 'min_valid_path_fraction': '0.05', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.948138952255249,0.243027925491333,1.7030996502236044,6.66168442666427,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.892956018447876,1.9138309955596924,1.7027888165481144,6.828509843519992,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.05', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '1.7', 'failed_expansion_score_factor': '0.65', 'min_valid_path_fraction': '1.0', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.892956018447876,1.9138309955596924,1.7027888165481144,6.828509843519992,1.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,0.0,0.0,0.0,0.0,0.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '1.0', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.1', 'failed_expansion_score_factor': '0.95', 'min_valid_path_fraction': '0.85', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+0.0,0.0,0.0,0.0,0.0
+""
+BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,1,1.1964681148529053,0.7040488719940186,1.7029274717099072,9.011953085873394,1.0,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.7', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.7', 'failed_expansion_score_factor': '0.55', 'min_valid_path_fraction': '0.1', 'type': 'geometric::BKPIECE'}"
+""
+t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
+1.1964681148529053,0.7040488719940186,1.7029274717099072,9.011953085873394,1.0
+""
