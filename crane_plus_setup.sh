@@ -68,10 +68,9 @@ sudo apt-get install gazebo9 ros-kinetic-gazebo9-* -y
 
 
 CYAN "\n==========  Installing CRANE V2+ and dependencies ==========\n"
-BLUE "Cloning crane_plus_v2_motion_planning Git repo"
-cd ~/catkin_ws/src/ && git clone http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git || { echo message && exit 1; }
+BLUE "Cloning crane_plus_v2_motion_planning Git repo and submodules"
+cd ~/catkin_ws/src/ && git clone --recursive http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git || { echo message && exit 1; }
 #git clone git@github.com:charyeezy/crane_plus_v2_motion_planning.git || { echo message && exit 1; }
-cd ~/catkin_ws/src/crane_plus_v2_motion_planning && git checkout smac3
 
 BLUE "Installing ROS dependencies"
 cd ~/catkin_ws && rosdep install -y --from-paths src --ignore-src --rosdistro kinetic 
@@ -87,7 +86,7 @@ sudo apt-get install scons -y
 blue "Compiling mongo-cxx-driver with scons"
 cd mongo-cxx-driver && sudo scons --prefix=/usr/local/ --full --use-system-boost --disable-warnings-as-errors
 
-cd ~/catkin_ws && catkin_make && source ~/catkin_ws/devel/setup.bash
+cd ~/catkin_ws && catkin_make && source ~/catkin_ws/devel/setup.bash 
 
 CYAN "\n==========  Installing CRANE V2+ Parameter Tuning Dependencies  ==========\n"
 BLUE "Installing latest pip"
@@ -102,12 +101,9 @@ BLUE "Installing pip requirements"
 cd ~/catkin_ws/src/crane_plus_v2_motion_planning && pip install -r requirements.txt
 
 
-BLUE "Installing SMAC3"
+BLUE "Installing SMAC3 requirements"
 # https://automl.github.io/SMAC3/master/installation.html
-blue "Cloning SMAC3 Git repo"
-cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules
-git clone https://github.com/automl/SMAC3.git && cd SMAC3 || { echo message && exit 1; }
-blue "Installing requirements"
+cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/SMAC3
 sudo apt-get install swig -y
 pip3 install pybind11
 cat requirements.txt | xargs -n 1 -L 1 pip3 install 
@@ -118,8 +114,8 @@ cd scripts && cat smac | sed 's/python/python3/'
 
 
 BLUE "Installing OpenTuner"
-cd ~/catkin_ws/src && git clone https://github.com/jansel/opentuner.git || { echo message && exit 1; }
-cd opentuner && sudo apt-get install `cat debian-packages-deps | tr '\n' ' '`
+cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/opentuner
+sudo apt-get install `cat debian-packages-deps | tr '\n' ' '`
 pip install --user opentuner
 
 

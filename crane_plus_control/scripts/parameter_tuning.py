@@ -2,7 +2,7 @@
 ###
 # File Created: Saturday, January 12th 2019, 11:23:55 am
 # Author: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 2:05:00 pm
+# Last Modified: Tuesday, January 29th 2019, 5:08:41 pm
 # Modified By: Charlene Leong
 ###
 
@@ -12,6 +12,7 @@ import moveit_commander
 from modules.hyperopt_session import HyperOptSession
 from modules.benchmark_session import BenchmarkSession
 from modules.smac_session import SMACSession
+from modules.opentuner_session import OpenTunerSession
 
 def check_params(mode):
     """Checks for valid ROS parameters and returns True if tuning path, False if tuning scene
@@ -19,10 +20,10 @@ def check_params(mode):
     Args:
         mode (str): Mode of parameter tuning session
     """
-    if mode not in ['default', 'tpe', 'rand', 'ompl', 'smac']:
+    modes = ['default', 'tpe', 'rand', 'ompl', 'smac', 'opentuner']
+    if mode not in modes:
         rospy.logerr('Invalid mode.')
-        rospy.logerr('Please choose from %s', str(
-            ['default', 'tpe', 'rand', 'ompl']))
+        rospy.logerr('Please choose from %s', str(modes))
         sys.exit(1)
 
     planner_select = rospy.get_param('~planner_select')
@@ -69,8 +70,10 @@ def main():
         session = HyperOptSession()
     elif(mode == 'smac'):
         session = SMACSession()
+    elif(mode == 'opentuner'):
+        session = OpenTunerSession()
 
-    session.run()
+    session.run_session()
     moveit_commander.roscpp_shutdown()
 
 if __name__ == '__main__':

@@ -2,21 +2,18 @@
 ###
 # File Created: Monday, January 21st 2019, 10:55:57 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Last Modified: Monday, January 28th 2019, 5:17:21 pm
+# Last Modified: Tuesday, January 29th 2019, 6:41:21 pm
 # Modified By: Charlene Leong
 ###
 import sys
-import time
 import signal
+from timeit import default_timer as timer
 
-import rospkg
 import rospy
 
 import moveit_commander
 
 from session import Session
-
-ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
 
 
 class SMACRun(Session):
@@ -70,12 +67,12 @@ if __name__ == '__main__':
     
     smac_run = SMACRun(scene, planner)
 
-    start_time = time.time()
+    start_time = timer()
     params = {'planner': planner, 'params_set': params_set, 'start_time': start_time}
    
     max_runtime = rospy.get_param('~max_runtime')
     if(max_runtime != "None"):
-        params['end_time'] = time.time() + int(max_runtime)
+        params['end_time'] = timer() + int(max_runtime)
     
     result = smac_run._smac_obj(params)
 

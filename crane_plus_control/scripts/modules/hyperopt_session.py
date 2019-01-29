@@ -2,22 +2,18 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 5:05:39 pm
+# Last Modified: Tuesday, January 29th 2019, 5:08:03 pm
 # Modified By: Charlene Leong
 ###
 
-import time
-import cPickle as pickle
+from timeit import default_timer as timer
 from functools import partial
 
-import rospkg
 import rospy
 
 from hyperopt import hp, rand, tpe, Trials, fmin
 
 from session import Session
-
-ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/scripts'
 
 
 class HyperOptSession(Session):
@@ -26,6 +22,7 @@ class HyperOptSession(Session):
     _hpt_obj(params): Hyperopt obj fn inherited from Session class
     run(): Runs in tpe or rand mode
     """
+
     def __init__(self):
         super(HyperOptSession, self).__init__()
         if self.path_tune:
@@ -37,30 +34,32 @@ class HyperOptSession(Session):
     def _hpt_obj(self, params):
         return super(HyperOptSession, self)._objective(params)
 
-    def run(self):
-        headers = ['elapsed_time', 'n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
-                             't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params']
-        super(HyperOptSession, self)._write_headers(headers=headers, results_path=self.results_path)
+    def _load_search_space(self, planner, params_set, *args, **kwargs):
+        params_set = dict(self.planner_config[planner].items())
+        for k, v in params_set.iteritems():
+            if isinstance(v, list):
+                if self.planner_select == "Cano_etal":
+                    # Discrete uniform dist [begin_range, end_range, step]
+                    params_set[k] = hp.quniform(k, v[0], v[1], v[2])
+                elif self.planner_select == "Burger_etal":
+                    params_set[k] = hp.uniform(k, v[0], v[1])
 
-        start_time = time.time()
+        return params_set
+
+    def run_session(self):
+        super(HyperOptSession, self)._write_headers(self.results_path)
+
         # Setting up the parameter search space and parameters
         for planner, params_set in self.planner_config.iteritems():
-            params_set = dict(self.planner_config[planner].items())
-            for k, v in params_set.iteritems():
-                if isinstance(v, list):
-                    if self.planner_select == "Cano_etal":
-                        # Discrete uniform dist [begin_range, end_range, step]
-                        params_set[k] = hp.quniform(k, v[0], v[1], v[2])
-                    elif self.planner_select == "Burger_etal":
-                        params_set[k] = hp.uniform(k, v[0], v[1])
+            params_set = self._load_search_space(planner, params_set)
 
-            params = {'planner': planner, 'params_set': params_set,
-                          'start_time': start_time}
+            start_time = timer()
+            params = {'planner': planner, 'params_set': params_set,'start_time': start_time}
                     
             if(self.max_runtime != "None"):
-                params['end_time'] = time.time() + self.max_runtime
+                params['end_time'] = timer() + self.max_runtime
                 print('\n')
-                rospy.loginfo('Executing %s on %s for: %d secs',
+                rospy.loginfo('Executing %s on %s for  %d secs',
                               self.mode, params['planner'], self.max_runtime)
             else:
                 print('\n')
@@ -83,9 +82,8 @@ class HyperOptSession(Session):
             best = fmin(fn=self._hpt_obj, space=params, algo=algo,
                         max_evals=self.max_trials, trials=trials)
 
-        with open(ROS_PKG_PATH+'/'+self.planner_select+'_'+self.mode+'.p', 'wb') as f:
-            pickle.dump(trials, f)
-
+        super(HyperOptSession, self)._dump_results(trials)
+        
         print('\n')
         rospy.loginfo('Saved results to %s', self.results_path)
         print('\n')
