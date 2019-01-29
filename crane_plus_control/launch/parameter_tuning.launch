@@ -9,7 +9,7 @@ Modified By:
   <!-- option to choose target -->
   <arg name="start_pose" default="None"/>       <!-- [vertical, backbend, resting, low_fwd_reach ...] -->
   <arg name="target_pose" default="None"/>
-  <arg name="planner_select" default="Burger_etal"/>  <!-- [Cano_etal] -->
+  <arg name="planner_select" default="Cano_etal"/>  <!-- [Cano_etal] -->
   <arg name="mode" default="tpe"/>                  <!-- [default, ompl, rand, tpe, smac] -->
   <arg name="avg_runs" default="1" />
   <arg name="max_trials" default="30" />

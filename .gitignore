@@ -115,3 +115,8 @@ scenarios/
 smac3-output*/
 log-*.txt
 
+#======================
+#   Opentuner
+#======================
+opentuner.db
+opentuner.log

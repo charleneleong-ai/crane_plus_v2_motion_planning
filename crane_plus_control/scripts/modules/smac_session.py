@@ -3,7 +3,7 @@
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author:  Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 5:04:39 pm
+# Last Modified: Tuesday, January 29th 2019, 5:08:09 pm
 ###
 
 import sys
@@ -15,7 +15,6 @@ import rospy
 
 from session import Session
 
-ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/scripts/modules'
 
 class SMACSession(Session):
     """
@@ -24,6 +23,7 @@ class SMACSession(Session):
     _create_scenario(planner, scene, scenario_fp, pcs_fp): Creates the scenario file
     run(): Executes SMAC on the smac_run.py with pcs and scenario file
     """
+    
     def __init__(self):
         super(SMACSession, self).__init__()
         if self.path_tune:
@@ -34,6 +34,9 @@ class SMACSession(Session):
 
         self.planner_configs_default = rospy.get_param(
             '~planner_configs_'+self.planner_select+'_default')
+
+        self.SMAC_PATH = self.ROS_PKG_PATH+'/scripts/modules'
+
 
     def _create_pcs(self, planner, params_set, pcs_fp):
         try:
@@ -56,7 +59,7 @@ class SMACSession(Session):
         try:
             scenario_file = open(scenario_fp, 'w+')
             scenario_file.write('always_race_default = true\n')
-            scenario_file.write('algo = python '+ROS_PKG_PATH+'/smac_run.py ' +
+            scenario_file.write('algo = python '+self.SMAC_PATH+'/smac_run.py ' +
                                 planner + ' ' + scene + ' ' + str(self.max_trials) + '\n')
             scenario_file.write('pcs_fn = ' + pcs_fp + '\n') 
             scenario_file.write('run_obj = quality\n')
@@ -75,12 +78,17 @@ class SMACSession(Session):
             rospy.logerr('Error writing scenario file to \n%s\n.', scenario_fp)
             sys.exit(1)
 
-    def run(self):
-        headers = ['elapsed_time', 'n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
-                             't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params']
-        super(SMACSession, self)._write_headers(headers=headers, results_path=self.results_path)
+    def _load_search_space(self, planner, params_set, *args, **kwargs):
+        pcs_fp = args[0]
+        scenario_fp = args[1]
+        self._create_pcs(planner, params_set, pcs_fp)
+        self._create_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
 
-        scenario_dir =  ROS_PKG_PATH+'/SMAC3/scenarios/'
+    def run_session(self):
+    
+        super(SMACSession, self)._write_headers(self.results_path)
+
+        scenario_dir =  self.SMAC_PATH+'/SMAC3/scenarios/'
         if not os.path.exists(scenario_dir):
             os.makedirs(scenario_dir)
 
@@ -88,10 +96,9 @@ class SMACSession(Session):
             pcs_fp = scenario_dir + self.planner_select + '_' + planner+'.pcs'
             scenario_fp = scenario_dir + planner + '_scenario.txt'
 
-            self._create_pcs(planner, params_set, pcs_fp)
-            self._create_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
+            self._load_search_space(planner, params_set, pcs_fp, scenario_fp)
         
-            os.system('python3 '+ ROS_PKG_PATH +'/SMAC3/scripts/smac --scenario '+scenario_fp)
+            os.system('python3 '+ self.SMAC_PATH +'/SMAC3/scripts/smac --scenario '+scenario_fp)
 
         print('\n')
         rospy.loginfo('Saved results to %s', self.results_path)

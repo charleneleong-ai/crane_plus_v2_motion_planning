@@ -3,7 +3,7 @@
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author: Charlene Leong charleneleong84@gmail.com
 # Modified By: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 6:51:24 pm
+# Last Modified: Tuesday, January 29th 2019, 5:08:05 pm
 ###
 
 import sys
@@ -41,7 +41,7 @@ class SKOptSession(Session):
 
         return super(SKOptSession, self)._objective(params)
 
-    def run(self):
+    def run_session(self):
         headers = ['elapsed_time', 'n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
                              't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params']
         super(SKOptSession, self)._write_headers(headers=headers, results_path=self.results_path)

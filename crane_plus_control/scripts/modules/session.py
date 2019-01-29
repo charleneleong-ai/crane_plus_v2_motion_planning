@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 5:53:24 pm
+# Last Modified: Tuesday, January 29th 2019, 8:11:32 pm
 # Modified By: Charlene Leong
 ###
 
@@ -10,6 +10,7 @@ import sys
 import time
 import os
 import csv
+import cPickle as pickle
 import pprint
 from timeit import default_timer as timer
 from collections import OrderedDict
@@ -27,15 +28,17 @@ from hyperopt import STATUS_OK
 from planner_config import PlannerConfig
 from scene_object import Scene
 
-ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
+
 
 
 class Session(object):
     """
     Session Base Class
     """
-
+    
     def __init__(self):
+        self.ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
+
         self.planner_config_obj = PlannerConfig()
         self.planner_config = self.planner_config_obj.planner_config
         self.planner_select = self.planner_config_obj.planner_select
@@ -70,13 +73,17 @@ class Session(object):
                                                             moveit_msgs.msg.DisplayTrajectory,
                                                             queue_size=20)
         
-        raw_dir = ROS_PKG_PATH + '/results/raw'
+        raw_dir = self.ROS_PKG_PATH + '/results/raw'
         if not os.path.exists(raw_dir):
             os.makedirs(raw_dir)
 
         self.results_path = raw_dir+'/'+self.planner_select+'_'+self.mode+'.csv'
 
-    def run(self):
+    def _load_search_space(self, planner, params_set, *args, **kwargs):
+        raise NotImplementedError
+
+    def run_session(self):
+        """Executes session"""
         raise NotImplementedError
 
     def _objective(self, params):
@@ -103,27 +110,22 @@ class Session(object):
 
         # Create OrderedDict to write to CSV
         result = OrderedDict([('elapsed_time', elapsed_time), ('n_trial', self.n_trial), ('loss', loss), ('planner', planner), ('avg_runs', self.avg_runs),
-                              ('t_avg_run_time', stats['t_avg_run_time']), (
-                                  't_avg_plan_time', stats['t_avg_plan_time']),
-                              ('t_avg_dist', stats['t_avg_dist']), (
-                                  't_avg_path_length', stats['t_avg_path_length']),
+                              ('t_avg_run_time', stats['t_avg_run_time']), ('t_avg_plan_time', stats['t_avg_plan_time']),
+                              ('t_avg_dist', stats['t_avg_dist']), ('t_avg_path_length', stats['t_avg_path_length']),
                               ('t_avg_success', stats['t_avg_success'])])
         # Save params as str for csv export
         result_csv = OrderedDict(
             list(result.items()) + [('params', str(params_set))])
         # Saving results dict with STATUS_OK for hyperopt
-        result = OrderedDict(list(result.items()) +
-                             [('params', params_set), ('status', STATUS_OK)])
+        result = OrderedDict(list(result.items()) + [('params', params_set), ('status', STATUS_OK)])
         # print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
 
-        result_df = pd.DataFrame(
-            dict(result_csv), columns=result.keys(), index=[0])
+        result_df = pd.DataFrame(dict(result_csv), columns=result.keys(), index=[0])
         with open(self.results_path, 'a') as f:
             result_df.to_csv(f, header=False, index=False)
 
         if (self.max_runtime != "None") and (time.time() > params['end_time']):
-            rospy.loginfo(
-                'Program has run for allotted time (%d secs)', self.max_runtime)
+            rospy.loginfo('Program has run for allotted time (%d secs)', self.max_runtime)
             print('\n')
             rospy.loginfo('Saved results to %s', self.results_path)
             print('\n')
@@ -147,7 +149,13 @@ class Session(object):
 
         return loss
     
-    def _write_headers(self, headers, results_path):
+    def _write_headers(self, results_path):
+        if self.mode in ['ompl', 'default']:
+            headers = ['planner', 'scene', 'query', 'start_pose', 'target_pose', 'avg_runs', 'avg_run_time',
+                             'avg_plan_time', 'avg_dist', 'avg_path_length', 'avg_success', 'params']
+        else:
+            headers = ['elapsed_time', 'n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
+                             't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params']
         with open(results_path, 'w') as f:
             writer = csv.writer(f)
             writer.writerow(headers)
@@ -365,6 +373,11 @@ class Session(object):
 
         return run_time, success
 
+
+    def _dump_results(self, results):
+        with open(self.ROS_PKG_PATH+'/scripts/'+self.planner_select+'_'+self.mode+'.p', 'wb') as f:
+            pickle.dump(results, f)
+ 
     # def get_results(self):
     #     # try:
     #     # catch:
