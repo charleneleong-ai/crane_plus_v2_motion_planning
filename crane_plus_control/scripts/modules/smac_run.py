@@ -47,7 +47,7 @@ def set_session_params():
 
 
 if __name__ == '__main__':
-    rospy.init_node('smac_run', anonymous=True, log_level=rospy.FATAL)
+    rospy.init_node('smac_run', anonymous=True)
     set_session_params()
 
     # SMAC calls the target algo in the following format

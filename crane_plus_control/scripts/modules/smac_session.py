@@ -70,7 +70,7 @@ class SMACSession(Session):
                 scenario_file.write('ta_run_limit = ' + str(self.max_trials) + '\n')
             scenario_file.close()
 
-            rospy.loginfo('Successful writing scenario file to \n%s\n.', pcs_fp)
+            rospy.loginfo('Successful writing scenario file to \n%s\n.', scenario_fp)
         except IOError:
             rospy.logerr('Error writing scenario file to \n%s\n.', scenario_fp)
             sys.exit(1)

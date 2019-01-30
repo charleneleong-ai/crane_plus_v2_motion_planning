@@ -31,13 +31,14 @@ class SKOptSession(Session):
             rospy.loginfo(
                 'Initialising SKOpt session in %s mode on full problem set', self.mode)
         self.planner = self.planners[0]
-
+        if self.max_trials < 10:
+            rospy.logerr('Max trials must be >= 10 for %s mode\n', self.mode)
+            sys.exit(1)
 
     def _skopt_obj(self, search_space):
-        # SKopt obj requires list of params and return scalar
+        # SKopt obj requires list of params and return scalar loss
         # Converting to be compatible with our obj function
-        start_time = timer()
-        params = {'planner': self.planner, 'start_time': start_time}
+        params = {'planner': self.planner, 'start_time': self.start_time}
         if(self.max_runtime != 'None'):
                             params['end_time'] = timer() + self.max_runtime
 
@@ -73,15 +74,23 @@ class SKOptSession(Session):
                 print('\n')
                 rospy.loginfo('Executing %s on %s for %d trials',
                                 self.mode, planner, self.max_trials)
-                                
-            self.planner = planner  # Keeping track of current planner
-            self.n_trial = 0        # Reset to n_trials to zero for each planner
-            if self.mode == 'gp':
-                result = gp_minimize(self._skopt_obj, search_space, n_calls=self.max_trials, random_state=0)
-            elif self.mode == 'rf':
-                result = forest_minimize(self._skopt_obj, search_space, n_calls=self.max_trials, random_state=0)
 
-        super(SKOptSession, self)._dump_results(result)
+            self.n_trial = 0        # Reset to n_trials to zero for each planner        
+            self.planner = planner  # Keeping track of current planner
+            self.start_time = timer()   # Keeping track of start_time
+            if self.mode == 'gp':
+                result = gp_minimize(self._skopt_obj, search_space, n_calls=self.max_trials, random_state=0,
+                                acq_func='gp_hedge')
+                # gp_hedge means probabilistically choose betwn LCB, EI and PI acquisition functions at every iteration
+            elif self.mode == 'rf':
+                result = forest_minimize(self._skopt_obj, search_space, n_calls=self.max_trials, random_state=0,
+                                base_estimator='RF', acq_func='EI')
+            elif self.mode == 'et':
+                result = forest_minimize(self._skopt_obj, search_space, n_calls=self.max_trials, random_state=0,
+                                base_estimator='ET', acq_func='EI')
+            elif self.mode == 'gbrt':
+                result = gbrt_minimize(self._skopt_obj, search_space, n_calls=self.max_trials, random_state=0,
+                                acq_func='EI')
 
         print('\n')
         rospy.loginfo('Saved results to %s\n', self.results_path)

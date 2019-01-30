@@ -59,7 +59,7 @@ class Session(object):
         self.start_pose = rospy.get_param('~start_pose')
         self.target_pose = rospy.get_param('~target_pose')
         self.path_tune = False
-        if (self.start_pose != "None") and (self.target_pose != "None"):
+        if (self.start_pose != 'None') and (self.target_pose != 'None'):
             self.path_tune = True
 
         self.scenes = ['narrow_passage']
@@ -121,7 +121,7 @@ class Session(object):
         with open(self.results_path, 'a') as f:
             result_df.to_csv(f, header=False, index=False)
 
-        if (self.max_runtime != "None") and (time.time() > params['end_time']):
+        if (self.max_runtime != 'None') and (time.time() > params['end_time']):
             rospy.loginfo('Program has run for allotted time (%d secs)', self.max_runtime)
             print('\n')
             rospy.loginfo('Saved results to %s', self.results_path)
