@@ -2,45 +2,26 @@
 
 This package aims to implement the following two papers in researching global blackbox optimisation techniques for automated parameter tuning of motion planning algorithms. 
 
-### [Automatic Parameter Tuning of Motion Planning Algorithms (IROS 2018)](http://homepages.inf.ed.ac.uk/jcanore/pub/2018_iros.pdf) 
+[Automatic Parameter Tuning of Motion Planning Algorithms (IROS 2018)](http://homepages.inf.ed.ac.uk/jcanore/pub/2018_iros.pdf) 
 
-Cano, J. et al. “Automatic Parameter Tuning of Motion Planning Algorithms,” 2018 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain,  October, 1-5, 2018
+[Automated Tuning and Configuration of Path Planning Algorithms (ICRA 2017)](http://www.factory-in-a-day.eu/wp-content/uploads/2017/08/Automated_Tuning_SMAC_ICRA_2017.pdf)
 
-- **Motion Planning Algorithms:** BKPiece and RRTConnect
+## Contents
 
-  *Note:* The Simplification trails (P5) parameter is specific to the simulator used in paper, therefore this parameter is omitted in our experiment.
-
-  ![](imgs/Canoetal_defaults.png)
-
-- **Optimisation Algorithms Explored:** Random Search, Bayesian Optimisation (Gaussian Process),  Random Forest and AUC Bandit
-
-- **Experiment Setup:** Simulation only testing for 7DOF KUKA LWR robot arm
-
-  - ***Environment 1:*** Tuning planning time on Narrow Passage problem to get optimal parameters with each method  run for a period of 2 hours (7200s) 
-  - ***Environment 2:*** Tuning planning time on random scenarios with increasing number of objects 
-
-  ![](imgs/Canoetal_test_env.png)
-
-- **Results:**
-
-  - ***Environment 1:*** AUC Bandit gives 4.5x speedup for BKPiece and Random Forest gives 1.26x speedup for RRTConnect
-
-    
-
-    ![](imgs/Canoetal_results_speedup.png)
-
-  - ***Environment 2:*** 
-
-___
-
-### [Automated Tuning and Configuration of Path Planning Algorithms (ICRA 2017)](http://www.factory-in-a-day.eu/wp-content/uploads/2017/08/Automated_Tuning_SMAC_ICRA_2017.pdf)
-
-R. Burger, M. Bharatheesha, M. van Eert and R. Babuška, "Automated tuning and configuration of path planning algorithms," 2017 IEEE International Conference on Robotics and Automation (ICRA), Singapore, 2017, pp. 4371-4376.
-doi: 10.1109/ICRA.2017.7989504
+- [Quick Start](#quick-start)
+- [Parameter Tuning Parameters](#parameter-tuning-parameters)
+- [MoveIt Planning Time Benchmark](#moveit-planning-time-benchmark)
+- Results: [Result Comparison](./results/result_comparison.md)
 
 
 
 ## Quick Start
+
+Please run setup script if you did not initially setup  with [`crane_plus_setup_FULL.sh`](../crane_plus_setup_FULL.sh). This script installs pip and all required submodules and dependencies to run the all parameter tuning modes.
+
+```bash
+$ chmod u+x parameter_tuning_setup.sh && ./parameter_tuning_setup.sh 
+```
 
 Launch `control.launch` to:
 
@@ -81,6 +62,8 @@ $ roslaunch crane_plus_control.launch control.launch
 
 **Note:** Please ignore `[WARN] Dropping first 1 trajectory point(s) out of 135, as they occur before the current time. First valid point will be reached in 0.130s.` which outputs before every plan. This is a [known issue](https://github.com/ros-controls/ros_controllers/pull/366/files/7d2f98db49552cab0af753421955071c3cbae8e4#diff-01202b8fd499de6fd52d7a3f43d26df8) that has been patched in newer updates of `ros-kinetic-joint-trajectory-controller`.
 
+
+
 ## Parameter Tuning Parameters
 
 Launch parameter tuning. Please feel free to adjust the defaults below.
@@ -88,16 +71,19 @@ Launch parameter tuning. Please feel free to adjust the defaults below.
 $ roslaunch crane_plus_control parameter_tuning.launch
 ```
 
-- **planner_select:** Sets the desired planner config as outlined in [planner_configs.yaml](./config/planner_configs.yaml).
+- **planner_select:** Sets the desired planner configs as described in papers.
 
   - ***[default]*** Cano_etal
   - Burger_etal
 - **mode:** Sets the mode of the parameter tuning session.
 
-  - ompl - Runs a benchmark session with [OMPL planner config defaults](../crane_plus_moveit_config/config/ompl_planning.yaml).
-  - default - Runs a benchmark session with planner config defaults in Cano etal paper.
-  - ***[default]*** tpe -  Runs a TPE parameter tuning session with parameter search space defined in Cano etal paper.
-  - rand -  Runs a random search parameter tuning session with parameter search space defined in Cano etal paper.
+  - ompl - Runs benchmarking session with [OMPL planner config defaults](../crane_plus_moveit_config/config/ompl_planning.yaml).
+  - default - Runs benchmarking session with [planner config defaults](./config/planner_configs.yaml).
+  - ***[default]*** tpe -  Runs tuning session using TPE in [Hyperopt](http://hyperopt.github.io/hyperopt/).
+  - rand -   Runs tuning session using random search in [Hyperopt](http://hyperopt.github.io/hyperopt/).
+  - smac - Runs tuning session using SMAC in [SMAC3](https://automl.github.io/SMAC3/master/).
+  - auc_bandit - Runs tuning session using AUC Bandit in [OpenTuner](http://opentuner.org/)
+  - gp - Runs tuning session using Bayesian optimisation with GP in [skopt](https://scikit-optimize.github.io/)
 - **avg_runs:** Sets the avg number of runs for each parameter configuration. 
 
   - ***[default]*** 1
@@ -120,41 +106,47 @@ $ roslaunch crane_plus_control parameter_tuning.launch
 
 Adapted from [moveit_benchmark_statistics.py](https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_ros/benchmarks/scripts/moveit_benchmark_statistics.py) from MoveIt! framework. See [here](http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/benchmarking/benchmarking_tutorial.html) for more details on parameter input.
 
-1. Launch CRANE+V2 simulation. Adjust and save the desired scenes, queries and states to be benchmarked in the MongoDB Warehouse.
+1. Please run setup script if you did not initially setup  with [`crane_plus_setup_FULL.sh`](../crane_plus_setup_FULL.sh).
+
+    ```bash
+    $ chmod u+x benchmark_db_setup.sh && ./benchmark_db_setup.sh 
+    ```
+
+2. Launch CRANE+V2 simulation. Adjust and save the desired scenes, queries and states to be benchmarked in the MongoDB Warehouse.
 
     ```bash 
     $ roslaunch crane_plus_moveit_config demo.launch db:=true
     ```
 
-2. Within the *Motion Planning* RViz plugin, connect to the database by pressing the *Connect* button in the *Context* tab.
+3. Within the *Motion Planning* RViz plugin, connect to the database by pressing the *Connect* button in the *Context* tab.
 
-3. Save a scene on the *Stored Scenes* tab and name it `Scene1` by double clicking the scene in the list.
+4. Save a scene on the *Stored Scenes* tab and name it `Scene1` by double clicking the scene in the list.
 
-4. Move the start and goal states of the Crane arm by using the interactive markers.
+5. Move the start and goal states of the Crane arm by using the interactive markers.
 
-5. Save an associated query for the `Scene1` scene and name the query `Move1`. Save a start state for the robot on the *Stored States* tab and name it `Start1`. 
+6. Save an associated query for the `Scene1` scene and name the query `Move1`. Save a start state for the robot on the *Stored States* tab and name it `Start1`. 
 
-6. The config file [benchmark_config.yaml](./config/benchmark_config.yaml) refers to the scenes, queries and start states used for benchmarking. Modify them appropriately.
+7. The config file [benchmark_config.yaml](./config/benchmark_config.yaml) refers to the scenes, queries and start states used for benchmarking. Modify them appropriately.
 
-7. Set the username for the `output_directory` to export the benchmarked files. Log files will be saved to `/home/${USER}/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/results/benchmarks/` by default. 
+8. Set the username for the `output_directory` to export the benchmarked files. Log files will be saved to `/home/${USER}/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/results/benchmarks/` by default. 
 
     ```bash
     $ rosed crane_plus_control benchmark_config.yaml
     ```
 
-8. Bring down your previous `demo.launch` file ( <kbd>Ctrl</kbd> + <kbd>C</kbd>) and run the benchmarks. 
+9. Bring down your previous `demo.launch` file ( <kbd>Ctrl</kbd> + <kbd>C</kbd>) and run the benchmarks. 
 
     ```bash
     $ roslaunch crane_plus_control benchmark.launch 
     ```
 
-9. Run [moveit_benchmark_statistics.py](./scripts/moveit_benchmark_statistics.py)  to view results. A `benchmark.db`  and `benchmark_plots` file will appear in the `benchmarks` folder. See `--help` for more options.
+10. Run [moveit_benchmark_statistics.py](./scripts/moveit_benchmark_statistics.py)  to view results. A `benchmark.db`  and `benchmark_plots` file will appear in the `benchmarks` folder. See `--help` for more options.
 
     ```bash
     $ rosrun crane_plus_control moveit_benchmark_statistics.py 
     ```
 
-10. Click on the <kbd>Change Database</kbd> button to upload the `benchmark.db` file generated by script to [plannerarena.org](http://plannerarena.org/) to interactively visualise results. 
+11. Click on the <kbd>Change Database</kbd> button to upload the `benchmark.db` file generated by script to [plannerarena.org](http://plannerarena.org/) to interactively visualise results. 
 
-      ![](imgs/plannerarena.png)
+       ![](imgs/plannerarena.png)
 

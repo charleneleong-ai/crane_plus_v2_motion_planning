@@ -1,7 +1,6 @@
 #!/bin/bash -i
 # Needs to be interactive shell for source ~/.bashrc
 
-
 BLUE=`tput bold && tput setaf 4`
 CYAN=`tput bold && tput setaf 6`
 blue=`tput setaf 4`
@@ -69,58 +68,12 @@ sudo apt-get install gazebo9 ros-kinetic-gazebo9-* -y
 
 CYAN "\n==========  Installing CRANE V2+ and dependencies ==========\n"
 BLUE "Cloning crane_plus_v2_motion_planning Git repo and submodules"
-cd ~/catkin_ws/src/ && git clone --recursive http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git || { echo message && exit 1; }
+cd ~/catkin_ws/src/ && git clone http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git || { echo message && exit 1; }
 #git clone git@github.com:charyeezy/crane_plus_v2_motion_planning.git || { echo message && exit 1; }
 
 BLUE "Installing ROS dependencies"
 cd ~/catkin_ws && rosdep install -y --from-paths src --ignore-src --rosdistro kinetic 
 
-
-BLUE "Installing Warehouse ROS Mongo DB dependencies"
-# https://github.com/ros-planning/warehouse_ros_mongo
-blue "Cloning warehouse_ros_mongo and mongo-cxx-driver git repos"
-cd ~/catkin_ws/src && git clone https://github.com/ros-planning/warehouse_ros_mongo.git
-git clone -b 26compat https://github.com/mongodb/mongo-cxx-driver.git
-blue "Installing scons"
-sudo apt-get install scons -y
-blue "Compiling mongo-cxx-driver with scons"
-cd mongo-cxx-driver && sudo scons --prefix=/usr/local/ --full --use-system-boost --disable-warnings-as-errors
-
-cd ~/catkin_ws && catkin_make && source ~/catkin_ws/devel/setup.bash 
-
-CYAN "\n==========  Installing CRANE V2+ Parameter Tuning Dependencies  ==========\n"
-BLUE "Installing latest pip"
-sudo apt-get install python-pip python3-pip -y
-#export http_proxy="melinet:9515"
-#wget https://bootstrap.pypa.io/get-pip.py
-#sudo python get-pip.py
-#sudo python3 get-pip.py
-#source ~/.bashrc
-
-BLUE "Installing pip requirements"
-cd ~/catkin_ws/src/crane_plus_v2_motion_planning && pip install --user -r requirements.txt
-
-
-BLUE "Installing SMAC3 requirements"
-# https://automl.github.io/SMAC3/master/installation.html
-cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/SMAC3
-sudo apt-get install swig -y
-pip3 install --user pybind11
-cat requirements.txt | xargs -n 1 -L 1 pip3 install 
-blue "python3 setup.py install"
-sudo python3 setup.py install
-blue "Fixing error in smac"
-cd scripts && cat smac | sed 's/python/python3/' 
-
-
-BLUE "Installing OpenTuner requirements"
-cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/opentuner
-sudo apt-get install `cat debian-packages-deps | tr '\n' ' '` -y
-pip install --user opentuner
-
-
-#cd ~/catkin_ws/src && sudo find ./ -name "*.py" -exec chmod u+x {} \;
-#sudo find ./ -name "smac" -exec chmod u+x {} \;
 
 BLUE "Autoremove unnecessary packages"
 sudo apt-get autoremove -y

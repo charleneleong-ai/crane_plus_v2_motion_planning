@@ -2,7 +2,7 @@
 ###
 # File Created: Saturday, January 12th 2019, 11:23:55 am
 # Author: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 10:59:08 am
+# Last Modified: Wednesday, January 30th 2019, 2:56:46 pm
 # Modified By: Charlene Leong
 ###
 
@@ -21,7 +21,7 @@ def check_params(mode):
     Args:
         mode (str): Mode of parameter tuning session
     """
-    modes = ['default', 'tpe', 'rand', 'ompl', 'smac', 'auc_bandit', 'gp']
+    modes = ['default', 'tpe', 'rand', 'ompl', 'smac', 'auc_bandit', 'gp', 'rf']
     if mode not in modes:
         rospy.logerr('Invalid mode.')
         rospy.logerr('Please choose from %s', str(modes))

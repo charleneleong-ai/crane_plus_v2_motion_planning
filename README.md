@@ -14,6 +14,7 @@ Code and models for the [Crane+V2](https://www.rt-net.jp/products/cranep2?lang=e
 - [Package Description](#package-description)
 - [Quick Start](#quick-start)
 - [Setting Up a VM](#setting-up-a-vm)
+- Crane Plus Control: [Parameter Tuning](./crane_plus_control/README.md)
 
 
 
@@ -65,7 +66,6 @@ $ source activate ros_env
     ```bash
     $ wget --no-proxy 'http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning/raw/master/crane_plus_setup.sh'
     $ chmod u+x crane_plus_setup.sh && ./crane_plus_setup.sh 
-    $ sudo reboot
     ```
 
 2. Launch the CRANE+V2 robot model either through the hardware interface or through simulation.

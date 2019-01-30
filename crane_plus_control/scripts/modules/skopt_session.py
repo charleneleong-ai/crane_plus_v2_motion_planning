@@ -3,7 +3,7 @@
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author: Charlene Leong charleneleong84@gmail.com
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 2:44:19 pm
+# Last Modified: Wednesday, January 30th 2019, 2:50:24 pm
 ###
 import sys
 from timeit import default_timer as timer
@@ -11,9 +11,8 @@ import pprint
 
 import rospy
 
-from skopt import gp_minimize
+from skopt import gp_minimize, forest_minimize, gbrt_minimize
 from skopt.space import Real, Categorical
-from skopt.utils import use_named_args
 
 from session import Session
 
@@ -34,7 +33,7 @@ class SKOptSession(Session):
         self.planner = self.planners[0]
 
 
-    def _bayesopt_obj(self, search_space):
+    def _skopt_obj(self, search_space):
         # SKopt obj requires list of params and return scalar
         # Converting to be compatible with our obj function
         start_time = timer()
@@ -78,7 +77,9 @@ class SKOptSession(Session):
             self.planner = planner  # Keeping track of current planner
             self.n_trial = 0        # Reset to n_trials to zero for each planner
             if self.mode == 'gp':
-                result = gp_minimize(self._bayesopt_obj, search_space, n_calls=self.max_trials, random_state=0)
+                result = gp_minimize(self._skopt_obj, search_space, n_calls=self.max_trials, random_state=0)
+            elif self.mode == 'rf':
+                result = forest_minimize(self._skopt_obj, search_space, n_calls=self.max_trials, random_state=0)
 
         super(SKOptSession, self)._dump_results(result)
 
