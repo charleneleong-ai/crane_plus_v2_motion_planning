@@ -13,18 +13,19 @@ Code and models for the [Crane+V2](https://www.rt-net.jp/products/cranep2?lang=e
 - [Environment Setup](#environment-setup)
 - [Package Description](#package-description)
 - [Quick Start](#quick-start)
+- [Setting Up a VM](#setting-up-a-vm)
 
 
 
 ## Environment Setup
 
-- [Ubuntu 16.04 Xenial](http://releases.ubuntu.com/16.04/)
+- [Ubuntu 16.04 LTS](http://releases.ubuntu.com/16.04/)
 - [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
 - [Python 2.7](https://www.python.org/download/releases/2.7/)
 
-This package has only been tested on Ubuntu 16.04 with ROS Kinetic. ROS is currently only stable on Python 2.7 due to compatibility with legacy packages. 
+This package has only been tested on Ubuntu 16.04 LTS with ROS Kinetic. ROS is currently only stable on Python 2.7 due to compatibility with legacy packages. 
 
-If you do not have Ubuntu16.04, an option is to download the Ubuntu16.04 [ISO](http://releases.ubuntu.com/16.04/ubuntu-16.04.5-desktop-amd64.iso) and install on a VM such as [VMWare Workstation Player](https://www.youtube.com/watch?v=Wmx5hZ_m7EY) or [Virtualbox](https://www.youtube.com/watch?v=RBU1xMP-SGc).
+If you do not have Ubuntu 16.04 LTS or want to run on Windows machine, an option is to download the [ISO](http://releases.ubuntu.com/16.04/ubuntu-16.04.5-desktop-amd64.iso) and install on a VM such as [VMWare Workstation Player](https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html) [(setup)](https://www.youtube.com/watch?v=Wmx5hZ_m7EY) or [Virtualbox](https://www.virtualbox.org/wiki/Downloads) [(setup)](https://www.youtube.com/watch?v=RBU1xMP-SGc).  See [below](#setting-up-a-vm) for further instructions.
 
 If you wish to run ROS along with Python 3 in Anaconda, please [create a py2.7 conda environment](https://www.youtube.com/watch?v=EMF20z-gT5s) for ROS.
 
@@ -95,3 +96,69 @@ $ source activate ros_env
     $ roslaunch crane_plus_moveit_config crane_plus.launch robot_execution:=true rviz:=false
     $ roslaunch crane_plus_control named_pose.launch pose:=resting
     ```
+
+
+
+## Setting Up A VM
+
+1. Download the Ubuntu 16.04 LTS [ISO](http://releases.ubuntu.com/16.04/ubuntu-16.04.5-desktop-amd64.iso) and install on a VM such as [VMWare Workstation Player](https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html) [(setup)](https://www.youtube.com/watch?v=Wmx5hZ_m7EY) or [Virtualbox](https://www.virtualbox.org/wiki/Downloads) [(setup)](https://www.youtube.com/watch?v=RBU1xMP-SGc). 
+
+2. Install [VMWare tools](https://www.youtube.com/watch?v=F5WaWIfi8f8) for VMWare Workstation Player or [VirtualBox Guest Additions](https://www.tecmint.com/install-virtualbox-guest-additions-in-ubuntu/) for Virtualbox. 
+
+3. [Ubuntu host only] Configure your Ethernet network connection settings to match host and connect to Internet. Click connections (top right) and click [Edit Connections], select Ethernet connection and see [IPv4 Settings].
+
+4. Set up melinet proxy.
+
+   Set up proxy for apt, software centre etc. Edit `/etc/apt/apt.conf`file and replace with following.
+
+   ```bash
+   $ sudo nano /etc/apt/apt.conf
+   ```
+
+   ```bash
+   Acquire::http::proxy "http://melinet:9515/";
+   Acquire::https::proxy "https://melinet:9515/";
+   Acquire::ftp::proxy "ftp://melinet:9515/";
+   ```
+
+   <kbd>Ctrl</kbd>+<kbd>X</kbd> and <kbd>Y</kbd> to save.
+
+   Set up proxy environment variables. Edit `/etc/environment` file and add the following below `PATH`.
+
+   ```bash
+   $ sudo nano /etc/environment
+   ```
+
+   ```bash
+   PATH ="..."
+   http_proxy="http://melinet:9515/"
+   https_proxy="https://melinet:9515/"
+   ftp_proxy="ftp://melinet:9515/"
+   ```
+
+5. Add gojou to proxy exceptions.
+
+   ```bash
+   $ gsettings get org.gnome.system.proxy ignore-hosts
+   ```
+
+   ```bash
+   ['localhost', '127.0.0.0/8', '::1']
+   ```
+
+   ```bash
+   $ gsettings set org.gnome.system.proxy ignore-hosts "['localhost', '127.0.0.0/8', '::1', 'gojou']"
+   ```
+
+   ```bash
+   ['localhost', '127.0.0.0/8', '::1', 'gojou']
+   ```
+
+6. Install updates and reboot. Say no to Ubuntu 18.04 LTS upgrade.
+
+   ```bash
+   $ sudo apt-get update && sudo apt-get upgrade -y
+   $ sudo reboot
+   ```
+
+7. Sign in to `gojou/gitlab`. Go to [Quick Start](#quick-start).
