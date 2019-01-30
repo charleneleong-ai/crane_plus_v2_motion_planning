@@ -31,7 +31,7 @@ BLUE "Installing pip requirements"
 cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control && pip install --user -r requirements.txt
 
 BLUE "Installing submodules"
-git submodule update --init --recursive
+cd ~/catkin_ws/src/crane_plus_v2_motion_planning && git submodule update --init --recursive
 
 BLUE "Installing SMAC3 requirements"
 # https://automl.github.io/SMAC3/master/installation.html

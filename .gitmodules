@@ -1,6 +1,6 @@
-[submodule "crane_plus_control/scripts/modules/SMAC3"]
-	path = crane_plus_control/scripts/modules/SMAC3
-	url = https://github.com/automl/SMAC3.git
 [submodule "crane_plus_control/scripts/modules/opentuner"]
 	path = crane_plus_control/scripts/modules/opentuner
 	url = https://github.com/jansel/opentuner.git
+[submodule "crane_plus_control/scripts/modules/SMAC3"]
+	path = crane_plus_control/scripts/modules/SMAC3
+	url = https://github.com/automl/SMAC3.git
