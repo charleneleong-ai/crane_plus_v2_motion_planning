@@ -90,12 +90,12 @@ cd ~/catkin_ws && catkin_make && source ~/catkin_ws/devel/setup.bash
 
 CYAN "\n==========  Installing CRANE V2+ Parameter Tuning Dependencies  ==========\n"
 BLUE "Installing latest pip"
-sudo apt-get remove python-pip python3-pip -y
-export http_proxy="melinet:9515"
-wget https://bootstrap.pypa.io/get-pip.py
-sudo python get-pip.py
-sudo python3 get-pip.py
-source ~/.bashrc
+sudo apt-get install python-pip python3-pip -y
+#export http_proxy="melinet:9515"
+#wget https://bootstrap.pypa.io/get-pip.py
+#sudo python get-pip.py
+#sudo python3 get-pip.py
+#source ~/.bashrc
 
 BLUE "Installing pip requirements"
 cd ~/catkin_ws/src/crane_plus_v2_motion_planning && pip install --user -r requirements.txt

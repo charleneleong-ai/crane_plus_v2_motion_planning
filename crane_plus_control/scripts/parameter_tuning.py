@@ -2,7 +2,7 @@
 ###
 # File Created: Saturday, January 12th 2019, 11:23:55 am
 # Author: Charlene Leong
-# Last Modified: Tuesday, January 29th 2019, 5:08:41 pm
+# Last Modified: Wednesday, January 30th 2019, 10:59:08 am
 # Modified By: Charlene Leong
 ###
 
@@ -13,14 +13,15 @@ from modules.hyperopt_session import HyperOptSession
 from modules.benchmark_session import BenchmarkSession
 from modules.smac_session import SMACSession
 from modules.opentuner_session import OpenTunerSession
+from modules.skopt_session import SKOptSession
 
 def check_params(mode):
-    """Checks for valid ROS parameters and returns True if tuning path, False if tuning scene
+    """Checks for valid ROS parameters
     
     Args:
         mode (str): Mode of parameter tuning session
     """
-    modes = ['default', 'tpe', 'rand', 'ompl', 'smac', 'opentuner']
+    modes = ['default', 'tpe', 'rand', 'ompl', 'smac', 'auc_bandit', 'gp']
     if mode not in modes:
         rospy.logerr('Invalid mode.')
         rospy.logerr('Please choose from %s', str(modes))
@@ -29,7 +30,7 @@ def check_params(mode):
     planner_select = rospy.get_param('~planner_select')
     if planner_select not in ['Cano_etal', 'Burger_etal']:
         rospy.logerr('Invalid planner config select.')
-        rospy.logerr('Please choose from %s', str(['Cano_etal']))
+        rospy.logerr('Please choose from %s', str(['Cano_etal', 'Burger_etal']))
         sys.exit(1)
 
     max_runtime = rospy.get_param('~max_runtime')
@@ -70,10 +71,13 @@ def main():
         session = HyperOptSession()
     elif(mode == 'smac'):
         session = SMACSession()
-    elif(mode == 'opentuner'):
+    elif(mode == 'auc_bandit'):
         session = OpenTunerSession()
+    elif(mode == 'gp'):
+        session = SKOptSession()
 
     session.run_session()
+
     moveit_commander.roscpp_shutdown()
 
 if __name__ == '__main__':

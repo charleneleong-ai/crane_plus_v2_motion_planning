@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Monday, January 28th 2019, 5:52:33 pm
+# Last Modified: Wednesday, January 30th 2019, 10:44:05 am
 # Modified By: Charlene Leong
 ###
 
@@ -33,7 +33,7 @@ class PlannerConfig(object):
 
         self.planners = self.planner_config.keys()
 
-        # Override with OMPL config for above planners in ompl mode
+        # Override planner config with OMPL config in ompl mode
         if rospy.get_param('~mode') == 'ompl':
             self.name = self.planner_select+'_ompl'
             ompl = rospy.get_param('/move_group/planner_configs/')
@@ -42,7 +42,6 @@ class PlannerConfig(object):
 
         assert isinstance(self.planner_config, dict)
 
-        # Set params
         for k, v in self.planner_config.iteritems():
             self.set_planner_params(k, v)
 
@@ -58,7 +57,6 @@ class PlannerConfig(object):
         params.keys = params_set.keys()
         params.values = [str(v) for v in params_set.values()]
 
-        # rospy.loginfo('Waiting for set_planner_params')
         rospy.wait_for_service('set_planner_params')
         set_planner_params = rospy.ServiceProxy(
             'set_planner_params', SetPlannerParams)
@@ -77,7 +75,6 @@ class PlannerConfig(object):
         Returns:
             dict -- planner params
         """
-        # rospy.loginfo('Waiting for get_planner_params')
         rospy.wait_for_service('get_planner_params')
         get_planner_params = rospy.ServiceProxy(
             'get_planner_params', GetPlannerParams)
@@ -86,6 +83,7 @@ class PlannerConfig(object):
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
 
+        # Convert PlannerParams msg to dict
         params = {}
         for idx, k in enumerate(req.params.keys):
             params[k] = req.params.values[idx]

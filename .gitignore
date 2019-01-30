@@ -1,3 +1,9 @@
+/*
+ * File Created: Wednesday, 30th January 2019 10:02:41 am
+ * Author:  Charlene Leong (charleneleong84@gmail.com>)
+ * Modified By: Charlene Leong
+ * Last Modified: Wednesday, January 30th 2019, 10:24:12 am
+ */
 #======================
 #          ROS
 #======================
@@ -116,7 +122,7 @@ smac3-output*/
 log-*.txt
 
 #======================
-#   Opentuner
+#   OpenTuner
 #======================
 opentuner.db
 opentuner.log

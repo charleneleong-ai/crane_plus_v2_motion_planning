@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Tuesday, January 29th 2019, 8:11:32 pm
+# Last Modified: Wednesday, January 30th 2019, 10:55:17 am
 # Modified By: Charlene Leong
 ###
 
@@ -10,8 +10,9 @@ import sys
 import time
 import os
 import csv
-import cPickle as pickle
 import pprint
+import cPickle as pickle
+
 from timeit import default_timer as timer
 from collections import OrderedDict
 import pandas as pd
@@ -27,8 +28,6 @@ from hyperopt import STATUS_OK
 
 from planner_config import PlannerConfig
 from scene_object import Scene
-
-
 
 
 class Session(object):
@@ -79,7 +78,7 @@ class Session(object):
 
         self.results_path = raw_dir+'/'+self.planner_select+'_'+self.mode+'.csv'
 
-    def _load_search_space(self, planner, params_set, *args, **kwargs):
+    def _load_search_space(self, params_set, *args, **kwargs):
         raise NotImplementedError
 
     def run_session(self):
@@ -92,13 +91,13 @@ class Session(object):
         params_set = params['params_set']
         self.planner_config_obj.set_planner_params(planner, params_set)
 
-        if self.path_tune:
+        if self.path_tune: 
             results = self._get_stats(self.start_pose, self.target_pose)
             stats = {'t_avg_run_time': results['avg_run_time'], 't_avg_plan_time': results['avg_plan_time'],
                      't_avg_dist': results['avg_dist'], 't_avg_path_length': results['avg_path_length'],
                      't_avg_success': results['avg_success']}
         else:
-            results, stats = self.run_problem_set(planner_id=planner)
+            results, stats = self._run_problem_set(planner_id=planner)
 
         loss = self._calc_loss(stats)
 
@@ -108,14 +107,12 @@ class Session(object):
         rospy.loginfo('elapsed_time(s): %.4f n_trial: %d loss: %.4f t_avg_run_time: %.4f t_avg_plan_time: %.4f t_avg_dist: %.4f t_avg_path_length: %.4f t_avg_success: %.4f\n',
                       elapsed_time, self.n_trial, loss, stats['t_avg_run_time'], stats['t_avg_plan_time'], stats['t_avg_dist'], stats['t_avg_path_length'], stats['t_avg_success'])
 
-        # Create OrderedDict to write to CSV
         result = OrderedDict([('elapsed_time', elapsed_time), ('n_trial', self.n_trial), ('loss', loss), ('planner', planner), ('avg_runs', self.avg_runs),
                               ('t_avg_run_time', stats['t_avg_run_time']), ('t_avg_plan_time', stats['t_avg_plan_time']),
                               ('t_avg_dist', stats['t_avg_dist']), ('t_avg_path_length', stats['t_avg_path_length']),
                               ('t_avg_success', stats['t_avg_success'])])
         # Save params as str for csv export
-        result_csv = OrderedDict(
-            list(result.items()) + [('params', str(params_set))])
+        result_csv = OrderedDict(list(result.items()) + [('params', str(params_set))])
         # Saving results dict with STATUS_OK for hyperopt
         result = OrderedDict(list(result.items()) + [('params', params_set), ('status', STATUS_OK)])
         # print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
@@ -134,16 +131,14 @@ class Session(object):
         return dict(result)
 
     def _calc_loss(self,  stats):
-        
         success_rate = (1 - stats['t_avg_success'])*self.max_plan_time         # Want to max this
 
-        # If no success rate penalty is proportional to how badly the plan failed (how short the plan time is).
+        # If no success rate penalty is proportional to how short the plan time is (how bad the plan failed).
         if stats['t_avg_success'] == 0:
             loss = self.max_plan_time
 
         elif(stats['t_avg_success'] == 1):
             loss = stats['t_avg_plan_time']     # Plan time is our metric
-
         else:
             loss = loss*success_rate       # Penalise loss relative to success rate
 
@@ -161,7 +156,7 @@ class Session(object):
             writer.writerow(headers)
 
 
-    def run_problem_set(self, planner_id, save=False, results_path=''):
+    def _run_problem_set(self, planner_id, save=False, results_path=''):
         """Returns resuls after iterating over all scenes and corresponding states
         
         Args:
@@ -197,8 +192,7 @@ class Session(object):
                     self.group.set_planner_id(planner_id)  # Set new planner ID
 
                     target_pose = states[x3]
-                    query = {'start_pose': start_pose,
-                             'target_pose': target_pose}  # Create query dict
+                    query = {'start_pose': start_pose, 'target_pose': target_pose}  # Create query dict
 
                     rospy.loginfo('%d Executing %s to %s for average over %d runs',
                                   query_count, start_pose, target_pose, self.avg_runs)
@@ -215,7 +209,7 @@ class Session(object):
                     t_avg_path_length += planner_results['avg_path_length']
                     t_avg_success += planner_results['avg_success']
 
-                    if save is True:        # Append results to csv if save is true
+                    if save is True:       
                         with open(results_path, 'a') as f:
                             writer = csv.writer(f)
                             writer.writerow([planner_id, scene_name, query_count, start_pose, target_pose,
@@ -253,8 +247,7 @@ class Session(object):
         run_times = []
         path_stats = []
         for _ in xrange(self.avg_runs):
-            self._move_arm(start_pose)  # reset to start pose
-
+            self._move_arm(start_pose)  
             path = self._plan_path(start_pose, target_pose)
             run_time, exec_success = self._move_arm(
                 target_pose, path['planned_path'])
@@ -277,7 +270,7 @@ class Session(object):
         avg_success = float(sum(d['success']
                                 for d in path_stats)) / len(path_stats)
 
-        # To penalise aborted plans which are missed (t_avg_success=1 but execution plan aborted (plan time <= 50ms)).
+        # To penalise aborted plans which are missed (t_avg_success=1 but execution plan aborted (plan time <= 10ms)).
         # This only happens with BKPIECEkConfigDefault planner
         if (avg_success == 1) and (avg_plan_time <= 0.01):
             avg_success = 0
@@ -330,6 +323,7 @@ class Session(object):
         #         'work_dist': w_dist, 'work_path': w_length}
         return {'joint_dist': j_dist, 'joint_length': j_length}
 
+    ## Problem with IK Server
     # def _get_forward_kinematics(self, joint_pos):
     #     rospy.wait_for_service('compute_fk')
     #     try:

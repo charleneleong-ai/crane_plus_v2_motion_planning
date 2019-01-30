@@ -2,7 +2,7 @@
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 9:24:28 am
+# Last Modified: Wednesday, January 30th 2019, 10:55:34 am
 # Modified By: Charlene Leong
 ###
 
@@ -34,8 +34,7 @@ class HyperOptSession(Session):
     def _hpt_obj(self, params):
         return super(HyperOptSession, self)._objective(params)
 
-    def _load_search_space(self, planner, params_set, *args, **kwargs):
-        params_set = dict(self.planner_config[planner].items())
+    def _load_search_space(self,  params_set, *args, **kwargs):
         for k, v in params_set.iteritems():
             if isinstance(v, list):
                 if self.planner_select == "Cano_etal":
@@ -43,7 +42,6 @@ class HyperOptSession(Session):
                     params_set[k] = hp.quniform(k, v[0], v[1], v[2])
                 elif self.planner_select == "Burger_etal":
                     params_set[k] = hp.uniform(k, v[0], v[1])
-
         return params_set
 
     def run_session(self):
@@ -51,7 +49,7 @@ class HyperOptSession(Session):
 
         # Setting up the parameter search space and parameters
         for planner, params_set in self.planner_config.iteritems():
-            params_set = self._load_search_space(planner, params_set)
+            params_set = self._load_search_space(params_set)
 
             start_time = timer()
             params = {'planner': planner, 'params_set': params_set,'start_time': start_time}
@@ -85,5 +83,4 @@ class HyperOptSession(Session):
         super(HyperOptSession, self)._dump_results(trials)
         
         print('\n')
-        rospy.loginfo('Saved results to %s', self.results_path)
-        print('\n')
+        rospy.loginfo('Saved results to %s\n', self.results_path)

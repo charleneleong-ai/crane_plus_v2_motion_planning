@@ -3,7 +3,7 @@
 # File Created: Friday, January 18th 2019, 1:36:24 pm
 # Author:  Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Tuesday, January 29th 2019, 5:08:09 pm
+# Last Modified: Wednesday, January 30th 2019, 11:03:38 am
 ###
 
 import sys
@@ -32,8 +32,7 @@ class SMACSession(Session):
         else:
             rospy.loginfo('Initialising SMAC session in %s mode on full problem set', self.mode)
 
-        self.planner_configs_default = rospy.get_param(
-            '~planner_configs_'+self.planner_select+'_default')
+        self.planner_configs_default = rospy.get_param('~planner_configs_'+self.planner_select+'_default')
 
         self.SMAC_PATH = self.ROS_PKG_PATH+'/scripts/modules'
 
@@ -69,8 +68,6 @@ class SMACSession(Session):
                 scenario_file.write('wallclock_limit = ' + str(self.max_runtime) + '\n')
             else:
                 scenario_file.write('ta_run_limit = ' + str(self.max_trials) + '\n')
-
-            # scenario_file.write('algo-cutoff-time 40\n')
             scenario_file.close()
 
             rospy.loginfo('Successful writing scenario file to \n%s\n.', pcs_fp)
@@ -78,14 +75,14 @@ class SMACSession(Session):
             rospy.logerr('Error writing scenario file to \n%s\n.', scenario_fp)
             sys.exit(1)
 
-    def _load_search_space(self, planner, params_set, *args, **kwargs):
-        pcs_fp = args[0]
-        scenario_fp = args[1]
+    def _load_search_space(self, params_set, *args, **kwargs):
+        planner = args[0]
+        pcs_fp = args[1]
+        scenario_fp = args[2]
         self._create_pcs(planner, params_set, pcs_fp)
         self._create_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
 
     def run_session(self):
-    
         super(SMACSession, self)._write_headers(self.results_path)
 
         scenario_dir =  self.SMAC_PATH+'/SMAC3/scenarios/'
@@ -96,10 +93,12 @@ class SMACSession(Session):
             pcs_fp = scenario_dir + self.planner_select + '_' + planner+'.pcs'
             scenario_fp = scenario_dir + planner + '_scenario.txt'
 
-            self._load_search_space(planner, params_set, pcs_fp, scenario_fp)
-        
+            # Write the scenario and pcs files to define SMAC run
+            self._load_search_space(params_set, planner, pcs_fp, scenario_fp)
+
+            # Need to execute SMAC run in separate script bcz py2 and py3 incompatibility
+            # python3 smac --scenario SCENARIO --seed INT --verbose_level LEVEL --mode MODE
             os.system('python3 '+ self.SMAC_PATH +'/SMAC3/scripts/smac --scenario '+scenario_fp)
 
         print('\n')
-        rospy.loginfo('Saved results to %s', self.results_path)
-        print('\n')
+        rospy.loginfo('Saved results to %s\n', self.results_path)
