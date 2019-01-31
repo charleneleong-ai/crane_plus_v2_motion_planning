@@ -15,7 +15,10 @@ if __name__ == "__main__":
 
     rospy.init_node('resize_gazebo', anonymous=True)
     gazebo_ini_fp = os.path.join(os.environ['HOME'], '.gazebo/gui.ini')
-
+    # Skip the first launch so that gazebo can make file
+    if not os.path.exists(gazebo_ini_fp):
+        sys.exit(0)
+        
     try:
         gazebo_ini_file = open(gazebo_ini_fp, 'w+')
         gazebo_ini_file.write('[geometry]\n')
