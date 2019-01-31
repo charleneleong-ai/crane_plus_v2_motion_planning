@@ -92,7 +92,7 @@ $ roslaunch crane_plus_control parameter_tuning.launch
   - ***[default]*** tpe -  Runs tuning session using Bayesian optimisation with TPE in [Hyperopt](http://hyperopt.github.io/hyperopt/).
   - rand -   Runs tuning session using standard random search in [Hyperopt](http://hyperopt.github.io/hyperopt/).
   - smac - Runs tuning session using SMAC in [SMAC3](https://automl.github.io/SMAC3/master/).
-  - auc_bandit - Runs tuning session using AUC Bandit in [OpenTuner](http://opentuner.org/)
+  - aucbandit - Runs tuning session using AUC Bandit in [OpenTuner](http://opentuner.org/)
   - gp - Runs tuning session using Bayesian optimisation with GP in [skopt](https://scikit-optimize.github.io/)
   - rf - Runs tuning session using sequential optimisation with random forest regressor in [skopt](https://scikit-optimize.github.io/)
   - et - Runs tuning session using sequential optimisation with extra trees regressor in [skopt](https://scikit-optimize.github.io/)

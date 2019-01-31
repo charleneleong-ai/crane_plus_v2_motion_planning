@@ -21,7 +21,7 @@ def check_params(mode):
     Args:
         mode (str): Mode of parameter tuning session
     """
-    modes = ['default', 'tpe', 'rand', 'ompl', 'smac', 'auc_bandit', 'gp', 'rf', 'et', 'gbrt']
+    modes = ['default', 'tpe', 'rand', 'ompl', 'smac', 'aucbandit', 'gp', 'rf', 'et', 'gbrt']
     if mode not in modes:
         rospy.logerr('Invalid mode.')
         rospy.logerr('Please choose from %s\n', str(modes))
@@ -78,7 +78,7 @@ def main():
         session = HyperOptSession()
     elif(mode == 'smac'):
         session = SMACSession()
-    elif(mode == 'auc_bandit'):
+    elif(mode == 'aucbandit'):
         session = OpenTunerSession()
     elif(mode in ['gp', 'rf', 'et', 'gbrt']):
         session = SKOptSession()
