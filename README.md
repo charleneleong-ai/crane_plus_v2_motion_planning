@@ -66,7 +66,10 @@ $ source activate ros_env
     ```bash
     $ wget --no-proxy 'http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning/raw/master/crane_plus_setup.sh'
     $ chmod u+x crane_plus_setup.sh && ./crane_plus_setup.sh 
+    $ sudo reboot
     ```
+
+    If you want to download all dependencies at once, do install `crane_plus_setup_FULL.sh`.
 
 2. Launch the CRANE+V2 robot model either through the hardware interface or through simulation.
 
@@ -104,6 +107,10 @@ $ source activate ros_env
 1. Download the Ubuntu 16.04 LTS [ISO](http://releases.ubuntu.com/16.04/ubuntu-16.04.5-desktop-amd64.iso) and install on a VM such as [VMWare Workstation Player](https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html) [(setup)](https://www.youtube.com/watch?v=Wmx5hZ_m7EY) or [Virtualbox](https://www.virtualbox.org/wiki/Downloads) [(setup)](https://www.youtube.com/watch?v=RBU1xMP-SGc). 
 
 2. Install [VMWare tools](https://www.youtube.com/watch?v=F5WaWIfi8f8) for VMWare Workstation Player or [VirtualBox Guest Additions](https://www.tecmint.com/install-virtualbox-guest-additions-in-ubuntu/) for Virtualbox. 
+
+   ```bash
+   $ sudo apt-get install open-vm-tools
+   ```
 
 3. [Ubuntu host only] Configure your Ethernet network connection settings to match host and connect to Internet. Click connections (top right) and click [Edit Connections], select Ethernet connection and see [IPv4 Settings].
 
