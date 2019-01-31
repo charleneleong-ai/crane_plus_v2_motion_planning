@@ -18,14 +18,14 @@ function blue(){
 
 CYAN "\n==========  Installing CRANE V2+ Parameter Tuning Dependencies  ==========\n"
 BLUE "Installing latest pip"
-sudo apt-get install python-pip -y
-pip install --user --upgrade pip
+sudo apt-get install python-pip python3-pip -y
+# pip install --user --upgrade pip
+source ~/.bashrc
 
 #export http_proxy="melinet:9515"
 #wget https://bootstrap.pypa.io/get-pip.py
 #sudo python get-pip.py
 #sudo python3 get-pip.py
-#source ~/.bashrc
 
 BLUE "Installing pip requirements"
 cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control && pip install --user -r requirements.txt
@@ -37,8 +37,8 @@ BLUE "Installing SMAC3 requirements"
 # https://automl.github.io/SMAC3/master/installation.html
 cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control/scripts/modules/SMAC3
 sudo apt-get install swig -y
-pip install --user pybind11
-cat requirements.txt | xargs -n 1 -L 1 pip install --user
+pip3 install --user pybind11
+cat requirements.txt | xargs -n 1 -L 1 pip3 install --user
 blue "python3 setup.py install"
 sudo python3 setup.py install
 blue "Fixing error in smac"
