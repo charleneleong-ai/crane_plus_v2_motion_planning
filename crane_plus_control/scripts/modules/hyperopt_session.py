@@ -25,11 +25,11 @@ class HyperOptSession(Session):
 
     def __init__(self):
         super(HyperOptSession, self).__init__()
-        if self.path_tune:
-            rospy.loginfo('Initialising hyperopt session in %s mode from %s to %s',
-                          self.mode, self.start_pose, self.target_pose)
+        if self.PATH_TUNE:
+            rospy.loginfo('Initialising hyperopt session in %s mode from %s to %s\n',
+                          self.MODE, self.START_POSE, self.TARGET_POSE)
         else:
-            rospy.loginfo('Initialising hyperopt session in %s mode on full problem set', self.mode)
+            rospy.loginfo('Initialising hyperopt session in %s mode on full problem set\n', self.MODE)
     
     def _hpt_obj(self, params):
         return super(HyperOptSession, self)._objective(params)
@@ -37,15 +37,15 @@ class HyperOptSession(Session):
     def _load_search_space(self,  params_set, *args, **kwargs):
         for k, v in params_set.iteritems():
             if isinstance(v, list):
-                if self.planner_select == "Cano_etal":
+                if self.PLANNER_SELECT == "Cano_etal":
                     # Discrete uniform dist [begin_range, end_range, step]
                     params_set[k] = hp.quniform(k, v[0], v[1], v[2])
-                elif self.planner_select == "Burger_etal":
+                elif self.PLANNER_SELECT == "Burger_etal":
                     params_set[k] = hp.uniform(k, v[0], v[1])
         return params_set
 
     def run_session(self):
-        super(HyperOptSession, self)._write_headers(path=self.results_path)
+        super(HyperOptSession, self)._write_headers(path=self.RESULTS_PATH)
 
         # Setting up the parameter search space and parameters
         for planner, params_set in self.planner_config.iteritems():
@@ -54,18 +54,18 @@ class HyperOptSession(Session):
             start_time = timer()
             params = {'planner': planner, 'params_set': params_set,'start_time': start_time}
                     
-            if(self.max_runtime != "None"):
-                params['end_time'] = timer() + self.max_runtime
+            if(self.MAX_RUNTIME != "None"):
+                params['end_time'] = timer() + self.MAX_RUNTIME
                 print('\n')
                 rospy.loginfo('Executing %s on %s for %d secs',
-                              self.mode, params['planner'], self.max_runtime)
+                              self.MODE, params['planner'], self.MAX_RUNTIME)
             else:
                 print('\n')
                 rospy.loginfo('Executing %s on %s for %d trials',
-                              self.mode, params['planner'], self.max_trials)
+                              self.MODE, params['planner'], self.MAX_TRIALS)
 
             self.n_trial = 0        # Reset to n_trials to zero for each planner
-            if self.mode == 'tpe':
+            if self.MODE == 'tpe':
                 algo = partial(tpe.suggest,
                                # Sample 100 candidates and select candidate that has highest Expected Improvement (EI)
                                n_EI_candidates=100,
@@ -73,14 +73,13 @@ class HyperOptSession(Session):
                                gamma=0.2,
                                # First 20 trials are going to be random
                                n_startup_jobs=20)
-            elif self.mode == 'rand':
+            elif self.MODE == 'rand':
                 algo = rand.suggest
                 
             trials = Trials()
             best = fmin(fn=self._hpt_obj, space=params, algo=algo,
-                        max_evals=self.max_trials, trials=trials)
+                        max_evals=self.MAX_TRIALS, trials=trials)
 
         super(HyperOptSession, self)._dump_results(trials)
         
-        print('\n')
-        rospy.loginfo('Saved results to %s\n', self.results_path)
+        rospy.loginfo('Saved results to %s\n', self.RESULTS_PATH)

@@ -63,17 +63,17 @@ class OpenTunerRun(Session):
         self.n_trial = 0        # Reset to n_trials to zero for each planner
         start_time = timer()
         params = {'planner': self.planner, 'start_time': start_time}
-        if(self.max_runtime != 'None'):
-            params['end_time'] = timer() + self.max_runtime
+        if(self.MAX_RUNTIME != 'None'):
+            params['end_time'] = timer() + self.MAX_RUNTIME
             print('\n')
             rospy.loginfo('Executing %s on %s for %d secs',
-                          self.mode, params['planner'], self.max_runtime)
+                          self.MODE, params['planner'], self.MAX_RUNTIME)
         else:
             print('\n')
             rospy.loginfo('Executing %s on %s for %d trials',
-                          self.mode, params['planner'], self.max_trials)
+                          self.MODE, params['planner'], self.MAX_TRIALS)
 
-        for _ in range(self.max_trials):
+        for _ in range(self.MAX_TRIALS):
             desired_result = api.get_next_desired_result()
             params_set = desired_result.configuration.data
             params['params_set'] = params_set

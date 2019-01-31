@@ -13,9 +13,6 @@ import moveit_msgs.msg
 import shape_msgs
 import geometry_msgs.msg
 
-ROS_PKG_PATH = rospkg.RosPack().get_path(
-    'crane_plus_control') + '/scripts/scenes/'
-
 
 class Scene(object):
     """
@@ -34,7 +31,8 @@ class Scene(object):
         self.robot = moveit_commander.RobotCommander()
         self.planning_frame = self.robot.get_planning_frame()
         self.planning_scene = moveit_commander.PlanningSceneInterface()
-        self.rviz = rospy.get_param('/launch_base/rviz')
+        self.RVIZ = rospy.get_param('/launch_base/rviz')
+        self.ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/scripts/scenes/'
         # #Object Publishers, can alsu use PlanningSceneInterface, but this doesn throw any warnings
         # self.object_publisher = rospy.Publisher('/collision_object',
         #         moveit_msgs.msg._CollisionObject.CollisionObject,
@@ -43,7 +41,7 @@ class Scene(object):
         # self.attached_object_publisher = rospy.Publisher('/attached_collision_object',
         #         moveit_msgs.msg._AttachedCollisionObject.AttachedCollisionObject,
         #         queue_size=30)
-        self.name = "box"
+        self.NAME = "box"
         self._load_scene(scene_file)
         self._load_states(scene_file)
 
@@ -52,13 +50,12 @@ class Scene(object):
         seconds = rospy.get_time()
         while (seconds - start < timeout) and not rospy.is_shutdown():
             # Test if the base is in attached objects
-            attached_objects = self.planning_scene.get_attached_objects([
-                                                                        self.name])
+            attached_objects = self.planning_scene.get_attached_objects([self.NAME])
             is_attached = len(attached_objects.keys()) > 0
 
             # Test if the base is in the scene.
             # Note that attaching the base will remove it from known_objects
-            is_known = self.name in self.planning_scene.get_known_object_names()
+            is_known = self.NAME in self.planning_scene.get_known_object_names()
 
             # Test if we are in the expected state
             if (box_is_attached == is_attached) and (box_is_known == is_known):
@@ -75,27 +72,27 @@ class Scene(object):
         objects = self.planning_scene.get_known_object_names()
         for x in xrange(len(objects)):
             self.planning_scene.remove_world_object(objects[x])
-            if(self.rviz == True):
+            if(self.RVIZ == True):
                 rospy.sleep(self.PUBLISHER_DELAY)
 
         return self._wait_for_state_update(box_is_known=False)
 
     def _add_object(self, dim, pos, rot, col):
-        if(self.rviz == True):
+        if(self.RVIZ == True):
             rospy.sleep(self.PUBLISHER_DELAY)
         pose = geometry_msgs.msg.PoseStamped()
         pose.header.frame_id = self.planning_frame
         pose.pose.position.x = pos[0]
         pose.pose.position.y = pos[1]
         pose.pose.position.z = pos[2]
-        self.planning_scene.add_box(self.name, pose, (dim[0], dim[1], dim[2]))
+        self.planning_scene.add_box(self.NAME, pose, (dim[0], dim[1], dim[2]))
 
         return self._wait_for_state_update(box_is_known=True)
 
     def _load_scene(self, scene_file):
         rospy.loginfo('Loading %s scene', scene_file)
         self._clear_scene()
-        with open(ROS_PKG_PATH+scene_file+'.scene') as f:
+        with open(self.ROS_PKG_PATH +scene_file+'.scene') as f:
 
             lines = 0   # get lines to know amount of blocks
             for line in f:
@@ -108,7 +105,7 @@ class Scene(object):
             cnt = (lines-2)/7
 
             for objs in range(0, cnt):
-                self.name = f.readline()[2:]   # object name
+                self.NAME = f.readline()[2:]   # object name
                 number = f.readline()     # object number?
                 shape = f.readline()      # object shape
 
@@ -176,6 +173,6 @@ class Scene(object):
         return self._wait_for_state_update(box_is_known=True)
 
     def _load_states(self, scene_file):
-        with open(ROS_PKG_PATH+scene_file+'.states') as f:
+        with open(self.ROS_PKG_PATH+scene_file+'.states') as f:
             content = f.readlines()
         self.states = [x.strip() for x in content]

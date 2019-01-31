@@ -20,22 +20,25 @@ class PlannerConfig(object):
     """
 
     def __init__(self):
-        self.planner_select = rospy.get_param('~planner_select')
+        self.PLANNER_SELECT = rospy.get_param('~planner_select')
+        self.PLANNER = rospy.get_param('~planner')
 
         if rospy.get_param('~mode') in ['default', 'ompl']:
-            self.planner_config = rospy.get_param(
-                '~planner_configs_'+self.planner_select+'_default')
-            self.name = self.planner_select+'_default'
+            self.NAME = self.PLANNER_SELECT+'_default'
+            self.planner_config = rospy.get_param('~planner_configs_'+self.NAME)
+                
         else:
-            self.planner_config = rospy.get_param(
-                '~planner_configs_'+self.planner_select+'_tune')
-            self.name = self.planner_select+'_tune'
-
-        self.planners = self.planner_config.keys()
+            self.NAME = self.PLANNER_SELECT+'_tune'
+            self.planner_config = rospy.get_param('~planner_configs_'+self.NAME)
+            
+        if self.PLANNER == 'all':
+            self.planners = [self.planner_config.keys()]
+        else:
+            self.planners = [rospy.get_param('~planner') + 'kConfigDefault']
 
         # Override planner config with OMPL config in ompl mode
         if rospy.get_param('~mode') == 'ompl':
-            self.name = self.planner_select+'_ompl'
+            self.NAME = self.PLANNER_SELECT+'_ompl'
             ompl = rospy.get_param('/move_group/planner_configs/')
             for p in self.planner_config.keys():
                 self.planner_config[p] = ompl[p]
@@ -62,7 +65,7 @@ class PlannerConfig(object):
             'set_planner_params', SetPlannerParams)
         try:
             set_planner_params(planner_id, 'arm', params, True)
-            rospy.loginfo('%s %s parameters updated', self.planner_select, planner_id)
+            rospy.loginfo('%s %s parameters updated', self.PLANNER_SELECT, planner_id)
         except rospy.ServiceException as e:
             rospy.logerr('Failed to get params: %s', e)
 
@@ -93,7 +96,7 @@ class PlannerConfig(object):
         return self.planner_config
 
     def get_planner_config_name(self):
-        return self.name
+        return self.NAME
 
     def get_planners(self):
         return self.planners

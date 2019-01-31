@@ -4,15 +4,15 @@ planner_configs_Cano_etal_tune:
     type: geometric::RRTConnect
     #[begin_range, end_range, step]
     default: [0.1, 2.0, 0.1] # Max steering distance 
-  BKPIECEkConfigDefault:
-    type: geometric::BKPIECE
-    #[begin_range, end_range, step]
-    range: [0.1, 2.0, 0.1]  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-    border_fraction: [0.05, 1.0, 0.05]  # Fraction of time focused on boarder default: 0.9
-    failed_expansion_score_factor: [0.05, 1.0, 0.05]  # When extending motion fails, scale score by factor. default: 0.5
-    min_valid_path_fraction: [0.05, 1.0, 0.05]  # Accept partially valid moves above fraction. default: 0.5
-    projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
-    longest_valid_segment_fraction: 0.005
+  # BKPIECEkConfigDefault:
+  #   type: geometric::BKPIECE
+  #   #[begin_range, end_range, step]
+  #   range: [0.1, 2.0, 0.1]  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+  #   border_fraction: [0.05, 1.0, 0.05]  # Fraction of time focused on boarder default: 0.9
+  #   failed_expansion_score_factor: [0.05, 1.0, 0.05]  # When extending motion fails, scale score by factor. default: 0.5
+  #   min_valid_path_fraction: [0.05, 1.0, 0.05]  # Accept partially valid moves above fraction. default: 0.5
+  #   projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
+  #   longest_valid_segment_fraction: 0.005
 
 planner_configs_Cano_etal_default:
   RRTConnectkConfigDefault:

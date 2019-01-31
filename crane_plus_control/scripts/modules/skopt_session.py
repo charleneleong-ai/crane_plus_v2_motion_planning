@@ -24,23 +24,23 @@ class SKOptSession(Session):
 
     def __init__(self):
         super(SKOptSession, self).__init__()
-        if self.path_tune:
-            rospy.loginfo('Initialising SKOpt session in %s mode from %s to %s',
-                          self.mode, self.start_pose, self.target_pose)
+        if self.PATH_TUNE:
+            rospy.loginfo('Initialising SKOpt session in %s mode from %s to %s\n',
+                          self.MODE, self.START_POSE, self.TARGET_POSE)
         else:
             rospy.loginfo(
-                'Initialising SKOpt session in %s mode on full problem set', self.mode)
+                'Initialising SKOpt session in %s mode on full problem set\n', self.MODE)
         self.planner = self.planners[0]
-        if self.max_trials < 10:
-            rospy.logerr('Max trials must be >= 10 for %s mode\n', self.mode)
+        if self.MAX_TRIALS < 10:
+            rospy.logerr('Max trials must be >= 10 for %s mode\n', self.MODE)
             sys.exit(1)
 
     def _skopt_obj(self, search_space):
         # SKopt obj requires list of params and return scalar loss
         # Converting to be compatible with our obj function
         params = {'planner': self.planner, 'start_time': self.start_time}
-        if(self.max_runtime != 'None'):
-                            params['end_time'] = timer() + self.max_runtime
+        if(self.MAX_RUNTIME != 'None'):
+            params['end_time'] = self.end_time
 
         params_set = {}
         for idx, k in enumerate(self.planner_config[self.planner].keys()):
@@ -61,36 +61,32 @@ class SKOptSession(Session):
         return search_space
 
     def run_session(self):
-        super(SKOptSession, self)._write_headers(path=self.results_path)
+        super(SKOptSession, self)._write_headers(path=self.RESULTS_PATH)
 
         for planner, params_set in self.planner_config.iteritems():
             search_space = self._load_search_space(params_set)
             
-            if(self.max_runtime != 'None'):
-                print('\n')
-                rospy.loginfo('Executing %s on %s for %d secs',
-                                self.mode, planner, self.max_runtime)
+            if(self.MAX_RUNTIME != 'None'):
+                rospy.loginfo('Executing %s on %s for %d secs', self.MODE, planner, self.MAX_RUNTIME)
             else:
-                print('\n')
-                rospy.loginfo('Executing %s on %s for %d trials',
-                                self.mode, planner, self.max_trials)
+                rospy.loginfo('Executing %s on %s for %d trials', self.MODE, planner, self.MAX_TRIALS)
 
             self.n_trial = 0        # Reset to n_trials to zero for each planner        
             self.planner = planner  # Keeping track of current planner
             self.start_time = timer()   # Keeping track of start_time
-            if self.mode == 'gp':
-                result = gp_minimize(self._skopt_obj, search_space, n_calls=self.max_trials, random_state=0,
+            self.end_time = self.start_time+self.MAX_RUNTIME  # Keeping track of end_time
+            if self.MODE == 'gp':
+                result = gp_minimize(self._skopt_obj, search_space, n_calls=self.MAX_TRIALS, random_state=0,
                                 acq_func='gp_hedge')
                 # gp_hedge means probabilistically choose betwn LCB, EI and PI acquisition functions at every iteration
-            elif self.mode == 'rf':
-                result = forest_minimize(self._skopt_obj, search_space, n_calls=self.max_trials, random_state=0,
+            elif self.MODE == 'rf':
+                result = forest_minimize(self._skopt_obj, search_space, n_calls=self.MAX_TRIALS, random_state=0,
                                 base_estimator='RF', acq_func='EI')
-            elif self.mode == 'et':
-                result = forest_minimize(self._skopt_obj, search_space, n_calls=self.max_trials, random_state=0,
+            elif self.MODE == 'et':
+                result = forest_minimize(self._skopt_obj, search_space, n_calls=self.MAX_TRIALS, random_state=0,
                                 base_estimator='ET', acq_func='EI')
-            elif self.mode == 'gbrt':
-                result = gbrt_minimize(self._skopt_obj, search_space, n_calls=self.max_trials, random_state=0,
+            elif self.MODE == 'gbrt':
+                result = gbrt_minimize(self._skopt_obj, search_space, n_calls=self.MAX_TRIALS, random_state=0,
                                 acq_func='EI')
 
-        print('\n')
-        rospy.loginfo('Saved results to %s\n', self.results_path)
+        rospy.loginfo('Saved results to %s\n', self.RESULTS_PATH)

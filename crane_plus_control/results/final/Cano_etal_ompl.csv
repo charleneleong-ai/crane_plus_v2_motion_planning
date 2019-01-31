@@ -1,11 +1,3 @@
-planner,scene,query,start_pose,target_pose,avg_runs,avg_run_time,avg_plan_time,avg_dist,avg_path_length,avg_success,params
-BKPIECEkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,5,0.9377399921417237,2.0601144313812254,1.3625450725118822,6.00382935688118,0.8,"{'longest_valid_segment_fraction': '0.005', 'border_fraction': '0.9', 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': '0.0', 'failed_expansion_score_factor': '0.5', 'min_valid_path_fraction': '0.5', 'type': 'geometric::BKPIECE'}"
-""
-t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
-0.9377399921417237,2.0601144313812254,1.3625450725118822,6.00382935688118,0.8
-""
-RRTConnectkConfigDefault,narrow_passage,0,vertical,low_fwd_reach,5,1.0243085861206054,0.22974700927734376,1.3623997388184226,6.2143297586256825,0.8,"{'range': '0.0', 'type': 'geometric::RRTConnect'}"
-""
-t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success
-1.0243085861206054,0.22974700927734376,1.3623997388184226,6.2143297586256825,0.8
-""
+planner,avg_runs,t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success,params
+BKPIECEkConfigDefault,5,1.477121639251709,0.852768087387085,1.3624285939086929,6.4414388738811,0.8,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.9, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 0.0, 'failed_expansion_score_factor': 0.5, 'min_valid_path_fraction': 0.5, 'type': 'geometric::BKPIECE'}"
+RRTConnectkConfigDefault,5,1.2272911071777344,0.17541699409484862,1.3623289973586603,6.142263815427722,0.8,"{'range': 0.0, 'type': 'geometric::RRTConnect'}"

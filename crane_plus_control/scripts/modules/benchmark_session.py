@@ -19,28 +19,29 @@ class BenchmarkSession(Session):
 
     def __init__(self):
         super(BenchmarkSession, self).__init__()
-        if self.path_tune:
-            rospy.loginfo('Initialising benchmarking session in %s mode from %s to %s',
-                          self.mode, self.start_pose, self.target_pose)
+        if self.PATH_TUNE:
+            rospy.loginfo('Initialising benchmarking session in %s mode from %s to %s\n',
+                          self.MODE, self.START_POSE, self.TARGET_POSE)
         else:
-            rospy.loginfo(
-                'Initialising benchmarking session in %s mode on full problem set', self.mode)
+            rospy.loginfo('Initialising benchmarking session in %s mode on full problem set\n', 
+                          self.MODE)
 
     def run_session(self):
-        super(BenchmarkSession, self)._write_headers(path=self.results_path)
+        super(BenchmarkSession, self)._write_headers(path=self.RESULTS_PATH)
 
         results = {}
-        for p in self.planners:
-            result, stats = super(BenchmarkSession, self)._run_problem_set(planner_id=p, save=True)
-            results[p] = result
+        for planner, params_set in self.planner_config.iteritems():
+            rospy.loginfo('Executing %s on %s', self.MODE, planner)
+            result, stats = super(BenchmarkSession, self)._run_problem_set(planner_id=planner)
+            results[planner] = result       
 
-            with open(self.results_path, 'a') as f:
+            with open(self.RESULTS_PATH, 'a') as f:
                 writer = csv.writer(f)
-                writer.writerow(p, self.avg_runs, stats['t_avg_run_time'], stats['t_avg_plan_time'],
-                                stats['t_avg_dist'], stats['t_avg_path_length'], stats['t_avg_success'], 
-                                stats['params'])
+                writer.writerow([planner, self.AVG_RUNS, stats['t_avg_run_time'], stats['t_avg_plan_time'],
+                                 stats['t_avg_dist'], stats['t_avg_path_length'], stats['t_avg_success'],
+                                 params_set])
 
         super(BenchmarkSession, self)._dump_results(results)
 
         print('\n')
-        rospy.loginfo('Saved results to %s\n', self.results_path)
+        rospy.loginfo('Saved results to %s\n', self.RESULTS_PATH)

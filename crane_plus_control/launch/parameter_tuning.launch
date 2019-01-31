@@ -10,6 +10,7 @@ Modified By:
   <arg name="start_pose" default="None"/>       <!-- [vertical, backbend, resting, low_fwd_reach ...] -->
   <arg name="target_pose" default="None"/>
   <arg name="planner_select" default="Cano_etal"/>  <!-- [Cano_etal] -->
+  <arg name="planner" default="all"/>  <!-- [Cano_etal] -->
   <arg name="mode" default="tpe"/>                  <!-- [default, ompl, rand, tpe, smac] -->
   <arg name="avg_runs" default="1" />
   <arg name="max_trials" default="30" />
@@ -26,6 +27,7 @@ Modified By:
     <param name="start_pose" type="str" value="$(arg start_pose)" />
     <param name="target_pose" type="str" value="$(arg target_pose)" />
     <param name="planner_select" type="str" value="$(arg planner_select)" />
+    <param name="planner" type="str" value="$(arg planner)" />
     <param name="mode" type="str" value="$(arg mode)" />
     <param name="avg_runs" type="int" value="$(arg avg_runs)" />
     <param name="max_trials" type="int" value="$(arg max_trials)" />

@@ -11,7 +11,8 @@ This package aims to implement the following two papers in researching global bl
 - [Quick Start](#quick-start)
 - [Parameter Tuning Parameters](#parameter-tuning-parameters)
 - [MoveIt Planning Time Benchmark](#moveit-planning-time-benchmark)
-- Results: [Result Comparison](./results/result_comparison.md)
+- Results: [Result Overview](./results/result_overview.md)
+- Results: [Result Analysis Notebook](./results/result_analysis.ipynb)
 
 
 
@@ -75,6 +76,15 @@ $ roslaunch crane_plus_control parameter_tuning.launch
 
   - ***[default]*** Cano_etal
   - Burger_etal
+
+- **planner:** Sets the desired motion planner
+
+  - ***[default]*** all
+  - [RRTConnect](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1RRTConnect.html#aea8a84e73c86ff415931a29be34228f5) - bidirectional version of rapidly-exploring random tree (RRT) 
+  - [BiTRRT](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1BiTRRT.html) - bidirectional version of RRT variant,  transition-based RRT (TRRT) 
+  - [BKPiece](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1BKPIECE1.html#gBKPIECE1) - bidirectional version of KPiece
+  - [KPiece](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1KPIECE1.html#gKPIECE1) - tree-based planner that uses discretisation to guide the exploration of the continuous space
+
 - **mode:** Sets the mode of the parameter tuning session. 
 
   - ompl - Runs benchmarking session with [OMPL planner config defaults](../crane_plus_moveit_config/config/ompl_planning.yaml).
@@ -87,18 +97,23 @@ $ roslaunch crane_plus_control parameter_tuning.launch
   - rf - Runs tuning session using sequential optimisation with random forest regressor in [skopt](https://scikit-optimize.github.io/)
   - et - Runs tuning session using sequential optimisation with extra trees regressor in [skopt](https://scikit-optimize.github.io/)
   - gbrt - Runs tuning session using sequential optimisation with gradient boosting tree regressor in [skopt](https://scikit-optimize.github.io/)
+
 - **avg_runs:** Sets the avg number of runs for each parameter configuration. 
 
   - ***[default]*** 1
+
 - **max_trials:** Sets the max number of trials when in parameter tuning mode.
 
   - ***[default]*** 30
+
 - **max_runtime: ** Sets the max runtime (secs) in parameter tuning mode. When set, overrides max_trials=10000.
 
   - ***[default]*** None
+
 - **start_pose**: Sets the start pose for specific path tuning.
 
   - ***[default]*** None
+
 - **target_pose: ** Sets the target pose for specific path tuning.
 
   - ***[default]*** None 

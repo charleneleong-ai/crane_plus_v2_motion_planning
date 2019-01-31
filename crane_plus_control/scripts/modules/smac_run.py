@@ -27,8 +27,8 @@ class SMACRun(Session):
         self.planners = [planner]
         self.planner = planner
         self.scenes = [scene]
-        self.max_trials = 1  
-        self.max_runtime = "None"
+        self.MAX_TRIALS = 1  
+        self.MAX_RUNTIME = "None"
 
     def _smac_obj(self, params):
         # Adding non-tunable params back to params_set
@@ -58,7 +58,7 @@ if __name__ == '__main__':
 
     instance = sys.argv[4]
     specifics = sys.argv[5]
-    cutoff = int(float(sys.argv[6]) + 1)
+    cutoff = int(float(sys.argv[6])+1)
     runlength = int(sys.argv[7])
     seed = str(sys.argv[8])
 
@@ -81,4 +81,4 @@ if __name__ == '__main__':
     quality = result['loss']
 
     # Result for SMAC: <STATUS>, <runtime>, <runlength>, <quality>, <seed>, <instance-specifics>
-    print('Result for SMAC: SUCCESS, ' + str(result['elapsed_time']) + ', 0, ' + str(quality) + ', 0')
+    print('Result for SMAC: SUCCESS, '+str(result['elapsed_time'])+', 0, '+str(quality)+', 0')
