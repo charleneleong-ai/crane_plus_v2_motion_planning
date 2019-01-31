@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
-# Author: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 10:55:17 am
+# Author: Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
+# Last Modified: Wednesday, January 30th 2019, 11:02:12 am
 ###
 
 import sys
@@ -34,21 +34,20 @@ class Session(object):
     """
     Session Base Class
     """
-    
+
     def __init__(self):
         self.ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
-
         self.planner_config_obj = PlannerConfig()
         self.planner_config = self.planner_config_obj.planner_config
         self.planner_select = self.planner_config_obj.planner_select
         self.planners = self.planner_config_obj.planners
+        self.scenes = ['narrow_passage']
 
         self.mode = rospy.get_param('~mode')
         self.avg_runs = rospy.get_param('~avg_runs')
         self.max_runtime = rospy.get_param('~max_runtime')
         self.n_trial = 0
         self.max_plan_time = rospy.get_param('~max_plan_time')
-        
 
         if self.mode not in ['default', 'ompl']:
             self.max_trials = rospy.get_param('~max_trials')
@@ -62,8 +61,6 @@ class Session(object):
         if (self.start_pose != 'None') and (self.target_pose != 'None'):
             self.path_tune = True
 
-        self.scenes = ['narrow_passage']
-
         self.robot = moveit_commander.RobotCommander()
         self.group = moveit_commander.MoveGroupCommander('arm')
         self.group.set_planning_time(self.max_plan_time)
@@ -71,7 +68,6 @@ class Session(object):
         self.display_trajectory_publisher = rospy.Publisher('/group/display_planned_path',
                                                             moveit_msgs.msg.DisplayTrajectory,
                                                             queue_size=20)
-        
         raw_dir = self.ROS_PKG_PATH + '/results/raw'
         if not os.path.exists(raw_dir):
             os.makedirs(raw_dir)
@@ -82,7 +78,6 @@ class Session(object):
         raise NotImplementedError
 
     def run_session(self):
-        """Executes session"""
         raise NotImplementedError
 
     def _objective(self, params):
@@ -91,7 +86,7 @@ class Session(object):
         params_set = params['params_set']
         self.planner_config_obj.set_planner_params(planner, params_set)
 
-        if self.path_tune: 
+        if self.path_tune:
             results = self._get_stats(self.start_pose, self.target_pose)
             stats = {'t_avg_run_time': results['avg_run_time'], 't_avg_plan_time': results['avg_plan_time'],
                      't_avg_dist': results['avg_dist'], 't_avg_path_length': results['avg_path_length'],
@@ -104,11 +99,15 @@ class Session(object):
         current = time.time()
         elapsed_time = (current - params['start_time'])
 
-        rospy.loginfo('elapsed_time(s): %.4f n_trial: %d loss: %.4f t_avg_run_time: %.4f t_avg_plan_time: %.4f t_avg_dist: %.4f t_avg_path_length: %.4f t_avg_success: %.4f\n',
-                      elapsed_time, self.n_trial, loss, stats['t_avg_run_time'], stats['t_avg_plan_time'], stats['t_avg_dist'], stats['t_avg_path_length'], stats['t_avg_success'])
+        rospy.loginfo('n_trial: %d elapsed_time(s): %.4f loss: %.4f t_avg_run_time: %.4f t_avg_plan_time: %.4f \
+                        t_avg_dist: %.4f t_avg_path_length: %.4f t_avg_success: %.4f\n',
+                        self.n_trial, elapsed_time, loss, stats['t_avg_run_time'], 
+                        stats['t_avg_plan_time'], stats['t_avg_dist'], stats['t_avg_path_length'], 
+                        stats['t_avg_success'])
 
-        result = OrderedDict([('elapsed_time', elapsed_time), ('n_trial', self.n_trial), ('loss', loss), ('planner', planner), ('avg_runs', self.avg_runs),
-                              ('t_avg_run_time', stats['t_avg_run_time']), ('t_avg_plan_time', stats['t_avg_plan_time']),
+        result = OrderedDict([('n_trial', self.n_trial), ('elapsed_time', elapsed_time), ('loss', loss), 
+                              ('planner', planner), ('avg_runs', self.avg_runs), ('t_avg_run_time', 
+                              stats['t_avg_run_time']), ('t_avg_plan_time', stats['t_avg_plan_time']),
                               ('t_avg_dist', stats['t_avg_dist']), ('t_avg_path_length', stats['t_avg_path_length']),
                               ('t_avg_success', stats['t_avg_success'])])
         # Save params as str for csv export
@@ -122,7 +121,8 @@ class Session(object):
             result_df.to_csv(f, header=False, index=False)
 
         if (self.max_runtime != 'None') and (time.time() > params['end_time']):
-            rospy.loginfo('Program has run for allotted time (%d secs)', self.max_runtime)
+            rospy.loginfo(
+                'Program has run for allotted time (%d secs)', self.max_runtime)
             print('\n')
             rospy.loginfo('Saved results to %s', self.results_path)
             print('\n')
@@ -131,32 +131,33 @@ class Session(object):
         return dict(result)
 
     def _calc_loss(self,  stats):
-        success_rate = (1 - stats['t_avg_success'])*self.max_plan_time         # Want to max this
-
+        success_rate = (1 - stats['t_avg_success']) * self.max_plan_time         # Want to max this
         # If no success rate penalty is proportional to how short the plan time is (how bad the plan failed).
         if stats['t_avg_success'] == 0:
             loss = self.max_plan_time
-
         elif(stats['t_avg_success'] == 1):
             loss = stats['t_avg_plan_time']     # Plan time is our metric
         else:
             loss = loss*success_rate       # Penalise loss relative to success rate
 
         return loss
-    
-    def _write_headers(self, results_path):
-        if self.mode in ['ompl', 'default']:
-            headers = ['planner', 'scene', 'query', 'start_pose', 'target_pose', 'avg_runs', 'avg_run_time',
-                             'avg_plan_time', 'avg_dist', 'avg_path_length', 'avg_success', 'params']
-        else:
-            headers = ['elapsed_time', 'n_trial', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
-                             't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params']
-        with open(results_path, 'w') as f:
+
+    def _write_headers(self, headers=None, path=None):
+        if headers is None:
+            if self.mode in ['ompl', 'default']:
+                headers = ['planner', 'avg_runs', 't_avg_run_time', 't_avg_plan_time', 't_avg_dist',
+                           't_avg_path_length', 't_avg_success', 'params']
+            else:
+                headers = ['n_trial', 'elapsed_time', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
+                           't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params']
+        if path is None:
+            path = self.results_path
+
+        with open(path, 'w') as f:
             writer = csv.writer(f)
             writer.writerow(headers)
 
-
-    def _run_problem_set(self, planner_id, save=False, results_path=''):
+    def _run_problem_set(self, planner_id, save=False):
         """Returns resuls after iterating over all scenes and corresponding states
         
         Args:
@@ -175,12 +176,18 @@ class Session(object):
         t_avg_path_length = 0
         t_avg_success = 0
 
+        RAW_PATH = self.ROS_PKG_PATH + '/results/raw/' + self.planner_select+'_' + self.mode + '_raw.csv'
+        if save is True:
+            headers = ['planner', 'scene', 'query', 'start_pose', 'target_pose', 'avg_runs', 'avg_run_time',
+                       'avg_plan_time', 'avg_dist', 'avg_path_length', 'avg_success', 'params']
+            self._write_headers(headers=headers, path=RAW_PATH)
+
         for x1 in xrange(len(self.scenes)):     # Scene loop
             query_count = 0                     # Initiate query count for each scene
             scene_name = self.scenes[x1]
 
             # Clears previous scene and loads scene to server, loads states
-            scene = {'name': scene_name}        # Create scene dict
+            scene = {'name': scene_name}       
             scene_obj = Scene(self.scenes[x1])
             states = scene_obj.states
 
@@ -192,16 +199,15 @@ class Session(object):
                     self.group.set_planner_id(planner_id)  # Set new planner ID
 
                     target_pose = states[x3]
-                    query = {'start_pose': start_pose, 'target_pose': target_pose}  # Create query dict
+                    query = {'start_pose': start_pose,
+                             'target_pose': target_pose}  # Create query dict
 
                     rospy.loginfo('%d Executing %s to %s for average over %d runs',
                                   query_count, start_pose, target_pose, self.avg_runs)
 
-                    # Plan path and add results to planner dict
-                    planner_results = self._get_stats(start_pose, target_pose)
+                    planner_results = self._get_stats(start_pose, target_pose)      # Plan path and add results to planner dict
 
-                    # Update query with planner results
-                    query.update(planner_results)
+                    query.update(planner_results)       # Update query with planner results
 
                     t_avg_run_time += planner_results['avg_run_time']
                     t_avg_plan_time += planner_results['avg_plan_time']
@@ -209,8 +215,8 @@ class Session(object):
                     t_avg_path_length += planner_results['avg_path_length']
                     t_avg_success += planner_results['avg_success']
 
-                    if save is True:       
-                        with open(results_path, 'a') as f:
+                    if save is True:
+                        with open(RAW_PATH, 'a') as f:
                             writer = csv.writer(f)
                             writer.writerow([planner_id, scene_name, query_count, start_pose, target_pose,
                                              planner_results['avg_runs'], planner_results['avg_run_time'],
@@ -222,21 +228,11 @@ class Session(object):
                                       planner_results['avg_run_time'],  planner_results['avg_plan_time'],
                                       planner_results['avg_dist'], planner_results['avg_path_length'],
                                       planner_results['avg_success'])
-
+         
                     scene[query_count] = query      # Add query dict to scene dict
                     query_count += 1
             result_log[x1] = scene        # Add scene dict to results
             t_avg_success = t_avg_success / float(query_count)
-
-            if save is True:
-                with open(results_path, 'a') as f:
-                    writer = csv.writer(f)
-                    writer.writerow([''])
-                    writer.writerow(['t_avg_run_time', 't_avg_plan_time',
-                                     't_avg_dist', 't_avg_path_length', 't_avg_success'])
-                    writer.writerow(
-                        [t_avg_run_time, t_avg_plan_time, t_avg_dist, t_avg_path_length, t_avg_success])
-                    writer.writerow([''])
 
             stats = {'t_avg_run_time': t_avg_run_time, 't_avg_plan_time': t_avg_plan_time,
                      't_avg_dist': t_avg_dist, 't_avg_path_length': t_avg_path_length, 't_avg_success': t_avg_success}
@@ -247,7 +243,7 @@ class Session(object):
         run_times = []
         path_stats = []
         for _ in xrange(self.avg_runs):
-            self._move_arm(start_pose)  
+            self._move_arm(start_pose)
             path = self._plan_path(start_pose, target_pose)
             run_time, exec_success = self._move_arm(
                 target_pose, path['planned_path'])
@@ -296,7 +292,7 @@ class Session(object):
             # plan_time_nsecs = planned_path.joint_trajectory.points[-1].time_from_start.nsecs
             # plan_time = plan_time_secs + plan_time_nsecs*1e-9
             if length['joint_length'] >= 0.001:
-                success=1
+                success = 1
 
         return {'planned_path': planned_path, 'plan_time': plan_time, 'length': length, 'success': success}
 
@@ -367,11 +363,10 @@ class Session(object):
 
         return run_time, success
 
-
     def _dump_results(self, results):
         with open(self.ROS_PKG_PATH+'/scripts/'+self.planner_select+'_'+self.mode+'.p', 'wb') as f:
             pickle.dump(results, f)
- 
+
     # def get_results(self):
     #     # try:
     #     # catch:

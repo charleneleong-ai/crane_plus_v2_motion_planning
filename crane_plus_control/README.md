@@ -26,8 +26,8 @@ $ chmod u+x parameter_tuning_setup.sh && ./parameter_tuning_setup.sh
 Launch `control.launch` to:
 
 - Launch Gazebo simulation in tuning mode `tuning:=true` which sets up the [physics properties](http://gazebosim.org/tutorials?tut=modifying_world#PhysicsProperties) in the [tuning_world.world](../crane_plus_simulation/worlds/tuning_world.world) file to speed up realtime simulation
-- Launch moveit config with `robot execution:=true` to execute on Gazebo.
-- You can optionally set`gui:=false` to launch Gazebo without gui.
+- Launch Moveit config with `robot_execution:=true` to execute on Gazebo.
+- You can optionally set `gui:=false` to launch Gazebo without gui.
 - You can optionally set `rviz:=false` to launch Moveit without rviz.
 
 ```bash
@@ -57,7 +57,7 @@ $ roslaunch crane_plus_control.launch control.launch
 4. Benchmarking or tuning a specific path with defined start pose and target pose.
 
     ```bash
-    $ roslaunch crane_plus_control parameter_tuning.launch mode:=ompl max_trials:=30 avg_runs:=3
+    $ roslaunch crane_plus_control parameter_tuning.launch mode:=ompl start_pose:=backbend target_pose:=low_fwd_reach
     ```
 
 **Note:** Please ignore `[WARN] Dropping first 1 trajectory point(s) out of 135, as they occur before the current time. First valid point will be reached in 0.130s.` which outputs before every plan. This is a [known issue](https://github.com/ros-controls/ros_controllers/pull/366/files/7d2f98db49552cab0af753421955071c3cbae8e4#diff-01202b8fd499de6fd52d7a3f43d26df8) that has been patched in newer updates of `ros-kinetic-joint-trajectory-controller`.
@@ -75,15 +75,18 @@ $ roslaunch crane_plus_control parameter_tuning.launch
 
   - ***[default]*** Cano_etal
   - Burger_etal
-- **mode:** Sets the mode of the parameter tuning session.
+- **mode:** Sets the mode of the parameter tuning session. 
 
   - ompl - Runs benchmarking session with [OMPL planner config defaults](../crane_plus_moveit_config/config/ompl_planning.yaml).
   - default - Runs benchmarking session with [planner config defaults](./config/planner_configs.yaml).
-  - ***[default]*** tpe -  Runs tuning session using TPE in [Hyperopt](http://hyperopt.github.io/hyperopt/).
-  - rand -   Runs tuning session using random search in [Hyperopt](http://hyperopt.github.io/hyperopt/).
+  - ***[default]*** tpe -  Runs tuning session using Bayesian optimisation with TPE in [Hyperopt](http://hyperopt.github.io/hyperopt/).
+  - rand -   Runs tuning session using standard random search in [Hyperopt](http://hyperopt.github.io/hyperopt/).
   - smac - Runs tuning session using SMAC in [SMAC3](https://automl.github.io/SMAC3/master/).
   - auc_bandit - Runs tuning session using AUC Bandit in [OpenTuner](http://opentuner.org/)
   - gp - Runs tuning session using Bayesian optimisation with GP in [skopt](https://scikit-optimize.github.io/)
+  - rf - Runs tuning session using sequential optimisation with random forest regressor in [skopt](https://scikit-optimize.github.io/)
+  - et - Runs tuning session using sequential optimisation with extra trees regressor in [skopt](https://scikit-optimize.github.io/)
+  - gbrt - Runs tuning session using sequential optimisation with gradient boosting tree regressor in [skopt](https://scikit-optimize.github.io/)
 - **avg_runs:** Sets the avg number of runs for each parameter configuration. 
 
   - ***[default]*** 1

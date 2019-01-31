@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
-# Author: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 10:55:34 am
+# Author: Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
+# Last Modified: Wednesday, January 30th 2019, 11:02:12 am
 ###
 
 from timeit import default_timer as timer
@@ -45,7 +45,7 @@ class HyperOptSession(Session):
         return params_set
 
     def run_session(self):
-        super(HyperOptSession, self)._write_headers(self.results_path)
+        super(HyperOptSession, self)._write_headers(path=self.results_path)
 
         # Setting up the parameter search space and parameters
         for planner, params_set in self.planner_config.iteritems():

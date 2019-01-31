@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 ###
 # File Created: Tuesday, 29th January 2019 11:29:40 am
-# Author:  Charlene Leong (charleneleong84@gmail.com>)
+# Author: Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 10:31:13 am
+# Last Modified: Wednesday, January 30th 2019, 11:02:12 am
 ###
 import os
 import rospy
@@ -21,7 +21,7 @@ class OpenTunerSession(Session):
             rospy.loginfo('Initialising OpenTuner session in %s mode on full problem set', self.mode)
 
     def run_session(self):
-        super(OpenTunerSession, self)._write_headers(self.results_path)
+        super(OpenTunerSession, self)._write_headers(path=self.results_path)
         args = '--no-dups ' # Skip duplicate param_set configs
         if(self.max_runtime != 'None'):
             args = args+'--stop-after='+str(self.max_runtime)   # Stop after designed runtime

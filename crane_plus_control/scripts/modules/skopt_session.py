@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 ###
 # File Created: Friday, January 18th 2019, 1:36:24 pm
-# Author: Charlene Leong charleneleong84@gmail.com
+# Author: Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 2:50:24 pm
+# Last Modified: Wednesday, January 30th 2019, 11:02:12 am
 ###
 import sys
 from timeit import default_timer as timer
@@ -61,7 +61,7 @@ class SKOptSession(Session):
         return search_space
 
     def run_session(self):
-        super(SKOptSession, self)._write_headers(self.results_path)
+        super(SKOptSession, self)._write_headers(path=self.results_path)
 
         for planner, params_set in self.planner_config.iteritems():
             search_space = self._load_search_space(params_set)

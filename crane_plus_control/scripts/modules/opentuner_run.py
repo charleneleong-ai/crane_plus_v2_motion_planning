@@ -1,17 +1,11 @@
 #!/usr/bin/env python
 ###
 # File Created: Tuesday, 29th January 2019 4:20:52 pm
-# Author:  Charlene Leong (charleneleong84@gmail.com>)
+# Author: Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
 # Last Modified: Wednesday, January 30th 2019, 11:02:12 am
 ###
-#!/usr/bin/env python
-###
-# File Created: Tuesday, 29th January 2019 11:29:40 am
-# Author:  Charlene Leong (charleneleong84@gmail.com>)
-# Modified By: Charlene Leong
-# Last Modified: Tuesday, January 29th 2019, 4:20:23 pm
-###
+
 import sys
 import argparse
 from timeit import default_timer as timer

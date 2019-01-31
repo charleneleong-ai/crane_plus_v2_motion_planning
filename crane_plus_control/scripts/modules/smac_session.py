@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 ###
 # File Created: Friday, January 18th 2019, 1:36:24 pm
-# Author:  Charlene Leong (charleneleong84@gmail.com>)
+# Author: Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 11:03:38 am
+# Last Modified: Wednesday, January 30th 2019, 11:02:12 am
 ###
 
 import sys
@@ -83,7 +83,7 @@ class SMACSession(Session):
         self._create_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
 
     def run_session(self):
-        super(SMACSession, self)._write_headers(self.results_path)
+        super(SMACSession, self)._write_headers(path=self.results_path)
 
         scenario_dir =  self.SMAC_PATH+'/SMAC3/scenarios/'
         if not os.path.exists(scenario_dir):

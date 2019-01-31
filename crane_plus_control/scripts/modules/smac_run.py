@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 ###
 # File Created: Monday, January 21st 2019, 10:55:57 pm
-# Author: Charlene Leong charleneleong84@gmail.com
-# Last Modified: Wednesday, January 30th 2019, 10:29:45 am
+# Author: Charlene Leong (charleneleong84@gmail.com>)
 # Modified By: Charlene Leong
+# Last Modified: Wednesday, January 30th 2019, 11:02:12 am
 ###
 import sys
 import signal
