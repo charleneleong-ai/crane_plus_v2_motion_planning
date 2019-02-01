@@ -108,64 +108,64 @@ $ source activate ros_env
 
 2. Install [VMWare tools](https://www.youtube.com/watch?v=F5WaWIfi8f8) for VMWare Workstation Player or [VirtualBox Guest Additions](https://www.tecmint.com/install-virtualbox-guest-additions-in-ubuntu/) for Virtualbox. 
 
-   ```bash
-   $ sudo apt-get install open-vm-tools
-   ```
+    ```bash
+    $ sudo apt-get install open-vm-tools
+    ```
 
 3. [Ubuntu host only] Configure your Ethernet network connection settings to match host and connect to Internet. Click connections (top right) and click [Edit Connections], select Ethernet connection and see [IPv4 Settings].
 
 4. Set up melinet proxy.
 
-   Set up proxy for apt, software centre etc. Edit `/etc/apt/apt.conf`file and replace with following.
+    Set up proxy for apt, software centre etc. Edit `/etc/apt/apt.conf`file and replace with following.
 
-   ```bash
-   $ sudo nano /etc/apt/apt.conf
-   ```
+    ```bash
+    $ sudo nano /etc/apt/apt.conf
+    ```
 
-   ```bash
-   Acquire::http::proxy "http://melinet:9515/";
-   Acquire::https::proxy "https://melinet:9515/";
-   Acquire::ftp::proxy "ftp://melinet:9515/";
-   ```
+    ```bash
+    Acquire::http::proxy "http://melinet:9515/";
+    Acquire::https::proxy "https://melinet:9515/";
+    Acquire::ftp::proxy "ftp://melinet:9515/";
+    ```
 
-   <kbd>Ctrl</kbd>+<kbd>X</kbd> and <kbd>Y</kbd> to save.
+    <kbd>Ctrl</kbd>+<kbd>X</kbd> and <kbd>Y</kbd> to save.
 
-   Set up proxy environment variables. Edit `/etc/environment` file and add the following below `PATH`.
+    Set up proxy environment variables. Edit `/etc/environment` file and add the following below `PATH`.
 
-   ```bash
-   $ sudo nano /etc/environment
-   ```
+    ```bash
+    $ sudo nano /etc/environment
+    ```
 
-   ```bash
-   PATH ="..."
-   http_proxy="http://melinet:9515/"
-   https_proxy="https://melinet:9515/"
-   ftp_proxy="ftp://melinet:9515/"
-   ```
+    ```bash
+    PATH ="..."
+    http_proxy="http://melinet:9515/"
+    https_proxy="https://melinet:9515/"
+    ftp_proxy="ftp://melinet:9515/"
+    ```
 
 5. Add gojou to proxy exceptions.
 
-   ```bash
-   $ gsettings get org.gnome.system.proxy ignore-hosts
-   ```
+    ```bash
+    $ gsettings get org.gnome.system.proxy ignore-hosts
+    ```
 
-   ```bash
-   ['localhost', '127.0.0.0/8', '::1']
-   ```
+    ```bash
+    ['localhost', '127.0.0.0/8', '::1']
+    ```
 
-   ```bash
-   $ gsettings set org.gnome.system.proxy ignore-hosts "['localhost', '127.0.0.0/8', '::1', 'gojou']"
-   ```
+    ```bash
+    $ gsettings set org.gnome.system.proxy ignore-hosts "['localhost', '127.0.0.0/8', '::1', 'gojou']"
+    ```
 
-   ```bash
-   ['localhost', '127.0.0.0/8', '::1', 'gojou']
-   ```
+    ```bash
+    ['localhost', '127.0.0.0/8', '::1', 'gojou']
+    ```
 
 6. Install updates and reboot. Say no to Ubuntu 18.04 LTS upgrade.
 
-   ```bash
-   $ sudo apt-get update && sudo apt-get upgrade -y
-   $ sudo reboot
-   ```
+    ```bash
+    $ sudo apt-get update && sudo apt-get upgrade -y
+    $ sudo reboot
+    ```
 
 7. Sign in to `gojou/gitlab`. Go to [Quick Start](#quick-start).

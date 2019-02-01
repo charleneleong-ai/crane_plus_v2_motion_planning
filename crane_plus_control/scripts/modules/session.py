@@ -130,14 +130,17 @@ class Session(object):
         return dict(result)
 
     def _calc_loss(self,  stats):
-        success_rate = (1 - stats['t_avg_success']) * self.MAX_PLANTIME         # Want to max this
+        
         # If no success rate penalty is proportional to how short the plan time is (how bad the plan failed).
-        if stats['t_avg_success'] == 0:
-            loss = self.MAX_PLANTIME
-        elif(stats['t_avg_success'] == 1):
-            loss = stats['t_avg_plan_time']     # Plan time is our metric
-        else:
-            loss = loss*success_rate       # Penalise loss relative to success rate
+        # if stats['t_avg_success'] == 0:
+        #     loss = self.MAX_PLANTIME
+        # elif(stats['t_avg_success'] == 1):
+        #     loss = stats['t_avg_plan_time']     # Plan time is our metric
+        # else:
+        #     success_rate = (1 - stats['t_avg_success']) * self.MAX_PLANTIME         # Want to max this
+        #     loss = stats['t_avg_plan_time']*success_rate       # Penalise loss relative to success rate
+        success_rate = (1 - stats['t_avg_success']) # Want to max success
+        loss = (stats['t_avg_plan_time']*stats['t_avg_success']) + (self.MAX_PLANTIME*success_rate)
 
         return loss
 
@@ -250,10 +253,10 @@ class Session(object):
             run_time, exec_success = self._move_arm(
                 target_pose, path['planned_path'])
 
-            if (path['success'] == 0) or (exec_success is False):
-                run_time = 0
-                path = {'planned_path': 0, 'plan_time': 0, 'length': {
-                    'joint_dist': 0, 'joint_length': 0}, 'success': 0}
+            # if (path['success'] == 0) or (exec_success is False):
+            #     run_time = 0
+            #     path = {'planned_path': 0, 'plan_time': 0, 'length': {
+            #         'joint_dist': 0, 'joint_length': 0}, 'success': 0}
 
             run_times.append(run_time)
             path_stats.append(path)
@@ -270,8 +273,8 @@ class Session(object):
 
         # To penalise aborted plans which are missed (t_avg_success=1 but execution plan aborted (plan time <= 10ms)).
         # This only happens with BKPIECEkConfigDefault planner
-        if (avg_success == 1) and (avg_plan_time <= 0.01):
-            avg_success = 0
+        # if (avg_success == 1) and (avg_plan_time <= 0.01):
+        #     avg_success = 0
 
         return {'avg_runs': self.AVG_RUNS, 'avg_run_time': avg_run_time, 'avg_plan_time': avg_plan_time,
                 'avg_dist': avg_dist, 'avg_path_length': avg_path_length, 'avg_success': avg_success}

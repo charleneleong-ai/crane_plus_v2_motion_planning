@@ -77,7 +77,7 @@ class SMACSession(Session):
             scenario_file.write('deterministic = 1\n')
             if(self.MAX_RUNTIME != 'None'):
                 # Maximum amount of wallclock-time used for optimization.  Default: inf.
-                scenario_file.write('algo_runs_timelimit = '+str(self.MAX_RUNTIME)+'\n')
+                scenario_file.write('wallclock_limit = '+str(self.MAX_RUNTIME)+'\n')
             else:
                 # Maximum number of algorithm-calls during optimisation.  Default: inf.
                 scenario_file.write('ta_run_limit = '+str(self.MAX_TRIALS)+'\n')
