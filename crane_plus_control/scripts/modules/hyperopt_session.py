@@ -48,7 +48,8 @@ class HyperOptSession(Session):
         super(HyperOptSession, self)._write_headers(path=self.RESULTS_PATH)
 
         # Setting up the parameter search space and parameters
-        for planner, params_set in self.planner_config.iteritems():
+        for planner in self.planners:
+            params_set = dict(self.planner_config[planner].items())
             params_set = self._load_search_space(params_set)
 
             start_time = timer()

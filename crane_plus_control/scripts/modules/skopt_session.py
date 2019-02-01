@@ -30,7 +30,7 @@ class SKOptSession(Session):
         else:
             rospy.loginfo(
                 'Initialising SKOpt session in %s mode on full problem set\n', self.MODE)
-        self.planner = self.planners[0]
+       
         if self.MAX_TRIALS < 10:
             rospy.logerr('Max trials must be >= 10 for %s mode\n', self.MODE)
             sys.exit(1)
@@ -63,7 +63,8 @@ class SKOptSession(Session):
     def run_session(self):
         super(SKOptSession, self)._write_headers(path=self.RESULTS_PATH)
 
-        for planner, params_set in self.planner_config.iteritems():
+        for planner in self.planners:
+            params_set = dict(self.planner_config[planner].items())
             search_space = self._load_search_space(params_set)
             
             if(self.MAX_RUNTIME != 'None'):

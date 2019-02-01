@@ -8,6 +8,7 @@
 
 import sys
 import rospy
+import pprint
 import moveit_msgs.msg
 from moveit_msgs.srv import GetPlannerParams, SetPlannerParams
 
@@ -31,13 +32,11 @@ class PlannerConfig(object):
             self.planner_config = rospy.get_param('~planner_configs_'+self.NAME)
         assert isinstance(self.planner_config, dict)
         
-
-        # self.planners = list(self.PLANNER)
         if self.PLANNER == 'all':
             self.planners = self.planner_config.keys()
         else:
             self.planners = [self.PLANNER+'kConfigDefault']
-
+            
         # Override planner config with OMPL config in ompl mode
         if rospy.get_param('~mode') == 'ompl':
             self.NAME = self.PLANNER_SELECT+'_ompl'
