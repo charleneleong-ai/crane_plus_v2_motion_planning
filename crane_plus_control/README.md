@@ -8,11 +8,11 @@ This package aims to implement the following two papers in researching global bl
 
 ## Contents
 
-- [Quick Start](#quick-start)
-- [Parameter Tuning Parameters](#parameter-tuning-parameters)
-- [MoveIt Planning Time Benchmark](#moveit-planning-time-benchmark)
-- Results: [Result Overview](./results/result_overview.md)
-- Results: [Result Analysis Notebook](./results/result_analysis.ipynb)
+- [Parameter Tuning](#parameter-tuning)
+  - [Contents](#contents)
+  - [Quick Start](#quick-start)
+  - [Parameter Tuning Parameters](#parameter-tuning-parameters)
+  - [MoveIt Planning Time Benchmark](#moveit-planning-time-benchmark)
 
 
 
@@ -82,8 +82,8 @@ $ roslaunch crane_plus_control parameter_tuning.launch
   - ***[default]*** all
   - [RRTConnect](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1RRTConnect.html#aea8a84e73c86ff415931a29be34228f5) - bidirectional version of rapidly-exploring random tree (RRT) 
   - [BiTRRT](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1BiTRRT.html) - bidirectional version of RRT variant,  transition-based RRT (TRRT) 
-  - [BKPiece](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1BKPIECE1.html#gBKPIECE1) - bidirectional version of KPiece
-  - [KPiece](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1KPIECE1.html#gKPIECE1) - tree-based planner that uses discretisation to guide the exploration of the continuous space
+  - [BKPIECE](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1BKPIECE1.html#gBKPIECE1) - bidirectional version of KPIECE
+  - [KPIECE](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1KPIECE1.html#gKPIECE1) - tree-based planner that uses discretisation to guide the exploration of the continuous space
 
 - **mode:** Sets the mode of the parameter tuning session. 
 

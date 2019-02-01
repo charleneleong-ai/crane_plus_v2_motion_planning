@@ -22,7 +22,6 @@ class PlannerConfig(object):
     def __init__(self):
         self.PLANNER_SELECT = rospy.get_param('~planner_select')
         self.PLANNER = rospy.get_param('~planner')
-
         if rospy.get_param('~mode') in ['default', 'ompl']:
             self.NAME = self.PLANNER_SELECT+'_default'
             self.planner_config = rospy.get_param('~planner_configs_'+self.NAME)
@@ -30,11 +29,14 @@ class PlannerConfig(object):
         else:
             self.NAME = self.PLANNER_SELECT+'_tune'
             self.planner_config = rospy.get_param('~planner_configs_'+self.NAME)
-            
+        assert isinstance(self.planner_config, dict)
+        
+
+        # self.planners = list(self.PLANNER)
         if self.PLANNER == 'all':
-            self.planners = [self.planner_config.keys()]
+            self.planners = self.planner_config.keys()
         else:
-            self.planners = [rospy.get_param('~planner') + 'kConfigDefault']
+            self.planners = [self.PLANNER+'kConfigDefault']
 
         # Override planner config with OMPL config in ompl mode
         if rospy.get_param('~mode') == 'ompl':
@@ -42,8 +44,6 @@ class PlannerConfig(object):
             ompl = rospy.get_param('/move_group/planner_configs/')
             for p in self.planner_config.keys():
                 self.planner_config[p] = ompl[p]
-
-        assert isinstance(self.planner_config, dict)
 
         for k, v in self.planner_config.iteritems():
             self.set_planner_params(k, v)

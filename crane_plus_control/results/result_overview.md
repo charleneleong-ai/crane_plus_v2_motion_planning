@@ -2,7 +2,7 @@
 
 Cano, J. et al. “Automatic Parameter Tuning of Motion Planning Algorithms,” 2018 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain,  October, 1-5, 2018
 
-- **Motion Planning Algorithms:** BKPiece and RRTConnect
+- **Motion Planning Algorithms:** BKPIECE and RRTConnect
 
   *Note:* The Simplification trails (P5) parameter is specific to the simulator used in paper, therefore this parameter is omitted in our experiment.
 
@@ -19,7 +19,7 @@ Cano, J. et al. “Automatic Parameter Tuning of Motion Planning Algorithms,” 
 
 - **Results:**
 
-  - ***Environment 1:*** AUC Bandit gives 4.5x speedup for BKPiece and Random Forest gives 1.26x speedup for RRTConnect
+  - ***Environment 1:*** AUC Bandit gives 4.5x speedup for BKPIECE and Random Forest gives 1.26x speedup for RRTConnect
 
     
 

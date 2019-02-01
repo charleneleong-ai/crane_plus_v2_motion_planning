@@ -4,15 +4,15 @@ planner_configs_Cano_etal_tune:
     type: geometric::RRTConnect
     #[begin_range, end_range, step]
     default: [0.1, 2.0, 0.1] # Max steering distance 
-  # BKPIECEkConfigDefault:
-  #   type: geometric::BKPIECE
-  #   #[begin_range, end_range, step]
-  #   range: [0.1, 2.0, 0.1]  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-  #   border_fraction: [0.05, 1.0, 0.05]  # Fraction of time focused on boarder default: 0.9
-  #   failed_expansion_score_factor: [0.05, 1.0, 0.05]  # When extending motion fails, scale score by factor. default: 0.5
-  #   min_valid_path_fraction: [0.05, 1.0, 0.05]  # Accept partially valid moves above fraction. default: 0.5
-  #   projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
-  #   longest_valid_segment_fraction: 0.005
+  BKPIECEkConfigDefault:
+    type: geometric::BKPIECE
+    #[begin_range, end_range, step]
+    range: [0.1, 2.0, 0.1]  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    border_fraction: [0.05, 1.0, 0.05]  # Fraction of time focused on boarder default: 0.9
+    failed_expansion_score_factor: [0.05, 1.0, 0.05]  # When extending motion fails, scale score by factor. default: 0.5
+    min_valid_path_fraction: [0.05, 1.0, 0.05]  # Accept partially valid moves above fraction. default: 0.5
+    projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
+    longest_valid_segment_fraction: 0.005
 
 planner_configs_Cano_etal_default:
   RRTConnectkConfigDefault:
@@ -30,9 +30,9 @@ planner_configs_Cano_etal_default:
 
 
 planner_configs_Burger_etal_tune:
-  # RRTConnectkConfigDefault:
-  #   type: geometric::RRTConnect
-  #   range: [0.1, 15.0] # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+  RRTConnectkConfigDefault:
+    type: geometric::RRTConnect
+    range: [0.1, 15.0] # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
 
   BiTRRTkConfigDefault:
     type: geometric::BiTRRT
@@ -43,26 +43,26 @@ planner_configs_Burger_etal_tune:
     frountier_node_ratio: [0, 1.0]  # 1/10, or 1 nonfrontier for every 10 frontier. default: 0.1
     cost_threshold: [0,100000]  # the cost threshold. Any motion cost that is not better will not be expanded. default: inf
 
-  # BKPIECEkConfigDefault:
-  #   type: geometric::BKPIECE
-  #   range: [0.1, 15.0] # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-  #   border_fraction: [0, 1.0]  # Fraction of time focused on boarder default: 0.9
-  #   failed_expansion_score_factor: [0, 1.0] # When extending motion fails, scale score by factor. default: 0.5
-  #   min_valid_path_fraction: [0, 1.0] # Accept partially valid moves above fraction. default: 0.5
+  BKPIECEkConfigDefault:
+    type: geometric::BKPIECE
+    range: [0.1, 15.0] # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    border_fraction: [0, 1.0]  # Fraction of time focused on boarder default: 0.9
+    failed_expansion_score_factor: [0, 1.0] # When extending motion fails, scale score by factor. default: 0.5
+    min_valid_path_fraction: [0, 1.0] # Accept partially valid moves above fraction. default: 0.5
 
-  #   projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
-  #   longest_valid_segment_fraction: 0.005
+    projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
+    longest_valid_segment_fraction: 0.005
 
-  # KPIECEkConfigDefault:
-  #   type: geometric::KPIECE
-  #   range: [0.1, 15]  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-  #   goal_bias: [0, 1.0] # When close to goal select goal, with this probability. default: 0.05 
-  #   border_fraction: [0, 1.0]  # Fraction of time focused on boarder default: 0.9 (0.0,1.]
-  #   failed_expansion_score_factor: [0, 1.0]  # When extending motion fails, scale score by factor. default: 0.5
-  #   min_valid_path_fraction: [0, 1.0]  # Accept partially valid moves above fraction. default: 0.5
+  KPIECEkConfigDefault:
+    type: geometric::KPIECE
+    range: [0.1, 15]  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    goal_bias: [0, 1.0] # When close to goal select goal, with this probability. default: 0.05 
+    border_fraction: [0, 1.0]  # Fraction of time focused on boarder default: 0.9 (0.0,1.]
+    failed_expansion_score_factor: [0, 1.0]  # When extending motion fails, scale score by factor. default: 0.5
+    min_valid_path_fraction: [0, 1.0]  # Accept partially valid moves above fraction. default: 0.5
 
-  #   projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
-  #   longest_valid_segment_fraction: 0.005
+    projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
+    longest_valid_segment_fraction: 0.005
 
 
 planner_configs_Burger_etal_default:

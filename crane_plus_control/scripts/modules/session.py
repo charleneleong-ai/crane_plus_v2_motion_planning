@@ -54,7 +54,6 @@ class Session(object):
             if self.MAX_RUNTIME != 'None':
                 self.MAX_RUNTIME = int(self.MAX_RUNTIME)
                 self.MAX_TRIALS = 10000     # Set to arbitrary large number
-                self.planners = self.planners[0]
                 
         self.START_POSE = rospy.get_param('~start_pose')
         self.TARGET_POSE = rospy.get_param('~target_pose')
@@ -73,8 +72,11 @@ class Session(object):
         if not os.path.exists(RAW_DIR):
             os.makedirs(RAW_DIR)
 
-        self.RESULTS_PATH = RAW_DIR+'/'+self.PLANNER_SELECT+'_'+self.MODE+'.csv'
-       
+        if self.planner_config_obj.PLANNER != 'all':
+            self.RESULTS_PATH = RAW_DIR+'/'+self.PLANNER_SELECT+'_'+self.MODE+'_'+self.planner_config_obj.PLANNER+'.csv'
+        else:
+            self.RESULTS_PATH = RAW_DIR+'/'+self.PLANNER_SELECT+'_'+self.MODE+'.csv'
+
     def _load_search_space(self, params_set, *args, **kwargs):
         raise NotImplementedError
 

@@ -33,7 +33,7 @@ def check_params(mode):
         rospy.logerr('Please choose from %s\n', str(['Cano_etal', 'Burger_etal']))
         sys.exit(1)
 
-    planners = ['all', 'BKPiece', 'RRTConnect', 'KPiece', 'BiTRRT']
+    planners = ['all', 'BKPIECE', 'RRTConnect', 'KPIECE', 'BiTRRT']
     planner = rospy.get_param('~planner')
     if planner not in planners:
         rospy.logerr('Invalid planner.')
