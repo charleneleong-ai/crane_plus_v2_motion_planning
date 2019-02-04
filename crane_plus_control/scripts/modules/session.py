@@ -131,14 +131,6 @@ class Session(object):
 
     def _calc_loss(self,  stats):
         
-        # If no success rate penalty is proportional to how short the plan time is (how bad the plan failed).
-        # if stats['t_avg_success'] == 0:
-        #     loss = self.MAX_PLANTIME
-        # elif(stats['t_avg_success'] == 1):
-        #     loss = stats['t_avg_plan_time']     # Plan time is our metric
-        # else:
-        #     success_rate = (1 - stats['t_avg_success']) * self.MAX_PLANTIME         # Want to max this
-        #     loss = stats['t_avg_plan_time']*success_rate       # Penalise loss relative to success rate
         success_rate = (1 - stats['t_avg_success']) # Want to max success
         loss = (stats['t_avg_plan_time']*stats['t_avg_success']) + (self.MAX_PLANTIME*success_rate)
 
@@ -271,11 +263,6 @@ class Session(object):
         avg_success = float(sum(d['success']
                                 for d in path_stats)) / len(path_stats)
 
-        # To penalise aborted plans which are missed (t_avg_success=1 but execution plan aborted (plan time <= 10ms)).
-        # This only happens with BKPIECEkConfigDefault planner
-        # if (avg_success == 1) and (avg_plan_time <= 0.01):
-        #     avg_success = 0
-
         return {'avg_runs': self.AVG_RUNS, 'avg_run_time': avg_run_time, 'avg_plan_time': avg_plan_time,
                 'avg_dist': avg_dist, 'avg_path_length': avg_path_length, 'avg_success': avg_success}
 
@@ -371,18 +358,3 @@ class Session(object):
     def _dump_results(self, results):
         with open(self.ROS_PKG_PATH+'/scripts/'+self.PLANNER_SELECT+'_'+self.MODE+'.p', 'wb') as f:
             pickle.dump(results, f)
-
-    # def get_results(self):
-    #     # try:
-    #     # catch:
-
-    #     results = pd.read_csv(self.RESULTS_PATH)
-    #     # Sort with best scores on top and reset index for slicing
-
-    #     for p in results.planner.unique():
-    #         planner_df = results[results['planner'] == p]
-    #         #print(planner_df)
-    #         planner_df.sort_values(
-    #             'loss', ascending=True, inplace=True)
-    #         planner_df.reset_index(inplace=True, drop=True)
-    #         print(planner_df.head())
