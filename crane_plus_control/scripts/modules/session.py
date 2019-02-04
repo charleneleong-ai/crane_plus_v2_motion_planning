@@ -47,7 +47,7 @@ class Session(object):
         self.MODE = rospy.get_param('~mode')
         self.AVG_RUNS = rospy.get_param('~avg_runs')
         self.MAX_RUNTIME = rospy.get_param('~max_runtime')
-        self.MAX_PLANTIME = rospy.get_param('~max_plan_time')
+        self.MAX_PLANTIME = rospy.get_param('~max_plantime')
 
         if self.MODE not in ['default', 'ompl']:
             self.MAX_TRIALS = rospy.get_param('~max_trials')
@@ -119,6 +119,7 @@ class Session(object):
         # print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
 
         result_df = pd.DataFrame(dict(result_csv), columns=result.keys(), index=[0])
+        
         with open(self.RESULTS_PATH, 'a') as f:
             result_df.to_csv(f, header=False, index=False)
 
@@ -130,8 +131,10 @@ class Session(object):
         return dict(result)
 
     def _calc_loss(self,  stats):
-        
+
+        # Plantime is our metric
         success_rate = (1 - stats['t_avg_success']) # Want to max success
+        # Returns max plantime if success = 0, otherwise returns plantime
         loss = (stats['t_avg_plan_time']*stats['t_avg_success']) + (self.MAX_PLANTIME*success_rate)
 
         return loss

@@ -35,11 +35,18 @@ class BenchmarkSession(Session):
             result, stats = super(BenchmarkSession, self)._run_problem_set(planner_id=planner)
             results[planner] = result       
 
+            rospy.loginfo('planner: %s avg_runs: %d t_avg_run_time: %.4f t_avg_plan_time: %.4f t_avg_dist: %.4f t_avg_path_length: %.4f t_avg_success: %.4f\n',
+                        planner, self.AVG_RUNS, stats['t_avg_run_time'], 
+                        stats['t_avg_plan_time'], stats['t_avg_dist'], stats['t_avg_path_length'], 
+                        stats['t_avg_success'])
+                        
             with open(self.RESULTS_PATH, 'a') as f:
                 writer = csv.writer(f)
                 writer.writerow([planner, self.AVG_RUNS, stats['t_avg_run_time'], stats['t_avg_plan_time'],
                                  stats['t_avg_dist'], stats['t_avg_path_length'], stats['t_avg_success'],
                                  params_set])
+
+            
 
         super(BenchmarkSession, self)._dump_results(results)
 

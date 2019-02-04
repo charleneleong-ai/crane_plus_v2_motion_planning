@@ -1,9 +1,10 @@
 
-
-
-named_states: [vertical, backbend, resting, low_fwd_reach,
-    pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, 
-    pose9, pose10, pose11, pose12, pose13, pose14]
-
-# poses: [pose1, pose2, pose3, pose4, pose5, pose6, pose7, pose8, pose9, pose10, pose11, pose12, pose13, pose14]
-
+start_pose: None
+target_pose: None
+planner_select: Cano_etal
+planner: all
+mode: tpe
+avg_runs: 1
+max_trials: 30
+max_runtime: None
+max_plantime: 3

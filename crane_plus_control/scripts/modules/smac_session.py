@@ -106,7 +106,8 @@ class SMACSession(Session):
         if not os.path.exists(SCENARIO_DIR):
             os.makedirs(SCENARIO_DIR)
 
-        for planner, params_set in self.planner_config.iteritems():
+        for planner in self.planners:
+            params_set = dict(self.planner_config[planner].items())
             pcs_fp = SCENARIO_DIR+self.PLANNER_SELECT+'_'+planner+'.pcs'
             scenario_fp = SCENARIO_DIR+planner+'_scenario.txt'
 

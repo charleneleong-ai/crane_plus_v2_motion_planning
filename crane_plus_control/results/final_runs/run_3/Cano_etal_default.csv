@@ -1,0 +1,3 @@
+planner,avg_runs,t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success,params
+BKPIECEkConfigDefault,5,1.3809542179107666,0.5277795791625977,1.7029189913553548,7.547268890760054,1.0,"{'longest_valid_segment_fraction': 0.005, 'border_fraction': 0.5, 'projection_evaluator': 'joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)', 'range': 1.0, 'failed_expansion_score_factor': 0.5, 'min_valid_path_fraction': 0.5, 'type': 'geometric::BKPIECE'}"
+RRTConnectkConfigDefault,5,0.9699635982513428,0.13203806877136232,1.3623163990762603,6.236382022998791,0.8,"{'default': 1.0, 'type': 'geometric::RRTConnect'}"

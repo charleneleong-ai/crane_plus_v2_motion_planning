@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
-# Author: Charlene Leong (charleneleong84@gmail.com>)
+# Author: Charlene Leong
+# Last Modified: Wednesday, January 30th 2019, 10:55:34 am
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 11:02:12 am
 ###
 
 from timeit import default_timer as timer
@@ -26,10 +26,10 @@ class HyperOptSession(Session):
     def __init__(self):
         super(HyperOptSession, self).__init__()
         if self.PATH_TUNE:
-            rospy.loginfo('Initialising hyperopt session in %s mode from %s to %s\n',
+            rospy.loginfo('Initialising hyperopt session in %s mode from %s to %s',
                           self.MODE, self.START_POSE, self.TARGET_POSE)
         else:
-            rospy.loginfo('Initialising hyperopt session in %s mode on full problem set\n', self.MODE)
+            rospy.loginfo('Initialising hyperopt session in %s mode on full problem set', self.MODE)
     
     def _hpt_obj(self, params):
         return super(HyperOptSession, self)._objective(params)
@@ -45,7 +45,7 @@ class HyperOptSession(Session):
         return params_set
 
     def run_session(self):
-        super(HyperOptSession, self)._write_headers(path=self.RESULTS_PATH)
+        super(HyperOptSession, self)._write_headers(self.RESULTS_PATH)
 
         # Setting up the parameter search space and parameters
         for planner in self.planners:
@@ -55,7 +55,7 @@ class HyperOptSession(Session):
             start_time = timer()
             params = {'planner': planner, 'params_set': params_set,'start_time': start_time}
                     
-            if(self.MAX_RUNTIME != "None"):
+            if(self.MAX_RUNTIME != 'None'):
                 params['end_time'] = timer() + self.MAX_RUNTIME
                 print('\n')
                 rospy.loginfo('Executing %s on %s for %d secs',
@@ -83,4 +83,5 @@ class HyperOptSession(Session):
 
         super(HyperOptSession, self)._dump_results(trials)
         
+        print('\n')
         rospy.loginfo('Saved results to %s\n', self.RESULTS_PATH)

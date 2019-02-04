@@ -67,15 +67,15 @@ class SKOptSession(Session):
             params_set = dict(self.planner_config[planner].items())
             search_space = self._load_search_space(params_set)
             
-            if(self.MAX_RUNTIME != 'None'):
-                rospy.loginfo('Executing %s on %s for %d secs', self.MODE, planner, self.MAX_RUNTIME)
-            else:
-                rospy.loginfo('Executing %s on %s for %d trials', self.MODE, planner, self.MAX_TRIALS)
-
             self.n_trial = 0        # Reset to n_trials to zero for each planner        
             self.planner = planner  # Keeping track of current planner
             self.start_time = timer()   # Keeping track of start_time
-            self.end_time = self.start_time+self.MAX_RUNTIME  # Keeping track of end_time
+            if(self.MAX_RUNTIME != 'None'):
+                self.end_time = self.start_time+self.MAX_RUNTIME  # Keeping track of end_time
+                rospy.loginfo('Executing %s on %s for %d secs', self.MODE, planner, self.MAX_RUNTIME)            
+            else:
+                rospy.loginfo('Executing %s on %s for %d trials', self.MODE, planner, self.MAX_TRIALS)
+
             if self.MODE == 'gp':
                 result = gp_minimize(self._skopt_obj, search_space, n_calls=self.MAX_TRIALS, random_state=0,
                                 acq_func='gp_hedge')

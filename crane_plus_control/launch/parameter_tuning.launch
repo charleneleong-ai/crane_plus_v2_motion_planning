@@ -15,15 +15,14 @@ Modified By:
   <arg name="avg_runs" default="1" />
   <arg name="max_trials" default="30" />
   <arg name="max_runtime" default="None" />         <!-- secs -->
-  <arg name="max_plan_time" default="3" />         <!-- secs -->
+  <arg name="max_plantime" default="3" />         <!-- secs -->
+  <arg name="config" default="false" />         <!-- secs -->
 
   <!-- parameter tuning file -->
   <arg name="param_tuning_config" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>
   <arg name="planner_configs" default="$(find crane_plus_control)/config/planner_configs.yaml"/>
 
   <node pkg="crane_plus_control" name="parameter_tuning" type="parameter_tuning.py" output="screen">
-    <rosparam command="load" file="$(arg param_tuning_config)"/>
-    <rosparam command="load" file="$(arg planner_configs)"/>
     <param name="start_pose" type="str" value="$(arg start_pose)" />
     <param name="target_pose" type="str" value="$(arg target_pose)" />
     <param name="planner_select" type="str" value="$(arg planner_select)" />
@@ -32,7 +31,9 @@ Modified By:
     <param name="avg_runs" type="int" value="$(arg avg_runs)" />
     <param name="max_trials" type="int" value="$(arg max_trials)" />
     <param name="max_runtime" type="str" value="$(arg max_runtime)" />
-    <param name="max_plan_time" type="int" value="$(arg max_plan_time)" />
+    <param name="max_plantime" type="int" value="$(arg max_plantime)" />
+    <rosparam command="load" file="$(arg planner_configs)"/>
+    <rosparam if='$(arg config)' command="load" file="$(arg param_tuning_config)"/>
   </node>
   
 </launch>
