@@ -119,7 +119,7 @@ class Session(object):
         # print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
 
         result_df = pd.DataFrame(dict(result_csv), columns=result.keys(), index=[0])
-        
+
         with open(self.RESULTS_PATH, 'a') as f:
             result_df.to_csv(f, header=False, index=False)
 
@@ -153,6 +153,7 @@ class Session(object):
         with open(path, 'w') as f:
             writer = csv.writer(f)
             writer.writerow(headers)
+
 
     def _run_problem_set(self, planner_id, save=False):
         """Returns resuls after iterating over all scenes and corresponding states

@@ -45,7 +45,7 @@ class HyperOptSession(Session):
         return params_set
 
     def run_session(self):
-        super(HyperOptSession, self)._write_headers(self.RESULTS_PATH)
+        super(HyperOptSession, self)._write_headers(path=self.RESULTS_PATH)
 
         # Setting up the parameter search space and parameters
         for planner in self.planners:
