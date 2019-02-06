@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
-# Author: Charlene Leong (charleneleong84@gmail.com>)
+# Author: Charlene Leong charleneleong84@gmail.com
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 11:02:12 am
+# Last Modified: Wednesday, February 6th 2019, 8:21:15 pm
 ###
 
 import sys
@@ -23,6 +23,7 @@ class PlannerConfig(object):
     def __init__(self):
         self.PLANNER_SELECT = rospy.get_param('~planner_select')
         self.PLANNER = rospy.get_param('~planner')
+
         if rospy.get_param('~mode') in ['default', 'ompl']:
             self.NAME = self.PLANNER_SELECT+'_default'
             self.planner_config = rospy.get_param('~planner_configs_'+self.NAME)
@@ -44,8 +45,10 @@ class PlannerConfig(object):
             for p in self.planner_config.keys():
                 self.planner_config[p] = ompl[p]
 
-        for k, v in self.planner_config.iteritems():
-            self.set_planner_params(k, v)
+        # Init planner config if not in result mode
+        if rospy.get_param('~param_test') == False:
+            for k, v in self.planner_config.iteritems():
+                self.set_planner_params(k, v)
 
     def set_planner_params(self, planner_id, params_set):
         """Calls SetPlannerParams moveit ROS service to set planner params for select planner

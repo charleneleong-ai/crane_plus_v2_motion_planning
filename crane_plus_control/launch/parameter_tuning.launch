@@ -6,6 +6,7 @@ Modified By:
 -->
 
 <launch>
+
   <!-- option to choose target -->
   <arg name="start_pose" default="None"/>       <!-- [vertical, backbend, resting, low_fwd_reach ...] -->
   <arg name="target_pose" default="None"/>
@@ -16,27 +17,48 @@ Modified By:
   <arg name="max_trials" default="30" />
   <arg name="max_runtime" default="None" />         <!-- secs -->
   <arg name="max_plantime" default="3" />         <!-- secs -->
-  <arg name="result_dir" default="raw" />         <!-- raw not included in git -->
+  <arg name="result_dir" default="final" />         <!-- raw not included in git -->
   <arg name="config" default="false" />         <!-- load params from yaml file instead -->
 
-  <!-- parameter tuning file -->
+  <arg name="param_test" default="true"/> 
+
   <arg name="param_tuning_config" default="$(find crane_plus_control)/config/parameter_tuning.yaml"/>
   <arg name="planner_configs" default="$(find crane_plus_control)/config/planner_configs.yaml"/>
 
-  <node pkg="crane_plus_control" name="parameter_tuning" type="parameter_tuning.py" output="screen">
-    <param unless="$(arg config)" name="start_pose" type="str" value="$(arg start_pose)" />
-    <param unless="$(arg config)" name="target_pose" type="str" value="$(arg target_pose)" />
-    <param unless="$(arg config)" name="planner_select" type="str" value="$(arg planner_select)" />
-    <param unless="$(arg config)" name="planner" type="str" value="$(arg planner)" />
-    <param unless="$(arg config)" name="mode" type="str" value="$(arg mode)" />
-    <param unless="$(arg config)" name="avg_runs" type="int" value="$(arg avg_runs)" />
-    <param unless="$(arg config)" name="max_trials" type="int" value="$(arg max_trials)" />
-    <param unless="$(arg config)" name="max_runtime" type="str" value="$(arg max_runtime)" />
-    <param unless="$(arg config)" name="max_plantime" type="int" value="$(arg max_plantime)" />
-    <param unless="$(arg config)" name="result_dir" type="str" value="$(arg result_dir)" />
+  <!-- parameter tuning node -->
+  <group unless='$(arg param_test)'>
+    <node pkg="crane_plus_control" name="parameter_tuning" type="parameter_tuning.py" output="screen">
+      <param unless="$(arg config)" name="start_pose" type="str" value="$(arg start_pose)" />
+      <param unless="$(arg config)" name="target_pose" type="str" value="$(arg target_pose)" />
+      <param unless="$(arg config)" name="planner_select" type="str" value="$(arg planner_select)" />
+      <param unless="$(arg config)" name="planner" type="str" value="$(arg planner)" />
+      <param unless="$(arg config)" name="mode" type="str" value="$(arg mode)" />
+      <param unless="$(arg config)" name="avg_runs" type="int" value="$(arg avg_runs)" />
+      <param unless="$(arg config)" name="max_trials" type="int" value="$(arg max_trials)" />
+      <param unless="$(arg config)" name="max_runtime" type="str" value="$(arg max_runtime)" />
+      <param unless="$(arg config)" name="max_plantime" type="int" value="$(arg max_plantime)" />
 
-    <rosparam command="load" file="$(arg planner_configs)"/>
-    <rosparam if='$(arg config)' command="load" file="$(arg param_tuning_config)"/>
-  </node>
+      <param name="param_test" type="bool" value="$(arg param_test)" />
+      <param unless="$(arg config)" name="result_dir" type="str" value="$(arg result_dir)" />
+
+      <rosparam command="load" file="$(arg planner_configs)"/>
+      <rosparam if='$(arg config)' command="load" file="$(arg param_tuning_config)"/>
+    </node>
+  </group>
+
+  <group if='$(arg param_test)'>
+    <node pkg="crane_plus_control" name="param_test" type="param_test.py" output="screen">
+      <param unless="$(arg config)" name="avg_runs" type="int" value="$(arg avg_runs)" />
+
+      <param name="param_test" type="bool" value="$(arg param_test)" />
+      <param unless="$(arg config)" name="result_dir" type="str" value="$(arg result_dir)" />
+
+      <rosparam command="load" file="$(arg planner_configs)"/>
+      <rosparam command="load" file="$(arg param_tuning_config)"/>
+    </node>
+  </group>
+
   
+
+
 </launch>

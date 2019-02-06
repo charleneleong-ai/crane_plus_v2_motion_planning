@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
-# Author: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 10:55:34 am
+# Author: Charlene Leong charleneleong84@gmail.com
+# Last Modified: Wednesday, February 6th 2019, 4:07:09 pm
 # Modified By: Charlene Leong
 ###
 
@@ -14,10 +14,10 @@ import rospy
 from hyperopt import hp, rand, tpe
 from hyperopt import Trials, fmin, STATUS_OK
 
-from session import Session
+from tuning_session import TuningSession
 
 
-class HyperOptSession(Session):
+class HyperOptSession(TuningSession):
     """
     Hyperopt Session
     _hpt_obj(params): Hyperopt obj fn inherited from Session class

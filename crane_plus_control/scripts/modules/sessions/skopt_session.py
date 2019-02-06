@@ -1,23 +1,22 @@
 #!/usr/bin/env python
 ###
 # File Created: Friday, January 18th 2019, 1:36:24 pm
-# Author: Charlene Leong (charleneleong84@gmail.com>)
+# Author: Charlene Leong charleneleong84@gmail.com
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 11:02:12 am
+# Last Modified: Wednesday, February 6th 2019, 4:06:51 pm
 ###
 import sys
 from timeit import default_timer as timer
-import pprint
 
 import rospy
 
 from skopt import gp_minimize, forest_minimize, gbrt_minimize
 from skopt.space import Real, Categorical
 
-from session import Session
+from tuning_session import TuningSession
 
 
-class SKOptSession(Session):
+class SKOptSession(TuningSession):
     """
     SKOpt Session 
     """

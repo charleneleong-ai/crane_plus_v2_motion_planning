@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 ###
 # File Created: Friday, January 18th 2019, 1:36:24 pm
-# Author: Charlene Leong (charleneleong84@gmail.com>)
+# Author: Charlene Leong charleneleong84@gmail.com
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 11:02:12 am
+# Last Modified: Wednesday, February 6th 2019, 4:47:11 pm
 ###
 
 import sys
@@ -11,13 +11,12 @@ import os
 import datetime
 import numpy as np
 
-import rospkg
 import rospy
 
-from session import Session
+from tuning_session import TuningSession
 
 
-class SMACSession(Session):
+class SMACSession(TuningSession):
     """
     SMAC Session
     _create_pcs(planner, params_set, pcs_fp): Creates pcs file
@@ -67,7 +66,7 @@ class SMACSession(Session):
             # Race new incumbents always against default configuration
             scenario_file.write('always_race_default = true\n')
             # Program to run and parameters
-            scenario_file.write('algo = python '+self.SMAC_PATH+'/smac_run.py ' +
+            scenario_file.write('algo = python '+self.SMAC_PATH+'/sessions/smac_run.py ' +
                                 planner+' '+scene+' '+str(self.MAX_TRIALS)+'\n')
             # Specifies the path to the PCS-file.
             scenario_file.write('pcs_fn = '+pcs_fp+'\n') 
@@ -100,7 +99,7 @@ class SMACSession(Session):
         self._create_scenario(planner, self.scenes[0], scenario_fp, pcs_fp)
 
     def run_session(self):
-        super(SMACSession, self)._write_headers(path=self.RESULTS_PATH)
+        self._write_headers(path=self.RESULTS_PATH)
 
         SCENARIO_DIR =  self.SMAC_PATH+'/SMAC3/scenarios/'
         if not os.path.exists(SCENARIO_DIR):

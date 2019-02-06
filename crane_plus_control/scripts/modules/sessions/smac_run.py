@@ -1,22 +1,19 @@
 #!/usr/bin/env python
 ###
 # File Created: Monday, January 21st 2019, 10:55:57 pm
-# Author: Charlene Leong (charleneleong84@gmail.com>)
+# Author: Charlene Leong charleneleong84@gmail.com
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 11:02:12 am
+# Last Modified: Wednesday, February 6th 2019, 4:48:48 pm
 ###
 import sys
-import signal
 from timeit import default_timer as timer
 
 import rospy
 
-import moveit_commander
-
-from session import Session
+from tuning_session import TuningSession
 
 
-class SMACRun(Session):
+class SMACRun(TuningSession):
     """
     SMACRun Session
     _smac_obj(params): Adds non tunable params from SMAC Session to params_set and executes obj
@@ -36,7 +33,7 @@ class SMACRun(Session):
         for k, v in params_set.iteritems():
             if not isinstance(v, list):
                 params['params_set'][k] = v
-        return super(SMACRun, self)._objective(params)
+        return self._objective(params)
 
 
 def set_session_params():

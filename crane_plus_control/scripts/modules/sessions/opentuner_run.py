@@ -1,29 +1,27 @@
 #!/usr/bin/env python
 ###
 # File Created: Tuesday, 29th January 2019 4:20:52 pm
-# Author: Charlene Leong (charleneleong84@gmail.com>)
+# Author: Charlene Leong charleneleong84@gmail.com
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 11:02:12 am
+# Last Modified: Wednesday, February 6th 2019, 4:06:08 pm
 ###
 
-import sys
 import argparse
 from timeit import default_timer as timer
 
 import rospy
 
 import opentuner
-from opentuner.utils import adddeps
 from opentuner.api import TuningRunManager
 from opentuner.measurement.interface import DefaultMeasurementInterface
 from opentuner import ConfigurationManipulator
 from opentuner import FloatParameter
 from opentuner import Result
 
-from session import Session
+from tuning_session import TuningSession
 
 
-class OpenTunerRun(Session):
+class OpenTunerRun(TuningSession):
     """
     OpenTunerRun Session
     _opentuner_obj(params): Adds non tunable params from OpenTuner Session to params_set and executes obj

@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 ###
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
-# Author: Charlene Leong (charleneleong84@gmail.com>)
+# Author: Charlene Leong charleneleong84@gmail.com
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, January 30th 2019, 11:02:12 am
-###
+# Last Modified: Wednesday, February 6th 2019, 5:33:15 pm
 
 import sys
 import os
@@ -24,8 +23,7 @@ import rospy
 import moveit_commander
 import moveit_msgs.msg
 
-from planner_config import PlannerConfig
-from scene_object import Scene
+from objs import PlannerConfig, Scene
 
 
 class Session(object):
@@ -37,27 +35,14 @@ class Session(object):
         self.ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
         self.planner_config_obj = PlannerConfig()
         self.planner_config = self.planner_config_obj.planner_config
-        self.PLANNER_SELECT = self.planner_config_obj.PLANNER_SELECT
         self.planners = self.planner_config_obj.planners
         self.scenes = rospy.get_param('~scenes')
 
-        self.n_trial = 0
+        self.PLANNER = self.planner_config_obj.PLANNER
+        self.PLANNER_SELECT = self.planner_config_obj.PLANNER_SELECT
         self.MODE = rospy.get_param('~mode')
         self.AVG_RUNS = rospy.get_param('~avg_runs')
-        self.MAX_RUNTIME = rospy.get_param('~max_runtime')
         self.MAX_PLANTIME = rospy.get_param('~max_plantime')
-
-        if self.MODE not in ['default', 'ompl']:
-            self.MAX_TRIALS = rospy.get_param('~max_trials')
-            if self.MAX_RUNTIME != 'None':
-                self.MAX_RUNTIME = int(self.MAX_RUNTIME)
-                self.MAX_TRIALS = 10000     # Set to arbitrary large number
-                
-        self.START_POSE = rospy.get_param('~start_pose')
-        self.TARGET_POSE = rospy.get_param('~target_pose')
-        self.PATH_TUNE = False
-        if (self.START_POSE != 'None') and (self.TARGET_POSE != 'None'):
-            self.PATH_TUNE = True
 
         self.robot = moveit_commander.RobotCommander()
         self.group = moveit_commander.MoveGroupCommander('arm')
@@ -67,94 +52,17 @@ class Session(object):
                                                             moveit_msgs.msg.DisplayTrajectory,
                                                             queue_size=20)
 
-        self.RESULTS_DIR = self.ROS_PKG_PATH+'/results/'+rospy.get_param('~result_dir')                                                  
+        self.RESULTS_DIR = self.ROS_PKG_PATH+'/results/'+rospy.get_param('~result_dir')                                        
         if not os.path.exists(self.RESULTS_DIR):
             os.makedirs(self.RESULTS_DIR )
 
-        if self.planner_config_obj.PLANNER != 'all':
-            self.RESULTS_PATH = self.RESULTS_DIR+'/'+self.PLANNER_SELECT+'_'+self.MODE+'_'+self.planner_config_obj.PLANNER+'.csv'
-        else:
+        if self.planner_config_obj.PLANNER  == 'all':
             self.RESULTS_PATH = self.RESULTS_DIR+'/'+self.PLANNER_SELECT+'_'+self.MODE+'.csv'
-
-    def _load_search_space(self, params_set, *args, **kwargs):
-        raise NotImplementedError
-
-    def run_session(self):
-        raise NotImplementedError
-
-    def _objective(self, params):
-        self.n_trial += 1
-        planner = params['planner']
-        params_set = params['params_set']
-        self.planner_config_obj.set_planner_params(planner, params_set)
-
-        if self.PATH_TUNE:
-            results = self._get_stats(self.START_POSE, self.TARGET_POSE)
-            stats = {'t_avg_run_time': results['avg_run_time'], 't_avg_plan_time': results['avg_plan_time'],
-                     't_avg_dist': results['avg_dist'], 't_avg_path_length': results['avg_path_length'],
-                     't_avg_success': results['avg_success']}
         else:
-            results, stats = self._run_problem_set(planner_id=planner)
-
-        loss = self._calc_loss(stats)
-
-        current = timer()
-        elapsed_time = (current - params['start_time'])
-
-        rospy.loginfo('n_trial: %d elapsed_time(s): %.4f loss: %.4f t_avg_run_time: %.4f t_avg_plan_time: %.4f t_avg_dist: %.4f t_avg_path_length: %.4f t_avg_success: %.4f\n',
-                        self.n_trial, elapsed_time, loss, stats['t_avg_run_time'], 
-                        stats['t_avg_plan_time'], stats['t_avg_dist'], stats['t_avg_path_length'], 
-                        stats['t_avg_success'])
-
-        result = OrderedDict([('n_trial', self.n_trial), ('elapsed_time', elapsed_time), ('loss', loss), 
-                              ('planner', planner), ('avg_runs', self.AVG_RUNS), ('t_avg_run_time', 
-                              stats['t_avg_run_time']), ('t_avg_plan_time', stats['t_avg_plan_time']),
-                              ('t_avg_dist', stats['t_avg_dist']), ('t_avg_path_length', stats['t_avg_path_length']),
-                              ('t_avg_success', stats['t_avg_success'])])
-        # Save params as str for csv export
-        result_csv = OrderedDict(list(result.items())+[('params', str(params_set))])
-        result = OrderedDict(list(result.items())+[('params', params_set)])
-        # print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
-
-        result_df = pd.DataFrame(dict(result_csv), columns=result.keys(), index=[0])
-
-        with open(self.RESULTS_PATH, 'a') as f:
-            result_df.to_csv(f, header=False, index=False)
-
-        if (self.MAX_RUNTIME != 'None') and (timer() > params['end_time']):
-            rospy.loginfo('Program has run for allotted time (%d secs)\n', self.MAX_RUNTIME)
-            rospy.loginfo('Saved results to %s\n', self.RESULTS_PATH)
-            sys.exit(0)
-
-        return dict(result)
-
-    def _calc_loss(self,  stats):
-
-        # Plantime is our metric
-        success_rate = (1 - stats['t_avg_success']) # Want to max success
-        # Returns max plantime if success = 0, otherwise returns plantime
-        loss = (stats['t_avg_plan_time']*stats['t_avg_success']) + (self.MAX_PLANTIME*success_rate)
-
-        return loss
-
-    def _write_headers(self, headers=None, path=None):
-        if headers is None:
-            if self.MODE in ['ompl', 'default']:
-                headers = ['planner', 'avg_runs', 't_avg_run_time', 't_avg_plan_time', 't_avg_dist',
-                           't_avg_path_length', 't_avg_success', 'params']
-            else:
-                headers = ['n_trial', 'elapsed_time', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
-                           't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params']
-        if path is None:
-            path = self.RESULTS_PATH
-
-        with open(path, 'w') as f:
-            writer = csv.writer(f)
-            writer.writerow(headers)
-
-
+            self.RESULTS_PATH = self.RESULTS_DIR+'/'+self.PLANNER_SELECT+'_'+self.MODE+'_'+self.PLANNER+'.csv'
+              
     def _run_problem_set(self, planner_id, save=False):
-        """Returns resuls after iterating over all scenes and corresponding states
+        """Returns results after iterating over all scenes and corresponding states
         
         Args:
             planner_id (str): planner type
@@ -172,7 +80,7 @@ class Session(object):
         t_avg_path_length = 0
         t_avg_success = 0
 
-        RAW_PATH = self.ROS_PKG_PATH+'/results/raw/'+self.PLANNER_SELECT+'_'+self.MODE+'_raw.csv'
+        RAW_PATH = self.ROS_PKG_PATH+'/results/raw/runs/' + self.PLANNER_SELECT+'_'+self.MODE+'_raw.csv'
         if save and not os.path.exists(RAW_PATH):
             headers = ['time', 'planner', 'scene', 'query', 'start_pose', 'target_pose', 'avg_runs', 'avg_run_time',
                        'avg_plan_time', 'avg_dist', 'avg_path_length', 'avg_success', 'params']
@@ -183,7 +91,7 @@ class Session(object):
             scene_name = self.scenes[x1]
 
             # Clears previous scene and loads scene to server, loads states
-            scene = {'name': scene_name}       
+            scene = {'name': scene_name}
             scene_obj = Scene(self.scenes[x1])
             states = scene_obj.states
 
@@ -195,14 +103,17 @@ class Session(object):
                     self.group.set_planner_id(planner_id)  # Set new planner ID
 
                     target_pose = states[x3]
-                    query = {'start_pose': start_pose, 'target_pose': target_pose}  # Create query dict
+                    query = {'start_pose': start_pose,
+                             'target_pose': target_pose}  # Create query dict
 
                     rospy.loginfo('%d Executing %s to %s for average over %d runs',
                                   query_count, start_pose, target_pose, self.AVG_RUNS)
 
-                    planner_results = self._get_stats(start_pose, target_pose)      # Plan path and add results to planner dict
+                    # Plan path and add results to planner dict
+                    planner_results = self._get_stats(start_pose, target_pose)
 
-                    query.update(planner_results)       # Update query with planner results
+                    # Update query with planner results
+                    query.update(planner_results)
 
                     t_avg_run_time += planner_results['avg_run_time']
                     t_avg_plan_time += planner_results['avg_plan_time']
@@ -224,8 +135,9 @@ class Session(object):
                                       planner_results['avg_run_time'],  planner_results['avg_plan_time'],
                                       planner_results['avg_dist'], planner_results['avg_path_length'],
                                       planner_results['avg_success'])
-         
-                    scene[query_count] = query      # Add query dict to scene dict
+
+                    # Add query dict to scene dict
+                    scene[query_count] = query
                     query_count += 1
             result_log[x1] = scene        # Add scene dict to results
             t_avg_success = t_avg_success / float(query_count)
@@ -237,6 +149,21 @@ class Session(object):
                      't_avg_dist': t_avg_dist, 't_avg_path_length': t_avg_path_length, 't_avg_success': t_avg_success}
 
         return result_log, stats
+
+    def _write_headers(self, headers=None, path=None):
+        if headers is None:
+            if self.MODE in ['ompl', 'default']:
+                headers = ['planner', 'avg_runs', 't_avg_run_time', 't_avg_plan_time', 't_avg_dist',
+                           't_avg_path_length', 't_avg_success', 'params']
+            else:
+                headers = ['n_trial', 'elapsed_time', 'loss', 'planner', 'avg_runs', 't_avg_run_time',
+                           't_avg_plan_time', 't_avg_dist', 't_avg_path_length', 't_avg_success', 'params']
+        if path is None:
+            path = self.RESULTS_PATH
+
+        with open(path, 'w') as f:
+            writer = csv.writer(f)
+            writer.writerow(headers)
 
     def _get_stats(self, start_pose, target_pose):
         run_times = []
