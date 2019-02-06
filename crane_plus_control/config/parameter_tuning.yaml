@@ -8,3 +8,7 @@ avg_runs: 1
 max_trials: 30
 max_runtime: None
 max_plantime: 3
+# results path relative to /crane_plus_control/results/
+# raw folder is not included in git
+# result_path: final/run_1
+result_dir: raw

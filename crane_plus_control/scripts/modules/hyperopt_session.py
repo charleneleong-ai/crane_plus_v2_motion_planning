@@ -11,7 +11,8 @@ from functools import partial
 
 import rospy
 
-from hyperopt import hp, rand, tpe, Trials, fmin
+from hyperopt import hp, rand, tpe
+from hyperopt import Trials, fmin, STATUS_OK
 
 from session import Session
 
@@ -32,7 +33,10 @@ class HyperOptSession(Session):
             rospy.loginfo('Initialising hyperopt session in %s mode on full problem set', self.MODE)
     
     def _hpt_obj(self, params):
-        return super(HyperOptSession, self)._objective(params)
+        # Hyperopt needs status object
+        result = super(HyperOptSession, self)._objective(params)
+        result['status'] = STATUS_OK
+        return result
 
     def _load_search_space(self,  params_set, *args, **kwargs):
         for k, v in params_set.iteritems():

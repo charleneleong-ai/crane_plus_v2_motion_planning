@@ -24,8 +24,6 @@ import rospy
 import moveit_commander
 import moveit_msgs.msg
 
-from hyperopt import STATUS_OK
-
 from planner_config import PlannerConfig
 from scene_object import Scene
 
@@ -41,7 +39,7 @@ class Session(object):
         self.planner_config = self.planner_config_obj.planner_config
         self.PLANNER_SELECT = self.planner_config_obj.PLANNER_SELECT
         self.planners = self.planner_config_obj.planners
-        self.scenes = ['narrow_passage']
+        self.scenes = rospy.get_param('~scenes')
 
         self.n_trial = 0
         self.MODE = rospy.get_param('~mode')
@@ -68,14 +66,15 @@ class Session(object):
         self.display_trajectory_publisher = rospy.Publisher('/group/display_planned_path',
                                                             moveit_msgs.msg.DisplayTrajectory,
                                                             queue_size=20)
-        RAW_DIR = self.ROS_PKG_PATH+'/results/raw'
-        if not os.path.exists(RAW_DIR):
-            os.makedirs(RAW_DIR)
+
+        self.RESULTS_DIR = self.ROS_PKG_PATH+'/results/'+rospy.get_param('~result_dir')                                                  
+        if not os.path.exists(self.RESULTS_DIR):
+            os.makedirs(self.RESULTS_DIR )
 
         if self.planner_config_obj.PLANNER != 'all':
-            self.RESULTS_PATH = RAW_DIR+'/'+self.PLANNER_SELECT+'_'+self.MODE+'_'+self.planner_config_obj.PLANNER+'.csv'
+            self.RESULTS_PATH = self.RESULTS_DIR+'/'+self.PLANNER_SELECT+'_'+self.MODE+'_'+self.planner_config_obj.PLANNER+'.csv'
         else:
-            self.RESULTS_PATH = RAW_DIR+'/'+self.PLANNER_SELECT+'_'+self.MODE+'.csv'
+            self.RESULTS_PATH = self.RESULTS_DIR+'/'+self.PLANNER_SELECT+'_'+self.MODE+'.csv'
 
     def _load_search_space(self, params_set, *args, **kwargs):
         raise NotImplementedError
@@ -114,8 +113,7 @@ class Session(object):
                               ('t_avg_success', stats['t_avg_success'])])
         # Save params as str for csv export
         result_csv = OrderedDict(list(result.items())+[('params', str(params_set))])
-        # Saving results dict with STATUS_OK for hyperopt
-        result = OrderedDict(list(result.items())+[('params', params_set), ('status', STATUS_OK)])
+        result = OrderedDict(list(result.items())+[('params', params_set)])
         # print(json.dumps(result_csv, indent=4))     # Print OrderedDict nicely
 
         result_df = pd.DataFrame(dict(result_csv), columns=result.keys(), index=[0])
