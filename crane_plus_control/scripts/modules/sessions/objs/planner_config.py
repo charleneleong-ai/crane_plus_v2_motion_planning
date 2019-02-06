@@ -46,7 +46,7 @@ class PlannerConfig(object):
                 self.planner_config[p] = ompl[p]
 
         # Init planner config if not in result mode
-        if rospy.get_param('~param_test') == False:
+        if rospy.get_param('~eval_params') == False:
             for k, v in self.planner_config.iteritems():
                 self.set_planner_params(k, v)
 

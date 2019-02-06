@@ -16,23 +16,24 @@ def check_rosparams():
     Args:
         mode (str): Mode of parameter tuning session
     """
+
     mode = rospy.get_param('~mode')
-    modes = ['default', 'tpe', 'rand', 'ompl',
-             'smac', 'aucbandit', 'gp', 'rf', 'et', 'gbrt']
+    modes = rospy.get_param('~modes')
     if mode not in modes:
         rospy.logerr('Invalid mode.')
         rospy.logerr('Please choose from %s\n', str(modes))
         sys.exit(1)
 
     planner_select = rospy.get_param('~planner_select')
-    if planner_select not in ['Cano_etal', 'Burger_etal']:
+    planner_selects = rospy.get_param('~planner_selects') 
+    if planner_select not in planner_selects:
         rospy.logerr('Invalid planner config select.')
         rospy.logerr('Please choose from %s\n',
-                     str(['Cano_etal', 'Burger_etal']))
+                     str(planner_selects))
         sys.exit(1)
 
-    planners = ['all', 'BKPIECE', 'RRTConnect', 'KPIECE', 'BiTRRT']
     planner = rospy.get_param('~planner')
+    planners = rospy.get_param('~planners')
     if planner not in planners:
         rospy.logerr('Invalid planner.')
         rospy.logerr('Please choose from %s\n', str(planners))
@@ -43,8 +44,7 @@ def check_rosparams():
         try:
             max_runtime = int(max_runtime)
         except ValueError:
-            rospy.logerr(
-                "Not an valid int value. Please express max_runtime in secs.\n")
+            rospy.logerr("Not a valid int value. Please express max_runtime in secs.\n")
             sys.exit(1)
 
     start_pose = rospy.get_param('~start_pose')

@@ -3,7 +3,7 @@ start_pose: None
 target_pose: None
 planner_select: Cano_etal
 planner: all
-mode: tpe
+mode: all
 avg_runs: 1
 max_trials: 30
 max_runtime: None

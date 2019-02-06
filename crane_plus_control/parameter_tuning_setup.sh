@@ -30,6 +30,12 @@ source ~/.bashrc
 BLUE "Installing pip requirements"
 cd ~/catkin_ws/src/crane_plus_v2_motion_planning/crane_plus_control && pip install --user -r requirements.txt
 
+BLUE "Enabling Jupyter extensions"
+jupyter contrib nbextension install --user
+jupyter nbextension enable toc2/main
+jupyter nbextension enable scroll_down/main
+jupyter nbextension enable varInspector/main
+
 BLUE "Installing submodules"
 cd ~/catkin_ws/src/crane_plus_v2_motion_planning && git submodule update --init --recursive
 
