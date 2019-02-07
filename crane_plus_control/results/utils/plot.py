@@ -2,8 +2,8 @@
 ###
 # File Created: Wednesday, February 6th 2019, 9:06:21 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Modified By:
-# Last Modified:
+# Modified By: Charlene Leong
+# Last Modified: Thursday, February 7th 2019, 6:55:18 pm
 ###
 
 # File handling libs
@@ -20,137 +20,6 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as mplcm
 import matplotlib.colors as colors
 
-# Timeseries data
-import datetime
-from pandas.tseries.frequencies import to_offset
-
-from files import files_to_df, list_num_files
-
-# Linear Resampling irregular timeseries data
-def resample(df, rate='T', short_rate='S', max_gap=None):
-    """Resample (unevenly spaced) timeseries data linearly by first upsampling to a
-        high frequency (short_rate) then downsampling to the desired rate.
-    
-    Arguments:
-        df {pd.df} -- a panda timeseries df
-    
-    Keyword Arguments:
-        rate {pd freq string} -- rate that df should be resampled to (default: {'T'})
-        short_rate {pd freq string} -- intermediate upsampling rate (default: {'S'})
-        max_gap {pd freq string} --null intervals larger than `max_gap` are being treated as missing
-        data and not interpolated. if None, always interpolate. must be provided as pandas
-        frequency string format, e.g. '6h' (default: {None})
-    
-    Returns:
-        df -- resampled df
-    """
-    # Resetting index to elapsed time 7200s
-    # Setting first value to 0
-    df.loc[-1] = df.loc[0]
-    df.index = df.index + 1 
-    df = df.sort_index() 
-    df.loc[0,'elapsed_time'] = 0
-    df.loc[0,'n_trial'] = 0
-
-    # Setting last value to 7200
-    df = df.loc[df['elapsed_time'] <= 7200]
-    df = df.append(df.iloc[-1]).reset_index(drop=True)
-    df.iloc[-1, df.columns.get_loc('elapsed_time')] = 7200
-    df.iloc[-1, df.columns.get_loc('n_trial')] = df.iloc[-2, df.columns.get_loc('n_trial')]+1
-
-    # Converting to timedelta and setting time as index
-    df['elapsed_time'] = df['elapsed_time'].apply(lambda x : datetime.timedelta(seconds=x))
-    df = df.set_index('elapsed_time')
-    
-    # return series if empty
-    if df.empty:
-        return df
-
-    # check for timedelta index
-    assert isinstance(
-        df.index[0], pd.Timedelta), 'Object must have a datetime-like index.'
-
-    # sort df by time
-    df.sort_index(inplace=True)
-
-    # create timedelta from frequency string
-    rate_delta = to_offset(rate).delta
-
-    # compute time intervals
-    diff = np.diff(df.index) / np.timedelta64(1, 's')
-
-    if max_gap is not None:
-        # identify intervals in df larger than max_gap
-        idx = np.where(np.greater(diff, to_offset(max_gap).delta.total_seconds()))[0]
-        start = df.index[idx].tolist()
-        stop = df.index[idx + 1].tolist()
-        # store start and stop indices of large intervals
-        big_gaps = list(zip(start, stop))
-
-    if short_rate is None:
-        # use minimal nonzero interval of original series as short_rate
-        short_rate = '%dS' % diff[np.nonzero(diff)].min()
-        # create timedelta from frequency string
-        short_rate_delta = to_offset(short_rate).delta
-        # if smallest interval is still larger than rate, use rate instead
-        if short_rate_delta > rate_delta:
-            short_rate = rate
-    else:
-        # convert frequency string to timedelta
-        short_rate_delta = to_offset(short_rate).delta
-        # make sure entered short_rate is smaller than rate
-        assert rate_delta >= short_rate_delta, 'short_rate must be <= rate'
-
-    # upsample to short_rate
-    df = df.resample(short_rate).mean().interpolate()
-
-    # downsample to desired rate
-    df = df.resample(rate).ffill()
-
-    # replace values in large gap itervals with NaN
-    if max_gap is not None:
-        for start, stop in big_gaps:
-            df[start:stop] = None
-    
-    return df
-
-def get_avg_losses():
-    """Returns pandas df of average losses over all runs of all files 
-        
-    Returns:
-        pd.df -- df of averages over all funs of all runs of files
-    """
-    # Returns pd df of fullpaths, paths and filenames
-    files = files_to_df('final/*/*.csv')
-    list_num_files('final')
-
-    # Iterate over all runs for every unique filename, 
-    # resample df to 2S interval, 
-    # create losses df, 
-    # concat mean to avg loss df
-    avg_losses = pd.DataFrame()
-    print('List of filenames:')
-    print('---------------------------')
-    for fn in files['filename'].unique():
-        name = fn.split('.')[0]
-        print(name)
-        
-        paths = files[files['filename'] == fn]['fullpath']
-        losses = pd.DataFrame()
-        for idx, path in enumerate(paths):
-            df = pd.read_csv(path, index_col=False, sep=',').dropna(axis=1)
-            df_resample = resample(df, '2S')
-
-            # If default or ompl, average t_avg_plan_time else loss
-            if any(x in path for x in ['default', 'ompl']):
-                df_resample = df_resample['t_avg_plan_time']     
-            else:
-                df_resample = df_resample['loss']     
- 
-            losses = pd.concat([losses, pd.DataFrame({name+str(idx): df_resample})], axis=1)
-        avg_losses = pd.concat([avg_losses, pd.DataFrame({name: losses.mean(axis=1)})], axis=1)
-    
-    return avg_losses
 
 def speedup_factor_plot(run, planner_select, planner, benchmark='default', mode_select=None, figsize=[15,10]):
     """Plots speedup factor plot of given run, planner select and planner
@@ -238,7 +107,7 @@ def speedup_factor_plot(run, planner_select, planner, benchmark='default', mode_
     plt.ylabel('Speed up over default')
     plt.legend()
 
-def avg_speedup_factor_plot(avg_losses, planner_select, planner, benchmark='default', mode_select=None, figsize=[15,10]):
+def avg_speedup_factor_plot(avg_losses, planner_select, planner, benchmark='ompl', mode_select=None, figsize=[15,10]):
     """Plots average speedup factor plot over all runs of given planner select and planner
     
     Arguments:
@@ -254,14 +123,16 @@ def avg_speedup_factor_plot(avg_losses, planner_select, planner, benchmark='defa
     
     plt.rcParams['figure.figsize'] = figsize
     
-    # Getting planner select df from avg losses df 
+    # Getting planner select df from avg losses df, ordering cols with default and ompl first
     df = avg_losses.copy()
-    def_cols = [planner_select+'_default', planner_select+'_ompl']
     cols = [c for c in df.columns if planner_select in c if planner in c]
+    for c in cols:
+        if any(x in c for x in ['default', 'ompl']):
+            cols.remove(c)
     cols = sorted(cols)
-    cols = def_cols + cols
+    cols = [planner_select+'_default_'+planner, planner_select+'_ompl_'+planner] + cols
     ps_df = df[cols]
-    
+
     # Renaming planner select df cols
     legend = [c.split('_')[2] for c in cols]
     ps_df.columns = legend

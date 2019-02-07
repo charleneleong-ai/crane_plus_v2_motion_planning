@@ -1,3 +1,0 @@
-run,avg_runs,t_avg_run_time,t_avg_plan_time,t_avg_dist,t_avg_path_length,t_avg_success,params
-best_run,1,1.6366801261901855,0.07283496856689453,1.7028509765803186,7.56996286248726,1.0,"{'range': 6.850228566610837, 'type': 'geometric::RRTConnect'}"
-test_run,5,0.7142036437988282,0.1258521556854248,1.702710553423049,7.921059807250555,1.0,"{'range': 6.850228566610837, 'type': 'geometric::RRTConnect'}"

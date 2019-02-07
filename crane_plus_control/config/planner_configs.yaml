@@ -35,8 +35,6 @@ planner_configs_Cano_etal_default:
     projection_evaluator: joints(crane_plus_shoulder_revolute_joint, crane_plus_wrist_joint)
     longest_valid_segment_fraction: 0.005
 
-
-
 planner_configs_Burger_etal_tune:
   RRTConnectkConfigDefault:
     type: geometric::RRTConnect
