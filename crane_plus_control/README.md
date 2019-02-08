@@ -14,7 +14,13 @@ This package aims to implement the following two papers in researching global bl
   - [Parameter Tuning Parameters](#parameter-tuning-parameters)
   - [MoveIt Planning Time Benchmark](#moveit-planning-time-benchmark)
 
+- [Results](./results)
 
+  - [Results Overview](./results/results_overview.md)
+
+  - [Results Analysis](./results/results_analysis/result_analysis.ipynb)
+
+    
 
 ## Quick Start
 
@@ -27,12 +33,11 @@ $ chmod u+x parameter_tuning_setup.sh && ./parameter_tuning_setup.sh
 Launch `control.launch` to:
 
 - Launch Gazebo simulation in tuning mode `tuning:=true` which sets up the [physics properties](http://gazebosim.org/tutorials?tut=modifying_world#PhysicsProperties) in the [tuning_world.world](../crane_plus_simulation/worlds/tuning_world.world) file to speed up realtime simulation
-- Launch Moveit config with `robot_execution:=true` to execute on Gazebo.
 - You can optionally set `gui:=false` to launch Gazebo without gui.
 - You can optionally set `rviz:=false` to launch Moveit without rviz.
 
 ```bash
-$ roslaunch crane_plus_control.launch control.launch 
+$ roslaunch crane_plus_control.launch control.launch tuning:=true gui:=false rviz:=false 
 ```
 
 1. Benchmarking session with OMPL or planner select defaults.
@@ -41,21 +46,13 @@ $ roslaunch crane_plus_control.launch control.launch
     $ roslaunch crane_plus_control parameter_tuning.launch planner_select:=Cano_etal mode:=default avg_runs:=5
     ```
 
-2. Parameter tuning session with TPE or Random Search using [Hyperopt](http://hyperopt.github.io/hyperopt/).
+2. Parameter tuning session with selected mode.
 
     ```bash
     $ roslaunch crane_plus_control parameter_tuning.launch mode:=tpe max_runtime:=7200
     ```
 
-3. Parameter tuning session with random Forest using [SMAC](http://www.cs.ubc.ca/labs/beta/Projects/SMAC/v2.10.03/quickstart.html#news).
-
-    Installed from source, located in [/scripts/modules/smac](./scripts/modules/smac).
-
-    ```bash
-    $ roslaunch crane_plus_control parameter_tuning.launch mode:=smac max_runtime:=7200
-    ```
-
-4. Benchmarking or tuning a specific path with defined start pose and target pose.
+3. Benchmarking or tuning a specific path with defined start pose and target pose.
 
     ```bash
     $ roslaunch crane_plus_control parameter_tuning.launch mode:=ompl start_pose:=backbend target_pose:=low_fwd_reach
@@ -82,14 +79,14 @@ $ roslaunch crane_plus_control parameter_tuning.launch
   - ***[default]*** all
   - [RRTConnect](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1RRTConnect.html#aea8a84e73c86ff415931a29be34228f5) - bidirectional version of rapidly-exploring random tree (RRT) 
   - [BiTRRT](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1BiTRRT.html) - bidirectional version of RRT variant,  transition-based RRT (TRRT) 
-  - [BKPIECE](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1BKPIECE1.html#gBKPIECE1) - bidirectional version of KPIECE
-  - [KPIECE](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1KPIECE1.html#gKPIECE1) - tree-based planner that uses discretisation to guide the exploration of the continuous space
+  - [BKPIECE](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1BKPIECE1.html#gBKPIECE1) - bidirectional version of [KPIECE](http://ompl.kavrakilab.org/classompl_1_1geometric_1_1KPIECE1.html#gKPIECE1), a tree-based planner that uses discretisation to guide the exploration of the continuous space
 
 - **mode:** Sets the mode of the parameter tuning session. 
 
   - ompl - Runs benchmarking session with [OMPL planner config defaults](../crane_plus_moveit_config/config/ompl_planning.yaml).
-  - default - Runs benchmarking session with [planner config defaults](./config/planner_configs.yaml).
-  - ***[default]*** tpe -  Runs tuning session using Bayesian optimisation with TPE in [Hyperopt](http://hyperopt.github.io/hyperopt/).
+  - ***[default]*** default - Runs benchmarking session with [planner config defaults](./config/planner_configs.yaml) of specified planner select.
+  - all -  Runs tuning session  session in all tuning modes.
+  -  tpe -  Runs tuning session using Bayesian optimisation with TPE in [Hyperopt](http://hyperopt.github.io/hyperopt/).
   - rand -   Runs tuning session using standard random search in [Hyperopt](http://hyperopt.github.io/hyperopt/).
   - smac - Runs tuning session using SMAC in [SMAC3](https://automl.github.io/SMAC3/master/).
   - aucbandit - Runs tuning session using AUC Bandit in [OpenTuner](http://opentuner.org/)
@@ -106,7 +103,7 @@ $ roslaunch crane_plus_control parameter_tuning.launch
 
   - ***[default]*** 30
 
-- **max_runtime: ** Sets the max runtime (secs) in parameter tuning mode. When set, overrides max_trials=10000.
+- **max_runtime:** Sets the max runtime (secs) in parameter tuning mode. When set, overrides max_trials=10000.
 
   - ***[default]*** None
 
@@ -114,15 +111,15 @@ $ roslaunch crane_plus_control parameter_tuning.launch
 
   - ***[default]*** None
 
-- **target_pose: ** Sets the target pose for specific path tuning.
+- **target_pose: **  Sets the target pose for specific path tuning.
 
   - ***[default]*** None 
 
     
 
-## MoveIt Planning Time Benchmark
+## OMPL Planning Time Benchmark
 
-Adapted from [moveit_benchmark_statistics.py](https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_ros/benchmarks/scripts/moveit_benchmark_statistics.py) from MoveIt! framework. See [here](http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/benchmarking/benchmarking_tutorial.html) for more details on parameter input.
+Adapted from [moveit_benchmark_statistics.py](https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_ros/benchmarks/scripts/moveit_benchmark_statistics.py) from MoveIt! framework wih reference to [benchmarking planners in OMPL](http://ompl.kavrakilab.org/benchmark.html). See [here](http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/benchmarking/benchmarking_tutorial.html) for more details on parameter input.
 
 1. Please run setup script if you did not initially setup  with [`crane_plus_setup_FULL.sh`](../crane_plus_setup_FULL.sh).
 
@@ -167,4 +164,3 @@ Adapted from [moveit_benchmark_statistics.py](https://github.com/ros-planning/mo
 11. Click on the <kbd>Change Database</kbd> button to upload the `benchmark.db` file generated by script to [plannerarena.org](http://plannerarena.org/) to interactively visualise results. 
 
        ![](imgs/plannerarena.png)
-

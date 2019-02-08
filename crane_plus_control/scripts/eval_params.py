@@ -2,8 +2,8 @@
 ###
 # File Created: Wednesday, February 6th 2019, 8:23:06 pm
 # Author: Charlene Leong charleneleong84@gmail.com
-# Modified By:
-# Last Modified:
+# Modified By: Charlene Leong
+# Last Modified: Friday, February 8th 2019, 3:37:43 pm
 ###
 
 
@@ -47,7 +47,7 @@ class Result(Session):
             'Initialising result session for %s %s in %s mode \n', self.PLANNER_SELECT, self.PLANNER, self.MODE)
 
         # Overwriting the results path
-        self.OUTPUT_DIR = self.ROS_PKG_PATH+'/results/param_tests/'
+        self.OUTPUT_DIR = self.ROS_PKG_PATH+'/results/results_analysis/param_tests/'
         if not exists(self.OUTPUT_DIR):
             os.makedirs(self.OUTPUT_DIR)
 
@@ -84,66 +84,70 @@ class Result(Session):
         return best_run
 
     def run_param_test(self, save=False):
-        # best_run = self._set_best_params()
-        # best_run_stats = best_run['min_run']
+        best_run = self._set_best_params()
+        best_run_stats = best_run['min_run']
 
-        # rospy.loginfo('BEST RUN STATS: t_avg_run_time: %.4f t_avg_plan_time: %.4f t_avg_dist: %.4f t_avg_path_length: %.4f t_avg_success: %.4f\n',
-        #               best_run_stats['t_avg_run_time'], best_run_stats['t_avg_plan_time'], best_run_stats[
-        #                   't_avg_dist'], best_run_stats['t_avg_path_length'],
-        #               best_run_stats['t_avg_success'])
+        rospy.loginfo('BEST RUN STATS: t_avg_run_time: %.4f t_avg_plan_time: %.4f t_avg_dist: %.4f t_avg_path_length: %.4f t_avg_success: %.4f\n',
+                      best_run_stats['t_avg_run_time'], best_run_stats['t_avg_plan_time'], best_run_stats[
+                          't_avg_dist'], best_run_stats['t_avg_path_length'],
+                      best_run_stats['t_avg_success'])
 
-        # results_log, test_stats = self._run_problem_set(self.PLANNER_ID)
-        # rospy.loginfo('TEST STATS: t_avg_run_time: %.4f t_avg_plan_time: %.4f t_avg_dist: %.4f t_avg_path_length: %.4f t_avg_success: %.4f\n',
-        #               test_stats['t_avg_run_time'], test_stats['t_avg_plan_time'], test_stats['t_avg_dist'], test_stats['t_avg_path_length'],
-        #               test_stats['t_avg_success'])
+        results_log, test_stats = self._run_problem_set(self.PLANNER_ID)
+        rospy.loginfo('TEST STATS: t_avg_run_time: %.4f t_avg_plan_time: %.4f t_avg_dist: %.4f t_avg_path_length: %.4f t_avg_success: %.4f\n',
+                      test_stats['t_avg_run_time'], test_stats['t_avg_plan_time'], test_stats['t_avg_dist'], test_stats['t_avg_path_length'],
+                      test_stats['t_avg_success'])
 
         if save == True:
             default_fps = [y for x in os.walk(self.RESULTS_DIR)
                             for y in glob.glob(join(x[0], '*.csv'))
                                 if ('default' in y) and
-                                (self.PLANNER_SELECT in y)]
-
+                                    (self.PLANNER_SELECT in y)]
             default_df = pd.DataFrame()
-            for idx, fp in enumerate(default_fps):
-                df = pd.read_csv(fp, index_col=False, sep=',').dropna(axis=1)
-                print(df)
-                default_df = pd.concat([default_df, pd.DataFrame({idx: df})], axis=1)
+            for f in default_fps:
+                df = pd.read_csv(f, index_col=False, sep=',').dropna(axis=1)
+                df = df[df['planner'].str.contains(self.PLANNER)]
+                default_df = pd.concat([default_df, df])
             
-            default = default_df.mean(axis=1)
-            print(default)
-            # cols = ['avg_runs', 't_avg_run_time', 't_avg_plan_time',
-            #         't_avg_dist', 't_avg_path_length', 't_avg_success', 'params']
-            # best_run_stats = {k: best_run_stats[k] for k in cols}
-            # best_run_stats['run'] = 'best_run'
+            avg_default = {'run': 'avg_default', 'avg_runs': default_df['avg_runs'].mean(), 
+                        't_avg_run_time': default_df['t_avg_run_time'].mean(),
+                        't_avg_plan_time': default_df['t_avg_plan_time'].mean(),
+                        't_avg_dist': default_df['t_avg_dist'].mean(), 
+                        't_avg_path_length': default_df['t_avg_path_length'].mean(),
+                        't_avg_success': default_df['t_avg_success'].mean(),
+                        'params': default_df.iloc[0]['params'] }
 
-            # test_stats['run'] = 'test_run'
-            # test_stats['avg_runs'] = self.AVG_RUNS
-            # test_stats['params'] = best_run_stats['params']
+            cols = ['avg_runs', 't_avg_run_time', 't_avg_plan_time',
+                    't_avg_dist', 't_avg_path_length', 't_avg_success', 'params']
+            best_run_stats = {k: best_run_stats[k] for k in cols}
+            best_run_stats['run'] = 'best_run'
 
-            # cols = ['run'] + cols
-            # df_best_run_stats = pd.DataFrame(
-            #     dict(best_run_stats), columns=cols, index=[0])
-            # df_test_stats = pd.DataFrame(
-            #     dict(test_stats), columns=cols, index=[0])
+            test_stats['run'] = 'test_run'
+            test_stats['avg_runs'] = self.AVG_RUNS
+            test_stats['params'] = best_run_stats['params']
+            cols = ['run'] + cols
 
-            # df_result = pd.concat([df_best_run_stats, df_test_stats])
+            df_avg_default = pd.DataFrame(avg_default, index=[0])
+            df_best_run_stats = pd.DataFrame(
+                dict(best_run_stats), columns=cols, index=[0])
+            df_test_stats = pd.DataFrame(
+                dict(test_stats), columns=cols, index=[0])
+            df_result = pd.concat([df_avg_default, df_best_run_stats, df_test_stats], sort=False)
 
-            # with open(self.RESULTS_PATH, 'w') as f:
-            #     df_result.to_csv(f, index=False)
+            with open(self.RESULTS_PATH, 'w') as f:
+                df_result.to_csv(f, index=False)
+                rospy.loginfo('Saved results to %s\n', self.RESULTS_PATH)
 
-            #     rospy.loginfo('Saved results to %s\n', self.RESULTS_PATH)
-
-        # return best_run_stats, test_stats
+        return best_run_stats, test_stats
 
 def eval_params():
     """
     Scans through all final results and tests the best params for each unique combination 
     of planner select, planner and mode and saves to /results/param_tests/
     """
-    ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')+'/results/final'
+    ROS_PKG_PATH = rospkg.RosPack().get_path('crane_plus_control')
     
     # Return list of unique filenames in dir
-    filenames = unique(ROS_PKG_PATH+"/*/*.csv")
+    filenames = unique(ROS_PKG_PATH+"/results/output/final/*/*.csv")
     planner_select = []
     modes = []
     planners = []
@@ -177,9 +181,9 @@ def main():
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('parameter_tuning', anonymous=True)
     check_rosparams()
-    # eval_params()
-    result_session = Result('Cano_etal', 'rand', 'RRTConnect')
-    result_session.run_param_test(save=True)
+    eval_params()
+    # result_session = Result('Cano_etal', 'rand', 'RRTConnect')
+    # result_session.run_param_test(save=True)
 
     moveit_commander.roscpp_shutdown()
 

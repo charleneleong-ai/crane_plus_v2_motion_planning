@@ -3,7 +3,7 @@
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong charleneleong84@gmail.com
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, February 6th 2019, 5:33:15 pm
+# Last Modified: Friday, February 8th 2019, 5:19:34 pm
 
 import sys
 import os
@@ -44,6 +44,12 @@ class Session(object):
         self.AVG_RUNS = rospy.get_param('~avg_runs')
         self.MAX_PLANTIME = rospy.get_param('~max_plantime')
 
+        self.START_POSE = rospy.get_param('~start_pose')
+        self.TARGET_POSE = rospy.get_param('~target_pose')
+        self.PATH_TUNE = False
+        if (self.START_POSE != 'None') and (self.TARGET_POSE != 'None'):
+            self.PATH_TUNE = True
+
         self.robot = moveit_commander.RobotCommander()
         self.group = moveit_commander.MoveGroupCommander('arm')
         self.group.set_planning_time(self.MAX_PLANTIME)
@@ -52,7 +58,7 @@ class Session(object):
                                                             moveit_msgs.msg.DisplayTrajectory,
                                                             queue_size=20)
 
-        self.RESULTS_DIR = self.ROS_PKG_PATH+'/results/'+rospy.get_param('~result_dir')                                        
+        self.RESULTS_DIR = self.ROS_PKG_PATH+'/results/output/'+rospy.get_param('~result_dir')                                        
         if not os.path.exists(self.RESULTS_DIR):
             os.makedirs(self.RESULTS_DIR )
 
@@ -80,11 +86,14 @@ class Session(object):
         t_avg_path_length = 0
         t_avg_success = 0
 
-        RAW_PATH = self.ROS_PKG_PATH+'/results/raw/runs/' + self.PLANNER_SELECT+'_'+self.MODE+'_raw.csv'
-        if save and not os.path.exists(RAW_PATH):
-            headers = ['time', 'planner', 'scene', 'query', 'start_pose', 'target_pose', 'avg_runs', 'avg_run_time',
-                       'avg_plan_time', 'avg_dist', 'avg_path_length', 'avg_success', 'params']
-            self._write_headers(headers=headers, path=RAW_PATH)
+        RUN_DIR = self.ROS_PKG_PATH+'/results/output/raw/runs/'
+        RUN_PATH = RUN_DIR + self.PLANNER_SELECT+'_'+self.MODE+'_raw.csv'
+        if save and not os.path.exists(RUN_DIR):
+            os.makedirs(RUN_DIR)
+            if not os.path.exists(RUN_PATH):
+                headers = ['time', 'planner', 'scene', 'query', 'start_pose', 'target_pose', 'avg_runs', 'avg_run_time',
+                        'avg_plan_time', 'avg_dist', 'avg_path_length', 'avg_success', 'params']
+                self._write_headers(headers=headers, path=RUN_PATH)
 
         for x1 in xrange(len(self.scenes)):     # Scene loop
             query_count = 0                     # Initiate query count for each scene
@@ -122,7 +131,7 @@ class Session(object):
                     t_avg_success += planner_results['avg_success']
 
                     if save is True:
-                        with open(RAW_PATH, 'a') as f:
+                        with open(RUN_PATH, 'a') as f:
                             writer = csv.writer(f)
                             currentDT = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                             writer.writerow([currentDT, planner_id, scene_name, query_count, start_pose, target_pose,
@@ -143,7 +152,7 @@ class Session(object):
             t_avg_success = t_avg_success / float(query_count)
 
             if save is True:
-                rospy.loginfo('Saved raw results to %s\n', RAW_PATH)
+                rospy.loginfo('Saved raw results to %s\n', RUN_PATH)
 
             stats = {'t_avg_run_time': t_avg_run_time, 't_avg_plan_time': t_avg_plan_time,
                      't_avg_dist': t_avg_dist, 't_avg_path_length': t_avg_path_length, 't_avg_success': t_avg_success}

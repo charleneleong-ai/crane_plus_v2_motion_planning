@@ -3,7 +3,7 @@
 # File Created: Wednesday, January 16th 2019, 7:18:59 pm
 # Author: Charlene Leong charleneleong84@gmail.com
 # Modified By: Charlene Leong
-# Last Modified: Wednesday, February 6th 2019, 5:28:49 pm
+# Last Modified: Friday, February 8th 2019, 5:31:44 pm
 ###
 
 import sys
@@ -43,12 +43,7 @@ class TuningSession(Session):
                 self.MAX_RUNTIME = int(self.MAX_RUNTIME)
                 self.MAX_TRIALS = 10000     # Set to arbitrary large number
                 
-        self.START_POSE = rospy.get_param('~start_pose')
-        self.TARGET_POSE = rospy.get_param('~target_pose')
-        self.PATH_TUNE = False
-        if (self.START_POSE != 'None') and (self.TARGET_POSE != 'None'):
-            self.PATH_TUNE = True
-
+    
          
     def _load_search_space(self, params_set, *args, **kwargs):
         raise NotImplementedError

@@ -1,0 +1,4 @@
+avg_runs,params,run,t_avg_dist,t_avg_path_length,t_avg_plan_time,t_avg_run_time,t_avg_success
+5.0,"{'default': 1.0, 'type': 'geometric::RRTConnect'}",avg_default,1.5894201656481861,7.335894233492485,0.19845188458760576,1.2405147552490234,0.9333333333333332
+1.0,"{'default': '0.6', 'type': 'geometric::RRTConnect'}",best_run,1.703028744,7.804692294,0.184149027,2.469372034,1.0
+5.0,"{'default': '0.6', 'type': 'geometric::RRTConnect'}",test_run,1.7028821654362094,8.694020378173814,0.22166643142700196,0.8698328018188477,1.0
