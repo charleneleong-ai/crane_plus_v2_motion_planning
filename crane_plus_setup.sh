@@ -71,7 +71,7 @@ sudo apt-get install gazebo9 ros-kinetic-gazebo9-* -y || { echo message && exit 
 
 CYAN "\n==========  Installing CRANE V2+ and dependencies ==========\n"
 BLUE "Cloning crane_plus_v2_motion_planning Git repo and submodules"
-cd ~/catkin_ws/src/ && git clone http://gojou/gitlab/charyeezy/crane_plus_v2_motion_planning.git || { echo message && exit 1; }
+cd ~/catkin_ws/src/ && git clone https://github.com/charyeezy/crane_plus_v2_motion_planning.git || { echo message && exit 1; }
 
 BLUE "Installing ROS dependencies"
 cd ~/catkin_ws && rosdep install -y --from-paths src --ignore-src --rosdistro kinetic || { echo message && exit 1; }
